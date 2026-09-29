@@ -1,0 +1,6 @@
+/* Imported after the components' stylesheet, so the logo's rules win over the link's. */
+@import url('./wordmark/styles/wordmark.css') layer(components);
+@import url('./logo/styles/logo.css') layer(components);
+@import url('./fox-mascot/styles/fox-mascot.css') layer(components);
+@import url('./heart/styles/heart.css') layer(components);
+@import url('./paw/styles/paw.css') layer(components);

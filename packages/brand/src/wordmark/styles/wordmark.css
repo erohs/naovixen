@@ -1,14 +1,13 @@
-/* The `< naovixen />` name, as code: the brackets in the accent text colour. */
 .nx-wordmark {
-  display: inline-flex;
-  align-items: baseline;
-  gap: var(--space-between-text);
-  font-family: var(--font-family-code);
-  font-size: var(--font-size-body);
-  white-space: nowrap;
+    display: inline-flex;
+    align-items: baseline;
+    gap: var(--space-between-text);
+    font-family: var(--font-family-code);
+    font-size: var(--font-size-body);
+    white-space: nowrap;
 }
 
 .nx-wordmark__bracket {
-  color: var(--color-text-accent);
-  font-weight: var(--font-weight-semi-bold);
+    color: var(--color-text-accent);
+    font-weight: var(--font-weight-semi-bold);
 }

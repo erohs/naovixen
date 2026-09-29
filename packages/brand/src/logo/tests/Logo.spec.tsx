@@ -1,29 +1,49 @@
-import { screen } from '@testing-library/react';
+import type { LinkProps } from '@naovixen/components';
+import { findAxeViolations } from '@naovixen/component-testing';
+import { render, screen } from '@testing-library/react';
+import type { FunctionComponent } from 'react';
 import { describe, expect, test } from 'vitest';
 
-import { findAxeViolations } from '../../tests/functions/FindAxeViolations.function';
-import { renderWithProvider } from '../../tests/functions/RenderWithProvider.function';
-import { RouterLinkForTests } from '../../tests/functions/RouterLinkForTests.component';
 import { Logo } from '../Logo.component';
 
+const RouterLink: FunctionComponent<LinkProps> = ({ children, ...anchorProps }) => (
+    <a {...anchorProps} data-routed="true">
+        {children}
+    </a>
+);
+
 describe('Using Logo', () => {
-  describe('when it renders', () => {
-    test('then it should link home by the name naovixen', () => {
-      renderWithProvider(<Logo />);
+    describe('when it renders', () => {
+        test('then it should link home by the name naovixen', () => {
+            render(<Logo />);
 
-      expect(screen.getByRole('link', { name: 'naovixen' })).toHaveProperty('pathname', '/');
+            expect(screen.getByRole('link', { name: 'naovixen' })).toHaveProperty('pathname', '/');
+        });
+
+        test('then it should have no accessibility violations', async () => {
+            render(<Logo />);
+
+            expect(await findAxeViolations()).toEqual([]);
+        });
     });
 
-    test('then it should go through the router', () => {
-      renderWithProvider(<Logo />, { linkComponent: RouterLinkForTests });
+    describe('given a link component', () => {
+        describe('when it renders', () => {
+            test('then it should render the link with it', () => {
+                render(<Logo linkComponent={RouterLink} />);
 
-      expect(screen.getByRole('link').dataset.routed).toBe('true');
+                expect(screen.getByRole('link', { name: 'naovixen' }).dataset.routed).toBe('true');
+            });
+        });
     });
 
-    test('then it should have no accessibility violations', async () => {
-      renderWithProvider(<Logo />);
+    describe('given intrinsic anchor props', () => {
+        describe('when it renders', () => {
+            test('then it should pass them through, so the home page can be marked current', () => {
+                render(<Logo aria-current="page" />);
 
-      expect(await findAxeViolations()).toEqual([]);
+                expect(screen.getByRole('link', { current: 'page' })).toBeDefined();
+            });
+        });
     });
-  });
 });

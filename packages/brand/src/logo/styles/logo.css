@@ -1,42 +1,41 @@
-/* The wordmark as a home link, with a text cursor that blinks while it is pointed at. */
 .nx-logo {
-  --logo-cursor-block-size: 1em;
+    --logo-cursor-block-size: 1em;
 
-  display: inline-flex;
-  align-items: center;
-  gap: var(--border-width-standout);
-  text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--border-width-standout);
+    text-decoration: none;
 }
 
 .nx-logo__cursor {
-  inline-size: var(--border-width-standout);
-  block-size: var(--logo-cursor-block-size);
-  background-color: currentcolor;
-  opacity: 0;
+    inline-size: var(--border-width-standout);
+    block-size: var(--logo-cursor-block-size);
+    background-color: currentcolor;
+    opacity: 0;
 }
 
 .nx-logo:hover .nx-logo__cursor,
 .nx-logo:focus-visible .nx-logo__cursor {
-  opacity: 1;
-  animation: nx-logo-blink calc(2 * var(--duration-slow)) steps(1) infinite;
+    opacity: 1;
+    animation: nx-logo-blink calc(2 * var(--duration-slow)) steps(1) infinite;
 }
 
 @keyframes nx-logo-blink {
-  50% {
-    opacity: 0;
-  }
+    50% {
+        opacity: 0;
+    }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .nx-logo:hover .nx-logo__cursor,
-  .nx-logo:focus-visible .nx-logo__cursor {
-    animation: none;
-  }
+    .nx-logo:hover .nx-logo__cursor,
+    .nx-logo:focus-visible .nx-logo__cursor {
+        animation: none;
+    }
 }
 
 /* Forced colours drop background colours, so the cursor is drawn as a border instead. */
 @media (forced-colors: active) {
-  .nx-logo__cursor {
-    border-inline-start: var(--border-width-standout) solid;
-  }
+    .nx-logo__cursor {
+        border-inline-start: var(--border-width-standout) solid;
+    }
 }
