@@ -12,8 +12,8 @@ Phase 5, the portfolio app.
 
 Still unanswered:
 
-- Open questions 3–6 — project content location (Phase 5), hosting (9), analytics (9),
-  contact form (5).
+- Open questions 4–5 — hosting (9), analytics (9). Phase 5 routes follow the prototype:
+  `/work`, `/work/$slug`, `/contact` and `/privacy` as well as the planned ones.
 - The 16 content gaps in `docs/content-inventory.md` (git-ignored). The ones that bite
   first: which case studies exist, whether PebblePad work can be shown visually at all,
   Naomi's GitHub and Bluesky handles, and whether `naovixen.dev` is real or placeholder.
@@ -264,7 +264,8 @@ Reworked after review: the first cut was site widgets, not a component library.
 ### Phase 5 — Portfolio app
 
 - [ ] Root route: `<html lang="en-GB">`, theme cookie handling, head/meta, global CSS, provider, skip link, route announcer.
-- [ ] Routes per the Claude Design prototype's layout, rebuilt from scratch with semantic HTML and our components (expected: `/`, `/projects`, `/projects/$slug`, `/about`, `/blog`, `/blog/$slug`, custom 404). Project data as typed local data files in the app unless Naomi wants it in the CMS. All copy comes from the CV or Naomi's answers (rule 7), never the prototype's placeholder text.
+- [ ] Routes per the Claude Design prototype's layout, rebuilt from scratch with semantic HTML and our components: `/`, `/about`, `/blog`, `/blog/$slug`, `/contact`, `/privacy`, custom 404. The work routes move to Phase 7 with the CMS.
+- [ ] Copy the CV cannot supply uses the prototype's placeholder text for now, kept in one clearly named placeholder file per route so it is easy to find and replace. It never deploys (see Phase 9).
 - [ ] SEO metadata + JSON-LD on every route; `sitemap.xml`, `robots.txt`.
 - **Verify:** pages match the prototype's layout visually on mobile and desktop (compare screenshots side by side), with no code carried over from it; Lighthouse ≥ 95 across all four categories locally. **Commit** once this passes.
 
@@ -275,7 +276,8 @@ Reworked after review: the first cut was site widgets, not a component library.
 
 ### Phase 7 — Blog
 
-- [ ] Sanity project + `apps/studio` schemas (post, author, tag, custom blocks) with validation.
+- [ ] Sanity project + `apps/studio` schemas (post, project, author, tag, custom blocks) with validation.
+- [ ] Project repository in `cms`, `/work` and `/work/$slug` routes, and the home page's featured work.
 - [ ] `SanityBlogRepository` in `cms`, mapping to `models`, with tests against fixture data.
 - [ ] Blog routes with caching headers, tag filtering, pagination, RSS, sitemap entries.
 - [ ] Draft preview route (optional webhook cache purge).
@@ -288,6 +290,7 @@ Reworked after review: the first cut was site widgets, not a component library.
 
 ### Phase 9 — Deployment
 
+- [ ] Every Phase 5 placeholder replaced with real copy from the CV or Naomi.
 - [ ] Cloudflare project for the portfolio; Sanity Studio deployed.
 - [ ] Custom domains, HTTPS, security headers (CSP, `Referrer-Policy`, `Permissions-Policy`, HSTS).
 - [ ] Build filtering configured per app.
@@ -316,7 +319,7 @@ Reworked after review: the first cut was site widgets, not a component library.
 
 1. **Section 3.2 defaults** — keep or change? In particular **enums**: native TypeScript `enum`, or an `as const` object with a derived union type (erases to plain objects, works with TypeScript's `erasableSyntaxOnly` and Node's type stripping, which native enums don't)? (Phase 0)
 2. **Blog CMS** — Sanity (structured content, hosted editor, instant publishing) or an alternative? Git-based options (MDX in the repo) are simpler but need a rebuild to publish. (Phase 7)
-3. **Project/portfolio content** — typed data files in the repo, or managed in the CMS alongside the blog? (Phase 5)
+3. **Project/portfolio content** — typed data files in the repo, or managed in the CMS alongside the blog? (Phase 5) **Answered: Sanity, alongside the blog.**
 4. **Hosting** — happy with Cloudflare, or prefer Netlify/Vercel? (Phase 9)
 5. **Analytics** — none, or a privacy-friendly option that avoids a UK/EU cookie banner (e.g. Plausible, Cloudflare Web Analytics)? (Phase 9)
-6. **Contact** — contact form (needs a form/email service) or just links? (Phase 5)
+6. **Contact** — contact form (needs a form/email service) or just links? (Phase 5) **Answered: links only.**
