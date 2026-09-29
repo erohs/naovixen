@@ -1,8 +1,7 @@
-import type { ReactNode } from 'react';
+import type { ComponentPropsWithRef, ReactNode } from 'react';
 
-export interface ICalloutProps {
-  /** A short handwritten label, such as "tip!". */
-  readonly kind: string;
-  readonly title: string;
-  readonly children: ReactNode;
+export interface ICalloutProps extends ComponentPropsWithRef<'div'> {
+    /** A short handwritten label, such as "tip!". */
+    readonly kind: ReactNode;
+    readonly heading: ReactNode;
 }

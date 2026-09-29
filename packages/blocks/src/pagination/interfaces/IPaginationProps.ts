@@ -1,8 +1,12 @@
-import type { INavigationItem } from '@naovixen/models';
+import type { ComponentPropsWithRef, ComponentType } from 'react';
+import type { LinkProps } from '@naovixen/components';
 
-export interface IPagerProps {
-  /** Usually the index this page belongs to, such as all projects. */
-  readonly back: INavigationItem;
-  /** The next page in the series, when there is one. */
-  readonly next?: INavigationItem | undefined;
+import type { IPaginationItem } from './IPaginationItem';
+
+export interface IPaginationProps extends ComponentPropsWithRef<'nav'> {
+    /** Usually the index this page belongs to, such as all projects. */
+    readonly back: IPaginationItem;
+    readonly next?: IPaginationItem | undefined;
+    /** Pass a router's link here. Defaults to `Link`. */
+    readonly linkComponent?: ComponentType<LinkProps> | undefined;
 }

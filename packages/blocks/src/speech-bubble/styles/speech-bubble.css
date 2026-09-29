@@ -1,46 +1,46 @@
 /*
- * A tilted handwritten bubble. The tail is a square turned 45 degrees and centred on the
- * bubble's edge: its two bordered sides make the point, and its fill hides the edge behind it.
+ * The tail is a square turned 45 degrees and centred on the bubble's edge: its two bordered
+ * sides make the point, and its fill hides the edge behind it.
  */
 .nx-speech-bubble {
-  --speech-bubble-tail-size: var(--space-between-content);
+    --speech-bubble-tail-size: var(--space-between-content);
 
-  position: relative;
-  inline-size: fit-content;
-  padding: var(--space-padding-action);
-  border: var(--border-width-standout) solid var(--color-border);
-  border-radius: var(--radius-large);
-  background-color: var(--color-background-page);
-  font-family: var(--font-family-handwriting);
-  font-size: var(--font-size-h3);
-  line-height: var(--line-height-heading);
-  rotate: -2deg;
+    position: relative;
+    inline-size: fit-content;
+    padding: var(--space-padding-action);
+    border: var(--border-width-standout) solid var(--color-border);
+    border-radius: var(--radius-large);
+    background-color: var(--color-background-page);
+    font-family: var(--font-family-handwriting);
+    font-size: var(--font-size-h3);
+    line-height: var(--line-height-heading);
+    rotate: -2deg;
 }
 
-.nx-speech-bubble[data-tail='bottom']::after,
-.nx-speech-bubble[data-tail='top']::after {
-  --speech-bubble-tail-overhang: calc(
-    var(--speech-bubble-tail-size) / -2 - var(--border-width-standout) / 2
-  );
+.nx-speech-bubble--tail-bottom::after,
+.nx-speech-bubble--tail-top::after {
+    --speech-bubble-tail-overhang: calc(
+        var(--speech-bubble-tail-size) / -2 - var(--border-width-standout) / 2
+    );
 
-  content: '';
-  position: absolute;
-  inset-inline-start: var(--space-padding-container);
-  inline-size: var(--speech-bubble-tail-size);
-  block-size: var(--speech-bubble-tail-size);
-  border: 0 solid var(--color-border);
-  background-color: inherit;
-  rotate: 45deg;
+    content: '';
+    position: absolute;
+    inset-inline-start: var(--space-padding-container);
+    inline-size: var(--speech-bubble-tail-size);
+    block-size: var(--speech-bubble-tail-size);
+    border: 0 solid var(--color-border);
+    background-color: inherit;
+    rotate: 45deg;
 }
 
-.nx-speech-bubble[data-tail='bottom']::after {
-  inset-block-end: var(--speech-bubble-tail-overhang);
-  border-block-end-width: var(--border-width-standout);
-  border-inline-end-width: var(--border-width-standout);
+.nx-speech-bubble--tail-bottom::after {
+    inset-block-end: var(--speech-bubble-tail-overhang);
+    border-block-end-width: var(--border-width-standout);
+    border-inline-end-width: var(--border-width-standout);
 }
 
-.nx-speech-bubble[data-tail='top']::after {
-  inset-block-start: var(--speech-bubble-tail-overhang);
-  border-block-start-width: var(--border-width-standout);
-  border-inline-start-width: var(--border-width-standout);
+.nx-speech-bubble--tail-top::after {
+    inset-block-start: var(--speech-bubble-tail-overhang);
+    border-block-start-width: var(--border-width-standout);
+    border-inline-start-width: var(--border-width-standout);
 }

@@ -1,28 +1,28 @@
 .nx-section-heading {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-between-content);
-  max-inline-size: var(--layout-width-prose);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-between-content);
+    max-inline-size: var(--layout-width-prose);
 }
 
 .nx-section-heading__title {
-  display: flex;
-  align-items: center;
-  gap: var(--space-between-content);
+    display: flex;
+    align-items: center;
+    gap: var(--space-between-content);
 }
 
 .nx-section-heading__number {
-  flex-shrink: 0;
-  padding: var(--space-padding-chip);
-  border: var(--border-width-standout) solid var(--color-border);
-  background-color: var(--color-background-accent);
-  color: var(--color-text-on-accent);
-  font-family: var(--font-family-handwriting);
-  font-size: var(--font-size-lead);
-  line-height: 1;
-  rotate: -4deg;
+    flex-shrink: 0;
+    padding: var(--space-padding-chip);
+    border: var(--border-width-standout) solid var(--color-border);
+    background-color: var(--color-background-accent);
+    color: var(--color-text-on-accent);
+    font-family: var(--font-family-handwriting);
+    font-size: var(--font-size-lead);
+    line-height: 1;
+    rotate: -4deg;
 }
 
 .nx-section-heading__intro {
-  color: var(--color-text-secondary);
+    color: var(--color-text-secondary);
 }

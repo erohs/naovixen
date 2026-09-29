@@ -1,31 +1,30 @@
-/* Accent card with faint dots gathering in the bottom corner, faded by the gradient on top. */
 .nx-callout {
-  --callout-dot-color: color-mix(in oklch, var(--color-text-on-accent) 30%, transparent);
+    --callout-dot-color: color-mix(in oklch, var(--color-text-on-accent) 30%, transparent);
 
-  display: grid;
-  gap: var(--space-between-text);
-  padding: var(--space-padding-container);
-  border: var(--border-width-standout) solid var(--color-border);
-  border-radius: var(--radius-small);
-  background:
-    linear-gradient(to bottom right, var(--color-background-accent) 55%, transparent),
-    radial-gradient(circle, var(--callout-dot-color) 25%, transparent 30%) 0 0 /
-      var(--space-between-content) var(--space-between-content),
-    var(--color-background-accent);
-  box-shadow: var(--shadow-resting);
-  color: var(--color-text-on-accent);
+    display: grid;
+    gap: var(--space-between-text);
+    padding: var(--space-padding-container);
+    border: var(--border-width-standout) solid var(--color-border);
+    border-radius: var(--radius-small);
+    background:
+        linear-gradient(to bottom right, var(--color-background-accent) 55%, transparent),
+        radial-gradient(circle, var(--callout-dot-color) 25%, transparent 30%) 0 0 /
+            var(--space-between-content) var(--space-between-content),
+        var(--color-background-accent);
+    box-shadow: var(--shadow-resting);
+    color: var(--color-text-on-accent);
 }
 
 .nx-callout__kind {
-  font-family: var(--font-family-handwriting);
-  font-size: var(--font-size-h3);
-  line-height: var(--line-height-heading);
+    font-family: var(--font-family-handwriting);
+    font-size: var(--font-size-h3);
+    line-height: var(--line-height-heading);
 }
 
-.nx-callout__title {
-  font-weight: var(--font-weight-semi-bold);
+.nx-callout__heading {
+    font-weight: var(--font-weight-semi-bold);
 }
 
 .nx-callout__body {
-  max-inline-size: 60ch;
+    max-inline-size: 60ch;
 }

@@ -1,13 +1,13 @@
 /* Drawn in currentcolor, so forced colours swap in the system text colour on their own. */
 .nx-hand-drawn-rule {
-  inline-size: 100%;
-  block-size: var(--space-between-content);
-  overflow: visible;
-  color: var(--color-border);
-  opacity: 0.85;
-  fill: none;
-  stroke: currentcolor;
-  stroke-width: var(--border-width-standout);
-  stroke-linecap: round;
-  stroke-linejoin: round;
+    inline-size: 100%;
+    block-size: var(--space-between-content);
+    overflow: visible;
+    color: var(--color-border);
+    opacity: 0.85;
+    fill: none;
+    stroke: currentcolor;
+    stroke-width: var(--border-width-standout);
+    stroke-linecap: round;
+    stroke-linejoin: round;
 }

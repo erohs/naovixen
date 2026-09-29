@@ -1,16 +1,21 @@
-import type { FunctionComponent } from 'react';
+import type { ComponentPropsWithRef, FunctionComponent } from 'react';
+import { joinClassNames } from '@naovixen/formatting';
 
 import { handDrawnRulePath } from './constants/HandDrawnRulePath.const';
 
-/** A decorative divider. Stretches to the full width without thickening the line. */
-export const HandDrawnRule: FunctionComponent = () => (
-  <svg
-    className="nx-hand-drawn-rule"
-    viewBox="0 0 240 12"
-    preserveAspectRatio="none"
-    aria-hidden="true"
-    focusable="false"
-  >
-    <path d={handDrawnRulePath} vectorEffect="non-scaling-stroke" />
-  </svg>
+/** Decorative. Stretches to the full width without thickening the line. */
+export const HandDrawnRule: FunctionComponent<Omit<ComponentPropsWithRef<'svg'>, 'children'>> = ({
+    className,
+    ...svgProps
+}) => (
+    <svg
+        viewBox="0 0 240 12"
+        preserveAspectRatio="none"
+        {...svgProps}
+        className={joinClassNames('nx-hand-drawn-rule', className)}
+        aria-hidden="true"
+        focusable="false"
+    >
+        <path d={handDrawnRulePath} vectorEffect="non-scaling-stroke" />
+    </svg>
 );

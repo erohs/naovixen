@@ -1,0 +1,13 @@
+/* Imported after the components' stylesheet, so a block's rules win over a component's. */
+@import url('./breadcrumb/styles/breadcrumb.css') layer(components);
+@import url('./callout/styles/callout.css') layer(components);
+@import url('./card/styles/card.css') layer(components);
+@import url('./code-block/styles/code-block.css') layer(components);
+@import url('./figure/styles/figure.css') layer(components);
+@import url('./hand-drawn-rule/styles/hand-drawn-rule.css') layer(components);
+@import url('./link-tile/styles/link-tile.css') layer(components);
+@import url('./navigation-list/styles/navigation-list.css') layer(components);
+@import url('./pagination/styles/pagination.css') layer(components);
+@import url('./section-heading/styles/section-heading.css') layer(components);
+@import url('./speech-bubble/styles/speech-bubble.css') layer(components);
+@import url('./tag-list/styles/tag-list.css') layer(components);

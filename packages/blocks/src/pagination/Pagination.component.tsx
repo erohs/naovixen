@@ -1,19 +1,31 @@
 import type { FunctionComponent } from 'react';
+import { arrowLeftIcon, arrowRightIcon, Icon, Link } from '@naovixen/components';
+import { joinClassNames } from '@naovixen/formatting';
 
-import { IconName } from '../enums/IconName';
-import { Link } from '../link/Link.component';
-import type { IPagerProps } from './interfaces/IPagerProps';
+import type { IPaginationProps } from './interfaces/IPaginationProps';
 
-/** Back to the index at the start, onward to the next page at the end. */
-export const Pager: FunctionComponent<IPagerProps> = ({ back, next }) => (
-  <nav aria-label="Where next" className="nx-pager">
-    <Link href={back.path} leadingIcon={IconName.ArrowLeft}>
-      {back.label}
-    </Link>
-    {next && (
-      <Link href={next.path} trailingIcon={IconName.ArrowRight}>
-        {next.label}
-      </Link>
-    )}
-  </nav>
-);
+export const Pagination: FunctionComponent<IPaginationProps> = ({
+    back,
+    next,
+    linkComponent = Link,
+    className,
+    ...navigationProps
+}) => {
+    const LinkComponent = linkComponent;
+    const navigationClassName = joinClassNames('nx-pagination', className);
+
+    return (
+        <nav aria-label="Pagination" {...navigationProps} className={navigationClassName}>
+            <LinkComponent href={back.href} className="nx-pagination__link">
+                <Icon source={arrowLeftIcon} />
+                {back.label}
+            </LinkComponent>
+            {next && (
+                <LinkComponent href={next.href} className="nx-pagination__link">
+                    {next.label}
+                    <Icon source={arrowRightIcon} />
+                </LinkComponent>
+            )}
+        </nav>
+    );
+};

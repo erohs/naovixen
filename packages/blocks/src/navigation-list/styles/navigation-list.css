@@ -1,23 +1,20 @@
-/*
- * A list of page links. The landmark around it sets the custom properties to lay it out as
- * a row or a column of full-width rows.
- */
+/* The landmark around it sets the custom properties that lay it out as a row or a column. */
 .nx-navigation-list {
-  display: flex;
-  flex-flow: var(--navigation-list-direction, column) wrap;
-  gap: var(--navigation-list-gap, var(--space-between-text));
-  padding: 0;
-  font-weight: var(--font-weight-semi-bold);
-  list-style: none;
+    display: flex;
+    flex-flow: var(--navigation-list-direction, column) wrap;
+    gap: var(--navigation-list-gap, var(--space-between-text));
+    padding: 0;
+    font-weight: var(--font-weight-semi-bold);
+    list-style: none;
 }
 
 .nx-navigation-list__item {
-  display: flex;
-  align-items: center;
-  min-block-size: var(--navigation-list-item-block-size, auto);
-  border-block-end: var(--navigation-list-item-divider, none);
+    display: flex;
+    align-items: center;
+    min-block-size: var(--navigation-list-item-block-size, auto);
+    border-block-end: var(--navigation-list-item-divider, none);
 
-  &:last-child {
-    border-block-end: none;
-  }
+    &:last-child {
+        border-block-end: none;
+    }
 }

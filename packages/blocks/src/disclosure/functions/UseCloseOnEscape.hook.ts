@@ -1,21 +1,29 @@
 import { useEffect } from 'react';
 import type { RefObject } from 'react';
 
-/** Calls `close` when Escape is pressed while focus is inside `element`. */
-export function useCloseOnEscape(element: RefObject<HTMLElement | null>, close: () => void): void {
-  useEffect(() => {
-    const target = element.current;
+/** While `isActive`, calls `close` when Escape is pressed with focus inside `element`. */
+export function useCloseOnEscape(
+    element: RefObject<HTMLElement | null>,
+    isActive: boolean,
+    close: () => void,
+): void {
+    useEffect(() => {
+        const target = element.current;
 
-    const onKeyDown = (event: KeyboardEvent): void => {
-      if (event.key === 'Escape') {
-        close();
-      }
-    };
+        if (!isActive || target === null) {
+            return undefined;
+        }
 
-    target?.addEventListener('keydown', onKeyDown);
+        const onKeyDown = (event: KeyboardEvent): void => {
+            if (event.key === 'Escape') {
+                close();
+            }
+        };
 
-    return () => {
-      target?.removeEventListener('keydown', onKeyDown);
-    };
-  }, [element, close]);
+        target.addEventListener('keydown', onKeyDown);
+
+        return () => {
+            target.removeEventListener('keydown', onKeyDown);
+        };
+    }, [element, isActive, close]);
 }

@@ -1,5 +1,5 @@
 export enum SpeechBubbleTail {
-  Bottom = 'bottom',
-  Top = 'top',
-  None = 'none',
+    Bottom = 'bottom',
+    Top = 'top',
+    None = 'none',
 }

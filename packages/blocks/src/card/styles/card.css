@@ -1,0 +1,88 @@
+/*
+ * The card's face is drawn on ::after and its halo on ::before, both beneath the content.
+ * Tilting makes the card a stacking context, which would otherwise lift a halo over the
+ * card's own face.
+ */
+.nx-card {
+    --card-lift: calc(-1 * var(--size-shadow-offset-raised));
+
+    position: relative;
+    isolation: isolate;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-between-content);
+    block-size: 100%;
+    padding: var(--space-padding-container);
+    transition:
+        translate var(--duration-slow) var(--easing-bounce),
+        rotate var(--duration-slow) var(--easing-bounce);
+
+    &::before,
+    &::after {
+        content: '';
+        position: absolute;
+        z-index: -1;
+    }
+
+    &::after {
+        inset: 0;
+        border: var(--border-width-standout) solid var(--color-border);
+        border-radius: var(--radius-medium);
+        background-color: var(--color-background-surface);
+        transition: box-shadow var(--duration-medium) var(--easing-standard);
+    }
+
+    &:hover {
+        translate: var(--card-lift) var(--card-lift);
+        rotate: var(--card-tilt);
+
+        &::after {
+            box-shadow: var(--shadow-raised);
+        }
+    }
+}
+
+.nx-card--tilt-left {
+    --card-tilt: -0.7deg;
+}
+
+.nx-card--tilt-right {
+    --card-tilt: 0.6deg;
+}
+
+.nx-card--halo-dotted {
+    &::before {
+        inset: calc(-1 * var(--space-between-groups));
+        border-radius: var(--radius-large);
+        background:
+            radial-gradient(circle at 100% 0, transparent 30%, var(--color-background-page) 80%),
+            radial-gradient(circle, var(--color-decoration-dots) 25%, transparent 30%) 0 0 /
+                var(--space-between-content) var(--space-between-content);
+        opacity: 0;
+        transition: opacity var(--duration-medium) var(--easing-standard);
+    }
+
+    &:hover::before,
+    &:focus-within::before {
+        opacity: 1;
+    }
+}
+
+/* Motion goes; the shadow and the halo, which only fade, stay. */
+@media (prefers-reduced-motion: reduce) {
+    .nx-card {
+        transition: none;
+
+        &:hover {
+            translate: none;
+            rotate: none;
+        }
+    }
+}
+
+/* The halo is decoration drawn with backgrounds, which forced colours would flatten. */
+@media (forced-colors: active) {
+    .nx-card--halo-dotted::before {
+        display: none;
+    }
+}

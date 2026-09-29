@@ -1,24 +1,29 @@
 import type { FunctionComponent } from 'react';
+import { Link } from '@naovixen/components';
 
-import { Link } from '../link/Link.component';
 import type { IBreadcrumbProps } from './interfaces/IBreadcrumbProps';
 
-export const Breadcrumb: FunctionComponent<IBreadcrumbProps> = ({ trail, currentLabel }) => (
-  <nav aria-label="Breadcrumb" className="nx-breadcrumb">
-    <ol className="nx-breadcrumb__list">
-      {trail.map((item) => (
-        <li key={item.path} className="nx-breadcrumb__item">
-          <Link href={item.path}>{item.label}</Link>
-          <span className="nx-breadcrumb__separator" aria-hidden="true">
-            /
-          </span>
-        </li>
-      ))}
-      <li className="nx-breadcrumb__item">
-        <span className="nx-breadcrumb__current" aria-current="page">
-          {currentLabel}
-        </span>
-      </li>
-    </ol>
-  </nav>
-);
+/** The separators between steps are drawn by the stylesheet and stay out of the name. */
+export const Breadcrumb: FunctionComponent<IBreadcrumbProps> = ({
+    trail,
+    currentLabel,
+    linkComponent = Link,
+    ...navigationProps
+}) => {
+    const LinkComponent = linkComponent;
+
+    return (
+        <nav aria-label="Breadcrumb" {...navigationProps}>
+            <ol className="nx-breadcrumb">
+                {trail.map((item) => (
+                    <li key={item.href} className="nx-breadcrumb__item">
+                        <LinkComponent href={item.href}>{item.label}</LinkComponent>
+                    </li>
+                ))}
+                <li className="nx-breadcrumb__item" aria-current="page">
+                    {currentLabel}
+                </li>
+            </ol>
+        </nav>
+    );
+};

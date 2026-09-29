@@ -1,7 +1,5 @@
-/* Wraps through the theming cluster; this only tightens the gap and drops the bullets. */
+/* Wraps through the layout Cluster; this only drops the bullets. */
 .nx-tag-list {
-  --cluster-gap: var(--space-between-text);
-
-  padding-inline-start: 0;
-  list-style: none;
+    padding-inline-start: 0;
+    list-style: none;
 }

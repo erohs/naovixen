@@ -1,75 +1,80 @@
-/* A row link with a leading icon disc. Lifts off its shadow on hover, sinks on press. */
 .nx-link-tile {
-  display: flex;
-  align-items: center;
-  gap: var(--space-between-content);
-  min-block-size: var(--size-action-minimum);
-  padding: var(--space-padding-chip);
-  border: var(--border-width-standout) solid var(--color-border);
-  border-radius: var(--radius-medium);
-  background-color: var(--color-background-page);
-  box-shadow: var(--shadow-resting);
-  color: var(--color-text-primary);
-  text-decoration: none;
-  transition:
-    translate var(--duration-fast) var(--easing-standard),
-    box-shadow var(--duration-fast) var(--easing-standard);
+    display: flex;
+    align-items: center;
+    gap: var(--space-between-content);
+    min-block-size: var(--size-action-minimum);
+    padding: var(--space-padding-chip);
+    border: var(--border-width-standout) solid var(--color-border);
+    border-radius: var(--radius-medium);
+    background-color: var(--color-background-page);
+    box-shadow: var(--shadow-resting);
+    color: var(--color-text-primary);
+    text-decoration: none;
+    transition:
+        translate var(--duration-fast) var(--easing-standard),
+        box-shadow var(--duration-fast) var(--easing-standard);
 
-  &:hover {
-    --link-tile-lift: calc(var(--size-shadow-offset-resting) - var(--size-shadow-offset-raised));
+    &:hover {
+        --link-tile-lift: calc(
+            var(--size-shadow-offset-resting) - var(--size-shadow-offset-raised)
+        );
 
-    translate: var(--link-tile-lift) var(--link-tile-lift);
-    box-shadow: var(--shadow-raised);
-  }
+        translate: var(--link-tile-lift) var(--link-tile-lift);
+        box-shadow: var(--shadow-raised);
+    }
 
-  &:active {
-    translate: var(--size-shadow-offset-resting) var(--size-shadow-offset-resting);
-    box-shadow: none;
-  }
+    &:active {
+        translate: var(--size-shadow-offset-resting) var(--size-shadow-offset-resting);
+        box-shadow: none;
+    }
 
-  &:focus-visible {
-    outline-offset: calc(var(--border-width-highlight) + var(--size-shadow-offset-raised));
-  }
+    /* A ring rather than the inverted block a text link gets, which would swamp a whole tile. */
+    &:focus-visible {
+        outline: var(--border-width-highlight) solid var(--color-focus);
+        outline-offset: calc(var(--border-width-highlight) + var(--size-shadow-offset-raised));
+        background-color: var(--color-background-page);
+        box-shadow: var(--shadow-resting);
+        color: var(--color-text-primary);
+    }
 }
 
 .nx-link-tile__disc {
-  display: grid;
-  place-items: center;
-  padding: var(--space-between-text);
-  border: var(--border-width-standout) solid var(--color-border);
-  border-radius: var(--radius-round);
-  background-color: var(--color-background-surface);
+    display: grid;
+    place-items: center;
+    padding: var(--space-between-text);
+    border: var(--border-width-standout) solid var(--color-border);
+    border-radius: var(--radius-round);
+    background-color: var(--color-background-surface);
 }
 
 .nx-link-tile__text {
-  display: grid;
-  flex-grow: 1;
-  min-inline-size: 0;
+    display: grid;
+    flex-grow: 1;
+    min-inline-size: 0;
 }
 
 .nx-link-tile__label {
-  font-weight: var(--font-weight-semi-bold);
+    font-weight: var(--font-weight-semi-bold);
 }
 
 .nx-link-tile__detail {
-  color: var(--color-text-secondary);
-  font-family: var(--font-family-code);
-  font-size: var(--font-size-meta);
-  overflow-wrap: anywhere;
+    color: var(--color-text-secondary);
+    font-family: var(--font-family-code);
+    font-size: var(--font-size-meta);
+    overflow-wrap: anywhere;
 }
 
 .nx-link-tile__trailing {
-  display: flex;
-  color: var(--color-text-accent);
+    color: var(--color-text-accent);
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .nx-link-tile {
-    transition: none;
+    .nx-link-tile {
+        transition: none;
 
-    &:hover,
-    &:active {
-      translate: none;
+        &:hover,
+        &:active {
+            translate: none;
+        }
     }
-  }
 }

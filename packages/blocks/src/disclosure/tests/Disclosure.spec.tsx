@@ -1,101 +1,127 @@
+import { findAxeViolations } from '@naovixen/component-testing';
 import { render, screen } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
 import type { UserEvent } from '@testing-library/user-event';
-import { describe, expect, test } from 'vitest';
+import type { FunctionComponent } from 'react';
+import { useState } from 'react';
+import { describe, expect, test, vi } from 'vitest';
 
-import { findAxeViolations } from '../../tests/functions/FindAxeViolations.function';
-import { MobileMenu } from '../MobileMenu.component';
+import { Disclosure } from '../Disclosure.component';
 
-const items = [
-  { label: 'Home', path: '/' },
-  { label: 'Work', path: '/work' },
-];
+const ControlledDisclosure: FunctionComponent<{ readonly isInitiallyOpen: boolean }> = ({
+    isInitiallyOpen,
+}) => {
+    const [isOpen, setIsOpen] = useState(isInitiallyOpen);
 
-async function openMenuOnHomePage(): Promise<UserEvent> {
-  const user = userEvent.setup();
-  render(<MobileMenu items={items} currentPath="/" />);
-  await user.click(screen.getByRole('button', { name: 'Menu' }));
+    return (
+        <Disclosure label="Menu" isOpen={isOpen} onOpenChange={setIsOpen}>
+            <a href="/work">Work</a>
+        </Disclosure>
+    );
+};
 
-  return user;
+async function openWithFocusOnItsLink(): Promise<UserEvent> {
+    const user = userEvent.setup();
+    render(<ControlledDisclosure isInitiallyOpen />);
+    await user.click(screen.getByRole('link', { name: 'Work' }));
+
+    return user;
 }
 
-describe('Using MobileMenu', () => {
-  describe('given it is closed', () => {
-    describe('when it renders', () => {
-      test('then it should offer a collapsed menu button', () => {
-        render(<MobileMenu items={items} currentPath="/" />);
+describe('Using Disclosure', () => {
+    describe('given it is closed', () => {
+        describe('when it renders', () => {
+            test('then it should offer a collapsed button', () => {
+                render(<ControlledDisclosure isInitiallyOpen={false} />);
 
-        expect(screen.getByRole('button', { name: 'Menu', expanded: false })).toBeDefined();
-      });
+                expect(screen.getByRole('button', { name: 'Menu', expanded: false })).toBeDefined();
+            });
 
-      test('then it should hide the menu', () => {
-        render(<MobileMenu items={items} currentPath="/" />);
+            test('then it should hide its content', () => {
+                render(<ControlledDisclosure isInitiallyOpen={false} />);
 
-        expect(screen.queryByRole('navigation')).toBeNull();
-      });
+                expect(screen.queryByRole('link')).toBeNull();
+            });
 
-      test('then it should have no accessibility violations', async () => {
-        render(<MobileMenu items={items} currentPath="/" />);
+            test('then it should have no accessibility violations', async () => {
+                render(<ControlledDisclosure isInitiallyOpen={false} />);
 
-        expect(await findAxeViolations()).toEqual([]);
-      });
-    });
-
-    describe('when the button is pressed', () => {
-      test('then it should show as expanded', async () => {
-        await openMenuOnHomePage();
-
-        expect(screen.getByRole('button', { name: 'Menu', expanded: true })).toBeDefined();
-      });
-
-      test('then it should show the main navigation', async () => {
-        await openMenuOnHomePage();
-
-        expect(screen.getByRole('navigation', { name: 'Main' })).toBeDefined();
-      });
-
-      test('then it should have no accessibility violations', async () => {
-        await openMenuOnHomePage();
-
-        expect(await findAxeViolations()).toEqual([]);
-      });
-    });
-  });
-
-  describe('given it is open', () => {
-    describe('and focus is on one of its links', () => {
-      describe('when Escape is pressed', () => {
-        test('then it should close', async () => {
-          const user = await openMenuOnHomePage();
-          await user.tab();
-
-          await user.keyboard('{Escape}');
-
-          expect(screen.getByRole('button', { name: 'Menu', expanded: false })).toBeDefined();
+                expect(await findAxeViolations()).toEqual([]);
+            });
         });
 
-        test('then it should return focus to the button', async () => {
-          const user = await openMenuOnHomePage();
-          await user.tab();
-          await user.keyboard('{Escape}');
+        describe('when the button is pressed', () => {
+            test('then it should ask to open', async () => {
+                const onOpenChange = vi.fn();
+                render(
+                    <Disclosure label="Menu" isOpen={false} onOpenChange={onOpenChange}>
+                        Example content
+                    </Disclosure>,
+                );
 
-          await user.keyboard('{Enter}');
+                await userEvent.setup().click(screen.getByRole('button'));
 
-          expect(screen.getByRole('button', { name: 'Menu', expanded: true })).toBeDefined();
+                expect(onOpenChange).toHaveBeenCalledExactlyOnceWith(true);
+            });
+
+            test('then it should show its content once the caller opens it', async () => {
+                render(<ControlledDisclosure isInitiallyOpen={false} />);
+
+                await userEvent.setup().click(screen.getByRole('button'));
+
+                expect(screen.getByRole('link', { name: 'Work' })).toBeDefined();
+            });
         });
-      });
     });
 
-    describe('when a link is followed to another page', () => {
-      test('then it should close', async () => {
-        const user = userEvent.setup();
-        const { rerender } = render(<MobileMenu items={items} currentPath="/" />);
-        await user.click(screen.getByRole('button', { name: 'Menu' }));
+    describe('given it is open', () => {
+        describe('when it renders', () => {
+            test('then it should have no accessibility violations', async () => {
+                render(<ControlledDisclosure isInitiallyOpen />);
 
-        rerender(<MobileMenu items={items} currentPath="/work" />);
+                expect(await findAxeViolations()).toEqual([]);
+            });
+        });
 
-        expect(screen.getByRole('button', { name: 'Menu', expanded: false })).toBeDefined();
-      });
+        describe('when the button is pressed', () => {
+            test('then it should ask to close', async () => {
+                const onOpenChange = vi.fn();
+                render(
+                    <Disclosure label="Menu" isOpen onOpenChange={onOpenChange}>
+                        Example content
+                    </Disclosure>,
+                );
+
+                await userEvent.setup().click(screen.getByRole('button'));
+
+                expect(onOpenChange).toHaveBeenCalledExactlyOnceWith(false);
+            });
+        });
+
+        describe('and focus is inside its content', () => {
+            describe('when Escape is pressed', () => {
+                test('then it should close', async () => {
+                    const user = await openWithFocusOnItsLink();
+
+                    await user.keyboard('{Escape}');
+
+                    expect(
+                        screen.getByRole('button', { name: 'Menu', expanded: false }),
+                    ).toBeDefined();
+                });
+
+                test('then it should return focus to the button', async () => {
+                    const user = await openWithFocusOnItsLink();
+
+                    await user.keyboard('{Escape}');
+
+                    await user.keyboard('{Enter}');
+
+                    expect(
+                        screen.getByRole('button', { name: 'Menu', expanded: true }),
+                    ).toBeDefined();
+                });
+            });
+        });
     });
-  });
 });

@@ -1,31 +1,30 @@
-/* A framed code sample under a header bar naming the file and the language. */
 .nx-code-block {
-  overflow: hidden;
-  border: var(--border-width-standout) solid var(--color-border);
-  border-radius: var(--radius-small);
-  background-color: var(--color-background-surface);
+    overflow: hidden;
+    border: var(--border-width-standout) solid var(--color-border);
+    border-radius: var(--radius-small);
+    background-color: var(--color-background-surface);
 }
 
 .nx-code-block__caption {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  gap: var(--space-between-text) var(--space-between-content);
-  padding: var(--space-padding-chip);
-  border-block-end: var(--border-width-standout) solid var(--color-border);
-  background-color: var(--color-background-page);
-  font-family: var(--font-family-code);
-  font-size: var(--font-size-meta);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: var(--space-between-text) var(--space-between-content);
+    padding: var(--space-padding-chip);
+    border-block-end: var(--border-width-standout) solid var(--color-border);
+    background-color: var(--color-background-page);
+    font-family: var(--font-family-code);
+    font-size: var(--font-size-meta);
 }
 
 .nx-code-block__language {
-  margin-inline-start: auto;
-  color: var(--color-text-secondary);
+    margin-inline-start: auto;
+    color: var(--color-text-secondary);
 }
 
 .nx-code-block__code {
-  padding: var(--space-padding-container);
-  line-height: var(--line-height-body);
-  white-space: pre-wrap;
-  overflow-wrap: anywhere;
+    padding: var(--space-padding-container);
+    line-height: var(--line-height-body);
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
 }
