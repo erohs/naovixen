@@ -70,9 +70,9 @@ The architecture above is dependency inversion already applied. Keep the rest wi
 ## Folders
 
 A component, service, controller or route owns a kebab-case folder. Its root holds the
-main file, its spec, and for components its showcase. Everything else goes in
-`interfaces/`, `types/`, `enums/`, `constants/`, `functions/` or `styles/`, created only
-when there is something to put in it.
+main file and, for components, its showcase. Everything else goes in `interfaces/`,
+`types/`, `enums/`, `constants/`, `functions/`, `styles/` or `tests/`, created only when
+there is something to put in it. Package-level code follows the same shape under `src/`.
 
 One barrel per package, `src/index.ts`. No nested index files, no re-export chains.
 

@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'vitest';
 
-import { createExcerpt } from './CreateExcerpt.function';
+import { createExcerpt } from '../functions/CreateExcerpt.function';
 
 describe('Using createExcerpt', () => {
   describe('when the text is shorter than the limit', () => {

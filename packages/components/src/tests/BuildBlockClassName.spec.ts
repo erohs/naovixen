@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'vitest';
 
-import { buildBlockClassName } from './BuildBlockClassName.function';
+import { buildBlockClassName } from '../functions/BuildBlockClassName.function';
 
 describe('Using buildBlockClassName', () => {
   describe('when called with a single-word block name', () => {

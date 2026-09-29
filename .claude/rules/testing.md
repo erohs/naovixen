@@ -23,7 +23,9 @@ A test should survive any refactor that does not change what the code does for c
 
 ## File names
 
-Beside what they test: `ThemeService.spec.ts`, `ProjectCard.spec.tsx`.
+In the `tests/` folder of whatever owns the code, named after what they test:
+`theme-service/tests/ThemeService.spec.ts`, and `src/tests/CreateExcerpt.spec.ts` for
+`src/functions/CreateExcerpt.function.ts`.
 
 Several files for one subject take a PascalCase description:
 `ThemeService.Persistence.spec.ts`. Integration tests use `Integration` as that
