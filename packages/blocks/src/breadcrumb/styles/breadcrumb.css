@@ -1,7 +1,7 @@
 .nx-breadcrumb {
     display: flex;
     flex-wrap: wrap;
-    align-items: baseline;
+    align-items: center;
     gap: var(--space-between-text);
     padding: 0;
     font-size: var(--font-size-small);
@@ -10,7 +10,7 @@
 
 .nx-breadcrumb__item {
     display: flex;
-    align-items: baseline;
+    align-items: center;
     gap: var(--space-between-text);
 
     /* The empty alternative text keeps the slash out of what a screen reader announces. */
@@ -18,9 +18,16 @@
         content: '/' / '';
         color: var(--color-text-accent);
         font-family: var(--font-family-handwriting);
+        font-size: var(--font-size-lead);
+        line-height: 1;
     }
 
     &[aria-current='page'] {
         font-weight: var(--font-weight-semi-bold);
     }
+}
+
+/* Taller than its text, so the link is easy to hit. */
+.nx-breadcrumb__link {
+    padding-block: var(--space-between-text);
 }

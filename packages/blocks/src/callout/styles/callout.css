@@ -17,8 +17,8 @@
 
 .nx-callout__kind {
     font-family: var(--font-family-handwriting);
-    font-size: var(--font-size-h3);
-    line-height: var(--line-height-heading);
+    font-size: var(--font-size-h4);
+    line-height: var(--line-height-subheading);
 }
 
 .nx-callout__heading {

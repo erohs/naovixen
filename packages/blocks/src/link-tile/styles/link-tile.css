@@ -3,9 +3,9 @@
     align-items: center;
     gap: var(--space-between-content);
     min-block-size: var(--size-action-minimum);
-    padding: var(--space-padding-chip);
+    padding: var(--space-padding-action);
     border: var(--border-width-standout) solid var(--color-border);
-    border-radius: var(--radius-medium);
+    border-radius: var(--radius-medium-alternate);
     background-color: var(--color-background-page);
     box-shadow: var(--shadow-resting);
     color: var(--color-text-primary);
@@ -49,6 +49,8 @@
 
 .nx-link-tile__text {
     display: grid;
+    gap: var(--space-between-lines);
+    line-height: var(--line-height-subheading);
     flex-grow: 1;
     min-inline-size: 0;
 }
@@ -59,6 +61,7 @@
 
 .nx-link-tile__detail {
     color: var(--color-text-secondary);
+    font-weight: var(--font-weight-regular);
     font-family: var(--font-family-code);
     font-size: var(--font-size-meta);
     overflow-wrap: anywhere;

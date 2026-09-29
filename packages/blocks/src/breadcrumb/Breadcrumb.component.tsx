@@ -17,7 +17,9 @@ export const Breadcrumb: FunctionComponent<IBreadcrumbProps> = ({
             <ol className="nx-breadcrumb">
                 {trail.map((item) => (
                     <li key={item.href} className="nx-breadcrumb__item">
-                        <LinkComponent href={item.href}>{item.label}</LinkComponent>
+                        <LinkComponent href={item.href} className="nx-breadcrumb__link">
+                            {item.label}
+                        </LinkComponent>
                     </li>
                 ))}
                 <li className="nx-breadcrumb__item" aria-current="page">

@@ -1,10 +1,10 @@
 /*
- * The card's face is drawn on ::after and its halo on ::before, both beneath the content.
- * Tilting makes the card a stacking context, which would otherwise lift a halo over the
- * card's own face.
+ * On hover the card's bottom corner folds up: the corner, shadow and all, is clipped away
+ * along a diagonal and the fold is drawn on ::after where it was. The halo is on ::before.
  */
 .nx-card {
-    --card-lift: calc(-1 * var(--size-shadow-offset-raised));
+    --card-fold-size: var(--space-between-groups);
+    --card-clip-reach: var(--space-between-regions);
 
     position: relative;
     isolation: isolate;
@@ -13,51 +13,66 @@
     gap: var(--space-between-content);
     block-size: 100%;
     padding: var(--space-padding-container);
-    transition:
-        translate var(--duration-slow) var(--easing-bounce),
-        rotate var(--duration-slow) var(--easing-bounce);
+    border: var(--border-width-standout) solid var(--color-border);
+    border-radius: var(--radius-medium);
+    background-color: var(--color-background-surface);
+    transition: box-shadow var(--duration-medium) var(--easing-standard);
 
     &::before,
     &::after {
         content: '';
         position: absolute;
-        z-index: -1;
+        pointer-events: none;
     }
 
     &::after {
-        inset: 0;
-        border: var(--border-width-standout) solid var(--color-border);
-        border-radius: var(--radius-medium);
-        background-color: var(--color-background-surface);
-        transition: box-shadow var(--duration-medium) var(--easing-standard);
+        inset-block-end: calc(-1 * var(--border-width-standout));
+        inset-inline-end: calc(-1 * var(--border-width-standout));
+        inline-size: var(--card-fold-size);
+        block-size: var(--card-fold-size);
+        border-block-start: var(--border-width-standout) solid var(--color-border);
+        border-inline-start: var(--border-width-standout) solid var(--color-border);
+        border-start-start-radius: calc(var(--card-fold-size) / 5);
+        background: linear-gradient(
+            to bottom right,
+            var(--color-background-accent) 50%,
+            transparent 50%
+        );
+        opacity: 0;
+        scale: 0.2;
+        transform-origin: 100% 100%;
+        transition:
+            scale var(--duration-medium) var(--easing-bounce),
+            opacity var(--duration-fast) var(--easing-standard);
     }
 
-    &:hover {
-        translate: var(--card-lift) var(--card-lift);
-        rotate: var(--card-tilt);
+    &:hover,
+    &:focus-within {
+        box-shadow: var(--shadow-raised);
+        clip-path: polygon(
+            -50% -50%,
+            calc(100% + var(--card-clip-reach)) -50%,
+            calc(100% + var(--card-clip-reach))
+                calc(100% - var(--card-fold-size) - var(--card-clip-reach)),
+            calc(100% - var(--card-fold-size) - var(--card-clip-reach))
+                calc(100% + var(--card-clip-reach)),
+            -50% calc(100% + var(--card-clip-reach))
+        );
 
         &::after {
-            box-shadow: var(--shadow-raised);
+            opacity: 1;
+            scale: 1;
         }
     }
 }
 
-.nx-card--tilt-left {
-    --card-tilt: -0.7deg;
-}
-
-.nx-card--tilt-right {
-    --card-tilt: 0.6deg;
-}
-
 .nx-card--halo-dotted {
     &::before {
-        inset: calc(-1 * var(--space-between-groups));
-        border-radius: var(--radius-large);
-        background:
-            radial-gradient(circle at 100% 0, transparent 30%, var(--color-background-page) 80%),
-            radial-gradient(circle, var(--color-decoration-dots) 25%, transparent 30%) 0 0 /
-                var(--space-between-content) var(--space-between-content);
+        z-index: -1;
+        inset: calc(-1 * var(--space-between-blocks));
+        background: radial-gradient(circle, var(--color-decoration-dots) 16%, transparent 21%) 0 0 /
+            var(--space-between-text) var(--space-between-text);
+        mask-image: radial-gradient(ellipse at 90% 8%, black, transparent 62%);
         opacity: 0;
         transition: opacity var(--duration-medium) var(--easing-standard);
     }
@@ -68,21 +83,24 @@
     }
 }
 
-/* Motion goes; the shadow and the halo, which only fade, stay. */
+/* The fold snaps into place instead of springing; the shadow still fades. */
 @media (prefers-reduced-motion: reduce) {
-    .nx-card {
+    .nx-card::after {
         transition: none;
-
-        &:hover {
-            translate: none;
-            rotate: none;
-        }
     }
 }
 
-/* The halo is decoration drawn with backgrounds, which forced colours would flatten. */
+/* Both flourishes are drawn with backgrounds, which forced colours flatten. */
 @media (forced-colors: active) {
-    .nx-card--halo-dotted::before {
-        display: none;
+    .nx-card {
+        &:hover,
+        &:focus-within {
+            clip-path: none;
+        }
+
+        &::after,
+        &.nx-card--halo-dotted::before {
+            display: none;
+        }
     }
 }

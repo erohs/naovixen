@@ -24,5 +24,6 @@
 }
 
 .nx-section-heading__intro {
+    max-inline-size: 52ch;
     color: var(--color-text-secondary);
 }

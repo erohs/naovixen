@@ -1,5 +1,4 @@
 export { CardHalo } from './card/enums/CardHalo';
-export { CardTilt } from './card/enums/CardTilt';
 export { FigureShape } from './figure/enums/FigureShape';
 export { SpeechBubbleTail } from './speech-bubble/enums/SpeechBubbleTail';
 export type { IBreadcrumbItem } from './breadcrumb/interfaces/IBreadcrumbItem';

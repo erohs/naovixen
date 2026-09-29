@@ -1,5 +1,5 @@
 import type { FunctionComponent } from 'react';
-import { Link } from '@naovixen/components';
+import { Link, navigationLinkClassName } from '@naovixen/components';
 import { joinClassNames } from '@naovixen/formatting';
 
 import { isCurrentHref } from './functions/IsCurrentHref.function';
@@ -21,6 +21,7 @@ export const NavigationList: FunctionComponent<INavigationListProps> = ({
                 <li key={item.href} className="nx-navigation-list__item">
                     <LinkComponent
                         href={item.href}
+                        className={navigationLinkClassName}
                         aria-current={isCurrentHref(currentHref, item.href) ? 'page' : undefined}
                     >
                         {item.label}

@@ -1,6 +1,6 @@
 .nx-figure {
     display: grid;
-    gap: var(--space-between-content);
+    gap: var(--space-between-text);
 }
 
 .nx-figure__image {
@@ -9,13 +9,13 @@
     aspect-ratio: 16 / 9;
     object-fit: cover;
     border: var(--border-width-standout) solid var(--color-border);
-    border-radius: var(--radius-medium);
+    border-radius: var(--radius-medium-alternate);
     background-color: var(--color-background-surface);
 }
 
 .nx-figure--portrait .nx-figure__image {
     aspect-ratio: 4 / 5;
-    border-radius: var(--radius-large);
+    border-radius: var(--radius-large-alternate);
     rotate: 1.5deg;
 }
 
