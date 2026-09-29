@@ -1,10 +1,14 @@
-.nx-blog-post-page {
+.nx-blog-post-page__body {
     display: flex;
     flex-direction: column;
-    gap: var(--space-between-groups);
+    gap: var(--space-between-blocks);
     max-inline-size: var(--layout-width-prose);
+    margin-block-start: var(--space-below-heading);
 }
 
+/* Sets the post's end apart from the links onward. */
 .nx-blog-post-page__rule {
-    max-inline-size: calc(var(--layout-width-prose) / 2);
+    max-inline-size: calc(var(--layout-width-prose) * 5 / 9);
+    margin-block: calc(var(--space-between-groups) + var(--space-between-text))
+        var(--space-between-text);
 }

@@ -12,11 +12,11 @@ export const PrivacyNotice: FunctionComponent = () => (
             Last updated <time dateTime={copy.lastUpdated}>{formatDate(copy.lastUpdated)}</time>
         </Text>
         <Text variant={TextVariant.Lead}>{copy.intro}</Text>
-        <Heading level={2} size={HeadingSize.H3}>
+        <Heading level={2} size={HeadingSize.H3} className="nx-privacy-notice__heading">
             Cookies and analytics
         </Heading>
         <Text>{copy.cookies}</Text>
-        <Heading level={2} size={HeadingSize.H3}>
+        <Heading level={2} size={HeadingSize.H3} className="nx-privacy-notice__heading">
             Your rights
         </Heading>
         <Text>

@@ -1,0 +1,30 @@
+/* The label takes a fixed column on a wide screen and sits above the tiles on a narrow one. */
+.nx-skill-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-between-content) var(--space-between-groups);
+    padding-block: var(--space-between-blocks);
+    border-block-start: var(--border-width-default) solid var(--color-border);
+}
+
+/* Level with the middle of the first row of tiles. */
+.nx-skill-group__label {
+    flex: 0 0 calc(4 * var(--space-between-regions));
+    padding-block-start: calc(var(--space-between-content) + var(--space-between-lines));
+    color: var(--color-text-accent);
+    font-family: var(--font-family-handwriting);
+    font-size: var(--font-size-h4);
+    font-weight: var(--font-weight-regular);
+}
+
+.nx-skill-group__skills {
+    display: grid;
+    flex: 1 1 calc(9 * var(--space-between-regions));
+    grid-template-columns: repeat(
+        auto-fill,
+        minmax(calc(2 * var(--space-between-regions) + var(--space-between-text)), 1fr)
+    );
+    gap: var(--space-between-blocks) var(--space-between-content);
+    padding: 0;
+    list-style: none;
+}

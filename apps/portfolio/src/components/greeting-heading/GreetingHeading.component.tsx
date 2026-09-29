@@ -1,5 +1,4 @@
 import type { FunctionComponent } from 'react';
-import { SpeechBubble } from '@naovixen/blocks';
 import { Heading } from '@naovixen/components';
 
 import type { IGreetingHeadingProps } from './interfaces/IGreetingHeadingProps';
@@ -10,7 +9,7 @@ export const GreetingHeading: FunctionComponent<IGreetingHeadingProps> = ({
     children,
 }) => (
     <div className="nx-greeting-heading">
-        <SpeechBubble className="nx-greeting-heading__bubble">{greeting}</SpeechBubble>
+        {greeting}
         <Heading level={1}>{children}</Heading>
     </div>
 );

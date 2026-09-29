@@ -1,0 +1,9 @@
+/* Pushed to the foot of the card, so a row of cards lines up whatever their excerpts' length. */
+.nx-post-card-details {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-between-text);
+    margin-block-start: auto;
+    padding-block-start: var(--space-between-content);
+    border-block-start: var(--border-width-default) dashed var(--color-border);
+}

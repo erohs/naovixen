@@ -7,7 +7,7 @@ import type { IBlogPostHeaderProps } from './interfaces/IBlogPostHeaderProps';
 
 export const BlogPostHeader: FunctionComponent<IBlogPostHeaderProps> = ({ post, headingId }) => (
     <header className="nx-blog-post-header">
-        <Heading level={1} size={HeadingSize.H2} id={headingId}>
+        <Heading level={1} size={HeadingSize.Title} id={headingId}>
             {post.title}
         </Heading>
         <Text variant={TextVariant.Lead} className="nx-blog-post-header__excerpt">

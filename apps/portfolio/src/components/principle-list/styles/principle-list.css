@@ -1,7 +1,13 @@
 .nx-principle-list {
     display: flex;
     flex-direction: column;
-    gap: var(--space-between-groups);
+    gap: var(--space-between-blocks);
+}
+
+.nx-principle-list__item {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-between-lines);
 }
 
 .nx-principle-list__title {

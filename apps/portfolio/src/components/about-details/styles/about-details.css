@@ -1,0 +1,3 @@
+.nx-about-details {
+    gap: var(--space-between-regions) calc(2 * var(--space-between-groups));
+}

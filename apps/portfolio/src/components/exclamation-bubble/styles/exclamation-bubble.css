@@ -1,0 +1,10 @@
+.nx-exclamation-bubble {
+    display: flex;
+    align-items: end;
+    gap: var(--space-between-content);
+}
+
+/* Level with the middle of the bubble rather than its tail. */
+.nx-exclamation-bubble__lines {
+    margin-block-end: var(--space-between-blocks);
+}

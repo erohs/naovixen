@@ -1,27 +1,37 @@
-/* The dots fade out towards the text, so they never sit behind it. */
+/*
+ * A field of dots fills the hero's right side and fades out towards every edge, strongest a
+ * little above and right of centre. It sits behind the text.
+ */
 .nx-hero-section {
     position: relative;
     isolation: isolate;
     display: flex;
     flex-direction: column;
     align-items: start;
-    gap: var(--space-between-content);
-    padding-block: var(--space-between-sections);
+    gap: var(--space-between-groups);
+    padding-block: calc(var(--space-between-sections) + var(--space-between-blocks))
+        calc(var(--space-between-sections) + var(--space-between-content));
 
     &::before {
         content: '';
         position: absolute;
         z-index: -1;
-        inset: 0 0 0 40%;
-        background: radial-gradient(circle, var(--color-decoration-dots) 25%, transparent 30%) 0 0 /
+        inset-block: var(--space-padding-panel) 0;
+        inset-inline-end: var(--space-padding-page);
+        inline-size: min(
+            calc(var(--layout-width-prose) * 8 / 9),
+            calc(100% - 2 * var(--space-padding-page))
+        );
+        background: radial-gradient(circle, var(--color-decoration-dots) 15%, transparent 20%) 0 0 /
             var(--space-between-content) var(--space-between-content);
-        mask-image: linear-gradient(to right, transparent, black 60%);
-        opacity: 0.5;
+        mask-image: radial-gradient(
+            ellipse at 70% 40%,
+            black,
+            rgb(0 0 0 / 55%) 30%,
+            transparent 68%
+        );
+        opacity: 0.6;
     }
-}
-
-.nx-hero-section__greeting {
-    rotate: -3deg;
 }
 
 /* Keeps the paw on the same line as the name it sits on. */
@@ -29,30 +39,47 @@
     white-space: nowrap;
 }
 
+/* A brush stroke under the surname, drawn behind the letters. */
 .nx-hero-section__highlight {
-    text-decoration: underline;
-    text-decoration-color: var(--color-background-accent);
-    text-decoration-thickness: calc(var(--size-underline-offset) / 2);
-    text-underline-offset: calc(var(--size-underline-offset) / 2);
+    position: relative;
+    z-index: 0;
+    display: inline-block;
+
+    &::after {
+        content: '';
+        position: absolute;
+        z-index: -1;
+        inset-inline: -2% -3%;
+        inset-block-end: -6%;
+        block-size: 13%;
+        border-radius: 40% 12px 30% 8px / 10px 30% 12px 40%;
+        background-color: var(--color-background-accent);
+        rotate: -1.5deg;
+    }
 }
 
 .nx-hero-section__paw {
-    inline-size: var(--font-size-h3);
-    block-size: var(--font-size-h3);
     display: inline-block;
+    inline-size: calc(var(--font-size-display) * 0.3);
+    block-size: calc(var(--font-size-display) * 0.3);
+    margin-block-start: calc(var(--font-size-display) * 0.04);
+    margin-inline-start: calc(var(--font-size-display) * 0.14);
     color: var(--color-decoration-paw);
-    vertical-align: super;
-    rotate: 15deg;
+    vertical-align: top;
+    rotate: 18deg;
 }
 
 .nx-hero-section__summary {
-    max-inline-size: var(--layout-width-prose);
+    max-inline-size: 34ch;
     color: var(--color-text-secondary);
 }
 
-/* On a narrow screen the text spans the width, so the dots would sit behind it. The breakpoint is the site header's. */
-@media (width < 51.25rem), (forced-colors: active) {
+@media (forced-colors: active) {
     .nx-hero-section::before {
         display: none;
+    }
+
+    .nx-hero-section__highlight::after {
+        background-color: CanvasText;
     }
 }

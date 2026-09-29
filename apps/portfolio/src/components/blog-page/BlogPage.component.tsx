@@ -1,7 +1,6 @@
 import type { FunctionComponent } from 'react';
 import { Breadcrumb } from '@naovixen/blocks';
 import { Text } from '@naovixen/components';
-import { Space, Stack } from '@naovixen/layout';
 
 import { homeBreadcrumbTrail } from '../../constants/HomeBreadcrumbTrail.const';
 import { placeholderBlogIntro } from '../../constants/PlaceholderBlogIntro.const';
@@ -13,18 +12,12 @@ import type { IBlogPageProps } from './interfaces/IBlogPageProps';
 
 export const BlogPage: FunctionComponent<IBlogPageProps> = ({ posts }) => (
     <Page>
-        <Stack gap={Space.BetweenGroups}>
-            <Breadcrumb
-                trail={homeBreadcrumbTrail}
-                currentLabel="Blog"
-                linkComponent={RoutedLink}
-            />
-            <PageHeader heading="Blog" intro={placeholderBlogIntro} />
-            {posts.length === 0 ? (
-                <Text>There are no posts yet.</Text>
-            ) : (
-                <PostCardList posts={posts} headingLevel={2} />
-            )}
-        </Stack>
+        <Breadcrumb trail={homeBreadcrumbTrail} currentLabel="Blog" linkComponent={RoutedLink} />
+        <PageHeader heading="Blog" intro={placeholderBlogIntro} />
+        {posts.length === 0 ? (
+            <Text>There are no posts yet.</Text>
+        ) : (
+            <PostCardList posts={posts} headingLevel={2} />
+        )}
     </Page>
 );

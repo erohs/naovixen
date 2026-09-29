@@ -1,10 +1,12 @@
+/* Follows a breadcrumb and heads a list, so it keeps its own space above and below. */
 .nx-page-header {
     display: flex;
     flex-direction: column;
     gap: var(--space-between-content);
-    max-inline-size: var(--layout-width-prose);
+    margin-block: var(--space-below-heading) var(--space-padding-panel);
 }
 
 .nx-page-header__intro {
+    max-inline-size: 48ch;
     color: var(--color-text-secondary);
 }

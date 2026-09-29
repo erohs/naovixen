@@ -1,17 +1,15 @@
 import type { FunctionComponent } from 'react';
-import { SpeechBubble } from '@naovixen/blocks';
 import { Paw } from '@naovixen/brand';
 import { Heading, HeadingSize, Text, TextVariant } from '@naovixen/components';
 import { Container } from '@naovixen/layout';
 
 import { placeholderHomePage } from '../../constants/PlaceholderHomePage.const';
+import { ExclamationBubble } from '../exclamation-bubble/ExclamationBubble.component';
 import { HeroActions } from '../hero-actions/HeroActions.component';
 
 export const HeroSection: FunctionComponent = () => (
     <Container as="section" aria-labelledby="hero-title" className="nx-hero-section">
-        <SpeechBubble className="nx-hero-section__greeting">
-            {placeholderHomePage.greeting}
-        </SpeechBubble>
+        <ExclamationBubble>{placeholderHomePage.greeting}</ExclamationBubble>
         <Heading level={1} size={HeadingSize.Display} id="hero-title">
             Naomi{' '}
             <span className="nx-hero-section__surname">

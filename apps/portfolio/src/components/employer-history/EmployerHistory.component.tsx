@@ -1,5 +1,5 @@
 import type { FunctionComponent } from 'react';
-import { Heading, Text, TextVariant } from '@naovixen/components';
+import { Heading, HeadingSize, Text, TextVariant } from '@naovixen/components';
 
 import { EmployerRole } from '../employer-role/EmployerRole.component';
 import type { IEmployerHistoryProps } from './interfaces/IEmployerHistoryProps';
@@ -7,8 +7,8 @@ import type { IEmployerHistoryProps } from './interfaces/IEmployerHistoryProps';
 export const EmployerHistory: FunctionComponent<IEmployerHistoryProps> = ({ employer }) => (
     <div className="nx-employer-history">
         <div className="nx-employer-history__header">
-            <div>
-                <Heading level={3}>
+            <div className="nx-employer-history__name">
+                <Heading level={3} size={HeadingSize.H4}>
                     {employer.name}
                     <span className="nx-employer-history__place">, {employer.place}</span>
                 </Heading>

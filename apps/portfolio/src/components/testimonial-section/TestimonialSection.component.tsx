@@ -3,6 +3,7 @@ import { Heading } from '@naovixen/components';
 import { Container } from '@naovixen/layout';
 
 import { placeholderTestimonial } from '../../constants/PlaceholderTestimonial.const';
+import { TestimonialAttribution } from '../testimonial-attribution/TestimonialAttribution.component';
 
 /** The heading only names the landmark; the quote speaks for itself on screen. */
 export const TestimonialSection: FunctionComponent = () => (
@@ -14,10 +15,7 @@ export const TestimonialSection: FunctionComponent = () => (
             <blockquote className="nx-testimonial-section__quote">
                 <p>{placeholderTestimonial.quote}</p>
             </blockquote>
-            <figcaption className="nx-testimonial-section__attribution">
-                <span className="nx-testimonial-section__name">{placeholderTestimonial.name}</span>
-                <span className="nx-testimonial-section__role">{placeholderTestimonial.role}</span>
-            </figcaption>
+            <TestimonialAttribution testimonial={placeholderTestimonial} />
         </figure>
     </Container>
 );

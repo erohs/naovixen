@@ -1,4 +1,10 @@
+/* A little further from the summary than the hero's other gaps. */
+.nx-hero-actions {
+    margin-block-start: var(--space-between-text);
+}
+
 .nx-hero-actions__file-type {
     font-family: var(--font-family-code);
     font-size: var(--font-size-meta);
+    font-weight: var(--font-weight-regular);
 }

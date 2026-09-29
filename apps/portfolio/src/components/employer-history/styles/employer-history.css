@@ -1,7 +1,7 @@
 .nx-employer-history {
     display: flex;
     flex-direction: column;
-    gap: var(--space-between-groups);
+    gap: var(--space-between-blocks);
 }
 
 .nx-employer-history__header {
@@ -9,21 +9,25 @@
     flex-wrap: wrap;
     align-items: baseline;
     justify-content: space-between;
-    gap: var(--space-between-text) var(--space-between-content);
+    gap: var(--space-between-lines) var(--space-between-blocks);
+}
+
+.nx-employer-history__name {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-between-lines);
 }
 
 .nx-employer-history__place {
     color: var(--color-text-secondary);
     font-family: var(--font-family-body);
-    font-size: var(--font-size-small);
+    font-size: var(--font-size-body);
     font-weight: var(--font-weight-regular);
 }
 
 .nx-employer-history__roles {
     display: flex;
     flex-direction: column;
-    gap: var(--space-between-groups);
-    padding-inline-start: var(--space-between-groups);
-    border-inline-start: var(--border-width-default) dashed var(--color-border);
+    padding: 0;
     list-style: none;
 }

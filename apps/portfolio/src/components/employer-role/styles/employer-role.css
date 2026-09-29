@@ -1,21 +1,40 @@
-/* The dot sits on the line that the roles' list draws down its inline start. */
+/*
+ * The dot sits beside the title on ::after; ::before is the faint line running from it down
+ * to the next role's dot.
+ */
 .nx-employer-role {
+    --employer-role-dot-size: calc(var(--space-between-content) + var(--border-width-standout));
+
     position: relative;
     display: flex;
     flex-direction: column;
-    gap: var(--space-between-text);
+    gap: var(--space-between-lines);
+    padding-block-end: calc(var(--space-between-blocks) + var(--space-between-lines));
+    padding-inline-start: calc(var(--space-between-groups) + var(--space-between-text));
 
-    &::before {
+    &::before,
+    &::after {
         content: '';
         position: absolute;
-        inset-block-start: var(--space-between-text);
-        inset-inline-start: calc(-1 * var(--space-between-groups));
-        inline-size: var(--space-between-content);
-        block-size: var(--space-between-content);
+    }
+
+    &::before {
+        inset-block: var(--employer-role-dot-size)
+            calc(-1 * (var(--space-between-text) + var(--space-between-lines)));
+        inset-inline-start: var(--space-between-text);
+        inline-size: var(--border-width-standout);
+        background-color: var(--color-border);
+        opacity: 0.3;
+    }
+
+    &::after {
+        inset-block-start: calc(var(--space-between-text) - var(--border-width-standout));
+        inset-inline-start: 0;
+        inline-size: var(--employer-role-dot-size);
+        block-size: var(--employer-role-dot-size);
         border: var(--border-width-standout) solid var(--color-border);
         border-radius: var(--radius-round);
         background-color: var(--color-background-accent);
-        translate: -50% 0;
     }
 }
 
@@ -24,11 +43,22 @@
     flex-wrap: wrap;
     align-items: baseline;
     justify-content: space-between;
-    gap: var(--space-between-text) var(--space-between-content);
+    gap: 0 var(--space-between-content);
+}
+
+.nx-employer-role__title {
+    font-family: var(--font-family-body);
+    font-size: var(--font-size-body);
+}
+
+.nx-employer-role__summary {
+    max-inline-size: 60ch;
+    color: var(--color-text-secondary);
 }
 
 @media (forced-colors: active) {
-    .nx-employer-role::before {
+    .nx-employer-role::before,
+    .nx-employer-role::after {
         background-color: CanvasText;
     }
 }

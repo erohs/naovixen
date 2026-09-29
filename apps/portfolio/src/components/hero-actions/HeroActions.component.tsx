@@ -6,7 +6,7 @@ import { placeholderCvPath } from '../../constants/PlaceholderCvPath.const';
 
 /** "See my work" points at the experience until Phase 7 brings the projects back. */
 export const HeroActions: FunctionComponent = () => (
-    <Cluster gap={Space.BetweenContent}>
+    <Cluster gap={Space.BetweenContent} className="nx-hero-actions">
         <LinkButton href="#experience" variant={ButtonVariant.Primary}>
             See my work <Icon source={arrowDownIcon} />
         </LinkButton>

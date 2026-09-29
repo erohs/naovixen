@@ -1,9 +1,10 @@
-.nx-post-card__excerpt {
-    color: var(--color-text-secondary);
+/* Covers the card, so the whole card is one link without nesting everything inside it. */
+.nx-post-card__link::before {
+    content: '';
+    position: absolute;
+    inset: 0;
 }
 
-.nx-post-card__meta {
-    margin-block-start: auto;
-    padding-block-start: var(--space-between-content);
-    border-block-start: var(--border-width-default) dashed var(--color-border);
+.nx-post-card__excerpt {
+    color: var(--color-text-secondary);
 }

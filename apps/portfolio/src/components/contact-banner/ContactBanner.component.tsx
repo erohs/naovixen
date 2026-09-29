@@ -3,6 +3,7 @@ import {
     arrowRightIcon,
     ButtonVariant,
     Heading,
+    HeadingSize,
     Icon,
     LinkButton,
     mailIcon,
@@ -18,7 +19,7 @@ export const ContactBanner: FunctionComponent = () => (
     <Container as="section" aria-labelledby="contact-title" className="nx-contact-banner">
         <div className="nx-contact-banner__panel">
             <div className="nx-contact-banner__text">
-                <Heading level={2} id="contact-title">
+                <Heading level={2} size={HeadingSize.H3} id="contact-title">
                     {placeholderHomePage.contactHeading}
                 </Heading>
                 <Text>{placeholderHomePage.contactBody}</Text>

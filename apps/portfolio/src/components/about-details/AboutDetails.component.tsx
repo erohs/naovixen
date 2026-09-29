@@ -8,7 +8,7 @@ import { InterestList } from '../interest-list/InterestList.component';
 import { PrincipleList } from '../principle-list/PrincipleList.component';
 
 export const AboutDetails: FunctionComponent = () => (
-    <Grid gap={Space.BetweenSections}>
+    <Grid className="nx-about-details">
         <Stack as="section" gap={Space.BetweenGroups} aria-labelledby="how-i-work-title">
             <SectionHeading headingId="how-i-work-title">How I work</SectionHeading>
             <PrincipleList principles={placeholderAboutPage.principles} />

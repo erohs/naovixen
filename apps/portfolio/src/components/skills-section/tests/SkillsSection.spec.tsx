@@ -2,7 +2,7 @@ import { findAxeViolations } from '@naovixen/component-testing';
 import { render, screen } from '@testing-library/react';
 import { describe, expect, test } from 'vitest';
 
-import { placeholderSkills } from '../../../constants/PlaceholderSkills.const';
+import { placeholderSkillGroups } from '../../../constants/PlaceholderSkillGroups.const';
 import { SkillsSection } from '../SkillsSection.component';
 
 describe('Using SkillsSection', () => {
@@ -19,12 +19,12 @@ describe('Using SkillsSection', () => {
             expect(screen.getByRole('heading', { level: 2, name: 'Skills' })).toBeDefined();
         });
 
-        test('then it should list each skill under a level 3 heading', () => {
+        test('then it should head each group of skills at level 3', () => {
             render(<SkillsSection />);
 
             expect(
                 screen.getAllByRole('heading', { level: 3 }).map((heading) => heading.textContent),
-            ).toEqual(placeholderSkills.map((skill) => skill.name));
+            ).toEqual(placeholderSkillGroups.map((group) => group.label));
         });
 
         test('then it should have no accessibility violations', async () => {

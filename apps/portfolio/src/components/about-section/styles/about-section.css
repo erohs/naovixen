@@ -4,14 +4,7 @@
 
 .nx-about-section__columns {
     align-items: center;
-}
-
-.nx-about-section__text {
-    max-inline-size: var(--layout-width-prose);
-}
-
-.nx-about-section__body {
-    color: var(--color-text-secondary);
+    gap: var(--space-between-regions) calc(2 * var(--space-between-groups));
 }
 
 .nx-about-section__photo {
@@ -22,10 +15,10 @@
 
 .nx-about-section__heart {
     position: absolute;
-    inset-block-start: calc(-1 * var(--space-between-content));
+    inset-block-start: calc(-1 * var(--space-between-blocks));
     inset-inline-end: calc(-1 * var(--space-between-content));
     inline-size: var(--font-size-h2);
     block-size: var(--font-size-h2);
     color: var(--color-background-accent);
-    rotate: 12deg;
+    rotate: 14deg;
 }

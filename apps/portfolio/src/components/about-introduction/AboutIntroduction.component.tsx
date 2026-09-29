@@ -1,5 +1,5 @@
 import type { FunctionComponent } from 'react';
-import { Figure, FigureShape } from '@naovixen/blocks';
+import { Figure, FigureShape, SpeechBubble } from '@naovixen/blocks';
 import { Text, TextVariant } from '@naovixen/components';
 import { Grid, Space, Stack } from '@naovixen/layout';
 
@@ -8,9 +8,13 @@ import { placeholderPhoto } from '../../constants/PlaceholderPhoto.const';
 import { GreetingHeading } from '../greeting-heading/GreetingHeading.component';
 
 export const AboutIntroduction: FunctionComponent = () => (
-    <Grid gap={Space.BetweenSections} className="nx-about-introduction">
-        <Stack className="nx-about-introduction__text">
-            <GreetingHeading greeting={placeholderAboutPage.greeting}>About me</GreetingHeading>
+    <Grid className="nx-about-introduction">
+        <Stack gap={Space.BetweenBlocks} className="nx-about-introduction__text">
+            <GreetingHeading
+                greeting={<SpeechBubble>{placeholderAboutPage.greeting}</SpeechBubble>}
+            >
+                About me
+            </GreetingHeading>
             <Text variant={TextVariant.Lead}>{placeholderAboutPage.lead}</Text>
             {placeholderAboutPage.paragraphs.map((paragraph) => (
                 <Text key={paragraph}>{paragraph}</Text>

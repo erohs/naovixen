@@ -11,12 +11,8 @@ import { RoutedLink } from '../routed-link/RoutedLink.component';
 
 export const AboutPage: FunctionComponent = () => (
     <Page>
-        <Stack gap={Space.BetweenSections}>
-            <Breadcrumb
-                trail={homeBreadcrumbTrail}
-                currentLabel="About"
-                linkComponent={RoutedLink}
-            />
+        <Breadcrumb trail={homeBreadcrumbTrail} currentLabel="About" linkComponent={RoutedLink} />
+        <Stack gap={Space.BetweenSections} className="nx-about-page__content">
             <AboutIntroduction />
             <HandDrawnRule className="nx-about-page__rule" />
             <AboutDetails />

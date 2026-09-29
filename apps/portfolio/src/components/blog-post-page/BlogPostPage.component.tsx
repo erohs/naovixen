@@ -17,10 +17,12 @@ export const BlogPostPage: FunctionComponent<IBlogPostPageData> = ({ post, older
                 currentLabel={post.title}
                 linkComponent={RoutedLink}
             />
-            <BlogPostHeader post={post} headingId="post-title" />
-            <BlogContent body={post.body} linkComponent={RoutedLink} />
-            <HandDrawnRule className="nx-blog-post-page__rule" />
-            <PostNavigation olderPost={olderPost} />
+            <div className="nx-blog-post-page__body">
+                <BlogPostHeader post={post} headingId="post-title" />
+                <BlogContent body={post.body} linkComponent={RoutedLink} />
+                <HandDrawnRule className="nx-blog-post-page__rule" />
+                <PostNavigation olderPost={olderPost} />
+            </div>
         </article>
     </Page>
 );

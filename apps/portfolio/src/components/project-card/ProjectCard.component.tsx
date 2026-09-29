@@ -20,7 +20,7 @@ export const ProjectCard: FunctionComponent<IProjectCardProps> = ({
         {project.screenshot && (
             <Image {...project.screenshot} className="nx-project-card__screenshot" />
         )}
-        <Heading level={headingLevel} size={HeadingSize.H3}>
+        <Heading level={headingLevel} size={HeadingSize.H4}>
             {project.title}
         </Heading>
         <Text className="nx-project-card__summary">{project.summary}</Text>

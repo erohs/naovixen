@@ -1,0 +1,21 @@
+.nx-about-summary {
+    max-inline-size: 60ch;
+}
+
+.nx-about-summary__heading {
+    margin-block-end: var(--space-between-text);
+}
+
+.nx-about-summary__body {
+    color: var(--color-text-secondary);
+}
+
+/* A small heading, the size of body text, a little apart from the paragraph above. */
+.nx-about-summary__subheading {
+    margin-block-start: var(--space-between-content);
+    font-size: var(--font-size-body);
+}
+
+.nx-about-summary__more {
+    margin-block-start: var(--space-between-text);
+}
