@@ -6,17 +6,8 @@ import { SiteFooterDirectory } from '../site-footer-directory/SiteFooterDirector
 import { SiteFooterLegal } from '../site-footer-legal/SiteFooterLegal.component';
 import type { ISiteFooterProps } from './interfaces/ISiteFooterProps';
 
-export const SiteFooter: FunctionComponent<ISiteFooterProps> = ({
-    mascot,
-    className,
-    ...contentProps
-}) => (
+export const SiteFooter: FunctionComponent<ISiteFooterProps> = ({ className, ...contentProps }) => (
     <footer className={joinClassNames('nx-site-footer', className)}>
-        {mascot && (
-            <div className="nx-site-footer__mascot" aria-hidden="true">
-                {mascot}
-            </div>
-        )}
         <Container>
             <Stack gap={Space.BetweenGroups} className="nx-site-footer__content">
                 <SiteFooterDirectory {...contentProps} />

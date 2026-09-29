@@ -1,6 +1,6 @@
 import type { FunctionComponent } from 'react';
-import type { IToggleButtonProps } from '@naovixen/components';
-import { Icon, moonIcon, sunIcon, ToggleButton, VisuallyHidden } from '@naovixen/components';
+import type { IButtonProps } from '@naovixen/components';
+import { Button, Icon, moonIcon, sunIcon, VisuallyHidden } from '@naovixen/components';
 import { joinClassNames } from '@naovixen/formatting';
 import { ResolvedTheme, ThemePreference } from '@naovixen/theming';
 
@@ -8,11 +8,12 @@ import { useTheme } from '../theme-provider/functions/UseTheme.hook';
 import { useThemeController } from '../theme-provider/functions/UseThemeController.hook';
 
 /**
- * Pressed while the page is dark, whether the reader chose dark or their system did.
+ * Pressed while the page is dark, whether the reader chose dark or their system did. It looks
+ * like any other button: the sun or moon shows the state, so it does not stay pushed in.
  * Pressing it chooses the opposite theme explicitly. Needs a ThemeProvider above it.
  */
 export const ThemeToggle: FunctionComponent<
-    Omit<IToggleButtonProps, 'isPressed' | 'onClick' | 'children'>
+    Omit<IButtonProps, 'aria-pressed' | 'onClick' | 'children'>
 > = ({ className, ...buttonProps }) => {
     const { resolvedTheme } = useTheme();
     const themeController = useThemeController();
@@ -23,14 +24,14 @@ export const ThemeToggle: FunctionComponent<
     };
 
     return (
-        <ToggleButton
+        <Button
             {...buttonProps}
             className={joinClassNames('nx-theme-toggle', className)}
-            isPressed={isDark}
+            aria-pressed={isDark}
             onClick={onClick}
         >
             <Icon source={isDark ? sunIcon : moonIcon} />
             <VisuallyHidden>Dark mode</VisuallyHidden>
-        </ToggleButton>
+        </Button>
     );
 };

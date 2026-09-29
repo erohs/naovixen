@@ -1,14 +1,6 @@
-/* The mascot stands on the top border, so only the part it draws above that edge shows. */
 .nx-site-footer {
-    position: relative;
     border-block-start: var(--border-width-standout) solid var(--color-border);
     background-color: var(--color-background-surface);
-}
-
-.nx-site-footer__mascot {
-    position: absolute;
-    inset-block-end: calc(100% + var(--border-width-standout));
-    inset-inline-end: max(var(--space-padding-page), (100% - var(--layout-width-page)) / 2);
 }
 
 .nx-site-footer__content {

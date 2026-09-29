@@ -29,8 +29,6 @@ const RouterLink: FunctionComponent<LinkProps> = ({ children, ...anchorProps }) 
     </a>
 );
 
-const mascot = <img src="/example.png" alt="Example mascot" width={96} height={60} />;
-
 describe('Using SiteFooter', () => {
     describe('given a page beneath the work section is shown', () => {
         describe('when it renders', () => {
@@ -74,22 +72,6 @@ describe('Using SiteFooter', () => {
                 render(<SiteFooter {...footerProps} />);
 
                 expect(await findAxeViolations()).toEqual([]);
-            });
-        });
-    });
-
-    describe('given a mascot', () => {
-        describe('when it renders', () => {
-            test('then it should draw the mascot', () => {
-                render(<SiteFooter {...footerProps} mascot={mascot} />);
-
-                expect(screen.getByRole('img', { hidden: true })).toBeDefined();
-            });
-
-            test('then it should hide the mascot from assistive technology', () => {
-                render(<SiteFooter {...footerProps} mascot={mascot} />);
-
-                expect(screen.queryByRole('img')).toBeNull();
             });
         });
     });

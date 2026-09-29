@@ -19,6 +19,11 @@
     margin-inline-end: auto;
 }
 
+/* Together with the row's gap, the theme button sits as far from the last link as the links sit from each other. */
+.nx-site-header__navigation {
+    margin-inline-end: calc(var(--space-between-groups) - var(--space-between-content));
+}
+
 .nx-site-header__menu {
     display: contents;
 }

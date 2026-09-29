@@ -4,7 +4,8 @@
  */
 .nx-site-footer-legal {
     --site-footer-legal-link-room: calc(
-        var(--size-action-minimum) + 2 * var(--space-between-content)
+        var(--size-action-minimum) + var(--space-between-content) + var(--space-between-text) +
+            var(--space-between-lines)
     );
     --site-footer-legal-page-margin: max(
         0rem,
