@@ -44,6 +44,7 @@ export { pawShowcase } from './showcases/brand/Paw.showcase';
 export { wordmarkShowcase } from './showcases/brand/Wordmark.showcase';
 export { backToTopShowcase } from './showcases/site-shell/BackToTop.showcase';
 export { mobileMenuShowcase } from './showcases/site-shell/MobileMenu.showcase';
+export { routeAnnouncerShowcase } from './showcases/site-shell/RouteAnnouncer.showcase';
 export { siteFooterShowcase } from './showcases/site-shell/SiteFooter.showcase';
 export { siteFooterColumnShowcase } from './showcases/site-shell/SiteFooterColumn.showcase';
 export { siteFooterDirectoryShowcase } from './showcases/site-shell/SiteFooterDirectory.showcase';

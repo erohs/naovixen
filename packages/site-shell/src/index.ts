@@ -1,4 +1,5 @@
 export { SiteNavigationLayout } from './site-navigation/enums/SiteNavigationLayout';
+export type { IRouteAnnouncerProps } from './route-announcer/interfaces/IRouteAnnouncerProps';
 export type { IMobileMenuProps } from './mobile-menu/interfaces/IMobileMenuProps';
 export type { ISiteFooterColumnProps } from './site-footer-column/interfaces/ISiteFooterColumnProps';
 export type { ISiteFooterDirectoryProps } from './site-footer-directory/interfaces/ISiteFooterDirectoryProps';
@@ -11,6 +12,7 @@ export type { IThemeProviderProps } from './theme-provider/interfaces/IThemeProv
 
 export { BackToTop } from './back-to-top/BackToTop.component';
 export { MobileMenu } from './mobile-menu/MobileMenu.component';
+export { RouteAnnouncer } from './route-announcer/RouteAnnouncer.component';
 export { SiteFooter } from './site-footer/SiteFooter.component';
 export { SiteFooterColumn } from './site-footer-column/SiteFooterColumn.component';
 export { SiteFooterDirectory } from './site-footer-directory/SiteFooterDirectory.component';
@@ -21,5 +23,6 @@ export { SocialLinkList } from './social-link-list/SocialLinkList.component';
 export { ThemeProvider } from './theme-provider/ThemeProvider.component';
 export { ThemeToggle } from './theme-toggle/ThemeToggle.component';
 
+export { useDocumentTheme } from './theme-provider/functions/UseDocumentTheme.hook';
 export { useTheme } from './theme-provider/functions/UseTheme.hook';
 export { useThemeController } from './theme-provider/functions/UseThemeController.hook';
