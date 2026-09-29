@@ -36,8 +36,9 @@ blob-report/
 # Content sources — Naomi's CV and other personal material must never reach the repo
 source-material/
 
-# Working notes that quote private CV details
+# Working notes: CV details, and subagent findings written as they work
 docs/content-inventory.md
+notes/
 
 # Editor and OS
 .idea/
