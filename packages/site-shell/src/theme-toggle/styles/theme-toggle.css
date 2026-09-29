@@ -1,0 +1,7 @@
+/* Worn with .nx-button, which gives it the border, shadow, lift and press. */
+.nx-theme-toggle {
+    inline-size: var(--size-action-minimum);
+    block-size: var(--size-action-minimum);
+    padding: 0;
+    border-radius: var(--radius-round);
+}

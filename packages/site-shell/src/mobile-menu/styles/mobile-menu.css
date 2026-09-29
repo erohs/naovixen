@@ -1,0 +1,11 @@
+/*
+ * The wrapper is layout-neutral, so the button sits in the header's row and the open panel
+ * wraps onto a full-width line beneath it.
+ */
+.nx-mobile-menu {
+    display: contents;
+}
+
+.nx-mobile-menu__panel {
+    flex-basis: 100%;
+}
