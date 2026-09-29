@@ -1,9 +1,13 @@
+import type { ComponentType } from 'react';
+import type { ICardProps } from '@naovixen/blocks';
+import type { HeadingLevel, LinkProps } from '@naovixen/components';
 import type { IBlogPostSummary } from '@naovixen/models';
 
-import type { HeadingLevel } from '../../types/HeadingLevel';
-
-export interface IBlogPostCardProps {
-  readonly post: IBlogPostSummary;
-  readonly href: string;
-  readonly headingLevel: HeadingLevel;
+export interface IPostCardProps extends Omit<ICardProps, 'children'> {
+    readonly post: IBlogPostSummary;
+    /** Where the title links to. */
+    readonly href: string;
+    readonly headingLevel: HeadingLevel;
+    /** Pass a router's link here. Defaults to `Link`. */
+    readonly linkComponent?: ComponentType<LinkProps> | undefined;
 }

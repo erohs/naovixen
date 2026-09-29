@@ -1,0 +1,4 @@
+/* Imported after the packages' stylesheets, so the app's cards win over the blocks they compose. */
+@import url('./components/case-study-link/styles/case-study-link.css') layer(components);
+@import url('./components/post-card/styles/post-card.css') layer(components);
+@import url('./components/project-card/styles/project-card.css') layer(components);
