@@ -1,29 +1,29 @@
 {
-  "name": "naovixen",
-  "private": true,
-  "type": "module",
-  "packageManager": "pnpm@12.6.0",
-  "engines": {
-    "node": ">=24.0.0"
-  },
-  "scripts": {
-    "dev": "turbo run dev",
-    "build": "turbo run build",
-    "typecheck": "turbo run typecheck",
-    "test": "turbo run test",
-    "lint": "turbo run lint && pnpm run lint:styles && pnpm run format:check",
-    "lint:styles": "stylelint \"**/*.css\"",
-    "format": "prettier --write .",
-    "format:check": "prettier --check ."
-  },
-  "devDependencies": {
-    "@naovixen/eslint-config": "workspace:*",
-    "@naovixen/typescript-config": "workspace:*",
-    "eslint": "10.11.0",
-    "prettier": "3.9.9",
-    "stylelint": "17.15.0",
-    "stylelint-config-standard": "40.0.0",
-    "turbo": "2.11.5",
-    "typescript": "6.0.3"
-  }
+    "name": "naovixen",
+    "private": true,
+    "type": "module",
+    "packageManager": "pnpm@12.6.0",
+    "engines": {
+        "node": ">=24.0.0"
+    },
+    "scripts": {
+        "dev": "turbo run dev",
+        "build": "turbo run build",
+        "typecheck": "turbo run typecheck",
+        "test": "turbo run test",
+        "lint": "turbo run lint && pnpm run lint:styles && pnpm run format:check",
+        "lint:styles": "stylelint \"**/*.css\"",
+        "format": "prettier --write .",
+        "format:check": "prettier --check ."
+    },
+    "devDependencies": {
+        "@naovixen/eslint-config": "workspace:*",
+        "@naovixen/typescript-config": "workspace:*",
+        "eslint": "10.11.0",
+        "prettier": "3.9.9",
+        "stylelint": "17.15.0",
+        "stylelint-config-standard": "40.0.0",
+        "turbo": "2.11.5",
+        "typescript": "6.0.3"
+    }
 }
