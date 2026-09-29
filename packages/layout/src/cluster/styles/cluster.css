@@ -1,16 +1,15 @@
-/* The block itself lives in theming; these pick its gap from the space tokens. */
 .nx-cluster--gap-between-text {
-  --cluster-gap: var(--space-between-text);
+    --cluster-gap: var(--space-between-text);
 }
 
 .nx-cluster--gap-between-content {
-  --cluster-gap: var(--space-between-content);
+    --cluster-gap: var(--space-between-content);
 }
 
 .nx-cluster--gap-between-groups {
-  --cluster-gap: var(--space-between-groups);
+    --cluster-gap: var(--space-between-groups);
 }
 
 .nx-cluster--gap-between-sections {
-  --cluster-gap: var(--space-between-sections);
+    --cluster-gap: var(--space-between-sections);
 }

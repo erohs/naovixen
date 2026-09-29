@@ -1,8 +1,7 @@
-import type { ReactNode } from 'react';
+import type { HTMLAttributes, RefAttributes } from 'react';
 
-import type { LayoutElement } from '../../types/LayoutElement';
+import type { LayoutElement } from '../../stack/types/LayoutElement';
 
-export interface IContainerProps {
-  readonly as?: LayoutElement | undefined;
-  readonly children: ReactNode;
+export interface IContainerProps extends HTMLAttributes<HTMLElement>, RefAttributes<HTMLElement> {
+    readonly as?: LayoutElement | undefined;
 }

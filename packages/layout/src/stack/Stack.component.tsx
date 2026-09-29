@@ -1,11 +1,17 @@
 import type { FunctionComponent } from 'react';
+import { createElement } from 'react';
+import { joinClassNames } from '@naovixen/formatting';
 
-import { buildLayoutClassName } from '../functions/BuildLayoutClassName.function';
-import type { ILayoutProps } from '../interfaces/ILayoutProps';
+import type { ILayoutProps } from './interfaces/ILayoutProps';
 
-/** Children one under another, a space token apart. */
-export const Stack: FunctionComponent<ILayoutProps> = ({ as = 'div', gap, children }) => {
-  const Element = as;
-
-  return <Element className={buildLayoutClassName('nx-stack', gap)}>{children}</Element>;
-};
+/** `createElement`, not JSX: JSX would demand a ref for one specific element, not any of them. */
+export const Stack: FunctionComponent<ILayoutProps> = ({
+    as = 'div',
+    gap,
+    className,
+    ...elementProps
+}) =>
+    createElement(as, {
+        ...elementProps,
+        className: joinClassNames('nx-stack', gap && `nx-stack--gap-${gap}`, className),
+    });
