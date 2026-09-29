@@ -1,0 +1,7 @@
+.nx-contact-link-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-between-content);
+    padding-inline-start: 0;
+    list-style: none;
+}

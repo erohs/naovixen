@@ -1,40 +1,29 @@
 import type { ReactNode } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
+import { OpenGraphType } from '@naovixen/models';
+import { buildPersonStructuredData, buildWebSiteStructuredData } from '@naovixen/seo';
 
-import { HeadingSize } from '@naovixen/components';
-import { designSystemPath } from '@naovixen/design-system';
-import { createExcerpt } from '@naovixen/formatting';
+import { HomePage } from '../components/home-page/HomePage.component';
+import { latestPostCount } from '../constants/LatestPostCount.const';
+import { person } from '../constants/Person.const';
+import { site } from '../constants/Site.const';
+import { buildRouteHead } from '../functions/BuildRouteHead.function';
 
-/**
- * Phase 1 scaffolding: proves the workspace packages resolve from TypeScript source with no
- * build step. Phase 5 replaces this with the real home page.
- */
-const HomeComponent = (): ReactNode => {
-    const wiringChecks = [
-        { packageName: '@naovixen/components', result: HeadingSize.Display },
-        {
-            packageName: '@naovixen/formatting',
-            result: createExcerpt('Scaffolding the monorepo', 14),
-        },
-        { packageName: '@naovixen/design-system', result: designSystemPath },
-    ];
-
-    return (
-        <main>
-            <h1>naovixen</h1>
-            <p>Phase 1 scaffold. Every shared package below resolved from source.</p>
-            <ul>
-                {wiringChecks.map((wiringCheck) => (
-                    <li key={wiringCheck.result}>
-                        <code>{wiringCheck.packageName}</code> &rarr;{' '}
-                        <code>{wiringCheck.result}</code>
-                    </li>
-                ))}
-            </ul>
-        </main>
-    );
-};
+const HomeComponent = (): ReactNode => <HomePage latestPosts={Route.useLoaderData()} />;
 
 export const Route = createFileRoute('/')({
+    loader: async ({ context }) =>
+        (await context.blogRepository.listPosts()).slice(0, latestPostCount),
+    head: () =>
+        buildRouteHead(
+            {
+                title: 'Naomi Shore — Software Engineer',
+                description:
+                    'Naomi Shore is a software engineer with seven years of experience across React, TypeScript and C#/.NET, and a focus on accessibility.',
+                path: '/',
+                type: OpenGraphType.Website,
+            },
+            [buildPersonStructuredData(person, site), buildWebSiteStructuredData(site)],
+        ),
     component: HomeComponent,
 });

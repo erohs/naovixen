@@ -229,6 +229,9 @@ importers:
       '@naovixen/theming':
         specifier: workspace:*
         version: link:../../packages/theming
+      '@portabletext/types':
+        specifier: 4.0.2
+        version: 4.0.2
       '@tanstack/react-router':
         specifier: 1.170.40
         version: 1.170.40(react-dom@19.3.0(react@19.3.0))(react@19.3.0)

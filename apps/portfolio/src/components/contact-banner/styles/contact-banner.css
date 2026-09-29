@@ -1,0 +1,26 @@
+.nx-contact-banner {
+    padding-block: var(--space-between-sections);
+}
+
+.nx-contact-banner__panel {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-between-groups);
+    padding: var(--space-padding-container);
+    border: var(--border-width-standout) solid var(--color-border);
+    border-radius: var(--radius-large);
+    background-color: var(--color-background-surface);
+    box-shadow: var(--shadow-resting);
+}
+
+.nx-contact-banner__text {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-between-content);
+    max-inline-size: var(--layout-width-prose);
+    color: var(--color-text-secondary);
+
+    & > h2 {
+        color: var(--color-text-primary);
+    }
+}

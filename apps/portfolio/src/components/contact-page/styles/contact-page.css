@@ -1,0 +1,14 @@
+.nx-contact-page {
+    max-inline-size: var(--layout-width-prose);
+}
+
+.nx-contact-page__body {
+    color: var(--color-text-secondary);
+}
+
+.nx-contact-page__elsewhere {
+    color: var(--color-text-accent);
+    font-family: var(--font-family-handwriting);
+    font-size: var(--font-size-lead);
+    font-weight: var(--font-weight-regular);
+}

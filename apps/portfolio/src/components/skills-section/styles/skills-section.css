@@ -1,0 +1,8 @@
+/* Two columns on a wide screen; rows sit flush, so each skill's rule lines up with its neighbour's. */
+.nx-skills-section__list {
+    --grid-minimum-column-width: calc(var(--layout-width-prose) * 2 / 3);
+
+    row-gap: 0;
+    padding-inline-start: 0;
+    list-style: none;
+}

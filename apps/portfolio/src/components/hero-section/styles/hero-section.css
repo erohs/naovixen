@@ -1,0 +1,58 @@
+/* The dots fade out towards the text, so they never sit behind it. */
+.nx-hero-section {
+    position: relative;
+    isolation: isolate;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: var(--space-between-content);
+    padding-block: var(--space-between-sections);
+
+    &::before {
+        content: '';
+        position: absolute;
+        z-index: -1;
+        inset: 0 0 0 40%;
+        background: radial-gradient(circle, var(--color-decoration-dots) 25%, transparent 30%) 0 0 /
+            var(--space-between-content) var(--space-between-content);
+        mask-image: linear-gradient(to right, transparent, black 60%);
+        opacity: 0.5;
+    }
+}
+
+.nx-hero-section__greeting {
+    rotate: -3deg;
+}
+
+/* Keeps the paw on the same line as the name it sits on. */
+.nx-hero-section__surname {
+    white-space: nowrap;
+}
+
+.nx-hero-section__highlight {
+    text-decoration: underline;
+    text-decoration-color: var(--color-background-accent);
+    text-decoration-thickness: calc(var(--size-underline-offset) / 2);
+    text-underline-offset: calc(var(--size-underline-offset) / 2);
+}
+
+.nx-hero-section__paw {
+    inline-size: var(--font-size-h3);
+    block-size: var(--font-size-h3);
+    display: inline-block;
+    color: var(--color-decoration-paw);
+    vertical-align: super;
+    rotate: 15deg;
+}
+
+.nx-hero-section__summary {
+    max-inline-size: var(--layout-width-prose);
+    color: var(--color-text-secondary);
+}
+
+/* On a narrow screen the text spans the width, so the dots would sit behind it. The breakpoint is the site header's. */
+@media (width < 51.25rem), (forced-colors: active) {
+    .nx-hero-section::before {
+        display: none;
+    }
+}

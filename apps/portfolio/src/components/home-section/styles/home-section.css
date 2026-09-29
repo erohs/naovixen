@@ -1,0 +1,14 @@
+.nx-home-section {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-between-groups);
+    padding-block: var(--space-between-sections);
+}
+
+.nx-home-section__header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: end;
+    justify-content: space-between;
+    gap: var(--space-between-content);
+}

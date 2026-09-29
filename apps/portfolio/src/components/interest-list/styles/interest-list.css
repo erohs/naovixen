@@ -1,0 +1,10 @@
+.nx-interest-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-between-text);
+    padding-inline-start: var(--space-indent-list);
+
+    & ::marker {
+        color: var(--color-text-accent);
+    }
+}

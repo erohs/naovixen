@@ -1,0 +1,21 @@
+.nx-education-summary {
+    display: flex;
+    gap: var(--space-between-content);
+    padding-block-start: var(--space-between-groups);
+    border-block-start: var(--border-width-default) dashed var(--color-border);
+}
+
+.nx-education-summary__icon {
+    flex-shrink: 0;
+    color: var(--color-text-accent);
+}
+
+.nx-education-summary__details {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-between-text);
+}
+
+.nx-education-summary__degree {
+    font-size: var(--font-size-h4);
+}

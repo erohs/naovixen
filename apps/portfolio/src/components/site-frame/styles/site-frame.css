@@ -1,0 +1,10 @@
+/* Keeps the footer at the bottom of a short page. */
+.nx-site-frame {
+    display: flex;
+    flex-direction: column;
+    min-block-size: 100dvh;
+}
+
+.nx-site-frame__main {
+    flex-grow: 1;
+}

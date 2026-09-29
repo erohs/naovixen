@@ -1,5 +1,6 @@
 import { createRouter } from '@tanstack/react-router';
 
+import { blogRepository } from './constants/BlogRepository.const';
 import { routeTree } from './routeTree.gen';
 
 /**
@@ -10,6 +11,7 @@ import { routeTree } from './routeTree.gen';
 export const getRouter = () =>
     createRouter({
         routeTree,
+        context: { blogRepository },
         scrollRestoration: true,
         defaultPreload: 'intent',
     });

@@ -1,0 +1,47 @@
+.nx-testimonial-section {
+    padding-block: var(--space-between-sections);
+}
+
+.nx-testimonial-section__figure {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-between-groups);
+    max-inline-size: var(--layout-width-prose);
+}
+
+/* The opening quote mark is decoration: CSS-generated content stays out of the quote's text. */
+.nx-testimonial-section__quote {
+    position: relative;
+    padding: var(--space-padding-container);
+    border: var(--border-width-standout) solid var(--color-border);
+    border-radius: var(--radius-large);
+    background-color: var(--color-background-surface);
+    box-shadow: var(--shadow-resting);
+    font-size: var(--font-size-lead);
+
+    &::before {
+        content: '\201C' / '';
+        position: absolute;
+        inset-block-start: calc(-1 * var(--space-between-groups));
+        inset-inline-start: var(--space-between-content);
+        color: var(--color-background-accent);
+        font-family: var(--font-family-heading);
+        font-size: var(--font-size-h1);
+        line-height: 1;
+    }
+}
+
+.nx-testimonial-section__attribution {
+    display: flex;
+    flex-direction: column;
+    padding-inline-start: var(--space-padding-container);
+}
+
+.nx-testimonial-section__name {
+    font-weight: var(--font-weight-semi-bold);
+}
+
+.nx-testimonial-section__role {
+    color: var(--color-text-secondary);
+    font-size: var(--font-size-small);
+}

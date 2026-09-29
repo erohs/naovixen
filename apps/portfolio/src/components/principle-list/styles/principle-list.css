@@ -1,0 +1,13 @@
+.nx-principle-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-between-groups);
+}
+
+.nx-principle-list__title {
+    font-weight: var(--font-weight-semi-bold);
+}
+
+.nx-principle-list__description {
+    color: var(--color-text-secondary);
+}

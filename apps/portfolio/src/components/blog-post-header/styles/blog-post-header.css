@@ -1,0 +1,18 @@
+.nx-blog-post-header {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-between-content);
+}
+
+.nx-blog-post-header__excerpt {
+    color: var(--color-text-secondary);
+}
+
+.nx-blog-post-header__details {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-between-content);
+    padding-block: var(--space-between-content);
+    border-block: var(--border-width-default) dashed var(--color-border);
+}

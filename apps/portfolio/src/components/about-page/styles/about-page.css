@@ -1,0 +1,3 @@
+.nx-about-page__rule {
+    max-inline-size: calc(var(--layout-width-prose) / 2);
+}

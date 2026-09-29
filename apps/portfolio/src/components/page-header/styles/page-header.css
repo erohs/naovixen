@@ -1,0 +1,10 @@
+.nx-page-header {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-between-content);
+    max-inline-size: var(--layout-width-prose);
+}
+
+.nx-page-header__intro {
+    color: var(--color-text-secondary);
+}
