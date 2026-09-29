@@ -1,0 +1,12 @@
+/* The copyright line and privacy link, below a dashed divider. */
+.nx-site-footer-legal {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-between-content);
+  padding-block-start: var(--space-between-content);
+  border-block-start: var(--border-width-default) dashed var(--color-border);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-small);
+}

@@ -1,6 +1,7 @@
 import type { FunctionComponent } from 'react';
 
 import { DownloadAnchor } from '../download-anchor/DownloadAnchor.component';
+import { EmailAnchor } from '../email-anchor/EmailAnchor.component';
 import { LinkDestination } from '../enums/LinkDestination';
 import { ExternalAnchor } from '../external-anchor/ExternalAnchor.component';
 import { PageAnchor } from '../page-anchor/PageAnchor.component';
@@ -15,5 +16,7 @@ export const Anchor: FunctionComponent<IAnchorProps> = (props) => {
       return <ExternalAnchor {...props} />;
     case LinkDestination.Download:
       return <DownloadAnchor {...props} />;
+    case LinkDestination.Email:
+      return <EmailAnchor {...props} />;
   }
 };

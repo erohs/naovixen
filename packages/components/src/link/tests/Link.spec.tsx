@@ -82,4 +82,29 @@ describe('Using Link', () => {
       });
     });
   });
+
+  describe('given a link to an email address', () => {
+    describe('when it renders', () => {
+      test('then it should open in place rather than in a new tab', () => {
+        renderWithProvider(
+          <Link href="mailto:hello@example.com" destination={LinkDestination.Email}>
+            Email
+          </Link>,
+        );
+
+        expect(screen.getByRole('link', { name: 'Email' }).hasAttribute('target')).toBe(false);
+      });
+
+      test('then it should not go through the router', () => {
+        renderWithProvider(
+          <Link href="mailto:hello@example.com" destination={LinkDestination.Email}>
+            Email
+          </Link>,
+          { linkComponent: RouterLinkForTests },
+        );
+
+        expect(screen.getByRole('link').dataset.routed).toBeUndefined();
+      });
+    });
+  });
 });

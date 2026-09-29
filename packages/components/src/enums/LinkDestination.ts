@@ -5,4 +5,6 @@ export enum LinkDestination {
   External = 'external',
   /** A file to save, such as a CV. */
   Download = 'download',
+  /** A `mailto:` address, handed to the mail app in place. */
+  Email = 'email',
 }
