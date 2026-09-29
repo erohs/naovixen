@@ -1,4 +1,4 @@
 export interface INamedMetaTag {
-  readonly name: string;
-  readonly content: string;
+    readonly name: string;
+    readonly content: string;
 }

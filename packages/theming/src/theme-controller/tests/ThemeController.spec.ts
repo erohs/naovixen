@@ -7,183 +7,183 @@ import type { IThemeStorage } from '../../interfaces/IThemeStorage';
 import { ThemeController } from '../ThemeController';
 
 class FakeThemeStorage implements IThemeStorage {
-  public storedPreference: ThemePreference | undefined;
+    public storedPreference: ThemePreference | undefined;
 
-  public constructor(storedPreference?: ThemePreference) {
-    this.storedPreference = storedPreference;
-  }
+    public constructor(storedPreference?: ThemePreference) {
+        this.storedPreference = storedPreference;
+    }
 
-  public readPreference(): ThemePreference | undefined {
-    return this.storedPreference;
-  }
+    public readPreference(): ThemePreference | undefined {
+        return this.storedPreference;
+    }
 
-  public writePreference(preference: ThemePreference): void {
-    this.storedPreference = preference;
-  }
+    public writePreference(preference: ThemePreference): void {
+        this.storedPreference = preference;
+    }
 }
 
 class FakeSystemThemeSource implements ISystemThemeSource {
-  private readonly _listeners = new Set<() => void>();
-  private _theme: ResolvedTheme;
+    private readonly _listeners = new Set<() => void>();
+    private _theme: ResolvedTheme;
 
-  public constructor(theme: ResolvedTheme) {
-    this._theme = theme;
-  }
+    public constructor(theme: ResolvedTheme) {
+        this._theme = theme;
+    }
 
-  public get listenerCount(): number {
-    return this._listeners.size;
-  }
+    public get listenerCount(): number {
+        return this._listeners.size;
+    }
 
-  public getTheme(): ResolvedTheme {
-    return this._theme;
-  }
+    public getTheme(): ResolvedTheme {
+        return this._theme;
+    }
 
-  public subscribe(listener: () => void): () => void {
-    this._listeners.add(listener);
+    public subscribe(listener: () => void): () => void {
+        this._listeners.add(listener);
 
-    return () => {
-      this._listeners.delete(listener);
-    };
-  }
+        return () => {
+            this._listeners.delete(listener);
+        };
+    }
 
-  public switchTo(theme: ResolvedTheme): void {
-    this._theme = theme;
-    this._listeners.forEach((listener) => {
-      listener();
-    });
-  }
+    public switchTo(theme: ResolvedTheme): void {
+        this._theme = theme;
+        this._listeners.forEach((listener) => {
+            listener();
+        });
+    }
 }
 
 describe('Using ThemeController', () => {
-  let storage: FakeThemeStorage;
-  let systemThemeSource: FakeSystemThemeSource;
-  let themeController: ThemeController;
+    let storage: FakeThemeStorage;
+    let systemThemeSource: FakeSystemThemeSource;
+    let themeController: ThemeController;
 
-  describe('given no stored preference', () => {
-    describe('and the system reports a dark colour scheme', () => {
-      beforeEach(() => {
-        storage = new FakeThemeStorage();
-        systemThemeSource = new FakeSystemThemeSource(ResolvedTheme.Dark);
-        themeController = new ThemeController(storage, systemThemeSource);
-      });
+    describe('given no stored preference', () => {
+        describe('and the system reports a dark colour scheme', () => {
+            beforeEach(() => {
+                storage = new FakeThemeStorage();
+                systemThemeSource = new FakeSystemThemeSource(ResolvedTheme.Dark);
+                themeController = new ThemeController(storage, systemThemeSource);
+            });
 
-      describe('when the state is read', () => {
-        test('then it should report the preference as system', () => {
-          expect(themeController.getState().preference).toBe(ThemePreference.System);
+            describe('when the state is read', () => {
+                test('then it should report the preference as system', () => {
+                    expect(themeController.getState().preference).toBe(ThemePreference.System);
+                });
+
+                test('then it should resolve to the dark theme', () => {
+                    expect(themeController.getState().resolvedTheme).toBe(ResolvedTheme.Dark);
+                });
+
+                test('then it should return the same state object until something changes', () => {
+                    expect(themeController.getState()).toBe(themeController.getState());
+                });
+
+                describe('and the preference is set to light', () => {
+                    beforeEach(() => {
+                        themeController.setPreference(ThemePreference.Light);
+                    });
+
+                    test('then it should resolve to the light theme', () => {
+                        expect(themeController.getState().resolvedTheme).toBe(ResolvedTheme.Light);
+                    });
+
+                    test('then it should persist light to storage', () => {
+                        expect(storage.storedPreference).toBe(ThemePreference.Light);
+                    });
+                });
+            });
+        });
+    });
+
+    describe('given a stored preference of dark', () => {
+        describe('and the system reports a light colour scheme', () => {
+            beforeEach(() => {
+                storage = new FakeThemeStorage(ThemePreference.Dark);
+                systemThemeSource = new FakeSystemThemeSource(ResolvedTheme.Light);
+                themeController = new ThemeController(storage, systemThemeSource);
+            });
+
+            describe('when the state is read', () => {
+                test('then it should resolve to the stored dark theme', () => {
+                    expect(themeController.getState().resolvedTheme).toBe(ResolvedTheme.Dark);
+                });
+            });
+
+            describe('when the system switches to dark while subscribed', () => {
+                test('then it should not notify the subscriber', () => {
+                    const listener = vi.fn();
+                    themeController.subscribe(listener);
+
+                    systemThemeSource.switchTo(ResolvedTheme.Dark);
+
+                    expect(listener).not.toHaveBeenCalled();
+                });
+            });
+        });
+    });
+
+    describe('given the preference follows a light system', () => {
+        let listener: () => void;
+
+        beforeEach(() => {
+            storage = new FakeThemeStorage(ThemePreference.System);
+            systemThemeSource = new FakeSystemThemeSource(ResolvedTheme.Light);
+            themeController = new ThemeController(storage, systemThemeSource);
+            listener = vi.fn();
         });
 
-        test('then it should resolve to the dark theme', () => {
-          expect(themeController.getState().resolvedTheme).toBe(ResolvedTheme.Dark);
+        describe('when the system switches to dark while subscribed', () => {
+            beforeEach(() => {
+                themeController.subscribe(listener);
+                systemThemeSource.switchTo(ResolvedTheme.Dark);
+            });
+
+            test('then it should notify the subscriber once', () => {
+                expect(listener).toHaveBeenCalledOnce();
+            });
+
+            test('then it should resolve to the dark theme', () => {
+                expect(themeController.getState().resolvedTheme).toBe(ResolvedTheme.Dark);
+            });
         });
 
-        test('then it should return the same state object until something changes', () => {
-          expect(themeController.getState()).toBe(themeController.getState());
+        describe('when the preference is set to the one it already has', () => {
+            test('then it should not notify the subscriber', () => {
+                themeController.subscribe(listener);
+
+                themeController.setPreference(ThemePreference.System);
+
+                expect(listener).not.toHaveBeenCalled();
+            });
         });
 
-        describe('and the preference is set to light', () => {
-          beforeEach(() => {
-            themeController.setPreference(ThemePreference.Light);
-          });
+        describe('when the only subscriber unsubscribes', () => {
+            beforeEach(() => {
+                const unsubscribe = themeController.subscribe(listener);
+                unsubscribe();
+            });
 
-          test('then it should resolve to the light theme', () => {
-            expect(themeController.getState().resolvedTheme).toBe(ResolvedTheme.Light);
-          });
+            test('then it should stop listening to the system', () => {
+                expect(systemThemeSource.listenerCount).toBe(0);
+            });
 
-          test('then it should persist light to storage', () => {
-            expect(storage.storedPreference).toBe(ThemePreference.Light);
-          });
+            test('then it should no longer notify that subscriber', () => {
+                themeController.setPreference(ThemePreference.Dark);
+
+                expect(listener).not.toHaveBeenCalled();
+            });
         });
-      });
-    });
-  });
 
-  describe('given a stored preference of dark', () => {
-    describe('and the system reports a light colour scheme', () => {
-      beforeEach(() => {
-        storage = new FakeThemeStorage(ThemePreference.Dark);
-        systemThemeSource = new FakeSystemThemeSource(ResolvedTheme.Light);
-        themeController = new ThemeController(storage, systemThemeSource);
-      });
+        describe('when one of two subscribers unsubscribes', () => {
+            test('then it should keep listening to the system', () => {
+                themeController.subscribe(listener);
+                const unsubscribe = themeController.subscribe(vi.fn());
+                unsubscribe();
 
-      describe('when the state is read', () => {
-        test('then it should resolve to the stored dark theme', () => {
-          expect(themeController.getState().resolvedTheme).toBe(ResolvedTheme.Dark);
+                expect(systemThemeSource.listenerCount).toBe(1);
+            });
         });
-      });
-
-      describe('when the system switches to dark while subscribed', () => {
-        test('then it should not notify the subscriber', () => {
-          const listener = vi.fn();
-          themeController.subscribe(listener);
-
-          systemThemeSource.switchTo(ResolvedTheme.Dark);
-
-          expect(listener).not.toHaveBeenCalled();
-        });
-      });
     });
-  });
-
-  describe('given the preference follows a light system', () => {
-    let listener: () => void;
-
-    beforeEach(() => {
-      storage = new FakeThemeStorage(ThemePreference.System);
-      systemThemeSource = new FakeSystemThemeSource(ResolvedTheme.Light);
-      themeController = new ThemeController(storage, systemThemeSource);
-      listener = vi.fn();
-    });
-
-    describe('when the system switches to dark while subscribed', () => {
-      beforeEach(() => {
-        themeController.subscribe(listener);
-        systemThemeSource.switchTo(ResolvedTheme.Dark);
-      });
-
-      test('then it should notify the subscriber once', () => {
-        expect(listener).toHaveBeenCalledOnce();
-      });
-
-      test('then it should resolve to the dark theme', () => {
-        expect(themeController.getState().resolvedTheme).toBe(ResolvedTheme.Dark);
-      });
-    });
-
-    describe('when the preference is set to the one it already has', () => {
-      test('then it should not notify the subscriber', () => {
-        themeController.subscribe(listener);
-
-        themeController.setPreference(ThemePreference.System);
-
-        expect(listener).not.toHaveBeenCalled();
-      });
-    });
-
-    describe('when the only subscriber unsubscribes', () => {
-      beforeEach(() => {
-        const unsubscribe = themeController.subscribe(listener);
-        unsubscribe();
-      });
-
-      test('then it should stop listening to the system', () => {
-        expect(systemThemeSource.listenerCount).toBe(0);
-      });
-
-      test('then it should no longer notify that subscriber', () => {
-        themeController.setPreference(ThemePreference.Dark);
-
-        expect(listener).not.toHaveBeenCalled();
-      });
-    });
-
-    describe('when one of two subscribers unsubscribes', () => {
-      test('then it should keep listening to the system', () => {
-        themeController.subscribe(listener);
-        const unsubscribe = themeController.subscribe(vi.fn());
-        unsubscribe();
-
-        expect(systemThemeSource.listenerCount).toBe(1);
-      });
-    });
-  });
 });

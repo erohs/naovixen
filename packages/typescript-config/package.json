@@ -1,10 +1,10 @@
 {
-  "name": "@naovixen/typescript-config",
-  "private": true,
-  "type": "module",
-  "exports": {
-    "./base.json": "./base.json",
-    "./react-library.json": "./react-library.json",
-    "./app.json": "./app.json"
-  }
+    "name": "@naovixen/typescript-config",
+    "private": true,
+    "type": "module",
+    "exports": {
+        "./base.json": "./base.json",
+        "./react-library.json": "./react-library.json",
+        "./app.json": "./app.json"
+    }
 }

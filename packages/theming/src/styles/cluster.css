@@ -1,7 +1,7 @@
-/* A wrapping row, for tags, buttons and links. Set --cluster-gap to change the gap. */
+/* Set --cluster-gap to change the gap. */
 .nx-cluster {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: var(--cluster-gap, var(--space-between-content));
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--cluster-gap, var(--space-between-content));
 }

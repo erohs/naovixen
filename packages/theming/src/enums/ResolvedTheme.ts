@@ -1,4 +1,4 @@
 export enum ResolvedTheme {
-  Light = 'light',
-  Dark = 'dark',
+    Light = 'light',
+    Dark = 'dark',
 }

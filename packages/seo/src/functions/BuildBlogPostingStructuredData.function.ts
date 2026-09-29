@@ -5,19 +5,19 @@ import type { IBlogPostingStructuredData } from '../interfaces/IBlogPostingStruc
 import { resolveAbsoluteUrl } from './ResolveAbsoluteUrl.function';
 
 export function buildBlogPostingStructuredData(
-  post: IBlogPostSummary,
-  author: IPerson,
-  site: ISite,
+    post: IBlogPostSummary,
+    author: IPerson,
+    site: ISite,
 ): IBlogPostingStructuredData {
-  return {
-    '@context': schemaOrgContext,
-    '@type': 'BlogPosting',
-    headline: post.title,
-    description: post.excerpt,
-    datePublished: post.publishedAt,
-    url: resolveAbsoluteUrl(site.origin, `/blog/${post.slug}`),
-    inLanguage: site.locale,
-    keywords: post.tags,
-    author: { '@type': 'Person', name: author.name, url: site.origin },
-  };
+    return {
+        '@context': schemaOrgContext,
+        '@type': 'BlogPosting',
+        headline: post.title,
+        description: post.excerpt,
+        datePublished: post.publishedAt,
+        url: resolveAbsoluteUrl(site.origin, `/blog/${post.slug}`),
+        inLanguage: site.locale,
+        keywords: post.tags,
+        author: { '@type': 'Person', name: author.name, url: site.origin },
+    };
 }

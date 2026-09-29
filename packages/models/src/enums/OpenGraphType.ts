@@ -1,4 +1,4 @@
 export enum OpenGraphType {
-  Website = 'website',
-  Article = 'article',
+    Website = 'website',
+    Article = 'article',
 }

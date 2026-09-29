@@ -1,7 +1,7 @@
 {
-  "extends": "@naovixen/typescript-config/base.json",
-  "compilerOptions": {
-    "types": []
-  },
-  "include": ["src"]
+    "extends": "@naovixen/typescript-config/base.json",
+    "compilerOptions": {
+        "types": []
+    },
+    "include": ["src"]
 }

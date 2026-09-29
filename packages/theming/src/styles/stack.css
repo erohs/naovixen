@@ -1,6 +1,6 @@
-/* Vertical rhythm: set --stack-gap to another space token to change it. */
+/* Set --stack-gap to another space token to change the gap. */
 .nx-stack {
-  display: flex;
-  flex-direction: column;
-  gap: var(--stack-gap, var(--space-between-content));
+    display: flex;
+    flex-direction: column;
+    gap: var(--stack-gap, var(--space-between-content));
 }

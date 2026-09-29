@@ -1,20 +1,20 @@
 {
-  "name": "@naovixen/seo",
-  "private": true,
-  "type": "module",
-  "exports": {
-    ".": "./src/index.ts"
-  },
-  "scripts": {
-    "lint": "eslint .",
-    "typecheck": "tsc --noEmit",
-    "test": "vitest run"
-  },
-  "dependencies": {
-    "@naovixen/models": "workspace:*"
-  },
-  "devDependencies": {
-    "@naovixen/typescript-config": "workspace:*",
-    "vitest": "5.0.2"
-  }
+    "name": "@naovixen/seo",
+    "private": true,
+    "type": "module",
+    "exports": {
+        ".": "./src/index.ts"
+    },
+    "scripts": {
+        "lint": "eslint .",
+        "typecheck": "tsc --noEmit",
+        "test": "vitest run"
+    },
+    "dependencies": {
+        "@naovixen/models": "workspace:*"
+    },
+    "devDependencies": {
+        "@naovixen/typescript-config": "workspace:*",
+        "vitest": "5.0.2"
+    }
 }

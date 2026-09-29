@@ -1,8 +1,8 @@
 {
-  "$schema": "https://json.schemastore.org/tsconfig",
-  "display": "naovixen application",
-  "extends": "./react-library.json",
-  "compilerOptions": {
-    "types": ["vite/client"]
-  }
+    "$schema": "https://json.schemastore.org/tsconfig",
+    "display": "naovixen application",
+    "extends": "./react-library.json",
+    "compilerOptions": {
+        "types": ["vite/client"]
+    }
 }

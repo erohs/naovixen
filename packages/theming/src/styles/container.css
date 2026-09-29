@@ -1,7 +1,6 @@
-/* Centres content at the page width with the page gutter either side. */
 .nx-container {
-  inline-size: 100%;
-  max-inline-size: calc(var(--layout-width-page) + 2 * var(--space-padding-page));
-  margin-inline: auto;
-  padding-inline: var(--space-padding-page);
+    inline-size: 100%;
+    max-inline-size: calc(var(--layout-width-page) + 2 * var(--space-padding-page));
+    margin-inline: auto;
+    padding-inline: var(--space-padding-page);
 }
