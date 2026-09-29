@@ -63,3 +63,10 @@ samp {
     outline: var(--border-width-highlight) solid var(--color-focus);
     outline-offset: var(--border-width-highlight);
 }
+
+/* In-page links glide to their target, unless the reader has asked for less motion. */
+@media (prefers-reduced-motion: no-preference) {
+    html {
+        scroll-behavior: smooth;
+    }
+}

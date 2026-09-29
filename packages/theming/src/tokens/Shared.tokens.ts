@@ -68,8 +68,12 @@ export const sharedTokens = {
     '--radius-round': '50% 44% 52% 46% / 46% 52% 44% 50%',
 
     /** Lifts and presses move by these offsets, so the shadow stays put. */
+    '--size-shadow-offset-small': '3px',
     '--size-shadow-offset-resting': '4px',
     '--size-shadow-offset-raised': '6px',
+    /** For small controls, such as round icon buttons and link tiles, which a full shadow swamps. */
+    '--shadow-small':
+        'var(--size-shadow-offset-small) var(--size-shadow-offset-small) 0 var(--color-shadow)',
     '--shadow-resting':
         'var(--size-shadow-offset-resting) var(--size-shadow-offset-resting) 0 var(--color-shadow)',
     '--shadow-raised':

@@ -49,8 +49,10 @@
     --radius-large: 30px 22px 34px 18px / 22px 32px 18px 30px;
     --radius-large-alternate: 18px 30px 16px 28px / 30px 16px 28px 18px;
     --radius-round: 50% 44% 52% 46% / 46% 52% 44% 50%;
+    --size-shadow-offset-small: 3px;
     --size-shadow-offset-resting: 4px;
     --size-shadow-offset-raised: 6px;
+    --shadow-small: var(--size-shadow-offset-small) var(--size-shadow-offset-small) 0 var(--color-shadow);
     --shadow-resting: var(--size-shadow-offset-resting) var(--size-shadow-offset-resting) 0 var(--color-shadow);
     --shadow-raised: var(--size-shadow-offset-raised) var(--size-shadow-offset-raised) 0 var(--color-shadow);
     --duration-fast: 150ms;
