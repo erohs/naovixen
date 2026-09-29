@@ -32,3 +32,32 @@
         }
     }
 }
+
+/*
+ * RevealThemeChange sets the centre and radius. The new theme grows over a still snapshot of
+ * the old one; with reduced motion the browser's default crossfade stays instead.
+ */
+@media (prefers-reduced-motion: no-preference) {
+    ::view-transition-old(root),
+    ::view-transition-new(root) {
+        animation: none;
+        mix-blend-mode: normal;
+    }
+
+    ::view-transition-new(root) {
+        animation: nx-theme-toggle-reveal var(--duration-slow) var(--easing-emphasized);
+    }
+}
+
+@keyframes nx-theme-toggle-reveal {
+    from {
+        clip-path: circle(0 at var(--theme-toggle-reveal-x) var(--theme-toggle-reveal-y));
+    }
+
+    to {
+        clip-path: circle(
+            var(--theme-toggle-reveal-radius) at var(--theme-toggle-reveal-x)
+                var(--theme-toggle-reveal-y)
+        );
+    }
+}
