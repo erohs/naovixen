@@ -3,8 +3,8 @@
  * and a reader west of Greenwich would disagree about the day.
  */
 export const longDateFormat = new Intl.DateTimeFormat('en-GB', {
-  day: 'numeric',
-  month: 'long',
-  year: 'numeric',
-  timeZone: 'UTC',
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+    timeZone: 'UTC',
 });

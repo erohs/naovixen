@@ -1,0 +1,30 @@
+{
+    "name": "@naovixen/component-testing",
+    "private": true,
+    "type": "module",
+    "exports": {
+        ".": "./src/index.ts",
+        "./setup": "./src/VitestSetup.effect.ts"
+    },
+    "scripts": {
+        "lint": "eslint .",
+        "typecheck": "tsc --noEmit"
+    },
+    "dependencies": {
+        "axe-core": "4.13.0"
+    },
+    "peerDependencies": {
+        "@testing-library/react": "16.3.3",
+        "vitest": "5.0.2"
+    },
+    "devDependencies": {
+        "@naovixen/typescript-config": "workspace:*",
+        "@testing-library/dom": "10.4.2",
+        "@testing-library/react": "16.3.3",
+        "@types/react": "19.3.0",
+        "@types/react-dom": "19.3.0",
+        "react": "19.3.0",
+        "react-dom": "19.3.0",
+        "vitest": "5.0.2"
+    }
+}

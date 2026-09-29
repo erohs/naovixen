@@ -1,17 +1,17 @@
 {
-  "name": "@naovixen/formatting",
-  "private": true,
-  "type": "module",
-  "exports": {
-    ".": "./src/index.ts"
-  },
-  "scripts": {
-    "lint": "eslint .",
-    "typecheck": "tsc --noEmit",
-    "test": "vitest run"
-  },
-  "devDependencies": {
-    "@naovixen/typescript-config": "workspace:*",
-    "vitest": "5.0.2"
-  }
+    "name": "@naovixen/formatting",
+    "private": true,
+    "type": "module",
+    "exports": {
+        ".": "./src/index.ts"
+    },
+    "scripts": {
+        "lint": "eslint .",
+        "typecheck": "tsc --noEmit",
+        "test": "vitest run"
+    },
+    "devDependencies": {
+        "@naovixen/typescript-config": "workspace:*",
+        "vitest": "5.0.2"
+    }
 }

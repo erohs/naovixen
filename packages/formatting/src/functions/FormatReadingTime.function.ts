@@ -1,3 +1,3 @@
 export function formatReadingTime(minutes: number): string {
-  return `${String(minutes)} min read`;
+    return `${String(minutes)} min read`;
 }

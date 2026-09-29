@@ -1,4 +1,4 @@
 {
-  "extends": "@naovixen/typescript-config/base.json",
-  "include": ["src"]
+    "extends": "@naovixen/typescript-config/base.json",
+    "include": ["src"]
 }
