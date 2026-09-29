@@ -1,0 +1,46 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Build output
+dist/
+build/
+out/
+.output/
+.vinxi/
+.tanstack/
+.nitro/
+.wrangler/
+*.tsbuildinfo
+
+# Caches
+.turbo/
+.cache/
+.vite/
+.eslintcache
+.stylelintcache
+
+# Test and coverage output
+coverage/
+playwright-report/
+test-results/
+blob-report/
+.playwright/
+.lighthouseci/
+
+# Environment files (`.env.example` is committed)
+.env
+.env.*
+!.env.example
+
+# Content sources — Naomi's CV and other personal material must never reach the repo
+source-material/
+
+# Working notes that quote private CV details
+docs/content-inventory.md
+
+# Editor and OS
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
