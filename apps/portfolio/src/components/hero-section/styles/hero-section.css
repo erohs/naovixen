@@ -58,12 +58,13 @@
     }
 }
 
+/* Sized and set off as the design does, in proportion to the heading. */
 .nx-hero-section__paw {
     display: inline-block;
     inline-size: calc(var(--font-size-display) * 0.3);
     block-size: calc(var(--font-size-display) * 0.3);
-    margin-block-start: calc(var(--font-size-display) * 0.04);
-    margin-inline-start: calc(var(--font-size-display) * 0.14);
+    margin-block-start: calc(var(--font-size-display) * 0.3 * 0.04);
+    margin-inline-start: calc(var(--font-size-display) * 0.3 * 0.14);
     color: var(--color-decoration-paw);
     vertical-align: top;
     rotate: 18deg;
@@ -71,6 +72,8 @@
 
 .nx-hero-section__summary {
     max-inline-size: 34ch;
+    font-size: calc(var(--font-size-lead) * 12 / 11);
+    line-height: 1.5;
     color: var(--color-text-secondary);
 }
 

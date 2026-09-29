@@ -11,6 +11,7 @@
 @import url('./components/hero-actions/styles/hero-actions.css') layer(components);
 @import url('./components/exclamation-bubble/styles/exclamation-bubble.css') layer(components);
 @import url('./components/interest-list/styles/interest-list.css') layer(components);
+@import url('./components/photo-placeholder/styles/photo-placeholder.css') layer(components);
 @import url('./components/about-summary/styles/about-summary.css') layer(components);
 @import url('./components/about-section/styles/about-section.css') layer(components);
 @import url('./components/employer-role/styles/employer-role.css') layer(components);

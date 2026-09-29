@@ -1,11 +1,12 @@
 import type { FunctionComponent } from 'react';
-import { Figure, FigureShape, SpeechBubble } from '@naovixen/blocks';
+import { SpeechBubble } from '@naovixen/blocks';
 import { Text, TextVariant } from '@naovixen/components';
 import { Grid, Space, Stack } from '@naovixen/layout';
 
 import { placeholderAboutPage } from '../../constants/PlaceholderAboutPage.const';
-import { placeholderPhoto } from '../../constants/PlaceholderPhoto.const';
+import { placeholderPhotoDescription } from '../../constants/PlaceholderPhotoDescription.const';
 import { GreetingHeading } from '../greeting-heading/GreetingHeading.component';
+import { PhotoPlaceholder } from '../photo-placeholder/PhotoPlaceholder.component';
 
 export const AboutIntroduction: FunctionComponent = () => (
     <Grid className="nx-about-introduction">
@@ -20,9 +21,8 @@ export const AboutIntroduction: FunctionComponent = () => (
                 <Text key={paragraph}>{paragraph}</Text>
             ))}
         </Stack>
-        <Figure
-            image={{ ...placeholderPhoto, loading: 'eager' }}
-            shape={FigureShape.Portrait}
+        <PhotoPlaceholder
+            description={placeholderPhotoDescription}
             className="nx-about-introduction__photo"
         />
     </Grid>

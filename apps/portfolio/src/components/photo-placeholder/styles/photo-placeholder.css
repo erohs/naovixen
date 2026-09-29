@@ -1,0 +1,30 @@
+/* A tilted portrait frame, striped in a faint tint of the line colour. */
+.nx-photo-placeholder {
+    --photo-placeholder-stripe: color-mix(
+        in oklch,
+        var(--color-border) 12%,
+        var(--color-background-surface)
+    );
+
+    display: grid;
+    place-items: center;
+    aspect-ratio: 4 / 5;
+    border: var(--border-width-standout) solid var(--color-border);
+    border-radius: var(--radius-large-alternate);
+    background: repeating-linear-gradient(
+        135deg,
+        var(--color-background-surface) 0 var(--space-between-text),
+        var(--photo-placeholder-stripe) var(--space-between-text) var(--space-between-content)
+    );
+    rotate: 1.5deg;
+}
+
+.nx-photo-placeholder__label {
+    padding: var(--space-padding-chip);
+    border: var(--border-width-default) solid var(--color-border);
+    border-radius: var(--radius-small);
+    background-color: var(--color-background-page);
+    font-family: var(--font-family-code);
+    font-size: var(--font-size-meta);
+    line-height: 1;
+}

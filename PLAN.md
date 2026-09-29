@@ -71,7 +71,7 @@ naovixen/
 │   ├── components/              # generic HTML-level React components
 │   ├── layout/                  # Container, Stack, Cluster, Grid
 │   ├── blocks/                  # generic compositions: Card, Breadcrumb, Disclosure…
-│   ├── brand/                   # logo, wordmark, fox and doodles
+│   ├── brand/                   # logo, wordmark and doodles
 │   ├── site-shell/              # header, footer, theme toggle, back-to-top
 │   ├── portable-text/           # blog body renderer
 │   ├── component-testing/       # shared test setup and axe helper (dev only)
@@ -255,7 +255,7 @@ Reworked after review: the first cut was site widgets, not a component library.
 - [x] `components`: generic, HTML-level, intrinsic props passed through — Button, BusyButton, IconButton, ToggleButton, Link, LinkIcon, LinkButton, ExternalLink, Input, TextArea, Label, FormField, Heading, Text, Code, Image, Tag, Blockquote, Icon (one `*.icon.ts` source per icon), VisuallyHidden, SkipLink.
 - [x] `layout`: Container, Stack, Cluster, Grid.
 - [x] `blocks`: Card, Callout, CodeBlock, Figure, TagList, SpeechBubble, Breadcrumb, Pagination, Disclosure, NavigationList, LinkTile, SectionHeading, HandDrawnRule.
-- [x] `brand`: Logo, Wordmark, a redrawn line-art FoxMascot, Heart, Paw.
+- [x] `brand`: Logo, Wordmark, Heart, Paw (the fox mascot was later removed at Naomi's request).
 - [x] `site-shell`: ThemeProvider and `useTheme`, ThemeToggle, SiteHeader, SiteNavigation, MobileMenu, SiteFooter, BackToTop.
 - [x] `portable-text`: BlogContent.
 - [x] App compositions: ProjectCard and PostCard in `apps/portfolio`.

@@ -93,6 +93,14 @@ Loaders read `context.blogRepository`, an `IBlogRepository` handed to the router
 7 it is an `InMemoryBlogRepository` holding placeholder posts; Sanity replaces it without a
 route changing.
 
+## Some pieces are drawn to the design's exact numbers
+
+The card's folded corner, the speech bubble, the tag, the heart, the paw and the motion lines
+are graphics, so their sizes are the design's own rather than the spacing scale's, as Naomi
+asked. Colours still come from the theme, so they follow light and dark. Small controls (the
+theme button, back-to-top, link tiles) rest on a 3px shadow, `--shadow-small`, where the
+design's buttons use 4px.
+
 ## Two looks for a link
 
 A link in content has a solid accent underline that turns wavy under the pointer. A link in

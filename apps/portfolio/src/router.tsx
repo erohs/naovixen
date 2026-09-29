@@ -13,6 +13,8 @@ export const getRouter = () =>
         routeTree,
         context: { blogRepository },
         scrollRestoration: true,
+        /** A new page starts at its top straight away; only in-page links scroll smoothly. */
+        scrollRestorationBehavior: 'instant',
         defaultPreload: 'intent',
     });
 

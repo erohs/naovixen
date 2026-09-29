@@ -1,5 +1,4 @@
 import type { FunctionComponent } from 'react';
-import { FoxMascot } from '@naovixen/brand';
 import { SiteFooter } from '@naovixen/site-shell';
 
 import { navigationItems } from '../../constants/NavigationItems.const';
@@ -10,7 +9,6 @@ import { site } from '../../constants/Site.const';
 import { RoutedLink } from '../routed-link/RoutedLink.component';
 import type { IPortfolioFooterProps } from './interfaces/IPortfolioFooterProps';
 
-/** The fox peeks over the footer on every page but home, as in the design. */
 export const PortfolioFooter: FunctionComponent<IPortfolioFooterProps> = ({
     currentPath,
     year,
@@ -24,6 +22,5 @@ export const PortfolioFooter: FunctionComponent<IPortfolioFooterProps> = ({
         copyrightHolder={site.name}
         year={year}
         privacyLink={privacyLink}
-        mascot={currentPath === '/' ? undefined : <FoxMascot />}
     />
 );

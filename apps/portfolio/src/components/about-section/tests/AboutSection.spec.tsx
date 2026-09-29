@@ -3,7 +3,7 @@ import { screen } from '@testing-library/react';
 import { describe, expect, test } from 'vitest';
 
 import { placeholderInterests } from '../../../constants/PlaceholderInterests.const';
-import { placeholderPhoto } from '../../../constants/PlaceholderPhoto.const';
+import { placeholderPhotoDescription } from '../../../constants/PlaceholderPhotoDescription.const';
 import { renderWithRouter } from '../../../tests/functions/RenderWithRouter.function';
 import { AboutSection } from '../AboutSection.component';
 
@@ -52,7 +52,7 @@ describe('Using AboutSection', () => {
         test('then it should show the photo with its description', async () => {
             await renderAboutSection();
 
-            expect(screen.getByRole('img', { name: placeholderPhoto.alt })).toBeDefined();
+            expect(screen.getByRole('img', { name: placeholderPhotoDescription })).toBeDefined();
         });
 
         test('then it should have no accessibility violations', async () => {

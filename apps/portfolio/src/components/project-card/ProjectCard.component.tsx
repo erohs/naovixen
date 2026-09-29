@@ -1,5 +1,5 @@
 import type { FunctionComponent } from 'react';
-import { Card, CardHalo, TagList } from '@naovixen/blocks';
+import { Card, TagList } from '@naovixen/blocks';
 import { Heading, HeadingSize, Image, Text } from '@naovixen/components';
 import { joinClassNames } from '@naovixen/formatting';
 
@@ -12,11 +12,10 @@ export const ProjectCard: FunctionComponent<IProjectCardProps> = ({
     href,
     headingLevel,
     linkComponent,
-    halo = CardHalo.Dotted,
     className,
     ...cardProps
 }) => (
-    <Card {...cardProps} halo={halo} className={joinClassNames('nx-project-card', className)}>
+    <Card {...cardProps} className={joinClassNames('nx-project-card', className)}>
         {project.screenshot && (
             <Image {...project.screenshot} className="nx-project-card__screenshot" />
         )}
