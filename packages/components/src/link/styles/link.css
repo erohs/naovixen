@@ -1,11 +1,15 @@
+/* A link in content: a solid underline that turns wavy under the pointer. */
 .nx-link {
-    text-decoration: underline wavy transparent;
+    color: var(--color-text-primary);
+    font-weight: var(--font-weight-semi-bold);
+    text-decoration: underline solid var(--color-text-accent);
     text-decoration-thickness: var(--border-width-standout);
+    text-decoration-skip-ink: none;
     transition: text-decoration-color var(--duration-fast) var(--easing-standard);
 
-    &:hover,
-    &[aria-current='page'] {
-        text-decoration-color: var(--color-text-accent);
+    &:hover {
+        text-decoration-style: wavy;
+        text-decoration-color: var(--color-background-accent);
     }
 
     /* Focus inverts the link into a solid block, which reads more clearly than a ring on text. */
@@ -17,6 +21,20 @@
         color: var(--color-background-page);
         text-decoration-color: transparent;
         box-decoration-break: clone;
+    }
+}
+
+/*
+ * A link in a list of places to go: no underline until the pointer is on it or it is the
+ * current page, so a column of links reads as a menu. Navigation lists pass this class to
+ * whichever link component renders them.
+ */
+.nx-link--navigation {
+    text-decoration-style: wavy;
+    text-decoration-color: transparent;
+
+    &[aria-current='page'] {
+        text-decoration-color: var(--color-background-accent);
     }
 }
 

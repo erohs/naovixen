@@ -6,6 +6,10 @@
     font-size: var(--font-size-h1);
 }
 
+.nx-heading--title {
+    font-size: var(--font-size-title);
+}
+
 .nx-heading--h2 {
     font-size: var(--font-size-h2);
 }
@@ -16,4 +20,17 @@
 
 .nx-heading--h4 {
     font-size: var(--font-size-h4);
+}
+
+/* Line height follows the size, not the element, so an h3 styled large stays tight. */
+.nx-heading--display,
+.nx-heading--h1,
+.nx-heading--title,
+.nx-heading--h2 {
+    line-height: var(--line-height-heading);
+}
+
+.nx-heading--h3,
+.nx-heading--h4 {
+    line-height: var(--line-height-subheading);
 }
