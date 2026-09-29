@@ -3,9 +3,9 @@ import { createFluidValue } from '../functions/CreateFluidValue.function';
 
 /** Tokens that are the same in both themes. Authored in px, emitted in rem. */
 export const sharedTokens = {
-  '--font-family-body': "'Schibsted Grotesk Variable', system-ui, sans-serif",
-  '--font-family-heading': "'Fredoka Variable', system-ui, sans-serif",
-  '--font-family-code': "'JetBrains Mono Variable', ui-monospace, monospace",
+  '--font-family-body': "'Schibsted Grotesk Variable', 'Schibsted Grotesk Fallback', sans-serif",
+  '--font-family-heading': "'Fredoka Variable', 'Fredoka Fallback', sans-serif",
+  '--font-family-code': "'JetBrains Mono Variable', 'JetBrains Mono Fallback', monospace",
   '--font-family-handwriting': "'Gochi Hand', cursive",
 
   '--font-size-display': createFluidValue(52, 128),

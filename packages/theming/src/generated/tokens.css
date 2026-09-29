@@ -1,9 +1,9 @@
 /* Generated from src/tokens by scripts/GenerateTokens.effect.ts. Do not edit by hand. */
 
 :root {
-  --font-family-body: 'Schibsted Grotesk Variable', system-ui, sans-serif;
-  --font-family-heading: 'Fredoka Variable', system-ui, sans-serif;
-  --font-family-code: 'JetBrains Mono Variable', ui-monospace, monospace;
+  --font-family-body: 'Schibsted Grotesk Variable', 'Schibsted Grotesk Fallback', sans-serif;
+  --font-family-heading: 'Fredoka Variable', 'Fredoka Fallback', sans-serif;
+  --font-family-code: 'JetBrains Mono Variable', 'JetBrains Mono Fallback', monospace;
   --font-family-handwriting: 'Gochi Hand', cursive;
   --font-size-display: clamp(3.25rem, 1.3913rem + 8.2609vw, 8rem);
   --font-size-h1: clamp(2.75rem, 1.4783rem + 5.6522vw, 6rem);

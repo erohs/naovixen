@@ -7,11 +7,8 @@
 
 ## Where we are
 
-**Phases 0 and 1 are done and pushed.** `pnpm typecheck`, `test`, `lint` and `build` all pass.
-
-**Phase 2 — theming, in progress.** Tokens, generator, both themes and the AA contrast
-check are done. Next: reset, base typography, focus styles, layout primitives, utilities,
-and self-hosted fonts with fallback metrics.
+**Phases 0–2 are done.** `pnpm typecheck`, `test`, `lint` and `build` all pass. Next:
+Phase 3, the logic packages (models, services, controllers).
 
 Package names changed from section 2: `ui` → `components`, `styles` → `theming`,
 `content` → `formatting`, `system-page` → `design-system`, `tsconfig` →
@@ -595,8 +592,8 @@ Simple, accessible, professional, Scandinavian restraint with a playful hint of 
 
 - [x] Derive palette, typography, spacing, radii, shadows and motion from how `design-reference/` **looks when rendered**, normalised into a small, consistent scale in `*.tokens.ts`. Don't lift raw values from its CSS: collapse near-duplicates (e.g. five slightly different greys or paddings become one token) and list any merges in `docs/decisions.md` for Naomi to check.
 - [x] Token generator script + generated `tokens.css`; light and dark semantic themes.
-- [ ] Reset, base typography, focus styles, layout primitives, minimal utilities, cascade layers.
-- [ ] Self-hosted fonts with fallback metrics.
+- [x] Reset, base typography, focus styles, layout primitives, minimal utilities, cascade layers.
+- [x] Self-hosted fonts with fallback metrics.
 - **Verify:** generator is deterministic; contrast check for all semantic pairs passes AA. **Commit** once this passes.
 
 ### Phase 3 — Core package
