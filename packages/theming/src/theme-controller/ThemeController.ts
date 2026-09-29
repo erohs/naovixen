@@ -2,7 +2,7 @@ import type { ThemePreference } from '../enums/ThemePreference';
 import type { ISystemThemeSource } from '../interfaces/ISystemThemeSource';
 import type { IThemeController } from '../interfaces/IThemeController';
 import type { IThemeStorage } from '../interfaces/IThemeStorage';
-import { defaultThemePreference } from './constants/DefaultThemePreference.const';
+import { defaultThemePreference } from '../constants/DefaultThemePreference.const';
 import { resolveTheme } from './functions/ResolveTheme.function';
 import type { IThemeState } from './interfaces/IThemeState';
 

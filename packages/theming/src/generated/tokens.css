@@ -90,3 +90,24 @@
     --color-decoration-paw: #F07C74;
     --color-decoration-highlight: #FBF6EE;
 }
+
+@media (prefers-color-scheme: dark) {
+    :root:not([data-theme]) {
+        color-scheme: dark;
+
+        --color-background-page: #2B1D14;
+        --color-background-surface: #3B2A1E;
+        --color-background-accent: #E8894A;
+        --color-text-primary: #FBF6EE;
+        --color-text-secondary: #E3CFBA;
+        --color-text-accent: #E8894A;
+        --color-text-error: #F59A8F;
+        --color-text-on-accent: #1F1B22;
+        --color-border: #FBF6EE;
+        --color-shadow: #FBF6EE;
+        --color-focus: #C9B8E6;
+        --color-decoration-dots: #8E7AAE;
+        --color-decoration-paw: #F07C74;
+        --color-decoration-highlight: #FBF6EE;
+    }
+}

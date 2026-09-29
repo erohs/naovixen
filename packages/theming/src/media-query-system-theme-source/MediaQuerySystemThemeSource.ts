@@ -1,6 +1,6 @@
 import { ResolvedTheme } from '../enums/ResolvedTheme';
 import type { ISystemThemeSource } from '../interfaces/ISystemThemeSource';
-import { darkColorSchemeQuery } from './constants/DarkColorSchemeQuery.const';
+import { darkColorSchemeQuery } from '../constants/DarkColorSchemeQuery.const';
 import type { IMediaQueryList } from './interfaces/IMediaQueryList';
 import type { MatchMedia } from './types/MatchMedia';
 

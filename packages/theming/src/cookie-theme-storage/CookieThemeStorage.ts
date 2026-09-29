@@ -1,6 +1,6 @@
 import type { ThemePreference } from '../enums/ThemePreference';
 import type { IThemeStorage } from '../interfaces/IThemeStorage';
-import { themeCookieName } from './constants/ThemeCookieName.const';
+import { themeCookieName } from '../constants/ThemeCookieName.const';
 import { isThemePreference } from './functions/IsThemePreference.function';
 import type { ICookieStore } from './interfaces/ICookieStore';
 

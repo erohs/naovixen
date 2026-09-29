@@ -31,5 +31,11 @@ describe('Using renderTokenStylesheet', () => {
         test('then it should apply dark only where it is selected', () => {
             expect(stylesheet).toContain("\n[data-theme='dark'] {\n    color-scheme: dark;\n");
         });
+
+        test('then it should follow a dark system setting until a theme is selected', () => {
+            expect(stylesheet).toContain(
+                '@media (prefers-color-scheme: dark) {\n    :root:not([data-theme]) {\n        color-scheme: dark;\n',
+            );
+        });
     });
 });
