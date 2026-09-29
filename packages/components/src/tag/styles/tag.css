@@ -1,12 +1,13 @@
+/* Written out to the design's measurements, like the cards it mostly sits in. */
 .nx-tag {
     display: inline-block;
-    padding: var(--space-padding-chip);
+    padding: 7px 10px;
     border: var(--border-width-default) solid var(--color-border);
     border-radius: var(--radius-small);
     background-color: var(--color-background-page);
     color: var(--color-text-primary);
     font-family: var(--font-family-code);
     font-size: var(--font-size-meta);
-    line-height: var(--line-height-heading);
+    line-height: 1;
     white-space: nowrap;
 }
