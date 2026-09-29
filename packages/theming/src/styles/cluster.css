@@ -1,7 +1,9 @@
-/* Set --cluster-gap to change the gap. */
+/* Set --cluster-gap on the cluster itself to change the gap: a parent's value never leaks in. */
 .nx-cluster {
+    --cluster-gap: var(--space-between-content);
+
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: var(--cluster-gap, var(--space-between-content));
+    gap: var(--cluster-gap);
 }

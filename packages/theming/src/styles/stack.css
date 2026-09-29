@@ -1,6 +1,8 @@
-/* Set --stack-gap to another space token to change the gap. */
+/* Set --stack-gap on the stack itself to change the gap: a parent's value never leaks in. */
 .nx-stack {
+    --stack-gap: var(--space-between-content);
+
     display: flex;
     flex-direction: column;
-    gap: var(--stack-gap, var(--space-between-content));
+    gap: var(--stack-gap);
 }
