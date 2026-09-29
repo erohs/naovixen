@@ -38,6 +38,8 @@ export const sharedTokens = {
   '--layout-width-page': convertPixelToRem(1160),
   '--layout-width-prose': convertPixelToRem(720),
   '--size-action-minimum': convertPixelToRem(44),
+  // In em, so the gap under a link grows with its text.
+  '--size-underline-offset': '0.3em',
 
   '--border-width-default': '1px',
   '--border-width-standout': '2px',
@@ -49,8 +51,13 @@ export const sharedTokens = {
   '--radius-large': '30px 18px 32px 16px / 18px 30px 16px 32px',
   '--radius-round': '50% 44% 52% 46% / 46% 52% 44% 50%',
 
-  '--shadow-resting': '4px 4px 0 var(--color-shadow)',
-  '--shadow-raised': '6px 6px 0 var(--color-shadow)',
+  // Hard offset shadows. Lifts and presses move by these offsets, so the shadow stays put.
+  '--size-shadow-offset-resting': '4px',
+  '--size-shadow-offset-raised': '6px',
+  '--shadow-resting':
+    'var(--size-shadow-offset-resting) var(--size-shadow-offset-resting) 0 var(--color-shadow)',
+  '--shadow-raised':
+    'var(--size-shadow-offset-raised) var(--size-shadow-offset-raised) 0 var(--color-shadow)',
 
   '--duration-fast': '150ms',
   '--duration-medium': '300ms',

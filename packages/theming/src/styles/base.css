@@ -43,7 +43,7 @@ p {
 
 a {
   color: inherit;
-  text-underline-offset: 0.2em;
+  text-underline-offset: var(--size-underline-offset);
 }
 
 code,

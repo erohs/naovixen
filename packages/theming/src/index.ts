@@ -1,5 +1,6 @@
 export type { IColorTheme } from './interfaces/IColorTheme';
 export type { IContrastRequirement } from './interfaces/IContrastRequirement';
+export type { IThemeController } from './interfaces/IThemeController';
 export type { ISystemThemeSource } from './interfaces/ISystemThemeSource';
 export type { IThemeStorage } from './interfaces/IThemeStorage';
 export { contrastRequirements } from './constants/ContrastRequirements.const';

@@ -1,5 +1,6 @@
 import type { ThemePreference } from '../enums/ThemePreference';
 import type { ISystemThemeSource } from '../interfaces/ISystemThemeSource';
+import type { IThemeController } from '../interfaces/IThemeController';
 import type { IThemeStorage } from '../interfaces/IThemeStorage';
 import { defaultThemePreference } from './constants/DefaultThemePreference.const';
 import { resolveTheme } from './functions/ResolveTheme.function';
@@ -9,7 +10,7 @@ import type { IThemeState } from './interfaces/IThemeState';
  * The public members are arrow properties so they stay bound when handed to
  * `useSyncExternalStore`. It listens to the system only while it has subscribers.
  */
-export class ThemeController {
+export class ThemeController implements IThemeController {
   private readonly _storage: IThemeStorage;
   private readonly _systemThemeSource: ISystemThemeSource;
   private readonly _listeners = new Set<() => void>();

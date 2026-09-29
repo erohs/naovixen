@@ -32,6 +32,7 @@
   --layout-width-page: 72.5rem;
   --layout-width-prose: 45rem;
   --size-action-minimum: 2.75rem;
+  --size-underline-offset: 0.3em;
   --border-width-default: 1px;
   --border-width-standout: 2px;
   --border-width-highlight: 3px;
@@ -39,8 +40,10 @@
   --radius-medium: 24px 12px 22px 14px / 14px 22px 12px 24px;
   --radius-large: 30px 18px 32px 16px / 18px 30px 16px 32px;
   --radius-round: 50% 44% 52% 46% / 46% 52% 44% 50%;
-  --shadow-resting: 4px 4px 0 var(--color-shadow);
-  --shadow-raised: 6px 6px 0 var(--color-shadow);
+  --size-shadow-offset-resting: 4px;
+  --size-shadow-offset-raised: 6px;
+  --shadow-resting: var(--size-shadow-offset-resting) var(--size-shadow-offset-resting) 0 var(--color-shadow);
+  --shadow-raised: var(--size-shadow-offset-raised) var(--size-shadow-offset-raised) 0 var(--color-shadow);
   --duration-fast: 150ms;
   --duration-medium: 300ms;
   --duration-slow: 450ms;
