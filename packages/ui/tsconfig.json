@@ -1,0 +1,4 @@
+{
+  "extends": "@naovixen/tsconfig/react-library.json",
+  "include": ["src"]
+}

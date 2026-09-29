@@ -1,0 +1,17 @@
+{
+  "name": "@naovixen/core",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "@naovixen/tsconfig": "workspace:*",
+    "vitest": "5.0.2"
+  }
+}

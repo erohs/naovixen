@@ -1,0 +1,16 @@
+{
+  "name": "@naovixen/styles",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./styles.css": "./src/index.css"
+  },
+  "scripts": {
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@naovixen/tsconfig": "workspace:*"
+  }
+}

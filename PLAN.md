@@ -12,7 +12,7 @@
 3. **Readability over cleverness.** Prefer explicit, verbose, well-named code. No clever one-liners, no magic abstractions. Future Naomi should understand any file in one read.
 4. **Work phase by phase.** Tick the checkboxes as you go. Each phase ends with its verification step passing before moving on.
 5. **Open questions (section 12) must be answered before the phase that depends on them.**
-6. **Trust the design's layout, not its code.** The Claude Design output may contain wonky CSS and messy implementation. Use it only for what it *looks like and how it behaves*: layout, spacing rhythm, hierarchy, colours, typography, interactions. Never copy its CSS, markup or JS. Rebuild everything clean and minimal from our tokens, layout primitives and conventions: the simplest CSS that reproduces the same visual result. If the prototype achieves something with hacks (magic numbers, absolute positioning, `!important`, fixed pixel heights, nested wrappers, non-semantic markup), find the clean equivalent. If a design detail can't be reproduced cleanly or accessibly, ask Naomi rather than copying the hack.
+6. **Trust the design's layout, not its code.** The Claude Design output may contain wonky CSS and messy implementation. Use it only for what it _looks like and how it behaves_: layout, spacing rhythm, hierarchy, colours, typography, interactions. Never copy its CSS, markup or JS. Rebuild everything clean and minimal from our tokens, layout primitives and conventions: the simplest CSS that reproduces the same visual result. If the prototype achieves something with hacks (magic numbers, absolute positioning, `!important`, fixed pixel heights, nested wrappers, non-semantic markup), find the clean equivalent. If a design detail can't be reproduced cleanly or accessibly, ask Naomi rather than copying the hack.
 7. **Content comes from Naomi's CV, or from Naomi.** Her CV is at `source-material/cv.pdf`. Use it as the single source for personal and factual content: bio, roles, employers, dates, skills, projects, education and links. **Never invent or embellish anything.** If a page needs information the CV doesn't contain (e.g. project write-ups, screenshots, an "about me" tone, social links), or the CV is ambiguous, ask Naomi. Placeholder copy from the design reference is not content. Don't publish private details from the CV (phone number, home address, personal email) unless Naomi explicitly says to.
 8. **Commit every stage.** The repo is initialised with `git init` as the very first step. Every phase ends with a commit once its verification passes, using Conventional Commits (e.g. `feat(styles): add design tokens and themes`). Smaller commits within a phase are welcome; never leave a phase's work uncommitted before starting the next. Each commit also ticks the completed checkboxes in `PLAN.md`, so the plan's history shows progress. Never commit anything in `source-material/`, secrets or `.env` files.
 
@@ -20,22 +20,22 @@
 
 ## 1. Decision summary
 
-| Area | Decision | Notes |
-|---|---|---|
-| Language | TypeScript, `strict: true` | Plus `noUncheckedIndexedAccess`, `exactOptionalPropertyTypes` |
-| UI library | React (latest stable) | |
-| App framework / router | **TanStack Start** (TanStack Router) | Type-safe file-based routing, SSR, prerendering, server functions, Vite-based. At time of planning it was at v1 release-candidate stage; **verify current status**. Fallback if unsuitable: React Router (framework mode). Ask before switching. |
-| Monorepo | **pnpm workspaces + Turborepo** | Internal packages, no publishing, no versioning |
-| Package linking | `"workspace:*"` + packages export TypeScript source directly | "Internal / just-in-time packages": no build step, no version numbers, edits are live in every app |
-| Styling | Global CSS, prefixed BEM (`.nx-block__element--modifier`), CSS custom properties, cascade layers | **No Tailwind, no CSS-in-JS, no CSS Modules** |
-| Theming | CSS variables + `data-theme` on `<html>`, light / dark / system | Cookie-backed so SSR renders the right theme with no flash |
-| Framework-agnostic logic | `@naovixen/core`: pure TS models, services, controllers | React only appears in thin adapters (hooks) and components |
-| Blog | Headless CMS (**Sanity** proposed), fetched at request time with CDN caching | Publish without redeploying; rich content mapped to own components |
-| Hosting | **Cloudflare** (Workers), one project per app | Verify TanStack Start's current Cloudflare deployment guide. Alternatives: Netlify, Vercel |
-| Domains | `naovixen.com` → portfolio | Future sites (e.g. a merch shop) are **not built now**; the architecture only has to make adding one easy |
-| Tests | Vitest (unit), Testing Library (components), Playwright + axe (end-to-end + accessibility) | |
-| Linting | ESLint (flat config, typescript-eslint, jsx-a11y), Stylelint (BEM pattern enforced), Prettier | |
-| Hidden design system page | `/system` route in every app, `noindex`, excluded from sitemap | |
+| Area                      | Decision                                                                                         | Notes                                                                                                                                                                                                                                            |
+| ------------------------- | ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Language                  | TypeScript, `strict: true`                                                                       | Plus `noUncheckedIndexedAccess`, `exactOptionalPropertyTypes`                                                                                                                                                                                    |
+| UI library                | React (latest stable)                                                                            |                                                                                                                                                                                                                                                  |
+| App framework / router    | **TanStack Start** (TanStack Router)                                                             | Type-safe file-based routing, SSR, prerendering, server functions, Vite-based. At time of planning it was at v1 release-candidate stage; **verify current status**. Fallback if unsuitable: React Router (framework mode). Ask before switching. |
+| Monorepo                  | **pnpm workspaces + Turborepo**                                                                  | Internal packages, no publishing, no versioning                                                                                                                                                                                                  |
+| Package linking           | `"workspace:*"` + packages export TypeScript source directly                                     | "Internal / just-in-time packages": no build step, no version numbers, edits are live in every app                                                                                                                                               |
+| Styling                   | Global CSS, prefixed BEM (`.nx-block__element--modifier`), CSS custom properties, cascade layers | **No Tailwind, no CSS-in-JS, no CSS Modules**                                                                                                                                                                                                    |
+| Theming                   | CSS variables + `data-theme` on `<html>`, light / dark / system                                  | Cookie-backed so SSR renders the right theme with no flash                                                                                                                                                                                       |
+| Framework-agnostic logic  | `@naovixen/core`: pure TS models, services, controllers                                          | React only appears in thin adapters (hooks) and components                                                                                                                                                                                       |
+| Blog                      | Headless CMS (**Sanity** proposed), fetched at request time with CDN caching                     | Publish without redeploying; rich content mapped to own components                                                                                                                                                                               |
+| Hosting                   | **Cloudflare** (Workers), one project per app                                                    | Verify TanStack Start's current Cloudflare deployment guide. Alternatives: Netlify, Vercel                                                                                                                                                       |
+| Domains                   | `naovixen.com` → portfolio                                                                       | Future sites (e.g. a merch shop) are **not built now**; the architecture only has to make adding one easy                                                                                                                                        |
+| Tests                     | Vitest (unit), Testing Library (components), Playwright + axe (end-to-end + accessibility)       |                                                                                                                                                                                                                                                  |
+| Linting                   | ESLint (flat config, typescript-eslint, jsx-a11y), Stylelint (BEM pattern enforced), Prettier    |                                                                                                                                                                                                                                                  |
+| Hidden design system page | `/system` route in every app, `noindex`, excluded from sitemap                                   |                                                                                                                                                                                                                                                  |
 
 ---
 
@@ -90,13 +90,13 @@ styles  ──►  (nothing; plain CSS + token data)
   "type": "module",
   "exports": {
     ".": "./src/index.ts",
-    "./styles.css": "./src/index.css"
+    "./styles.css": "./src/index.css",
   },
   "dependencies": {
     "@naovixen/core": "workspace:*",
-    "@naovixen/styles": "workspace:*"
+    "@naovixen/styles": "workspace:*",
   },
-  "peerDependencies": { "react": "*", "react-dom": "*" }
+  "peerDependencies": { "react": "*", "react-dom": "*" },
 }
 ```
 
@@ -113,44 +113,44 @@ Apps consume the TypeScript source directly; Vite transpiles it. Verify in the T
 
 ### 3.1 Confirmed by Naomi
 
-| Thing | Convention | Example |
-|---|---|---|
-| Folders | kebab-case | `components/project-card/` |
-| React component files | PascalCase | `ProjectCard.tsx` |
-| CSS files | kebab-case | `project-card.css` |
-| CSS classes | Global, `nx-` prefixed BEM | `.nx-project-card`, `.nx-project-card__title`, `.nx-project-card--featured` |
-| CSS custom properties | Unprefixed, category first | `--color-accent`, `--space-4`, `--font-size-body` |
-| Functions | camelCase | `buildProjectCardClassName()`, `resolveTheme()` |
-| Variables and parameters | camelCase | `resolvedTheme`, `projectSummaries` |
-| Private functions | camelCase with a leading underscore. Applies to private class methods (combined with TypeScript's `private` modifier) and module functions that aren't exported | `private _notifyListeners()`, `function _readCookie()` |
-| Classes | PascalCase | `ThemeService`, `SanityBlogRepository` |
-| Separation of concerns | A component file contains **only the component**. Interfaces, styles, constants, enums and functions each live in their own subfolder inside the owning folder. The same applies to services, controllers and routes. | See 3.4 |
+| Thing                    | Convention                                                                                                                                                                                                            | Example                                                                     |
+| ------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------- |
+| Folders                  | kebab-case                                                                                                                                                                                                            | `components/project-card/`                                                  |
+| React component files    | PascalCase                                                                                                                                                                                                            | `ProjectCard.tsx`                                                           |
+| CSS files                | kebab-case                                                                                                                                                                                                            | `project-card.css`                                                          |
+| CSS classes              | Global, `nx-` prefixed BEM                                                                                                                                                                                            | `.nx-project-card`, `.nx-project-card__title`, `.nx-project-card--featured` |
+| CSS custom properties    | Unprefixed, category first                                                                                                                                                                                            | `--color-accent`, `--space-4`, `--font-size-body`                           |
+| Functions                | camelCase                                                                                                                                                                                                             | `buildProjectCardClassName()`, `resolveTheme()`                             |
+| Variables and parameters | camelCase                                                                                                                                                                                                             | `resolvedTheme`, `projectSummaries`                                         |
+| Private functions        | camelCase with a leading underscore. Applies to private class methods (combined with TypeScript's `private` modifier) and module functions that aren't exported                                                       | `private _notifyListeners()`, `function _readCookie()`                      |
+| Classes                  | PascalCase                                                                                                                                                                                                            | `ThemeService`, `SanityBlogRepository`                                      |
+| Separation of concerns   | A component file contains **only the component**. Interfaces, styles, constants, enums and functions each live in their own subfolder inside the owning folder. The same applies to services, controllers and routes. | See 3.4                                                                     |
 
 ### 3.2 Proposed defaults — Naomi to confirm or change in Phase 0
 
-| Thing | Proposed convention | Example |
-|---|---|---|
-| Non-component TS files | kebab-case with a role suffix | `theme.service.ts`, `project.model.ts`, `blog.repository.ts`, `project-card-props.interface.ts`, `project-card-variant.enum.ts`, `project-card.constants.ts` |
-| One thing per file | One exported interface, enum or function per file, file named after it. Constants may be grouped per owner in one `*.constants.ts` file | `build-project-card-class-name.ts` exports `buildProjectCardClassName` |
-| Functions | kebab-case file named after the function, in `functions/`, with its test beside it | `functions/build-project-card-class-name.ts` + `.test.ts` |
-| Hooks | `useX` function in kebab-case file, in the package's `hooks/` folder | `useTheme` in `hooks/use-theme.ts` |
-| Component folder root | Only the component, its showcase and its test | `ProjectCard.tsx`, `ProjectCard.test.tsx`, `ProjectCard.showcase.tsx` |
-| Exports | Named exports only (framework-required exports excepted, e.g. `export const Route`) | `export function ProjectCard()` |
-| Components | Function declarations, not arrow constants | `export function Button(props: ButtonProps)` |
-| Props types | `<ComponentName>Props` | `ProjectCardProps` |
-| Object shapes / contracts | `interface` | `interface Project { … }`, `interface ThemeStorage { … }` |
-| Unions, aliases, mapped types | `type` | `type ThemePreference = 'light' \| 'dark' \| 'system'` |
-| Enums | **Pending — see section 12, question 1.** Either TypeScript `enum`, or an `as const` object plus derived union type. Either way they live in `enums/` | `enums/theme-preference.enum.ts` |
-| Booleans | `is` / `has` / `should` / `can` prefix | `isFeatured`, `hasCoverImage` |
-| Event props / handlers | `onX` props, `handleX` implementations | `onSelect` → `handleSelect` |
-| Module constants | SCREAMING_SNAKE_CASE for fixed, module-level values (the one exception to camelCase variables); ordinary local `const`s stay camelCase | `DEFAULT_THEME_PREFERENCE` vs `const resolvedTheme = …` |
-| Abbreviations | Avoid; write full words | `button` not `btn`, `navigation` not `nav` (except HTML element names) |
-| Return types | Explicit on every exported function | `export function formatDate(date: Date): string` |
-| Barrel files | Only one per package (`src/index.ts`) | No nested `index.ts` re-export chains |
-| Component-scoped CSS vars | Block name then property, set on the block | `--project-card-padding-inline` |
-| UI state in CSS | Prefer ARIA / `data-*` attributes over state classes | `.nx-tab[aria-selected="true"]`, `[data-state="open"]` |
-| Comments | Explain *why*, not *what*; TSDoc on every exported symbol | |
-| Commits | Conventional Commits | `feat(ui): add ProjectCard` |
+| Thing                         | Proposed convention                                                                                                                                   | Example                                                                                                                                                      |
+| ----------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Non-component TS files        | kebab-case with a role suffix                                                                                                                         | `theme.service.ts`, `project.model.ts`, `blog.repository.ts`, `project-card-props.interface.ts`, `project-card-variant.enum.ts`, `project-card.constants.ts` |
+| One thing per file            | One exported interface, enum or function per file, file named after it. Constants may be grouped per owner in one `*.constants.ts` file               | `build-project-card-class-name.ts` exports `buildProjectCardClassName`                                                                                       |
+| Functions                     | kebab-case file named after the function, in `functions/`, with its test beside it                                                                    | `functions/build-project-card-class-name.ts` + `.test.ts`                                                                                                    |
+| Hooks                         | `useX` function in kebab-case file, in the package's `hooks/` folder                                                                                  | `useTheme` in `hooks/use-theme.ts`                                                                                                                           |
+| Component folder root         | Only the component, its showcase and its test                                                                                                         | `ProjectCard.tsx`, `ProjectCard.test.tsx`, `ProjectCard.showcase.tsx`                                                                                        |
+| Exports                       | Named exports only (framework-required exports excepted, e.g. `export const Route`)                                                                   | `export function ProjectCard()`                                                                                                                              |
+| Components                    | Function declarations, not arrow constants                                                                                                            | `export function Button(props: ButtonProps)`                                                                                                                 |
+| Props types                   | `<ComponentName>Props`                                                                                                                                | `ProjectCardProps`                                                                                                                                           |
+| Object shapes / contracts     | `interface`                                                                                                                                           | `interface Project { … }`, `interface ThemeStorage { … }`                                                                                                    |
+| Unions, aliases, mapped types | `type`                                                                                                                                                | `type ThemePreference = 'light' \| 'dark' \| 'system'`                                                                                                       |
+| Enums                         | **Pending — see section 12, question 1.** Either TypeScript `enum`, or an `as const` object plus derived union type. Either way they live in `enums/` | `enums/theme-preference.enum.ts`                                                                                                                             |
+| Booleans                      | `is` / `has` / `should` / `can` prefix                                                                                                                | `isFeatured`, `hasCoverImage`                                                                                                                                |
+| Event props / handlers        | `onX` props, `handleX` implementations                                                                                                                | `onSelect` → `handleSelect`                                                                                                                                  |
+| Module constants              | SCREAMING_SNAKE_CASE for fixed, module-level values (the one exception to camelCase variables); ordinary local `const`s stay camelCase                | `DEFAULT_THEME_PREFERENCE` vs `const resolvedTheme = …`                                                                                                      |
+| Abbreviations                 | Avoid; write full words                                                                                                                               | `button` not `btn`, `navigation` not `nav` (except HTML element names)                                                                                       |
+| Return types                  | Explicit on every exported function                                                                                                                   | `export function formatDate(date: Date): string`                                                                                                             |
+| Barrel files                  | Only one per package (`src/index.ts`)                                                                                                                 | No nested `index.ts` re-export chains                                                                                                                        |
+| Component-scoped CSS vars     | Block name then property, set on the block                                                                                                            | `--project-card-padding-inline`                                                                                                                              |
+| UI state in CSS               | Prefer ARIA / `data-*` attributes over state classes                                                                                                  | `.nx-tab[aria-selected="true"]`, `[data-state="open"]`                                                                                                       |
+| Comments                      | Explain _why_, not _what_; TSDoc on every exported symbol                                                                                             |                                                                                                                                                              |
+| Commits                       | Conventional Commits                                                                                                                                  | `feat(ui): add ProjectCard`                                                                                                                                  |
 
 ### 3.3 CSS custom property categories
 
@@ -164,14 +164,14 @@ Colour tokens are **semantic** (`--color-surface`, `--color-text`, `--color-text
 
 Every component, service, controller and route owns a kebab-case folder. Its root holds only the main file (plus showcase and test). Everything else goes in a subfolder named after its concern. **Only create a subfolder when there is something to put in it** — no empty placeholder folders.
 
-| Subfolder | Contains | File naming |
-|---|---|---|
-| `interfaces/` | Props, state and contract interfaces | `project-card-props.interface.ts` |
-| `types/` | Union/alias/mapped types (if not in `interfaces/`) | `project-card-size.type.ts` |
-| `enums/` | Enums (form per section 12, Q1) | `project-card-variant.enum.ts` |
-| `constants/` | Constants for this owner | `project-card.constants.ts` |
-| `functions/` | Pure helper functions, one per file, test alongside | `build-project-card-class-name.ts`, `build-project-card-class-name.test.ts` |
-| `styles/` | The owner's CSS (components only) | `project-card.css` |
+| Subfolder     | Contains                                            | File naming                                                                 |
+| ------------- | --------------------------------------------------- | --------------------------------------------------------------------------- |
+| `interfaces/` | Props, state and contract interfaces                | `project-card-props.interface.ts`                                           |
+| `types/`      | Union/alias/mapped types (if not in `interfaces/`)  | `project-card-size.type.ts`                                                 |
+| `enums/`      | Enums (form per section 12, Q1)                     | `project-card-variant.enum.ts`                                              |
+| `constants/`  | Constants for this owner                            | `project-card.constants.ts`                                                 |
+| `functions/`  | Pure helper functions, one per file, test alongside | `build-project-card-class-name.ts`, `build-project-card-class-name.test.ts` |
+| `styles/`     | The owner's CSS (components only)                   | `project-card.css`                                                          |
 
 **Component example**
 
@@ -234,15 +234,15 @@ packages/core/src/services/theme/
 
 Tests are written as nested `describe` / `test` blocks (always `test`, never `it`) so the runner output reads as one sentence:
 
-| Level | Wording | Required? |
-|---|---|---|
-| Outer `describe` | `Using [TEST FILE CONTEXT]` | Always |
-| `describe` | `given [CONTEXT]` | Skip when there's no state or scenario setup, e.g. a pure function, or a function with no arguments and no external state |
-| `describe` | `and [FURTHER CONTEXT]` | Optional, repeatable |
-| `describe` | `when [ACTION]` | Always |
-| `test` | `then it should [REACTION]` | Always |
-| `describe` | `and [FURTHER ACTION]` | Optional follow-up action |
-| `test` | `then it should [FURTHER REACTION]` | Required after a follow-up action |
+| Level            | Wording                             | Required?                                                                                                                 |
+| ---------------- | ----------------------------------- | ------------------------------------------------------------------------------------------------------------------------- |
+| Outer `describe` | `Using [TEST FILE CONTEXT]`         | Always                                                                                                                    |
+| `describe`       | `given [CONTEXT]`                   | Skip when there's no state or scenario setup, e.g. a pure function, or a function with no arguments and no external state |
+| `describe`       | `and [FURTHER CONTEXT]`             | Optional, repeatable                                                                                                      |
+| `describe`       | `when [ACTION]`                     | Always                                                                                                                    |
+| `test`           | `then it should [REACTION]`         | Always                                                                                                                    |
+| `describe`       | `and [FURTHER ACTION]`              | Optional follow-up action                                                                                                 |
+| `test`           | `then it should [FURTHER REACTION]` | Required after a follow-up action                                                                                         |
 
 **Stateful example (service)**
 
@@ -251,12 +251,20 @@ describe('Using ThemeService', () => {
   describe('given no stored preference', () => {
     describe('and the system theme is dark', () => {
       describe('when getState is called', () => {
-        test('then it should resolve to the dark theme', () => { /* … */ });
-        test('then it should report the preference as system', () => { /* … */ });
+        test('then it should resolve to the dark theme', () => {
+          /* … */
+        });
+        test('then it should report the preference as system', () => {
+          /* … */
+        });
 
         describe('and setPreference is called with light', () => {
-          test('then it should resolve to the light theme', () => { /* … */ });
-          test('then it should write light to storage', () => { /* … */ });
+          test('then it should resolve to the light theme', () => {
+            /* … */
+          });
+          test('then it should write light to storage', () => {
+            /* … */
+          });
         });
       });
     });
@@ -264,14 +272,16 @@ describe('Using ThemeService', () => {
 });
 ```
 
-Runner output: *Using ThemeService › given no stored preference › and the system theme is dark › when getState is called › and setPreference is called with light › then it should write light to storage*
+Runner output: _Using ThemeService › given no stored preference › and the system theme is dark › when getState is called › and setPreference is called with light › then it should write light to storage_
 
 **Pure function example (no `given`)**
 
 ```ts
 describe('Using buildProjectCardClassName', () => {
   describe('when called with the featured variant', () => {
-    test('then it should return the block class and the featured modifier', () => { /* … */ });
+    test('then it should return the block class and the featured modifier', () => {
+      /* … */
+    });
   });
 });
 ```
@@ -282,8 +292,12 @@ describe('Using buildProjectCardClassName', () => {
 describe('Using ProjectCard', () => {
   describe('given a project with a cover image', () => {
     describe('when it renders', () => {
-      test('then it should show the image with its alt text', () => { /* … */ });
-      test('then it should label the article with the project title', () => { /* … */ });
+      test('then it should show the image with its alt text', () => {
+        /* … */
+      });
+      test('then it should label the article with the project title', () => {
+        /* … */
+      });
     });
   });
 });
@@ -422,8 +436,8 @@ Services are provided to the React tree via a single `NaovixenProvider` in `ui`,
 
 @import './reset.css' layer(reset);
 @import './generated/tokens.css' layer(tokens);
-@import './base.css' layer(base);         /* typography, links, focus styles, selection */
-@import './layout.css' layer(layout);     /* .nx-container, .nx-stack, .nx-cluster, .nx-grid */
+@import './base.css' layer(base); /* typography, links, focus styles, selection */
+@import './layout.css' layer(layout); /* .nx-container, .nx-stack, .nx-cluster, .nx-grid */
 @import './utilities.css' layer(utilities); /* .nx-visually-hidden, etc. — keep tiny */
 ```
 
@@ -486,6 +500,7 @@ Simple, accessible, professional, Scandinavian restraint with a playful hint of 
 ## 8. Performance, SEO and accessibility checklist
 
 ### Performance
+
 - [ ] Static pages prerendered at build; blog server-rendered with CDN caching.
 - [ ] Route-level code splitting (TanStack Router default — verify).
 - [ ] Minimal client JS: interactive islands only where needed; no heavy dependencies without justification in `docs/decisions.md`.
@@ -494,6 +509,7 @@ Simple, accessible, professional, Scandinavian restraint with a playful hint of 
 - [ ] Budgets (enforced in CI via Lighthouse CI): LCP < 2.5 s, INP < 200 ms, CLS < 0.1, Lighthouse Performance ≥ 95 on mobile.
 
 ### SEO
+
 - [ ] Per-route `title`, `description`, canonical URL, Open Graph and Twitter card tags via a `buildSeoMetadata()` service in `core`.
 - [ ] `<html lang="en-GB">`.
 - [ ] JSON-LD: `Person` (details from the CV, only fields Naomi approved for publishing) + `WebSite` on the home page, `BlogPosting` on posts.
@@ -502,6 +518,7 @@ Simple, accessible, professional, Scandinavian restraint with a playful hint of 
 - [ ] Open Graph images (static per page initially; generated per post as a later enhancement).
 
 ### Accessibility (target WCAG 2.2 AA)
+
 - [ ] Semantic landmarks, one `<h1>` per page, logical heading order.
 - [ ] Skip link, visible `:focus-visible` styles, focus moved and route change announced on navigation.
 - [ ] Minimum 24×24 px target sizes; full keyboard support; no keyboard traps.
@@ -527,6 +544,7 @@ Simple, accessible, professional, Scandinavian restraint with a playful hint of 
 ## 10. Phases
 
 ### Phase 0 — Groundwork and confirmation
+
 - [x] `git init` (default branch `main`), then create `.gitignore` covering `node_modules/`, build output, `.env*` (except `.env.example`), `source-material/` and `docs/content-inventory.md`.
 - [x] First commit: `.gitignore` and `PLAN.md` only — `chore: initialise repository`.
 - [x] Ask Naomi whether to connect a remote now (e.g. a private GitHub repository). CI (Phase 8) and deployment (Phase 9) need one.
@@ -539,16 +557,18 @@ Simple, accessible, professional, Scandinavian restraint with a playful hint of 
 - **Verify:** Naomi has approved the guidelines. **Commit:** `docs: add CLAUDE.md and coding guidelines`.
 
 ### Phase 1 — Monorepo scaffold
-- [ ] Root `package.json`, `pnpm-workspace.yaml`, `turbo.json`, `.nvmrc` (current Node LTS), `.editorconfig`, `.gitignore`.
-- [ ] `@naovixen/tsconfig` (base, react-library, app) and `@naovixen/eslint-config`; Prettier; Stylelint with `selector-class-pattern` enforcing `^nx-[a-z0-9]+(-[a-z0-9]+)*(__[a-z0-9]+(-[a-z0-9]+)*)?(--[a-z0-9]+(-[a-z0-9]+)*)?$`.
-- [ ] Empty `core`, `styles`, `ui`, `content`, `system-page` packages exporting source.
-- [ ] `@typescript-eslint/naming-convention` configured for section 3.1/3.2: camelCase functions, variables and parameters; PascalCase classes, interfaces, types and React components; UPPER_CASE allowed for module-level constants; leading underscore **required** on `private` methods and **forbidden** elsewhere. Non-exported module functions with an underscore are checked in review (the rule can't tell exported from non-exported cleanly — verify against current docs).
-- [ ] Vitest ESLint plugin with `valid-title` (or equivalent — check current docs) enforcing section 3.5: outer `describe` starts with `Using `, inner `describe`s start with `given `, `and ` or `when `, and every `test` starts with `then it should `. Enable `consistent-test-it` (or equivalent) set to `test` so `it` is a lint error.
-- [ ] Lint rules enforcing section 3.4: component (`*.tsx`) and service files may export only their one component/class (e.g. `no-restricted-syntax` on exported interfaces, types, enums and top-level `const`s outside the matching subfolders); files in `interfaces/`, `enums/`, `functions/` may export only one symbol. Document any rule that can't be automated in `CLAUDE.md`.
-- [ ] `apps/portfolio` scaffolded with TanStack Start, importing one function from each package to prove linking and HMR work across packages.
+
+- [x] Root `package.json`, `pnpm-workspace.yaml`, `turbo.json`, `.nvmrc` (current Node LTS), `.editorconfig`, `.gitignore`.
+- [x] `@naovixen/tsconfig` (base, react-library, app) and `@naovixen/eslint-config`; Prettier; Stylelint with `selector-class-pattern` enforcing `^nx-[a-z0-9]+(-[a-z0-9]+)*(__[a-z0-9]+(-[a-z0-9]+)*)?(--[a-z0-9]+(-[a-z0-9]+)*)?$`.
+- [x] Empty `core`, `styles`, `ui`, `content`, `system-page` packages exporting source.
+- [x] `@typescript-eslint/naming-convention` configured for section 3.1/3.2: camelCase functions, variables and parameters; PascalCase classes, interfaces, types and React components; UPPER_CASE allowed for module-level constants; leading underscore **required** on `private` methods and **forbidden** elsewhere. Non-exported module functions with an underscore are checked in review (the rule can't tell exported from non-exported cleanly — verify against current docs).
+- [x] Vitest ESLint plugin with `valid-title` (or equivalent — check current docs) enforcing section 3.5: outer `describe` starts with `Using `, inner `describe`s start with `given `, `and ` or `when `, and every `test` starts with `then it should `. Enable `consistent-test-it` (or equivalent) set to `test` so `it` is a lint error.
+- [x] Lint rules enforcing section 3.4: component (`*.tsx`) and service files may export only their one component/class (e.g. `no-restricted-syntax` on exported interfaces, types, enums and top-level `const`s outside the matching subfolders); files in `interfaces/`, `enums/`, `functions/` may export only one symbol. Document any rule that can't be automated in `CLAUDE.md`.
+- [x] `apps/portfolio` scaffolded with TanStack Start, importing one function from each package to prove linking and HMR work across packages.
 - **Verify:** `pnpm dev`, `pnpm build`, `pnpm lint`, `pnpm typecheck` all pass; editing a package updates the app live. **Commit** once this passes.
 
 ### Phase 2 — Styles package
+
 - [ ] Derive palette, typography, spacing, radii, shadows and motion from how `design-reference/` **looks when rendered**, normalised into a small, consistent scale in `*.tokens.ts`. Don't lift raw values from its CSS: collapse near-duplicates (e.g. five slightly different greys or paddings become one token) and list any merges in `docs/decisions.md` for Naomi to check.
 - [ ] Token generator script + generated `tokens.css`; light and dark semantic themes.
 - [ ] Reset, base typography, focus styles, layout primitives, minimal utilities, cascade layers.
@@ -556,6 +576,7 @@ Simple, accessible, professional, Scandinavian restraint with a playful hint of 
 - **Verify:** generator is deterministic; contrast check for all semantic pairs passes AA. **Commit** once this passes.
 
 ### Phase 3 — Core package
+
 - [ ] Models: `Project`, `NavigationItem`, `SocialLink`, `SeoMetadata`, `BlogPost`, `BlogPostSummary`, `Product`.
 - [ ] Services: `ThemeService` (+ cookie storage and `matchMedia` source implementations), `ReducedMotionService`, `buildSeoMetadata`, `buildStructuredData`, `calculateContrastRatio`, date/reading-time formatting (en-GB).
 - [ ] `BlogRepository` interface.
@@ -563,6 +584,7 @@ Simple, accessible, professional, Scandinavian restraint with a playful hint of 
 - **Verify:** 100% of exported functions tested; `core` has zero React/DOM-framework imports. **Commit** once this passes.
 
 ### Phase 4 — UI package
+
 - [ ] `NaovixenProvider`, `useTheme`, `useReducedMotion` adapters.
 - [ ] Primitives: `SkipLink`, `VisuallyHidden`, `Container`, `Stack`, `Cluster`, `Grid`, `Heading`, `Text`, `Link` (router-agnostic: accepts a link component via provider), `Button`, `Icon`, `Tag`.
 - [ ] Brand: `Logo` (`< naovixen />`, accessible name "naovixen"), `ThemeToggle`.
@@ -572,16 +594,19 @@ Simple, accessible, professional, Scandinavian restraint with a playful hint of 
 - **Verify:** all tests pass; ESLint and Stylelint clean; no component imports a raw palette token; no component file exports anything but its component. **Commit** once this passes.
 
 ### Phase 5 — Portfolio app
+
 - [ ] Root route: `<html lang="en-GB">`, theme cookie handling, head/meta, global CSS, provider, skip link, route announcer.
 - [ ] Routes per the Claude Design prototype's layout, rebuilt from scratch with semantic HTML and our components (expected: `/`, `/projects`, `/projects/$slug`, `/about`, `/blog`, `/blog/$slug`, custom 404). Project data as typed local data files in the app unless Naomi wants it in the CMS. All copy comes from the CV or Naomi's answers (rule 7), never the prototype's placeholder text.
 - [ ] SEO metadata + JSON-LD on every route; `sitemap.xml`, `robots.txt`.
 - **Verify:** pages match the prototype's layout visually on mobile and desktop (compare screenshots side by side), with no code carried over from it; Lighthouse ≥ 95 across all four categories locally. **Commit** once this passes.
 
 ### Phase 6 — System page
+
 - [ ] Build `@naovixen/system-page` (section 7) and mount `/system` in the portfolio.
 - **Verify:** every token and every showcase appears automatically; page is `noindex` and absent from the sitemap. **Commit** once this passes.
 
 ### Phase 7 — Blog
+
 - [ ] Sanity project + `apps/studio` schemas (post, author, tag, custom blocks) with validation.
 - [ ] `SanityBlogRepository` in `content`, mapping to `core` models, with tests against fixture data.
 - [ ] Blog routes with caching headers, tag filtering, pagination, RSS, sitemap entries.
@@ -589,16 +614,19 @@ Simple, accessible, professional, Scandinavian restraint with a playful hint of 
 - **Verify:** publishing a post in Studio appears on the live site within the cache window with **no deployment**. **Commit** once this passes.
 
 ### Phase 8 — Quality gates and CI
+
 - [ ] GitHub Actions: typecheck, lint, Stylelint, unit tests, token freshness, Playwright + axe on all routes, Lighthouse CI budgets.
 - **Verify:** CI green on a PR. **Commit** once this passes.
 
 ### Phase 9 — Deployment
+
 - [ ] Cloudflare project for the portfolio; Sanity Studio deployed.
 - [ ] Custom domains, HTTPS, security headers (CSP, `Referrer-Policy`, `Permissions-Policy`, HSTS).
 - [ ] Build filtering configured per app.
 - **Verify:** `naovixen.com` live over HTTPS with the canonical host redirect working. **Commit** once this passes.
 
 ### Phase 10 — Documentation and cleanup
+
 - [ ] `docs/architecture.md`, `docs/decisions.md`, `docs/adding-a-new-site.md`, README with day-to-day commands ("how to add a component", "how to add a post", "how to add a page").
 - [ ] Confirm `CLAUDE.md` contains everything from sections 3 and 4, plus rules 6 and 7 (design reference and content sources).
 - [ ] Delete `docs/content-inventory.md` once all gaps are filled (keep `source-material/` locally for future updates).

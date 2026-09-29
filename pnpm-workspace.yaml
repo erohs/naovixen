@@ -1,0 +1,9 @@
+packages:
+  - apps/*
+  - packages/*
+
+# pnpm refuses to run a dependency's install scripts unless it is listed here.
+# unrs-resolver is the native module behind eslint-import-resolver-typescript, which
+# eslint-plugin-import-x needs to follow imports across workspace packages.
+allowBuilds:
+  unrs-resolver: true

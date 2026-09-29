@@ -1,7 +1,7 @@
 ---
 paths:
-  - "**/*.spec.ts"
-  - "**/*.spec.tsx"
+  - '**/*.spec.ts'
+  - '**/*.spec.tsx'
 ---
 
 # Testing
@@ -42,27 +42,35 @@ Integration tests use `Integration` as that description:
 Always `test`, never `it` — enforced by lint. Nest `describe` blocks so the runner output
 reads as one English sentence.
 
-| Level | Wording | Required |
-|---|---|---|
-| Outer `describe` | `Using <subject>` | Always |
-| `describe` | `given <context>` | Only when there is state or setup |
-| `describe` | `and <more context>` | Optional, repeatable |
-| `describe` | `when <action>` | Always |
-| `test` | `then it should <outcome>` | Always |
-| `describe` | `and <follow-up action>` | Optional |
-| `test` | `then it should <follow-up outcome>` | Required after a follow-up action |
+| Level            | Wording                              | Required                          |
+| ---------------- | ------------------------------------ | --------------------------------- |
+| Outer `describe` | `Using <subject>`                    | Always                            |
+| `describe`       | `given <context>`                    | Only when there is state or setup |
+| `describe`       | `and <more context>`                 | Optional, repeatable              |
+| `describe`       | `when <action>`                      | Always                            |
+| `test`           | `then it should <outcome>`           | Always                            |
+| `describe`       | `and <follow-up action>`             | Optional                          |
+| `test`           | `then it should <follow-up outcome>` | Required after a follow-up action |
 
 ```ts
 describe('Using ThemeService', () => {
   describe('given no stored preference', () => {
     describe('and the system reports a dark colour scheme', () => {
       describe('when the state is read', () => {
-        test('then it should resolve to the dark theme', () => { /* … */ });
-        test('then it should report the preference as system', () => { /* … */ });
+        test('then it should resolve to the dark theme', () => {
+          /* … */
+        });
+        test('then it should report the preference as system', () => {
+          /* … */
+        });
 
         describe('and the preference is set to light', () => {
-          test('then it should resolve to the light theme', () => { /* … */ });
-          test('then it should persist light to storage', () => { /* … */ });
+          test('then it should resolve to the light theme', () => {
+            /* … */
+          });
+          test('then it should persist light to storage', () => {
+            /* … */
+          });
         });
       });
     });
@@ -75,7 +83,9 @@ A pure function has no state to set up, so it skips `given`:
 ```ts
 describe('Using buildProjectCardClassName', () => {
   describe('when called with the featured variant', () => {
-    test('then it should return the block class and the featured modifier', () => { /* … */ });
+    test('then it should return the block class and the featured modifier', () => {
+      /* … */
+    });
   });
 });
 ```

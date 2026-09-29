@@ -1,0 +1,11 @@
+/*
+ * The single stylesheet every app imports.
+ *
+ * Layer order is declared once, here, and never again. Because precedence is settled by
+ * layer rather than by specificity, a rule that loses a fight is in the wrong layer —
+ * reaching for `!important` or a doubled selector means something is misfiled.
+ *
+ * Phases 2 onwards fill these layers in: tokens, reset, base typography, layout
+ * primitives and utilities.
+ */
+@layer reset, tokens, base, layout, components, utilities, overrides;

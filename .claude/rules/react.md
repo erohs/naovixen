@@ -1,6 +1,6 @@
 ---
 paths:
-  - "**/*.tsx"
+  - '**/*.tsx'
 ---
 
 # React components

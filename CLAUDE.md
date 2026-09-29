@@ -12,7 +12,7 @@ training data. Before writing code against a tool, fetch its current documentati
 check the installed version. `docs/decisions.md` records every version this project was
 built against and why — add to it when a version changes or a decision is revisited.
 
-Two live examples of why: TypeScript 7 is generally available but is *not* what we use,
+Two live examples of why: TypeScript 7 is generally available but is _not_ what we use,
 because it shipped without a stable compiler API and typescript-eslint cannot run on it.
 TanStack Start looks like a stable v1 from its version number but is formally still a
 Release Candidate.
@@ -131,12 +131,12 @@ secrets.
 These load automatically when relevant, so this file stays short. Read one directly only
 if you need it before touching a matching file.
 
-| Rules | Load when you open |
-|---|---|
-| `.claude/rules/typescript.md` — naming, casing, file names, TypeScript rules | any `.ts` or `.tsx` |
-| `.claude/rules/react.md` — component form, props, component accessibility | any `.tsx` |
-| `.claude/rules/testing.md` — what to test, test file names, test wording | any `.spec.ts` / `.spec.tsx` |
-| `.claude/rules/styles.md` — BEM, tokens, cascade layers, theming | any `.css` |
+| Rules                                                                        | Load when you open           |
+| ---------------------------------------------------------------------------- | ---------------------------- |
+| `.claude/rules/typescript.md` — naming, casing, file names, TypeScript rules | any `.ts` or `.tsx`          |
+| `.claude/rules/react.md` — component form, props, component accessibility    | any `.tsx`                   |
+| `.claude/rules/testing.md` — what to test, test file names, test wording     | any `.spec.ts` / `.spec.tsx` |
+| `.claude/rules/styles.md` — BEM, tokens, cascade layers, theming             | any `.css`                   |
 
 Per-package instructions live in a `CLAUDE.md` inside each package and load when you read
 files there. They are created alongside each package as it is scaffolded.

@@ -1,7 +1,7 @@
 ---
 paths:
-  - "**/*.ts"
-  - "**/*.tsx"
+  - '**/*.ts'
+  - '**/*.tsx'
 ---
 
 # Naming, file names and TypeScript
@@ -20,14 +20,14 @@ There is no SCREAMING_SNAKE_CASE in this codebase. A module-level constant is a 
 
 ## Prefixes and suffixes that carry meaning
 
-| Pattern | Applies to | Example |
-|---|---|---|
-| `I` prefix | Every interface | `IThemeStorage`, `IBlogPost` |
-| `I…Props` | React component props interfaces | `IProjectCardProps` |
-| `_` prefix | Private class members, and non-exported module functions | `private _notifyListeners()` |
-| `use` prefix | React hooks | `useTheme`, `useReducedMotion` |
-| `on` prefix | Event handlers and callback props, simple present | `onSelect`, not `onSelected` |
-| `is` / `has` / `should` / `can` | Booleans | `isFeatured`, `hasCoverImage` |
+| Pattern                         | Applies to                                               | Example                        |
+| ------------------------------- | -------------------------------------------------------- | ------------------------------ |
+| `I` prefix                      | Every interface                                          | `IThemeStorage`, `IBlogPost`   |
+| `I…Props`                       | React component props interfaces                         | `IProjectCardProps`            |
+| `_` prefix                      | Private class members, and non-exported module functions | `private _notifyListeners()`   |
+| `use` prefix                    | React hooks                                              | `useTheme`, `useReducedMotion` |
+| `on` prefix                     | Event handlers and callback props, simple present        | `onSelect`, not `onSelected`   |
+| `is` / `has` / `should` / `can` | Booleans                                                 | `isFeatured`, `hasCoverImage`  |
 
 Enum type names end in a singular noun; members are PascalCase.
 
@@ -76,22 +76,22 @@ group.
 A file is named after the single thing it exports, in PascalCase, plus a suffix saying
 what kind of thing it is. Directories stay kebab-case.
 
-The PascalCase rule applies to the *file*, not the export — a function exported as
+The PascalCase rule applies to the _file_, not the export — a function exported as
 `resolveTheme` lives in `ResolveTheme.function.ts`, and a hook exported as `useTheme`
 lives in `UseTheme.hook.ts`.
 
-| Exports | Suffix | Example file |
-|---|---|---|
-| React component | `.component.tsx` | `ThemeToggle.component.tsx` |
-| React hook | `.hook.ts` | `UseTheme.hook.ts` |
-| React context | `.context.ts` | `NaovixenContext.context.ts` |
-| Class | *none* | `ThemeService.ts` |
-| Function | `.function.ts` | `CalculateContrastRatio.function.ts` |
-| Constant or instance | `.const.ts` | `DefaultThemePreference.const.ts` |
-| Interface | *none* | `IBlogPost.ts` |
-| Enum | *none* | `ThemePreference.ts` |
-| Type | *none* | `ThemeChangeListener.ts` |
-| Side effects only | `.effect.ts` | `RouteAnnouncerPolyfill.effect.ts` |
+| Exports              | Suffix           | Example file                         |
+| -------------------- | ---------------- | ------------------------------------ |
+| React component      | `.component.tsx` | `ThemeToggle.component.tsx`          |
+| React hook           | `.hook.ts`       | `UseTheme.hook.ts`                   |
+| React context        | `.context.ts`    | `NaovixenContext.context.ts`         |
+| Class                | _none_           | `ThemeService.ts`                    |
+| Function             | `.function.ts`   | `CalculateContrastRatio.function.ts` |
+| Constant or instance | `.const.ts`      | `DefaultThemePreference.const.ts`    |
+| Interface            | _none_           | `IBlogPost.ts`                       |
+| Enum                 | _none_           | `ThemePreference.ts`                 |
+| Type                 | _none_           | `ThemeChangeListener.ts`             |
+| Side effects only    | `.effect.ts`     | `RouteAnnouncerPolyfill.effect.ts`   |
 
 Anything containing JSX is `.tsx`; everything else `.ts`.
 
@@ -117,4 +117,22 @@ except where a framework requires otherwise such as TanStack Router's `export co
 - **TSDoc on every exported symbol.** Say why it exists and what a caller needs to know.
 - **`any` needs a comment justifying it.** Prefer `unknown` and narrow.
 
-Comments explain *why*. The code already says what.
+Comments explain _why_. The code already says what.
+
+---
+
+## What lint cannot check
+
+Most of the above is enforced by ESLint. These are the parts that are not, so they need
+attention in review:
+
+- **One exported symbol per file.** `import-x/no-default-export` forces named exports,
+  and a `*.component.tsx` may not export an interface, type, enum or function beside its
+  component. Nothing counts the exports in a file in `interfaces/`, `enums/`, `types/` or
+  `functions/` — keep it to one.
+- **The file name matches the export.** No rule ties `ResolveTheme.function.ts` to
+  `resolveTheme`.
+- **The role suffix is the right one.** A class in a `.function.ts` file lints clean.
+- **A leading underscore on a non-exported module function.** The rule can require it on
+  `private` class members, but cannot tell an exported function from an unexported one.
+- **TSDoc on exported symbols**, and whether a comment explains _why_ rather than _what_.

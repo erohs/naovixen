@@ -1,0 +1,4 @@
+{
+  "extends": "@naovixen/tsconfig/app.json",
+  "include": ["src", "vite.config.ts"]
+}

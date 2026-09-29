@@ -1,6 +1,6 @@
 ---
 paths:
-  - "**/*.css"
+  - '**/*.css'
 ---
 
 # CSS
@@ -12,9 +12,12 @@ Global stylesheets. No Tailwind, no CSS-in-JS, no CSS Modules.
 BEM, prefixed `nx-`, all lower case:
 
 ```css
-.nx-project-card { }
-.nx-project-card__title { }
-.nx-project-card--featured { }
+.nx-project-card {
+}
+.nx-project-card__title {
+}
+.nx-project-card--featured {
+}
 ```
 
 Stylelint enforces the pattern. One block per file, named after the block:
@@ -82,8 +85,10 @@ Style ARIA and `data-*` attributes, not state classes. The accessible state and 
 visual state are then the same fact, and cannot drift apart.
 
 ```css
-.nx-tab[aria-selected='true'] { }
-.nx-disclosure[data-state='open'] { }
+.nx-tab[aria-selected='true'] {
+}
+.nx-disclosure[data-state='open'] {
+}
 ```
 
 ## Accessibility
