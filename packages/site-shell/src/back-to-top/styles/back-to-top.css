@@ -1,6 +1,4 @@
 .nx-back-to-top {
-    --back-to-top-reveal-after: 100svh;
-
     position: fixed;
     z-index: var(--z-index-floating);
     inset-block-end: var(--space-between-content);
@@ -12,23 +10,23 @@
 }
 
 /*
- * Where scroll-driven animations work, the link is hidden for the first screenful of
- * scrolling. Visibility, not just opacity, so a hidden link is out of the tab order and
- * the accessibility tree. Elsewhere, and on pages too short to scroll, it always shows.
+ * Where scroll-driven animations work, the link is hidden at the very top of the page and
+ * fades in over the first few pixels of scrolling down. Visibility, not just opacity, so a
+ * hidden link is out of the tab order and the accessibility tree. Elsewhere it always shows.
  */
 @supports (animation-timeline: scroll()) {
     .nx-back-to-top {
-        animation-name: nx-back-to-top-hidden;
+        animation-name: nx-back-to-top-reveal;
         animation-duration: auto;
         animation-timing-function: linear;
+        animation-fill-mode: both;
         animation-timeline: scroll(root);
-        animation-range: 0 var(--back-to-top-reveal-after);
+        animation-range: 0 var(--space-between-content);
     }
 }
 
-@keyframes nx-back-to-top-hidden {
-    from,
-    to {
+@keyframes nx-back-to-top-reveal {
+    from {
         visibility: hidden;
         opacity: 0;
     }
