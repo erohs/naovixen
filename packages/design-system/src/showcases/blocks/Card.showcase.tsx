@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import { Card, CardHalo, CardTilt, TagList } from '@naovixen/blocks';
+import { Card, CardHalo, TagList } from '@naovixen/blocks';
 import { arrowRightIcon, Heading, LinkIcon, Text } from '@naovixen/components';
 
 import type { IShowcase } from '../../interfaces/IShowcase';
@@ -18,11 +18,7 @@ const renderContent = (): ReactNode => (
 export const cardShowcase: IShowcase = {
     name: 'Card',
     examples: [
-        { name: 'Tilts left on hover', render: () => <Card>{renderContent()}</Card> },
-        {
-            name: 'Tilts right on hover',
-            render: () => <Card tilt={CardTilt.Right}>{renderContent()}</Card>,
-        },
+        { name: 'Folds its corner on hover', render: () => <Card>{renderContent()}</Card> },
         {
             name: 'With a dotted halo',
             render: () => <Card halo={CardHalo.Dotted}>{renderContent()}</Card>,

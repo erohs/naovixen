@@ -40,6 +40,7 @@ export { tagListShowcase } from './showcases/blocks/TagList.showcase';
 export { foxMascotShowcase } from './showcases/brand/FoxMascot.showcase';
 export { heartShowcase } from './showcases/brand/Heart.showcase';
 export { logoShowcase } from './showcases/brand/Logo.showcase';
+export { motionLinesShowcase } from './showcases/brand/MotionLines.showcase';
 export { pawShowcase } from './showcases/brand/Paw.showcase';
 export { wordmarkShowcase } from './showcases/brand/Wordmark.showcase';
 export { backToTopShowcase } from './showcases/site-shell/BackToTop.showcase';

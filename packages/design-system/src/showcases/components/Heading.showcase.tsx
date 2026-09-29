@@ -14,6 +14,14 @@ export const headingShowcase: IShowcase = {
             ),
         },
         { name: 'Level 1', render: () => <Heading level={1}>Heading one</Heading> },
+        {
+            name: 'Title size, level 1',
+            render: () => (
+                <Heading level={1} size={HeadingSize.Title}>
+                    A post title that runs onto a second line
+                </Heading>
+            ),
+        },
         { name: 'Level 2', render: () => <Heading level={2}>Heading two</Heading> },
         { name: 'Level 3', render: () => <Heading level={3}>Heading three</Heading> },
         { name: 'Level 4', render: () => <Heading level={4}>Heading four</Heading> },
