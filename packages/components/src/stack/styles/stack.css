@@ -1,0 +1,16 @@
+/* The block itself lives in theming; these pick its gap from the space tokens. */
+.nx-stack--gap-between-text {
+  --stack-gap: var(--space-between-text);
+}
+
+.nx-stack--gap-between-content {
+  --stack-gap: var(--space-between-content);
+}
+
+.nx-stack--gap-between-groups {
+  --stack-gap: var(--space-between-groups);
+}
+
+.nx-stack--gap-between-sections {
+  --stack-gap: var(--space-between-sections);
+}
