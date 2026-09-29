@@ -48,6 +48,22 @@ Coupling is confined to one adapter behind `IBlogRepository`.
 working tree. Claude Code reads `CLAUDE.md` in preference, so it costs no context. Opt out
 with `"agentGuidance": false` in `turbo.json`.
 
+## Tokens normalise the prototype rather than copy it
+
+The Claude Design prototype used around 35 spacing values, 30 type sizes and a dozen
+hand-drawn radii. The token source collapses them onto short scales, so a spacing or size
+that differs from the prototype by a pixel or two is intentional. Notably: its 10px paddings
+became 12px, and the mirrored twin radii for secondary buttons and alternate cards were
+dropped.
+
+**One accent orange for fills, two for text.** `#E8894A` fills buttons in both themes, with
+dark text on it. Orange _text_ cannot be one colour: a value dark enough for 4.5:1 on the
+light surface is too dark for 4.5:1 on the dark one. So `--color-text-accent` is `#A84C16`
+in light and `#E8894A` in dark.
+
+**Lines and shadows are the text colour** in both themes — hard offset shadows, not soft
+greys. That is the comic-book look; do not soften it.
+
 ## Open
 
 - **Lighthouse CI** (`@lhci/cli`) has not been published since June 2025. Confirm it still

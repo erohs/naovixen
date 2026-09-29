@@ -3,6 +3,19 @@
   "private": true,
   "type": "module",
   "exports": {
+    ".": "./src/index.ts",
     "./styles.css": "./src/index.css"
+  },
+  "scripts": {
+    "generate": "tsx scripts/GenerateTokens.effect.ts",
+    "lint": "eslint . && tsx scripts/GenerateTokens.effect.ts --check",
+    "typecheck": "tsc --noEmit && tsc --noEmit -p scripts",
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "@naovixen/typescript-config": "workspace:*",
+    "@types/node": "24.19.0",
+    "tsx": "4.23.15",
+    "vitest": "5.0.2"
   }
 }

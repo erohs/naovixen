@@ -1,6 +1,7 @@
 ---
 paths:
   - '**/*.css'
+  - 'packages/theming/src/tokens/**'
 ---
 
 # CSS
@@ -21,21 +22,26 @@ block.
 }
 ```
 
-Custom properties are unprefixed and lead with their category: `--color-accent`,
-`--space-4`, `--duration-fast`. Categories are `color`, `font-family`, `font-size`,
-`font-weight`, `line-height`, `letter-spacing`, `space`, `size`, `radius`, `border-width`,
-`shadow`, `duration`, `easing`, `layout`, `breakpoint`, `z-index`.
+Custom properties are unprefixed, lead with their category, then say what the value is
+for: `--space-between-content`, `--space-padding-action`, `--font-size-h3`.
+Categories are `color`, `font-family`, `font-size`, `font-weight`, `line-height`,
+`letter-spacing`, `space`, `size`, `radius`, `border-width`, `shadow`, `duration`,
+`easing`, `layout`, `breakpoint`, `z-index`.
 
 Component-scoped properties lead with the block name and are set on the block:
 `--project-card-padding-inline`.
 
 ## Tokens
 
-Components use semantic tokens — `--color-surface`, `--color-text-muted`. Raw palette
-values appear only in the token source, never in a component stylesheet.
+Tokens are few and general on purpose. Pick the one whose name fits the job, say
+`--space-between-content`; add a token only when nothing fits, never one per component.
+No length or colour literals in a component stylesheet.
 
-Tokens are generated. Edit `packages/theming/src/tokens/*.tokens.ts` and regenerate; never
-hand-edit the generated CSS.
+Space, type and layout are in rem so they follow the reader's font size. Borders, radii and
+shadows are drawing geometry and stay in px.
+
+Tokens are generated. Edit `packages/theming/src/tokens/*.tokens.ts`, run `pnpm generate`
+in `packages/theming`, and never hand-edit the generated CSS. Lint fails if it is stale.
 
 ## Layers
 

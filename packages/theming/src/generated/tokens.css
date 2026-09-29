@@ -1,0 +1,86 @@
+/* Generated from src/tokens by scripts/GenerateTokens.effect.ts. Do not edit by hand. */
+
+:root {
+  --font-family-body: 'Schibsted Grotesk Variable', system-ui, sans-serif;
+  --font-family-heading: 'Fredoka Variable', system-ui, sans-serif;
+  --font-family-code: 'JetBrains Mono Variable', ui-monospace, monospace;
+  --font-family-handwriting: 'Gochi Hand', cursive;
+  --font-size-display: clamp(3.25rem, 1.3913rem + 8.2609vw, 8rem);
+  --font-size-h1: clamp(2.75rem, 1.4783rem + 5.6522vw, 6rem);
+  --font-size-h2: clamp(1.75rem, 1.163rem + 2.6087vw, 3.25rem);
+  --font-size-h3: 1.5rem;
+  --font-size-h4: 1.125rem;
+  --font-size-lead: clamp(1.3125rem, 1.2391rem + 0.3261vw, 1.5rem);
+  --font-size-body: 1.125rem;
+  --font-size-small: 1rem;
+  --font-size-meta: 0.875rem;
+  --font-weight-regular: 400;
+  --font-weight-semi-bold: 600;
+  --line-height-heading: 1.15;
+  --line-height-body: 1.6;
+  --letter-spacing-heading: -0.01em;
+  --space-between-text: 0.5rem;
+  --space-between-content: 1rem;
+  --space-between-groups: 2rem;
+  --space-between-sections: clamp(3rem, 1.8261rem + 5.2174vw, 6rem);
+  --space-padding-page: clamp(1rem, 0.2174rem + 3.4783vw, 3rem);
+  --space-padding-container: 1.5rem;
+  --space-padding-panel: 3rem;
+  --space-padding-action: 0.75rem 1.5rem;
+  --space-padding-chip: 0.5rem 0.75rem;
+  --space-indent-list: 1.5rem;
+  --layout-width-page: 72.5rem;
+  --layout-width-prose: 45rem;
+  --size-action-minimum: 2.75rem;
+  --border-width-default: 1px;
+  --border-width-standout: 2px;
+  --border-width-highlight: 3px;
+  --radius-small: 10px 4px 9px 5px / 5px 9px 4px 10px;
+  --radius-medium: 24px 12px 22px 14px / 14px 22px 12px 24px;
+  --radius-large: 30px 18px 32px 16px / 18px 30px 16px 32px;
+  --radius-round: 50% 44% 52% 46% / 46% 52% 44% 50%;
+  --shadow-resting: 4px 4px 0 var(--color-shadow);
+  --shadow-raised: 6px 6px 0 var(--color-shadow);
+  --duration-fast: 150ms;
+  --duration-medium: 300ms;
+  --duration-slow: 450ms;
+  --easing-standard: ease;
+  --easing-bounce: cubic-bezier(0.34, 1.9, 0.5, 1);
+}
+
+:root,
+[data-theme='light'] {
+  color-scheme: light;
+
+  --color-background-page: #FBF6EE;
+  --color-background-surface: #F3EADC;
+  --color-background-accent: #E8894A;
+  --color-text-primary: #1F1B22;
+  --color-text-secondary: #564E5A;
+  --color-text-accent: #A84C16;
+  --color-text-error: #A3261E;
+  --color-text-on-accent: #1F1B22;
+  --color-border: #1F1B22;
+  --color-shadow: #1F1B22;
+  --color-focus: #4A3A5E;
+  --color-decoration-dots: #8E7AAE;
+  --color-decoration-paw: #F07C74;
+}
+
+[data-theme='dark'] {
+  color-scheme: dark;
+
+  --color-background-page: #2B1D14;
+  --color-background-surface: #3B2A1E;
+  --color-background-accent: #E8894A;
+  --color-text-primary: #FBF6EE;
+  --color-text-secondary: #E3CFBA;
+  --color-text-accent: #E8894A;
+  --color-text-error: #F59A8F;
+  --color-text-on-accent: #1F1B22;
+  --color-border: #FBF6EE;
+  --color-shadow: #FBF6EE;
+  --color-focus: #C9B8E6;
+  --color-decoration-dots: #8E7AAE;
+  --color-decoration-paw: #F07C74;
+}

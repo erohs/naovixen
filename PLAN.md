@@ -9,9 +9,9 @@
 
 **Phases 0 and 1 are done and pushed.** `pnpm typecheck`, `test`, `lint` and `build` all pass.
 
-**Next: Phase 2 — theming.** Start by rendering `design-reference/` in a browser and
-looking at it; `notes/design-reference-findings.md` has the palette, typefaces, views and
-content shapes already extracted from the bundle, so that does not need repeating.
+**Phase 2 — theming, in progress.** Tokens, generator, both themes and the AA contrast
+check are done. Next: reset, base typography, focus styles, layout primitives, utilities,
+and self-hosted fonts with fallback metrics.
 
 Package names changed from section 2: `ui` → `components`, `styles` → `theming`,
 `content` → `formatting`, `system-page` → `design-system`, `tsconfig` →
@@ -593,8 +593,8 @@ Simple, accessible, professional, Scandinavian restraint with a playful hint of 
 
 ### Phase 2 — Styles package
 
-- [ ] Derive palette, typography, spacing, radii, shadows and motion from how `design-reference/` **looks when rendered**, normalised into a small, consistent scale in `*.tokens.ts`. Don't lift raw values from its CSS: collapse near-duplicates (e.g. five slightly different greys or paddings become one token) and list any merges in `docs/decisions.md` for Naomi to check.
-- [ ] Token generator script + generated `tokens.css`; light and dark semantic themes.
+- [x] Derive palette, typography, spacing, radii, shadows and motion from how `design-reference/` **looks when rendered**, normalised into a small, consistent scale in `*.tokens.ts`. Don't lift raw values from its CSS: collapse near-duplicates (e.g. five slightly different greys or paddings become one token) and list any merges in `docs/decisions.md` for Naomi to check.
+- [x] Token generator script + generated `tokens.css`; light and dark semantic themes.
 - [ ] Reset, base typography, focus styles, layout primitives, minimal utilities, cascade layers.
 - [ ] Self-hosted fonts with fallback metrics.
 - **Verify:** generator is deterministic; contrast check for all semantic pairs passes AA. **Commit** once this passes.

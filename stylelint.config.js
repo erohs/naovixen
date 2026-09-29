@@ -68,7 +68,7 @@ export default {
   overrides: [
     {
       // Global design tokens lead with their category, so they sort and read as a scale.
-      files: ['packages/styles/src/**/*.css'],
+      files: ['packages/theming/src/**/*.css'],
       rules: {
         'custom-property-pattern': [
           tokenPattern,
