@@ -19,8 +19,28 @@
     padding: 0;
     border-radius: var(--radius-round);
     box-shadow: var(--shadow-small);
+
+    /*
+     * Hidden until the reader has scrolled a full screen down. Visibility, not just opacity,
+     * keeps a hidden link out of the tab order and the accessibility tree; it waits for the fade
+     * to finish before hiding.
+     */
     visibility: hidden;
     opacity: 0;
+    transition:
+        translate var(--duration-fast) var(--easing-standard),
+        box-shadow var(--duration-fast) var(--easing-standard),
+        opacity var(--duration-medium) var(--easing-standard),
+        visibility 0s linear var(--duration-medium);
+
+    &[data-visible='true'] {
+        visibility: visible;
+        opacity: 1;
+        transition:
+            translate var(--duration-fast) var(--easing-standard),
+            box-shadow var(--duration-fast) var(--easing-standard),
+            opacity var(--duration-medium) var(--easing-standard);
+    }
 
     &:hover {
         --back-to-top-lift: calc(
@@ -43,29 +63,5 @@
         &:active {
             translate: none;
         }
-    }
-}
-
-/*
- * Hidden until the reader has scrolled a full screen down, then it fades in. Only a
- * scroll-driven animation reveals it, so on a page too short to scroll, or in a browser without
- * such animations, it stays hidden and the page's own scrolling does the job. Visibility, not
- * just opacity, keeps a hidden link out of the tab order and the accessibility tree.
- */
-@supports (animation-timeline: scroll()) {
-    .nx-back-to-top {
-        animation-name: nx-back-to-top-reveal;
-        animation-duration: auto;
-        animation-timing-function: linear;
-        animation-fill-mode: forwards;
-        animation-timeline: scroll(root);
-        animation-range: 100dvh calc(100dvh + var(--space-between-content));
-    }
-}
-
-@keyframes nx-back-to-top-reveal {
-    to {
-        visibility: visible;
-        opacity: 1;
     }
 }
