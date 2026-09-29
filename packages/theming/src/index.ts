@@ -1,7 +1,18 @@
 export type { IColorTheme } from './interfaces/IColorTheme';
 export type { IContrastRequirement } from './interfaces/IContrastRequirement';
+export type { ISystemThemeSource } from './interfaces/ISystemThemeSource';
+export type { IThemeStorage } from './interfaces/IThemeStorage';
 export { contrastRequirements } from './constants/ContrastRequirements.const';
 export { calculateContrastRatio } from './functions/CalculateContrastRatio.function';
 export { darkTheme } from './tokens/DarkTheme.tokens';
 export { lightTheme } from './tokens/LightTheme.tokens';
 export { sharedTokens } from './tokens/Shared.tokens';
+export { ResolvedTheme } from './enums/ResolvedTheme';
+export { ThemePreference } from './enums/ThemePreference';
+export { ThemeController } from './theme-controller/ThemeController';
+export type { IThemeState } from './theme-controller/interfaces/IThemeState';
+export { CookieThemeStorage } from './cookie-theme-storage/CookieThemeStorage';
+export type { ICookieStore } from './cookie-theme-storage/interfaces/ICookieStore';
+export { MediaQuerySystemThemeSource } from './media-query-system-theme-source/MediaQuerySystemThemeSource';
+export type { IMediaQueryList } from './media-query-system-theme-source/interfaces/IMediaQueryList';
+export type { MatchMedia } from './media-query-system-theme-source/types/MatchMedia';
