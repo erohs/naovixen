@@ -1,0 +1,94 @@
+/*
+ * The card's face is drawn on ::after and its dotted halo on ::before, both beneath the
+ * content. Tilting makes the card a stacking context, which would otherwise lift a halo
+ * over the card's own background.
+ */
+.nx-project-card {
+  --project-card-tilt: -0.7deg;
+  --project-card-lift: calc(-1 * var(--size-shadow-offset-raised));
+
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-between-content);
+  block-size: 100%;
+  padding: var(--space-padding-container);
+  transition:
+    translate var(--duration-slow) var(--easing-bounce),
+    rotate var(--duration-slow) var(--easing-bounce);
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    z-index: -1;
+  }
+
+  /* Dots under a wash of page colour that thins towards the top-right corner. */
+  &::before {
+    inset: calc(-1 * var(--space-between-groups));
+    border-radius: var(--radius-large);
+    background:
+      radial-gradient(circle at 100% 0, transparent 30%, var(--color-background-page) 80%),
+      radial-gradient(circle, var(--color-decoration-dots) 25%, transparent 30%) 0 0 /
+        var(--space-between-content) var(--space-between-content);
+    opacity: 0;
+    transition: opacity var(--duration-medium) var(--easing-standard);
+  }
+
+  &::after {
+    inset: 0;
+    border: var(--border-width-standout) solid var(--color-border);
+    border-radius: var(--radius-medium);
+    background-color: var(--color-background-surface);
+    transition: box-shadow var(--duration-medium) var(--easing-standard);
+  }
+
+  &:hover,
+  &:focus-within {
+    &::before {
+      opacity: 1;
+    }
+  }
+
+  &:hover {
+    translate: var(--project-card-lift) var(--project-card-lift);
+    rotate: var(--project-card-tilt);
+
+    &::after {
+      box-shadow: var(--shadow-raised);
+    }
+  }
+}
+
+.nx-project-card__screenshot {
+  inline-size: 100%;
+  block-size: auto;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  border: var(--border-width-standout) solid var(--color-border);
+  border-radius: var(--radius-small);
+}
+
+.nx-project-card__summary {
+  color: var(--color-text-secondary);
+}
+
+.nx-project-card__footer {
+  margin-block-start: auto;
+  padding-block-start: var(--space-between-content);
+  border-block-start: var(--border-width-default) dashed var(--color-border);
+  font-weight: var(--font-weight-semi-bold);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nx-project-card {
+    transition: none;
+
+    &:hover {
+      translate: none;
+      rotate: none;
+    }
+  }
+}

@@ -1,0 +1,27 @@
+/* Prose: a readable measure, space between blocks, and more above each heading. */
+.nx-blog-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-between-content);
+  max-inline-size: var(--layout-width-prose);
+
+  & :is(h2, h3) {
+    margin-block-start: var(--space-between-groups);
+  }
+
+  & :is(ul, ol) {
+    padding-inline-start: var(--space-indent-list);
+  }
+
+  & blockquote {
+    padding-inline-start: var(--space-between-content);
+    border-inline-start: var(--border-width-highlight) solid var(--color-border);
+    color: var(--color-text-secondary);
+  }
+
+  & :not(pre) > code {
+    padding-inline: var(--space-between-text);
+    border-radius: var(--radius-small);
+    background-color: var(--color-background-surface);
+  }
+}

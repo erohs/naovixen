@@ -1,0 +1,48 @@
+/* A surface card that lifts, tilts the opposite way to a project card, and gains a shadow. */
+.nx-blog-post-card {
+  --blog-post-card-tilt: 0.6deg;
+  --blog-post-card-lift: calc(-1 * var(--size-shadow-offset-raised));
+
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-between-content);
+  block-size: 100%;
+  padding: var(--space-padding-container);
+  border: var(--border-width-standout) solid var(--color-border);
+  border-radius: var(--radius-medium);
+  background-color: var(--color-background-surface);
+  transition:
+    translate var(--duration-slow) var(--easing-bounce),
+    rotate var(--duration-slow) var(--easing-bounce),
+    box-shadow var(--duration-medium) var(--easing-standard);
+
+  &:hover {
+    translate: var(--blog-post-card-lift) var(--blog-post-card-lift);
+    rotate: var(--blog-post-card-tilt);
+    box-shadow: var(--shadow-raised);
+  }
+}
+
+.nx-blog-post-card__excerpt {
+  color: var(--color-text-secondary);
+}
+
+.nx-blog-post-card__meta {
+  margin-block-start: auto;
+  padding-block-start: var(--space-between-content);
+  border-block-start: var(--border-width-default) dashed var(--color-border);
+  color: var(--color-text-secondary);
+  font-family: var(--font-family-code);
+  font-size: var(--font-size-meta);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nx-blog-post-card {
+    transition: box-shadow var(--duration-medium) var(--easing-standard);
+
+    &:hover {
+      translate: none;
+      rotate: none;
+    }
+  }
+}
