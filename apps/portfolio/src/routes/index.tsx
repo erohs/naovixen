@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
 
-import { buildBlockClassName, classNamePrefix } from '@naovixen/components';
+import { IconName } from '@naovixen/components';
 import { designSystemPath } from '@naovixen/design-system';
 import { createExcerpt } from '@naovixen/formatting';
 
@@ -9,8 +9,7 @@ import { createExcerpt } from '@naovixen/formatting';
 // no build step. Phase 5 replaces this with the real home page.
 const HomeComponent = (): ReactNode => {
   const wiringChecks = [
-    { packageName: '@naovixen/components', result: buildBlockClassName('project-card') },
-    { packageName: '@naovixen/components', result: classNamePrefix },
+    { packageName: '@naovixen/components', result: IconName.ArrowRight },
     { packageName: '@naovixen/formatting', result: createExcerpt('Scaffolding the monorepo', 14) },
     { packageName: '@naovixen/design-system', result: designSystemPath },
   ];

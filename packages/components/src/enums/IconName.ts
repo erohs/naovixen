@@ -1,0 +1,17 @@
+export enum IconName {
+  ArrowDown = 'arrow-down',
+  ArrowLeft = 'arrow-left',
+  ArrowRight = 'arrow-right',
+  ArrowUp = 'arrow-up',
+  Bluesky = 'bluesky',
+  Close = 'close',
+  Download = 'download',
+  ExternalLink = 'external-link',
+  GitHub = 'github',
+  GraduationCap = 'graduation-cap',
+  LinkedIn = 'linkedin',
+  Mail = 'mail',
+  Menu = 'menu',
+  Moon = 'moon',
+  Sun = 'sun',
+}

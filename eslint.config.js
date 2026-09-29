@@ -45,6 +45,6 @@ export default [
   restrictImports('formatting', { paths: noReact }),
   restrictImports('cms', { mayImport: ['models'], paths: noReact }),
   restrictImports('seo', { mayImport: ['models'], paths: noReact }),
-  restrictImports('components', { mayImport: ['models', 'theming'] }),
+  restrictImports('components', { mayImport: ['formatting', 'models', 'theming'] }),
   restrictImports('design-system', { mayImport: ['components', 'theming'] }),
 ];

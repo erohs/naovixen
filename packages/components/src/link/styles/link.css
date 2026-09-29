@@ -1,0 +1,48 @@
+/* A wavy underline that appears on hover and stays on the current page. */
+.nx-link {
+  text-decoration: none;
+
+  & .nx-icon {
+    vertical-align: middle;
+  }
+
+  & .nx-icon:first-child {
+    margin-inline-end: var(--space-between-text);
+  }
+
+  & .nx-icon:last-child {
+    margin-inline-start: var(--space-between-text);
+  }
+}
+
+.nx-link__label {
+  text-decoration: underline wavy transparent;
+  text-decoration-thickness: var(--border-width-standout);
+  transition: text-decoration-color var(--duration-fast) var(--easing-standard);
+}
+
+.nx-link:hover .nx-link__label,
+.nx-link[aria-current='page'] .nx-link__label {
+  text-decoration-color: var(--color-text-accent);
+}
+
+/* Focus inverts the link into a solid block, which reads more clearly than a ring on text. */
+.nx-link:focus-visible {
+  outline: none;
+  border-radius: var(--radius-small);
+  background-color: var(--color-focus);
+  box-shadow: 0 0 0 var(--border-width-highlight) var(--color-focus);
+  color: var(--color-background-page);
+  box-decoration-break: clone;
+
+  & .nx-link__label {
+    text-decoration-color: transparent;
+  }
+}
+
+/* Forced colours drop backgrounds and shadows, so the outline has to come back. */
+@media (forced-colors: active) {
+  .nx-link:focus-visible {
+    outline: var(--border-width-highlight) solid;
+  }
+}

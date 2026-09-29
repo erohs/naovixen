@@ -1,1 +1,4 @@
-/* Component stylesheets are imported here, into the components layer. */
+/* Every component stylesheet, filed into the components layer declared by theming. */
+@import url('./styles/button.css') layer(components);
+@import url('./icon/styles/icon.css') layer(components);
+@import url('./link/styles/link.css') layer(components);

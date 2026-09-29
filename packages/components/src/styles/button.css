@@ -1,0 +1,60 @@
+/* Shared by Button and ButtonLink. Hover lifts off the shadow; pressing sinks into it. */
+.nx-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-between-text);
+  min-block-size: var(--size-action-minimum);
+  padding: var(--space-padding-action);
+  border: var(--border-width-standout) solid var(--color-border);
+  border-radius: var(--radius-medium);
+  background-color: var(--color-background-page);
+  box-shadow: var(--shadow-resting);
+  color: var(--color-text-primary);
+  font: inherit;
+  font-weight: var(--font-weight-semi-bold);
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    translate var(--duration-fast) var(--easing-standard),
+    box-shadow var(--duration-fast) var(--easing-standard);
+
+  &:hover {
+    --button-lift: calc(var(--size-shadow-offset-resting) - var(--size-shadow-offset-raised));
+
+    translate: var(--button-lift) var(--button-lift);
+    box-shadow: var(--shadow-raised);
+  }
+
+  &:active {
+    translate: var(--size-shadow-offset-resting) var(--size-shadow-offset-resting);
+    box-shadow: none;
+  }
+
+  /* Clear of the shadow, so the ring is not drawn on top of it. */
+  &:focus-visible {
+    outline-offset: calc(var(--border-width-highlight) + var(--size-shadow-offset-raised));
+  }
+}
+
+.nx-button--primary {
+  background-color: var(--color-background-accent);
+  color: var(--color-text-on-accent);
+}
+
+.nx-button__meta {
+  font-family: var(--font-family-code);
+  font-size: var(--font-size-meta);
+  font-weight: var(--font-weight-regular);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nx-button {
+    transition: none;
+
+    &:hover,
+    &:active {
+      translate: none;
+    }
+  }
+}
