@@ -1,13 +1,16 @@
-import type { FunctionComponent } from 'react';
+import type { ComponentPropsWithRef, FunctionComponent } from 'react';
+import { joinClassNames } from '@naovixen/formatting';
 
-import type { ISkipLinkProps } from './interfaces/ISkipLinkProps';
-
-/** Render it first in the body. The target needs `tabIndex={-1}` to take focus. */
-export const SkipLink: FunctionComponent<ISkipLinkProps> = ({
-  targetId,
-  label = 'Skip to content',
+/**
+ * Render it first in the body, pointing at the main content: `href="#main"`. The target
+ * needs `tabIndex={-1}` to take focus.
+ */
+export const SkipLink: FunctionComponent<ComponentPropsWithRef<'a'>> = ({
+    className,
+    children,
+    ...anchorProps
 }) => (
-  <a className="nx-skip-link" href={`#${targetId}`}>
-    {label}
-  </a>
+    <a {...anchorProps} className={joinClassNames('nx-skip-link', className)}>
+        {children}
+    </a>
 );

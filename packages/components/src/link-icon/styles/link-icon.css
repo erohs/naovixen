@@ -1,0 +1,9 @@
+.nx-link-icon {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-between-text);
+}
+
+.nx-link-icon--start .nx-link-icon__icon {
+    order: -1;
+}

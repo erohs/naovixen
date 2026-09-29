@@ -1,20 +1,19 @@
-/* Clipped away like visually hidden text until it has focus, then shown in the corner. */
 .nx-skip-link {
-  position: fixed;
-  z-index: var(--z-index-floating);
-  inset-block-start: var(--space-between-content);
-  inset-inline-start: var(--space-between-content);
-  padding: var(--space-padding-chip);
-  border: var(--border-width-standout) solid var(--color-border);
-  border-radius: var(--radius-small);
-  background-color: var(--color-background-accent);
-  color: var(--color-text-on-accent);
-  font-size: var(--font-size-small);
-  font-weight: var(--font-weight-semi-bold);
-  text-decoration: none;
+    position: fixed;
+    z-index: var(--z-index-floating);
+    inset-block-start: var(--space-between-content);
+    inset-inline-start: var(--space-between-content);
+    padding: var(--space-padding-chip);
+    border: var(--border-width-standout) solid var(--color-border);
+    border-radius: var(--radius-small);
+    background-color: var(--color-background-accent);
+    color: var(--color-text-on-accent);
+    font-size: var(--font-size-small);
+    font-weight: var(--font-weight-semi-bold);
+    text-decoration: none;
 
-  &:not(:focus) {
-    clip-path: inset(50%);
-    white-space: nowrap;
-  }
+    &:not(:focus) {
+        clip-path: inset(50%);
+        white-space: nowrap;
+    }
 }

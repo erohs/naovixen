@@ -1,12 +1,12 @@
 .nx-tag {
-  display: inline-block;
-  padding: var(--space-padding-chip);
-  border: var(--border-width-default) solid var(--color-border);
-  border-radius: var(--radius-small);
-  background-color: var(--color-background-page);
-  color: var(--color-text-primary);
-  font-family: var(--font-family-code);
-  font-size: var(--font-size-meta);
-  line-height: var(--line-height-heading);
-  white-space: nowrap;
+    display: inline-block;
+    padding: var(--space-padding-chip);
+    border: var(--border-width-default) solid var(--color-border);
+    border-radius: var(--radius-small);
+    background-color: var(--color-background-page);
+    color: var(--color-text-primary);
+    font-family: var(--font-family-code);
+    font-size: var(--font-size-meta);
+    line-height: var(--line-height-heading);
+    white-space: nowrap;
 }

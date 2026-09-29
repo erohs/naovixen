@@ -1,22 +1,35 @@
+import { findAxeViolations } from '@naovixen/component-testing';
 import { render, screen } from '@testing-library/react';
 import { describe, expect, test } from 'vitest';
 
-import { IconName } from '../../enums/IconName';
-import { findAxeViolations } from '../../tests/functions/FindAxeViolations.function';
 import { Icon } from '../Icon.component';
+import { sunIcon } from '../icons/Sun.icon';
 
 describe('Using Icon', () => {
-  describe('when it renders', () => {
-    test('then it should be hidden from assistive technology', () => {
-      render(<Icon name={IconName.Sun} />);
+    describe('when it renders', () => {
+        test('then it should be hidden from assistive technology', () => {
+            render(<Icon source={sunIcon} />);
 
-      expect(screen.queryByRole('img')).toBeNull();
+            expect(screen.queryByRole('img')).toBeNull();
+        });
+
+        test('then it should have no accessibility violations', async () => {
+            render(<Icon source={sunIcon} />);
+
+            expect(await findAxeViolations()).toEqual([]);
+        });
     });
 
-    test('then it should have no accessibility violations', async () => {
-      render(<Icon name={IconName.GitHub} />);
+    describe('when it sits inside a button', () => {
+        test('then it should add nothing to the button name', () => {
+            render(
+                <button type="button">
+                    <Icon source={sunIcon} />
+                    Light mode
+                </button>,
+            );
 
-      expect(await findAxeViolations()).toEqual([]);
+            expect(screen.getByRole('button', { name: 'Light mode' })).toBeDefined();
+        });
     });
-  });
 });

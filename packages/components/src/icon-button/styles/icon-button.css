@@ -1,0 +1,6 @@
+.nx-icon-button {
+    aspect-ratio: 1;
+    min-inline-size: var(--size-action-minimum);
+    padding: 0;
+    border-radius: var(--radius-round);
+}

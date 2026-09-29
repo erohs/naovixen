@@ -1,0 +1,21 @@
+/* Shared by Input and TextArea. An invalid field thickens its border as well as changing
+   colour, so the error is not shown by colour alone. */
+.nx-input {
+    inline-size: 100%;
+    min-block-size: var(--size-action-minimum);
+    padding: var(--space-padding-chip);
+    border: var(--border-width-standout) solid var(--color-border);
+    border-radius: var(--radius-small);
+    background-color: var(--color-background-page);
+    color: var(--color-text-primary);
+    font: inherit;
+
+    &[aria-invalid='true'] {
+        border-width: var(--border-width-highlight);
+        border-color: var(--color-text-error);
+    }
+
+    &:focus-visible {
+        outline-offset: 0;
+    }
+}

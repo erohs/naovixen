@@ -1,16 +1,13 @@
-/* Sized in em so an icon matches the text beside it, and drawn in the text colour. */
+/* Sized in em so an icon matches the text beside it. The svg draws in currentcolor. */
 .nx-icon {
-  flex-shrink: 0;
-  inline-size: 1.1em;
-  block-size: 1.1em;
-  fill: none;
-  stroke: currentcolor;
-  stroke-width: 2;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
+    display: inline-flex;
+    flex-shrink: 0;
+    inline-size: 1.1em;
+    block-size: 1.1em;
+    vertical-align: middle;
 
-.nx-icon[data-filled='true'] {
-  fill: currentcolor;
-  stroke: none;
+    & svg {
+        inline-size: 100%;
+        block-size: 100%;
+    }
 }

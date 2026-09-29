@@ -1,110 +1,56 @@
-import { screen } from '@testing-library/react';
+import { findAxeViolations } from '@naovixen/component-testing';
+import { render, screen } from '@testing-library/react';
+import { createRef } from 'react';
 import { describe, expect, test } from 'vitest';
 
-import { LinkDestination } from '../../enums/LinkDestination';
-import { findAxeViolations } from '../../tests/functions/FindAxeViolations.function';
-import { renderWithProvider } from '../../tests/functions/RenderWithProvider.function';
-import { RouterLinkForTests } from '../../tests/functions/RouterLinkForTests.component';
 import { Link } from '../Link.component';
 
 describe('Using Link', () => {
-  describe('given a link to a page on the site', () => {
-    describe('when it renders', () => {
-      test('then it should go through the router', () => {
-        renderWithProvider(<Link href="/work">Work</Link>, { linkComponent: RouterLinkForTests });
+    describe('given an href and text', () => {
+        describe('when it renders', () => {
+            test('then it should be a link named by its text', () => {
+                render(<Link href="/work">Work</Link>);
 
-        expect(screen.getByRole('link', { name: 'Work' }).dataset.routed).toBe('true');
-      });
+                expect(screen.getByRole('link', { name: 'Work' })).toHaveProperty(
+                    'pathname',
+                    '/work',
+                );
+            });
 
-      test('then it should have no accessibility violations', async () => {
-        renderWithProvider(<Link href="/work">Work</Link>);
+            test('then it should have no accessibility violations', async () => {
+                render(<Link href="/work">Work</Link>);
 
-        expect(await findAxeViolations()).toEqual([]);
-      });
-    });
-
-    describe('and it is the current page', () => {
-      describe('when it renders', () => {
-        test('then it should mark itself as the current page', () => {
-          renderWithProvider(
-            <Link href="/work" isCurrent>
-              Work
-            </Link>,
-          );
-
-          expect(screen.getByRole('link', { current: 'page' })).toHaveProperty(
-            'textContent',
-            'Work',
-          );
+                expect(await findAxeViolations()).toEqual([]);
+            });
         });
-      });
     });
-  });
 
-  describe('given a link to another site', () => {
-    describe('when it renders', () => {
-      test('then it should warn that it opens a new tab', () => {
-        renderWithProvider(
-          <Link href="https://example.com" destination={LinkDestination.External}>
-            Example
-          </Link>,
-        );
+    describe('given intrinsic anchor props', () => {
+        describe('when it renders', () => {
+            test('then it should pass them through, so a router can mark the current page', () => {
+                render(
+                    <Link href="/work" aria-current="page">
+                        Work
+                    </Link>,
+                );
 
-        expect(screen.getByRole('link', { name: 'Example (opens in new tab)' })).toHaveProperty(
-          'target',
-          '_blank',
-        );
-      });
-
-      test('then it should not go through the router', () => {
-        renderWithProvider(
-          <Link href="https://example.com" destination={LinkDestination.External}>
-            Example
-          </Link>,
-          { linkComponent: RouterLinkForTests },
-        );
-
-        expect(screen.getByRole('link').dataset.routed).toBeUndefined();
-      });
+                expect(screen.getByRole('link', { current: 'page' })).toBeDefined();
+            });
+        });
     });
-  });
 
-  describe('given a link to a file', () => {
-    describe('when it renders', () => {
-      test('then it should offer the file as a download', () => {
-        renderWithProvider(
-          <Link href="/cv.pdf" destination={LinkDestination.Download}>
-            CV
-          </Link>,
-        );
+    describe('given a ref', () => {
+        describe('when it renders', () => {
+            test('then it should hand the anchor to the ref, as a router link needs', () => {
+                const ref = createRef<HTMLAnchorElement>();
+                render(
+                    <Link href="/work" ref={ref}>
+                        Work
+                    </Link>,
+                );
 
-        expect(screen.getByRole('link', { name: 'CV' }).hasAttribute('download')).toBe(true);
-      });
+                expect(ref.current).toBe(screen.getByRole('link'));
+            });
+        });
     });
-  });
-
-  describe('given a link to an email address', () => {
-    describe('when it renders', () => {
-      test('then it should open in place rather than in a new tab', () => {
-        renderWithProvider(
-          <Link href="mailto:hello@example.com" destination={LinkDestination.Email}>
-            Email
-          </Link>,
-        );
-
-        expect(screen.getByRole('link', { name: 'Email' }).hasAttribute('target')).toBe(false);
-      });
-
-      test('then it should not go through the router', () => {
-        renderWithProvider(
-          <Link href="mailto:hello@example.com" destination={LinkDestination.Email}>
-            Email
-          </Link>,
-          { linkComponent: RouterLinkForTests },
-        );
-
-        expect(screen.getByRole('link').dataset.routed).toBeUndefined();
-      });
-    });
-  });
 });

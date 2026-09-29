@@ -1,17 +1,22 @@
 import type { FunctionComponent } from 'react';
+import { joinClassNames } from '@naovixen/formatting';
 
-import { ButtonContent } from '../button-content/ButtonContent.component';
-import { ButtonVariant } from '../enums/ButtonVariant';
-import { buildButtonClassName } from '../functions/BuildButtonClassName.function';
+import { ButtonVariant } from './enums/ButtonVariant';
 import type { IButtonProps } from './interfaces/IButtonProps';
 
+/** A plain button unless told otherwise, so it never submits a form by accident. */
 export const Button: FunctionComponent<IButtonProps> = ({
-  variant = ButtonVariant.Secondary,
-  type = 'button',
-  onPress,
-  ...contentProps
+    variant = ButtonVariant.Secondary,
+    type = 'button',
+    className,
+    children,
+    ...buttonProps
 }) => (
-  <button type={type} className={buildButtonClassName(variant)} onClick={onPress}>
-    <ButtonContent {...contentProps} />
-  </button>
+    <button
+        {...buttonProps}
+        type={type}
+        className={joinClassNames('nx-button', `nx-button--${variant}`, className)}
+    >
+        {children}
+    </button>
 );

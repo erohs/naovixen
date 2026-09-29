@@ -1,7 +1,3 @@
-import type { IconName } from '../../enums/IconName';
-import type { IAnchorProps } from '../../anchor/interfaces/IAnchorProps';
+import type { ComponentPropsWithRef } from 'react';
 
-export interface ILinkProps extends Omit<IAnchorProps, 'className'> {
-  readonly leadingIcon?: IconName;
-  readonly trailingIcon?: IconName;
-}
+export type LinkProps = ComponentPropsWithRef<'a'>;

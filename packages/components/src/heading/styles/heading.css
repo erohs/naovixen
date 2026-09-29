@@ -1,20 +1,19 @@
-/* Base styles give each level its own size; a modifier lets the look differ from the level. */
 .nx-heading--display {
-  font-size: var(--font-size-display);
+    font-size: var(--font-size-display);
 }
 
 .nx-heading--h1 {
-  font-size: var(--font-size-h1);
+    font-size: var(--font-size-h1);
 }
 
 .nx-heading--h2 {
-  font-size: var(--font-size-h2);
+    font-size: var(--font-size-h2);
 }
 
 .nx-heading--h3 {
-  font-size: var(--font-size-h3);
+    font-size: var(--font-size-h3);
 }
 
 .nx-heading--h4 {
-  font-size: var(--font-size-h4);
+    font-size: var(--font-size-h4);
 }

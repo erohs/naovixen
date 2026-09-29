@@ -1,6 +1,7 @@
-import type { IButtonAppearanceProps } from '../../interfaces/IButtonAppearanceProps';
+import type { ComponentPropsWithRef } from 'react';
 
-export interface IButtonProps extends IButtonAppearanceProps {
-  readonly type?: 'button' | 'submit';
-  readonly onPress?: () => void;
+import type { ButtonVariant } from '../enums/ButtonVariant';
+
+export interface IButtonProps extends ComponentPropsWithRef<'button'> {
+    readonly variant?: ButtonVariant | undefined;
 }

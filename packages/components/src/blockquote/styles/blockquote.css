@@ -1,0 +1,5 @@
+.nx-blockquote {
+    padding-inline-start: var(--space-between-content);
+    border-inline-start: var(--border-width-highlight) solid var(--color-text-accent);
+    font-size: var(--font-size-lead);
+}

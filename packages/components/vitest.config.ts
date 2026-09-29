@@ -1,8 +1,8 @@
 import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
-  test: {
-    environment: 'jsdom',
-    setupFiles: ['./src/tests/VitestSetup.effect.ts'],
-  },
+    test: {
+        environment: 'jsdom',
+        setupFiles: ['@naovixen/component-testing/setup'],
+    },
 });

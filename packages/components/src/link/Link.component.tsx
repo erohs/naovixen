@@ -1,18 +1,14 @@
 import type { FunctionComponent } from 'react';
+import { joinClassNames } from '@naovixen/formatting';
 
-import { Anchor } from '../anchor/Anchor.component';
-import { Icon } from '../icon/Icon.component';
-import type { ILinkProps } from './interfaces/ILinkProps';
+import type { LinkProps } from './types/LinkProps';
 
-export const Link: FunctionComponent<ILinkProps> = ({
-  leadingIcon,
-  trailingIcon,
-  children,
-  ...anchorProps
-}) => (
-  <Anchor className="nx-link" {...anchorProps}>
-    {leadingIcon && <Icon name={leadingIcon} />}
-    <span className="nx-link__label">{children}</span>
-    {trailingIcon && <Icon name={trailingIcon} />}
-  </Anchor>
+/**
+ * A styled anchor that passes every prop and its ref through, so a router can wrap it:
+ * TanStack Router's `createLink(Link)` gives a typed router link with this look.
+ */
+export const Link: FunctionComponent<LinkProps> = ({ className, children, ...anchorProps }) => (
+    <a {...anchorProps} className={joinClassNames('nx-link', className)}>
+        {children}
+    </a>
 );

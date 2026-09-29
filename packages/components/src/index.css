@@ -1,42 +1,17 @@
-/*
- * Every component stylesheet, filed into the components layer declared by theming.
- * Shared button styles come first: the round and icon buttons further down override them.
- */
-@import url('./styles/button.css') layer(components);
-@import url('./cluster/styles/cluster.css') layer(components);
-@import url('./grid/styles/grid.css') layer(components);
-@import url('./hand-drawn-rule/styles/hand-drawn-rule.css') layer(components);
-@import url('./heading/styles/heading.css') layer(components);
-@import url('./section-heading/styles/section-heading.css') layer(components);
-@import url('./skip-link/styles/skip-link.css') layer(components);
-@import url('./stack/styles/stack.css') layer(components);
-@import url('./tag/styles/tag.css') layer(components);
-@import url('./tag-list/styles/tag-list.css') layer(components);
-@import url('./text/styles/text.css') layer(components);
-@import url('./icon/styles/icon.css') layer(components);
+/* Button first: its spin-offs further down override it. */
+@import url('./button/styles/button.css') layer(components);
+@import url('./busy-button/styles/busy-button.css') layer(components);
+@import url('./icon-button/styles/icon-button.css') layer(components);
+@import url('./toggle-button/styles/toggle-button.css') layer(components);
 @import url('./link/styles/link.css') layer(components);
-@import url('./heart/styles/heart.css') layer(components);
-@import url('./paw/styles/paw.css') layer(components);
-@import url('./fox-mascot/styles/fox-mascot.css') layer(components);
-@import url('./blog-content/styles/blog-content.css') layer(components);
-@import url('./blog-post-card/styles/blog-post-card.css') layer(components);
-@import url('./callout/styles/callout.css') layer(components);
-@import url('./code-block/styles/code-block.css') layer(components);
-@import url('./figure/styles/figure.css') layer(components);
-@import url('./link-tile/styles/link-tile.css') layer(components);
-@import url('./project-card/styles/project-card.css') layer(components);
-@import url('./speech-bubble/styles/speech-bubble.css') layer(components);
-@import url('./wordmark/styles/wordmark.css') layer(components);
-@import url('./logo/styles/logo.css') layer(components);
-@import url('./theme-toggle/styles/theme-toggle.css') layer(components);
-@import url('./navigation-list/styles/navigation-list.css') layer(components);
-@import url('./site-navigation/styles/site-navigation.css') layer(components);
-@import url('./mobile-menu/styles/mobile-menu.css') layer(components);
-@import url('./site-header/styles/site-header.css') layer(components);
-@import url('./social-link-list/styles/social-link-list.css') layer(components);
-@import url('./site-footer-column/styles/site-footer-column.css') layer(components);
-@import url('./site-footer-legal/styles/site-footer-legal.css') layer(components);
-@import url('./site-footer/styles/site-footer.css') layer(components);
-@import url('./breadcrumb/styles/breadcrumb.css') layer(components);
-@import url('./pager/styles/pager.css') layer(components);
-@import url('./back-to-top/styles/back-to-top.css') layer(components);
+@import url('./link-icon/styles/link-icon.css') layer(components);
+@import url('./icon/styles/icon.css') layer(components);
+@import url('./input/styles/input.css') layer(components);
+@import url('./label/styles/label.css') layer(components);
+@import url('./form-field/styles/form-field.css') layer(components);
+@import url('./heading/styles/heading.css') layer(components);
+@import url('./text/styles/text.css') layer(components);
+@import url('./code/styles/code.css') layer(components);
+@import url('./blockquote/styles/blockquote.css') layer(components);
+@import url('./tag/styles/tag.css') layer(components);
+@import url('./skip-link/styles/skip-link.css') layer(components);

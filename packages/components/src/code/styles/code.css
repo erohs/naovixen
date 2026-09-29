@@ -1,0 +1,5 @@
+.nx-code {
+    padding-inline: calc(var(--space-between-text) / 2);
+    border-radius: var(--radius-small);
+    background-color: var(--color-background-surface);
+}

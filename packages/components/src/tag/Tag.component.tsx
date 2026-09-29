@@ -1,7 +1,7 @@
-import type { FunctionComponent } from 'react';
+import type { ComponentPropsWithRef, FunctionComponent } from 'react';
+import { joinClassNames } from '@naovixen/formatting';
 
-import type { ITagProps } from './interfaces/ITagProps';
-
-export const Tag: FunctionComponent<ITagProps> = ({ label }) => (
-  <span className="nx-tag">{label}</span>
-);
+export const Tag: FunctionComponent<ComponentPropsWithRef<'span'>> = ({
+    className,
+    ...spanProps
+}) => <span {...spanProps} className={joinClassNames('nx-tag', className)} />;

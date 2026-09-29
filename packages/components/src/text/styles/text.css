@@ -1,18 +1,18 @@
 .nx-text--lead {
-  font-size: var(--font-size-lead);
+    font-size: var(--font-size-lead);
 }
 
 .nx-text--body {
-  font-size: var(--font-size-body);
+    font-size: var(--font-size-body);
 }
 
 .nx-text--small {
-  color: var(--color-text-secondary);
-  font-size: var(--font-size-small);
+    color: var(--color-text-secondary);
+    font-size: var(--font-size-small);
 }
 
 .nx-text--meta {
-  color: var(--color-text-secondary);
-  font-family: var(--font-family-code);
-  font-size: var(--font-size-meta);
+    color: var(--color-text-secondary);
+    font-family: var(--font-family-code);
+    font-size: var(--font-size-meta);
 }
