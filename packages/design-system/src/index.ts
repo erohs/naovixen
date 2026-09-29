@@ -37,7 +37,6 @@ export { paginationShowcase } from './showcases/blocks/Pagination.showcase';
 export { sectionHeadingShowcase } from './showcases/blocks/SectionHeading.showcase';
 export { speechBubbleShowcase } from './showcases/blocks/SpeechBubble.showcase';
 export { tagListShowcase } from './showcases/blocks/TagList.showcase';
-export { foxMascotShowcase } from './showcases/brand/FoxMascot.showcase';
 export { heartShowcase } from './showcases/brand/Heart.showcase';
 export { logoShowcase } from './showcases/brand/Logo.showcase';
 export { motionLinesShowcase } from './showcases/brand/MotionLines.showcase';
