@@ -5,9 +5,6 @@ body {
     font-size: var(--font-size-body);
     font-weight: var(--font-weight-regular);
     line-height: var(--line-height-body);
-    transition:
-        background-color var(--duration-medium) var(--easing-standard),
-        color var(--duration-medium) var(--easing-standard);
 }
 
 h1,
