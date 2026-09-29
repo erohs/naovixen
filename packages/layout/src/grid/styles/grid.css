@@ -6,8 +6,16 @@
     --grid-gap: var(--space-between-content);
 }
 
+.nx-grid--gap-between-blocks {
+    --grid-gap: var(--space-between-blocks);
+}
+
 .nx-grid--gap-between-groups {
     --grid-gap: var(--space-between-groups);
+}
+
+.nx-grid--gap-between-regions {
+    --grid-gap: var(--space-between-regions);
 }
 
 .nx-grid--gap-between-sections {

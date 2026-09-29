@@ -6,8 +6,16 @@
     --cluster-gap: var(--space-between-content);
 }
 
+.nx-cluster--gap-between-blocks {
+    --cluster-gap: var(--space-between-blocks);
+}
+
 .nx-cluster--gap-between-groups {
     --cluster-gap: var(--space-between-groups);
+}
+
+.nx-cluster--gap-between-regions {
+    --cluster-gap: var(--space-between-regions);
 }
 
 .nx-cluster--gap-between-sections {

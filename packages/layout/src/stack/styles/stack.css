@@ -6,8 +6,16 @@
     --stack-gap: var(--space-between-content);
 }
 
+.nx-stack--gap-between-blocks {
+    --stack-gap: var(--space-between-blocks);
+}
+
 .nx-stack--gap-between-groups {
     --stack-gap: var(--space-between-groups);
+}
+
+.nx-stack--gap-between-regions {
+    --stack-gap: var(--space-between-regions);
 }
 
 .nx-stack--gap-between-sections {
