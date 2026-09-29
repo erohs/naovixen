@@ -1,32 +1,31 @@
-/* The outline is painted under the fill, so only its outer half shows and small shapes stay open. */
+/* The shine is a fixed cream highlight, as in the design, whatever the theme. */
 .nx-heart {
     flex-shrink: 0;
     inline-size: 1em;
     block-size: 1em;
     color: var(--color-background-accent);
-    fill: currentcolor;
-    stroke: var(--color-border);
-    stroke-width: 3;
-    stroke-linejoin: round;
-    paint-order: stroke;
 }
 
-/* A pale tint of the sticker's own colour. Where relative colour is unsupported, the shine
-   inherits the body colour and simply disappears. */
+.nx-heart__outline {
+    fill: var(--color-border);
+}
+
+.nx-heart__body {
+    fill: currentcolor;
+}
+
 .nx-heart__shine {
-    fill: oklch(from currentcolor 96% calc(c * 0.3) h);
-    stroke: none;
+    fill: #fbf6ee;
+    opacity: 0.85;
 }
 
 @media (forced-colors: active) {
-    .nx-heart,
-    .nx-heart__shine {
-        fill: none;
+    .nx-heart__outline {
+        fill: CanvasText;
     }
 
-    .nx-heart {
-        color: CanvasText;
-        stroke: currentcolor;
-        stroke-width: 2;
+    .nx-heart__body,
+    .nx-heart__shine {
+        fill: Canvas;
     }
 }

@@ -1,32 +1,34 @@
-/* The outline is painted under the fill, so only its outer half shows and the toes stay open. */
+/*
+ * Each part is outlined with a stroke centred on a shape drawn half a stroke inside the design's
+ * edge, so the outline sits within it as the design's border does. The shine is a fixed cream
+ * highlight, whatever the theme.
+ */
 .nx-paw {
     flex-shrink: 0;
     inline-size: 1em;
     block-size: 1em;
+    overflow: visible;
     color: var(--color-decoration-paw);
-    fill: currentcolor;
-    stroke: var(--color-border);
-    stroke-width: 3;
-    stroke-linejoin: round;
-    paint-order: stroke;
 }
 
-/* A pale tint of the sticker's own colour. Where relative colour is unsupported, the shine
-   inherits the body colour and simply disappears. */
+.nx-paw__part {
+    fill: currentcolor;
+    stroke: var(--color-border);
+    stroke-width: 5;
+}
+
 .nx-paw__shine {
-    fill: oklch(from currentcolor 96% calc(c * 0.3) h);
-    stroke: none;
+    fill: #fbf6ee;
+    opacity: 0.85;
 }
 
 @media (forced-colors: active) {
-    .nx-paw,
-    .nx-paw__shine {
-        fill: none;
+    .nx-paw__part {
+        fill: Canvas;
+        stroke: CanvasText;
     }
 
-    .nx-paw {
-        color: CanvasText;
-        stroke: currentcolor;
-        stroke-width: 2;
+    .nx-paw__shine {
+        fill: Canvas;
     }
 }
