@@ -12,14 +12,14 @@ paths:
 and contexts. **camelCase** — everything else, including module-level constants. There is
 no SCREAMING_SNAKE_CASE here.
 
-| Pattern                         | Applies to                                         | Example                      |
-| ------------------------------- | -------------------------------------------------- | ---------------------------- |
-| `I` prefix                      | Every interface                                    | `IThemeStorage`              |
-| `I…Props`                       | Component props interfaces                         | `IProjectCardProps`          |
-| `_` prefix                      | Private class members, unexported module functions | `private _notifyListeners()` |
-| `use` prefix                    | Hooks                                              | `useTheme`                   |
-| `on` prefix                     | Handlers and callback props, simple present        | `onSelect`, not `onSelected` |
-| `is` / `has` / `should` / `can` | Booleans                                           | `isFeatured`                 |
+| Pattern                         | Applies to                                  | Example                      |
+| ------------------------------- | ------------------------------------------- | ---------------------------- |
+| `I` prefix                      | Every interface                             | `IThemeStorage`              |
+| `I…Props`                       | Component props interfaces                  | `IProjectCardProps`          |
+| `_` prefix                      | Private class members                       | `private _notifyListeners()` |
+| `use` prefix                    | Hooks                                       | `useTheme`                   |
+| `on` prefix                     | Handlers and callback props, simple present | `onSelect`, not `onSelected` |
+| `is` / `has` / `should` / `can` | Booleans                                    | `isFeatured`                 |
 
 Enum names end in a singular noun; members are PascalCase. `interface` for object shapes,
 `type` for unions, aliases and mapped types.
@@ -79,4 +79,3 @@ Watch for these in review — no rule catches them:
 
 - More than one export in a file under `interfaces/`, `enums/`, `types/` or `functions/`.
 - A file name that does not match its export, or carries the wrong role suffix.
-- A leading underscore on an unexported module function.
