@@ -71,5 +71,12 @@ export const namingConventionOptions = [
         format: null,
     },
 
+    /** Portable Text's own field names, which every block and span carries. */
+    {
+        selector: ['objectLiteralProperty', 'typeProperty'],
+        filter: { regex: '^_(type|key)$', match: true },
+        format: null,
+    },
+
     { selector: 'import', format: ['camelCase', 'PascalCase'] },
 ];

@@ -5,7 +5,7 @@ import type { FunctionComponent } from 'react';
 import { describe, expect, test } from 'vitest';
 
 import { BlogContent } from '../BlogContent.component';
-import body from './BlogContentBody.json';
+import { blogContentBody as body } from './BlogContentBody.const';
 
 const RouterLink: FunctionComponent<LinkProps> = ({ children, ...anchorProps }) => (
     <a {...anchorProps} data-routed="true">
@@ -107,7 +107,7 @@ describe('Using BlogContent', () => {
             });
 
             test('then it should print nothing for an unknown block type', () => {
-                render(<BlogContent body={body} />);
+                render(<BlogContent body={[...body, { _type: 'mystery', _key: 'mystery' }]} />);
 
                 expect(screen.queryByText(/mystery/)).toBeNull();
             });
