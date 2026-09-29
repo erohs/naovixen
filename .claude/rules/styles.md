@@ -1,7 +1,7 @@
 ---
 paths:
-  - '**/*.css'
-  - 'packages/theming/src/tokens/**'
+    - '**/*.css'
+    - 'packages/theming/src/tokens/**'
 ---
 
 # CSS
@@ -14,11 +14,11 @@ Classes are `nx-` prefixed BEM, enforced by Stylelint. One block per file, named
 block.
 
 ```css
-.nx-project-card {
+.nx-card {
 }
-.nx-project-card__title {
+.nx-card__title {
 }
-.nx-project-card--featured {
+.nx-card--featured {
 }
 ```
 
@@ -29,7 +29,7 @@ Categories are `color`, `font-family`, `font-size`, `font-weight`, `line-height`
 `easing`, `layout`, `breakpoint`, `z-index`.
 
 Component-scoped properties lead with the block name and are set on the block:
-`--project-card-padding-inline`.
+`--card-padding-inline`.
 
 ## Tokens
 

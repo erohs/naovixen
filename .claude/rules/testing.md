@@ -1,7 +1,7 @@
 ---
 paths:
-  - '**/*.spec.ts'
-  - '**/*.spec.tsx'
+    - '**/*.spec.ts'
+    - '**/*.spec.tsx'
 ---
 
 # Testing
@@ -46,17 +46,17 @@ sentence.
 
 ```ts
 describe('Using ThemeService', () => {
-  describe('given no stored preference', () => {
-    describe('and the system reports a dark colour scheme', () => {
-      describe('when the state is read', () => {
-        test('then it should resolve to the dark theme', () => {});
+    describe('given no stored preference', () => {
+        describe('and the system reports a dark colour scheme', () => {
+            describe('when the state is read', () => {
+                test('then it should resolve to the dark theme', () => {});
 
-        describe('and the preference is set to light', () => {
-          test('then it should persist light to storage', () => {});
+                describe('and the preference is set to light', () => {
+                    test('then it should persist light to storage', () => {});
+                });
+            });
         });
-      });
     });
-  });
 });
 ```
 

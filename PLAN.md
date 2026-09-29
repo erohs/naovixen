@@ -67,8 +67,14 @@ naovixen/
 │   ├── seo/                     # metadata and structured data — Phase 3
 │   ├── cms/                     # blog repository adapters — Phase 7
 │   ├── theming/                 # tokens, themes, fonts, reset, base, layout primitives
-│   ├── components/              # React components and their showcases
-│   ├── design-system/           # the hidden /system page, reused by every app
+│   ├── components/              # generic HTML-level React components
+│   ├── layout/                  # Container, Stack, Cluster, Grid
+│   ├── blocks/                  # generic compositions: Card, Breadcrumb, Disclosure…
+│   ├── brand/                   # logo, wordmark, fox and doodles
+│   ├── site-shell/              # header, footer, theme toggle, back-to-top
+│   ├── portable-text/           # blog body renderer
+│   ├── component-testing/       # shared test setup and axe helper (dev only)
+│   ├── design-system/           # every showcase, and the hidden /system page
 │   ├── typescript-config/       # shared tsconfig bases
 │   └── eslint-config/           # shared lint rules
 ├── design-reference/            # Claude Design export — visual reference only
@@ -130,8 +136,8 @@ Simple, accessible, professional, Scandinavian restraint with a playful hint of 
 - Content is **Portable Text** (structured JSON), rendered by a serializer map in `components` so every block/mark becomes a `@naovixen/components` component. No raw HTML injection.
 - Schema enforces quality: required `alt` text on images, required excerpt/description (SEO), slug validation, published date, tags.
 - **Framework-agnostic boundary:**
-  - `models`: `BlogPost`, `BlogPostSummary`, `BlogRepository` interface (`listPosts`, `getPostBySlug`, `listTags`).
-  - `cms`: `SanityBlogRepository implements BlogRepository` — maps CMS documents to `models`. Swapping CMS later means writing one new adapter.
+    - `models`: `BlogPost`, `BlogPostSummary`, `BlogRepository` interface (`listPosts`, `getPostBySlug`, `listTags`).
+    - `cms`: `SanityBlogRepository implements BlogRepository` — maps CMS documents to `models`. Swapping CMS later means writing one new adapter.
 - **Freshness without deploys:** blog routes are server-rendered; responses sent with `Cache-Control` using `s-maxage` + `stale-while-revalidate` so the CDN serves fast and picks up new posts within minutes. Optional: a Sanity webhook that purges the CDN cache for instant publishing.
 - Draft preview: preview route guarded by a secret token, using Sanity's draft perspective. Verify current Sanity preview/visual-editing docs.
 - RSS/Atom feed at `/blog/feed.xml`; blog posts included in the sitemap.
@@ -143,12 +149,12 @@ Simple, accessible, professional, Scandinavian restraint with a playful hint of 
 - Lives in `@naovixen/design-system` and is mounted as a route in every app, so each site shows the shared system rendered with its own theme.
 - Not linked anywhere, `<meta name="robots" content="noindex, nofollow">` plus `X-Robots-Tag` header, excluded from the sitemap. **Do not list it in `robots.txt`** (that advertises it). Hidden ≠ secret; nothing sensitive goes here.
 - Sections:
-  1. **Colours** — every semantic token, swatch in light and dark, value, and contrast ratio against its paired token (computed in `theming`).
-  2. **Typography** — type scale, families, weights, line heights, a specimen paragraph.
-  3. **Spacing, radii, shadows, motion** — visual scales generated from token data.
-  4. **Layout primitives** — container, stack, cluster, grid demos.
-  5. **Components** — each `*.showcase.tsx` file exports its variants/states; the page collects them automatically (e.g. via `import.meta.glob`).
-  6. **Theme switcher** at the top.
+    1. **Colours** — every semantic token, swatch in light and dark, value, and contrast ratio against its paired token (computed in `theming`).
+    2. **Typography** — type scale, families, weights, line heights, a specimen paragraph.
+    3. **Spacing, radii, shadows, motion** — visual scales generated from token data.
+    4. **Layout primitives** — container, stack, cluster, grid demos.
+    5. **Components** — each `*.showcase.tsx` file exports its variants/states; the page collects them automatically (e.g. via `import.meta.glob`).
+    6. **Theme switcher** at the top.
 - Showcases double as visual/accessibility test fixtures for Playwright.
 
 ---
@@ -241,14 +247,18 @@ Simple, accessible, professional, Scandinavian restraint with a playful hint of 
 - [x] Unit tests for everything, written to `.claude/rules/testing.md`.
 - **Verify:** every exported function tested; no React or DOM imports outside `components` and `design-system`. **Commit** once this passes.
 
-### Phase 4 — Components package
+### Phase 4 — React packages
 
-- [x] `NaovixenProvider` and the `useTheme` adapter.
-- [x] Primitives: `SkipLink`, `VisuallyHidden`, `Container`, `Stack`, `Cluster`, `Grid`, `Heading`, `Text`, `Link` (router-agnostic: accepts a link component via provider), `Button`, `Icon`, `Tag`.
-- [x] Brand: `Logo` (`< naovixen />`, accessible name "naovixen"), `ThemeToggle`.
-- [x] Composites from the design: `SiteHeader`, `SiteNavigation`, `SiteFooter`, `ProjectCard`, `BlogPostCard`, `Callout`, `CodeBlock`, `Figure`, plus whatever else the prototype contains: `LinkTile`, `SpeechBubble`, `Breadcrumb`, `Pager`, `SectionHeading`, `BackToTop`, `HandDrawnRule`, `Heart`, `Paw`, and a redrawn line-art `FoxMascot`.
-- [x] Portable Text serializer map (`BlogContent` component).
-- [x] Each component follows the folder rules in `CLAUDE.md`: component and showcase at the folder root, everything else in category folders, tests in `tests/`. Behaviour + axe tests on every component.
+Reworked after review: the first cut was site widgets, not a component library.
+
+- [x] `components`: generic, HTML-level, intrinsic props passed through — Button, BusyButton, IconButton, ToggleButton, Link, LinkIcon, LinkButton, ExternalLink, Input, TextArea, Label, FormField, Heading, Text, Code, Image, Tag, Blockquote, Icon (one `*.icon.ts` source per icon), VisuallyHidden, SkipLink.
+- [x] `layout`: Container, Stack, Cluster, Grid.
+- [x] `blocks`: Card, Callout, CodeBlock, Figure, TagList, SpeechBubble, Breadcrumb, Pagination, Disclosure, NavigationList, LinkTile, SectionHeading, HandDrawnRule.
+- [x] `brand`: Logo, Wordmark, a redrawn line-art FoxMascot, Heart, Paw.
+- [x] `site-shell`: ThemeProvider and `useTheme`, ThemeToggle, SiteHeader, SiteNavigation, MobileMenu, SiteFooter, BackToTop.
+- [x] `portable-text`: BlogContent.
+- [x] App compositions: ProjectCard and PostCard in `apps/portfolio`.
+- [x] Showcases for every component in `design-system`. Behaviour + axe tests on every component.
 - **Verify:** all tests pass; ESLint and Stylelint clean; no component imports a raw palette token; no component file exports anything but its component. **Commit** once this passes.
 
 ### Phase 5 — Portfolio app

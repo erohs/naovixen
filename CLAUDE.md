@@ -39,13 +39,28 @@ copy it.
 Dependencies point one way, from apps down to leaf packages, and never sideways between
 siblings. Lint fails the build if that is broken.
 
-Only `components` and `design-system` may import React. Every other package runs unchanged
-in a browser, on a Worker, and in a test with no DOM: anything needing a browser
-capability declares an interface and has an implementation injected. The base tsconfig
-omits the `DOM` lib, so reaching for `window` is a compile error rather than a convention.
+Logic packages (`models`, `theming`, `formatting`, `seo`, `cms`) never import React. They
+run unchanged in a browser, on a Worker, and in a test with no DOM: anything needing a
+browser capability declares an interface and has an implementation injected. The base
+tsconfig omits the `DOM` lib, so reaching for `window` is a compile error rather than a
+convention.
+
+React packages build on each other, from generic to specific:
+
+- `components`: HTML-level and generic — Button, Link, Input, Heading, Icon. Each passes
+  its element's intrinsic props and ref through, and knows nothing of routers, models or
+  brand.
+- `layout`, `blocks`: generic compositions — Stack, Grid, Card, Breadcrumb, Disclosure.
+- `brand`, `site-shell`, `portable-text`: naovixen's own pieces, reusable by any naovixen
+  site. Models and theme bindings enter here.
+- `apps/*`: whatever only that site uses, and the router wiring, `createLink(Link)`.
+- `design-system`: every showcase. Nothing else holds one.
+
+Variation comes from composition, never from a switch: LinkIcon is Link plus Icon, not a
+`kind` prop on Link. A consumer that wants something different composes its own.
 
 Layers: models (data, no behaviour) → services and controllers (logic, dependencies
-injected) → hooks (thin React bindings, no logic) → components (models in, semantic HTML
+injected) → hooks (thin React bindings, no logic) → components (props in, semantic HTML
 out) → routes (load, map, compose).
 
 Controllers expose `getState()`, `subscribe(listener)` and intent methods, so a hook binds
@@ -70,20 +85,22 @@ The architecture above is dependency inversion already applied. Keep the rest wi
 ## Folders
 
 A component, service, controller or route owns a kebab-case folder. Its root holds the
-main file and, for components, its showcase. Everything else goes in `interfaces/`,
-`types/`, `enums/`, `constants/`, `functions/`, `styles/` or `tests/`, created only when
-there is something to put in it. Package-level code follows the same shape under `src/`.
+main file. Everything else goes in `interfaces/`, `types/`, `enums/`, `constants/`,
+`functions/`, `styles/` or `tests/`, created only when there is something to put in it.
+Package-level code follows the same shape under `src/`, except in the React packages,
+whose `src/` holds component folders and nothing else.
 
 One barrel per package, `src/index.ts`. No nested index files, no re-export chains.
 
 Something used by one owner lives with that owner. Once a second needs it, move it up to
-the package level rather than importing sideways.
+the package level rather than importing sideways. A component composing another imports
+it directly: that is the design, not a sideways dependency.
 
 Names say what is inside. No `core`, `utils`, `common`, `shared` or `helpers`.
 
 ## Commits
 
-Conventional Commits, scoped to the package: `feat(components): add ProjectCard`.
+Conventional Commits, scoped to the package: `feat(components): add BusyButton`.
 
 Never commit `source-material/`, `notes/`, `.env`, or anything holding personal details.
 

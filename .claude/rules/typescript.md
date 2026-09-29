@@ -1,7 +1,7 @@
 ---
 paths:
-  - '**/*.ts'
-  - '**/*.tsx'
+    - '**/*.ts'
+    - '**/*.tsx'
 ---
 
 # Naming, file names, TypeScript
@@ -45,13 +45,14 @@ to the file, not the export: `resolveTheme` lives in `ResolveTheme.function.ts` 
 | Function             | `.function.ts`   |
 | Constant or instance | `.const.ts`      |
 | Side effects only    | `.effect.ts`     |
+| Icon's SVG source    | `.icon.ts`       |
 | Class                | none             |
 | Interface            | none             |
 | Enum                 | none             |
 | Type                 | none             |
 
 JSX means `.tsx`. CSS files are the exception to PascalCase: kebab-case, named for the BEM
-block, so `ProjectCard.component.tsx` pairs with `styles/project-card.css`.
+block, so `LinkIcon.component.tsx` pairs with `styles/link-icon.css`.
 
 One exported thing per file. Named exports only, except where a framework requires
 otherwise (`export const Route`).
@@ -70,8 +71,11 @@ otherwise (`export const Route`).
 
 Only where the code genuinely cannot speak for itself: a non-obvious constraint, a
 workaround and its reason, a unit, an edge case. A comment restating the signature is
-noise. TSDoc on an exported symbol is welcome when it tells a caller something the types
-do not.
+noise.
+
+A comment that earns its place is TSDoc, `/** … */`, on the declaration it explains — so
+editors show it where the symbol is used. No `//` line comments. In CSS, `/* … */` above
+the rule it explains.
 
 ## Not enforced by lint
 

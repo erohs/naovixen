@@ -1,31 +1,49 @@
 ---
 paths:
-  - '**/*.tsx'
+    - '**/*.tsx'
 ---
 
 # React
 
-Components are typed arrow constants:
+Components are typed arrow constants. A component in `components` takes its element's
+intrinsic props, spreads the rest onto the element, and merges its class names with the
+caller's:
 
 ```tsx
-export const ProjectCard: FunctionComponent<IProjectCardProps> = ({
-  project,
-  variant = ProjectCardVariant.Default,
-}) => {
-  const className = buildProjectCardClassName(variant);
-
-  return <article className={className}>…</article>;
-};
+export const Button: FunctionComponent<IButtonProps> = ({
+    variant = ButtonVariant.Secondary,
+    type = 'button',
+    className,
+    children,
+    ...buttonProps
+}) => (
+    <button
+        {...buttonProps}
+        type={type}
+        className={joinClassNames('nx-button', `nx-button--${variant}`, className)}
+    >
+        {children}
+    </button>
+);
 ```
 
-React 19 removed `children` from `FunctionComponent`, so declare it on the props
-interface when the component takes children.
+`IButtonProps extends ComponentPropsWithRef<'button'>`, so `ref`, ARIA and event props pass
+straight through. React 19 removed `children` from `FunctionComponent`, so declare it on
+the props interface when a component that does not extend an element's props takes
+children.
 
 A component file holds the component and nothing else. Its props interface, enums,
 constants and helpers live in the sibling subfolders.
 
-Components take **models** as props — `IProject`, `IBlogPostSummary` — not loose strings
-assembled at the call site. Data loading belongs in routes, logic in services.
+## Compose, do not branch
+
+A variant is a new component built from an existing one: `LinkIcon` renders `Link` with an
+`Icon`; `BusyButton` renders `Button` with `aria-busy`. Never a `kind` prop with a switch
+inside. A variant that changes only the look is a modifier class, picked by an enum prop.
+
+Generic components know nothing of models, routers or brand. Models enter at the packages
+that build naovixen's own pieces (`site-shell`, `portable-text`) and in the apps. Data
+loading belongs in routes, logic in services.
 
 ## The `on` prefix collides
 
@@ -34,7 +52,7 @@ handler for the DOM event it is bound to:
 
 ```tsx
 const onClick = (): void => {
-  onSelect(project.slug);
+    onSelect(project.slug);
 };
 ```
 
@@ -60,6 +78,7 @@ order, a meaningless `alt`, or a focus order that makes no sense.
 
 ## Showcases
 
-Every component has a `*.showcase.tsx` beside it exporting its variants and states. The
-design system page collects them automatically and Playwright uses them as fixtures, so a
-showcase missing a state is that state going untested.
+Showcases live in `packages/design-system`, one per component, exporting its variants and
+states. Nothing outside the design system holds one. The design system page renders them
+and Playwright uses them as fixtures, so a showcase missing a state is that state going
+untested.
