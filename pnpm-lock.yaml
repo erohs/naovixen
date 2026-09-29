@@ -196,6 +196,12 @@ importers:
       '@naovixen/blocks':
         specifier: workspace:*
         version: link:../../packages/blocks
+      '@naovixen/brand':
+        specifier: workspace:*
+        version: link:../../packages/brand
+      '@naovixen/cms':
+        specifier: workspace:*
+        version: link:../../packages/cms
       '@naovixen/components':
         specifier: workspace:*
         version: link:../../packages/components
@@ -205,9 +211,21 @@ importers:
       '@naovixen/formatting':
         specifier: workspace:*
         version: link:../../packages/formatting
+      '@naovixen/layout':
+        specifier: workspace:*
+        version: link:../../packages/layout
       '@naovixen/models':
         specifier: workspace:*
         version: link:../../packages/models
+      '@naovixen/portable-text':
+        specifier: workspace:*
+        version: link:../../packages/portable-text
+      '@naovixen/seo':
+        specifier: workspace:*
+        version: link:../../packages/seo
+      '@naovixen/site-shell':
+        specifier: workspace:*
+        version: link:../../packages/site-shell
       '@naovixen/theming':
         specifier: workspace:*
         version: link:../../packages/theming
@@ -356,6 +374,9 @@ importers:
       '@naovixen/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config
+      vitest:
+        specifier: 5.0.2
+        version: 5.0.2(@types/node@24.19.0)(jsdom@30.1.1)(vite@8.3.1(@types/node@24.19.0)(jiti@2.7.0))
 
   packages/component-testing:
     dependencies:

@@ -7,12 +7,14 @@
     },
     "scripts": {
         "lint": "eslint .",
-        "typecheck": "tsc --noEmit"
+        "typecheck": "tsc --noEmit",
+        "test": "vitest run"
     },
     "dependencies": {
         "@naovixen/models": "workspace:*"
     },
     "devDependencies": {
-        "@naovixen/typescript-config": "workspace:*"
+        "@naovixen/typescript-config": "workspace:*",
+        "vitest": "5.0.2"
     }
 }
