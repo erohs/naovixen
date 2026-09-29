@@ -64,6 +64,12 @@ in light and `#E8894A` in dark.
 **Lines and shadows are the text colour** in both themes — hard offset shadows, not soft
 greys. That is the comic-book look; do not soften it.
 
+## Reduced motion is CSS only
+
+Every animation is CSS, and each stylesheet answers `prefers-reduced-motion` itself, so no
+JavaScript reads the preference. Add a service behind an injected media query only when a
+script-driven animation arrives.
+
 ## Open
 
 - **Lighthouse CI** (`@lhci/cli`) has not been published since June 2025. Confirm it still
