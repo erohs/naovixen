@@ -37,6 +37,11 @@ h4 {
     font-size: var(--font-size-h4);
 }
 
+h3,
+h4 {
+    line-height: var(--line-height-subheading);
+}
+
 p {
     text-wrap: pretty;
 }
