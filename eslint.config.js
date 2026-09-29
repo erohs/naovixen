@@ -40,8 +40,11 @@ export default [
   ...createReactConfig(),
   ...createTestConfig(),
 
+  restrictImports('models', { paths: noReact }),
   restrictImports('theming', { paths: noReact }),
   restrictImports('formatting', { paths: noReact }),
-  restrictImports('components', { mayImport: ['theming'] }),
+  restrictImports('cms', { mayImport: ['models'], paths: noReact }),
+  restrictImports('seo', { mayImport: ['models'], paths: noReact }),
+  restrictImports('components', { mayImport: ['models', 'theming'] }),
   restrictImports('design-system', { mayImport: ['components', 'theming'] }),
 ];
