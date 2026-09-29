@@ -52,9 +52,14 @@ with `"agentGuidance": false` in `turbo.json`.
 
 The Claude Design prototype used around 35 spacing values, 30 type sizes and a dozen
 hand-drawn radii. The token source collapses them onto short scales, so a spacing or size
-that differs from the prototype by a pixel or two is intentional. Notably: its 10px paddings
-became 12px, and the mirrored twin radii for secondary buttons and alternate cards were
-dropped.
+that differs from the prototype by a pixel or two is intentional. Notably, its 10px paddings
+became 12px.
+
+Space sits on an 8px grid with a 4px half step, plus fluid steps for the space below a
+heading, between sections and at a page's end. Corners come in mirrored pairs
+(`--radius-medium` and `--radius-medium-alternate`), so neighbouring boxes, such as a
+primary and a secondary button, do not look stamped from one mould. Restored after the
+September 2026 design review; the first pass dropped them.
 
 **One accent orange for fills, two for text.** `#E8894A` fills buttons in both themes, with
 dark text on it. Orange _text_ cannot be one colour: a value dark enough for 4.5:1 on the
@@ -87,6 +92,13 @@ stays, so a server could still read it one day.
 Loaders read `context.blogRepository`, an `IBlogRepository` handed to the router. Until Phase
 7 it is an `InMemoryBlogRepository` holding placeholder posts; Sanity replaces it without a
 route changing.
+
+## Two looks for a link
+
+A link in content has a solid accent underline that turns wavy under the pointer. A link in
+a list of places to go (header, footer) has no underline until the pointer is on it or it is
+the current page. The second is a modifier class, `navigationLinkClassName`, that navigation
+lists pass to whatever link component renders them, since that may be a router's link.
 
 ## Router links match exactly
 
