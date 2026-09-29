@@ -173,26 +173,35 @@ Playwright-driven measurement.
 
 ---
 
-## ADR-0006 — Enums are `as const` objects with a derived union type
+## ADR-0006 — Enums are native TypeScript enums
 
 **Date:** 2026-09-29
-**Status:** Accepted (Naomi, 2026-09-29)
+**Status:** Accepted (Naomi, 2026-09-29) — supersedes the `as const` form first
+recorded here the same day
 
-Resolves open question 1. Native TypeScript `enum` emits runtime code, is rejected by
-`erasableSyntaxOnly`, and cannot run under Node's native type stripping. The
-`as const` form erases completely while still giving a single named place to
-reference members from.
+Resolves open question 1. This entry originally recorded an `as const` object with a
+derived union type. Naomi then supplied the house style guide these conventions are
+drawn from, which specifies native TypeScript enums, and confirmed that it wins.
 
 ```ts
-export const ThemePreference = {
-  Light: 'light',
-  Dark: 'dark',
-  System: 'system',
-} as const;
-
-export type ThemePreference = (typeof ThemePreference)[keyof typeof ThemePreference];
+// enums/ThemePreference.ts
+export enum ThemePreference {
+  Light = 'light',
+  Dark = 'dark',
+  System = 'system',
+}
 ```
 
+**What this costs.** Native enums emit runtime code, so `erasableSyntaxOnly` must stay
+off and these files cannot run under Node's native type stripping. Neither is used by
+this project: everything is built by Vite, which transpiles enums correctly.
+
+**What is banned as a result.** `const enum` cannot be transpiled a file at a time,
+which is exactly how Vite and esbuild build this project. `isolatedModules` makes that
+a compile error, and CLAUDE.md section 8 states it explicitly.
+
+**To verify in Phase 1.** Confirm a native enum survives the Vite build in both the
+client and SSR bundles before the pattern is used widely.
 ---
 
 ## ADR-0007 — Typefaces are self-hosted from Fontsource
@@ -232,3 +241,91 @@ Changing CMS later means writing one new class.
 
 `origin` is `git@github.com:erohs/naovixen.git` (private), tracking `main`.
 GitHub Actions in Phase 8 and the Cloudflare project in Phase 9 both build from it.
+
+---
+
+## ADR-0010 — Naomi's house style supersedes PLAN.md section 3.2
+
+**Date:** 2026-09-29
+**Status:** Accepted (Naomi, 2026-09-29)
+
+Naomi supplied the naming and file-layout conventions she already works to, and they
+differ from the defaults drafted in PLAN.md section 3.2. Consistency with how she
+actually writes code beats a convention invented for this repository, so the house
+style wins wherever the two disagree. CLAUDE.md is now the single authority; section
+3.2 of the plan is superseded and the plan is deleted in Phase 10 regardless.
+
+The conventions themselves are recorded in CLAUDE.md in this project's own words and
+with this project's own examples. The source document is not reproduced anywhere in
+the repository.
+
+What changed from the drafted defaults:
+
+| Area | PLAN.md draft | Adopted |
+|---|---|---|
+| Interfaces | `ProjectCardProps` | `IProjectCardProps` — `I` prefix throughout |
+| File names | kebab-case, `theme.service.ts` | PascalCase, `ThemeService.ts` |
+| Components | function declarations | typed arrow constants, `FunctionComponent<IProps>` |
+| Enums | `as const` + derived union | native `enum` |
+| Module constants | `SCREAMING_SNAKE_CASE` | camelCase, one per `*.const.ts` file |
+| Event handlers | `onSelect` prop, `handleSelect` implementation | `on` prefix for both, disambiguated by DOM event name |
+| Test files | `*.test.ts` | `*.spec.ts` |
+| Integration tests | `*.integration.test.ts` | `*.Integration.spec.ts` |
+| Acronyms | not specified | cased as words — `SeoMetadata`, not `SEOMetadata` |
+| Abbreviations | avoid | avoid, with a short allow-list: `id`, `props`, `ref`, `src`, `ui`, `i` |
+
+Kept from the plan, because the house style does not cover them: kebab-case
+directories and CSS file names, `nx-` prefixed BEM classes, unprefixed CSS custom
+properties, one barrel file per package, explicit return types on exported functions,
+TSDoc on exported symbols, the `Using / given / when / then it should` test wording,
+and Conventional Commits.
+
+One correction applied. The source names hook files in PascalCase like every other
+file, but its worked example shows an unrelated file name, so the rule and the example
+disagree. The rule is applied as written — a hook exported as `useTheme` lives in
+`UseTheme.hook.ts` — on the grounds that the same transformation already applies to
+functions, where `resolveTheme` lives in `ResolveTheme.function.ts`.
+
+---
+
+## ADR-0011 — `var` is banned
+
+**Date:** 2026-09-29
+**Status:** Accepted (Naomi, 2026-09-29)
+
+`const` by default, `let` where a binding genuinely changes, `var` never. Function
+scoping and hoisting make `var` a source of bugs that block scoping does not have.
+Enforced by the `no-var` and `prefer-const` ESLint rules as errors, configured in
+Phase 1.
+
+---
+
+## ADR-0012 — Instructions are split so agents load only what they need
+
+**Date:** 2026-09-29
+**Status:** Accepted (Naomi, 2026-09-29)
+
+A single large `CLAUDE.md` is loaded into every session in full, spending context on
+CSS rules during a TypeScript task and on testing rules during a styling one. Claude
+Code's documentation puts the target at under 200 lines per file, and adherence drops
+as files grow.
+
+The conventions are therefore split across three mechanisms, chosen by how each rule is
+scoped:
+
+| Mechanism | Loads | Used for |
+|---|---|---|
+| `CLAUDE.md` at the repository root | Every session | Rules that apply everywhere: how to work, content sources, the design-reference rule, architecture, commits |
+| `.claude/rules/*.md` with `paths:` frontmatter | Only when a matching file is opened | Rules scoped by file type: `typescript.md`, `react.md`, `testing.md`, `styles.md` |
+| `CLAUDE.md` inside a package or app | Only when a file in that directory is read | Rules scoped by location, created alongside each package as it is scaffolded |
+
+The root file is 145 lines and every rules file is under 120.
+
+**`@path` imports are deliberately not used.** They are expanded eagerly at launch, so
+they organise the text without saving any context — which is the entire point of the
+split. Paths are written inside backticks instead, which Claude Code's import parser
+skips.
+
+**Keep them consistent.** Claude Code concatenates every file it finds rather than
+letting the most specific one win, so two files that contradict each other leave the
+choice to chance. A rule belongs in exactly one place.

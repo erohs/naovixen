@@ -106,7 +106,10 @@ Apps consume the TypeScript source directly; Vite transpiles it. Verify in the T
 
 ## 3. Coding guidelines
 
-These move into `CLAUDE.md` in Phase 0 so they outlive this plan.
+> **Superseded.** `CLAUDE.md` and `.claude/rules/` are now the
+> authority on every convention below. Naomi supplied her own house style in Phase 0 and it
+> won wherever the two disagreed — see `docs/decisions.md`, ADR-0010, for the differences.
+> This section is kept only as a record of what was originally proposed.
 
 ### 3.1 Confirmed by Naomi
 
@@ -524,15 +527,15 @@ Simple, accessible, professional, Scandinavian restraint with a playful hint of 
 ## 10. Phases
 
 ### Phase 0 — Groundwork and confirmation
-- [ ] `git init` (default branch `main`), then create `.gitignore` covering `node_modules/`, build output, `.env*` (except `.env.example`), `source-material/` and `docs/content-inventory.md`.
-- [ ] First commit: `.gitignore` and `PLAN.md` only — `chore: initialise repository`.
-- [ ] Ask Naomi whether to connect a remote now (e.g. a private GitHub repository). CI (Phase 8) and deployment (Phase 9) need one.
-- [ ] Read current docs: pnpm workspaces, Turborepo, TanStack Start + Router, Vite, React, Sanity, Cloudflare deployment for TanStack Start, typescript-eslint, Stylelint, Vitest, Playwright. Record versions in `docs/decisions.md`.
-- [ ] Ask Naomi to confirm/amend section 3.2 and answer section 12.
-- [ ] Ask Naomi to place the Claude Design export (and/or screenshots) in `design-reference/` and her CV at `source-material/cv.pdf`.
-- [ ] Add `source-material/` to `.gitignore` before anything is committed.
-- [ ] Read the CV and write `docs/content-inventory.md` (also git-ignored): which page will use which CV information, plus a list of **content gaps** — everything the pages need that the CV doesn't cover. Ask Naomi to fill the gaps and confirm which contact details may be published.
-- [ ] Create `CLAUDE.md` containing: coding guidelines (section 3), architecture rules (section 4), the docs-first rule, and "readability over cleverness".
+- [x] `git init` (default branch `main`), then create `.gitignore` covering `node_modules/`, build output, `.env*` (except `.env.example`), `source-material/` and `docs/content-inventory.md`.
+- [x] First commit: `.gitignore` and `PLAN.md` only — `chore: initialise repository`.
+- [x] Ask Naomi whether to connect a remote now (e.g. a private GitHub repository). CI (Phase 8) and deployment (Phase 9) need one.
+- [x] Read current docs: pnpm workspaces, Turborepo, TanStack Start + Router, Vite, React, Sanity, Cloudflare deployment for TanStack Start, typescript-eslint, Stylelint, Vitest, Playwright. Record versions in `docs/decisions.md`.
+- [x] Ask Naomi to confirm/amend section 3.2 and answer section 12. **Section 3.2 is superseded by `CLAUDE.md` (ADR-0010). Questions 1 and 2 answered (ADR-0006, ADR-0008). Questions 3–6 still open.**
+- [x] Ask Naomi to place the Claude Design export (and/or screenshots) in `design-reference/` and her CV at `source-material/cv.pdf`.
+- [x] Add `source-material/` to `.gitignore` before anything is committed.
+- [x] Read the CV and write `docs/content-inventory.md` (also git-ignored): which page will use which CV information, plus a list of **content gaps** — everything the pages need that the CV doesn't cover. Ask Naomi to fill the gaps and confirm which contact details may be published.
+- [x] Create `CLAUDE.md` containing: coding guidelines (section 3), architecture rules (section 4), the docs-first rule, and "readability over cleverness".
 - **Verify:** Naomi has approved the guidelines. **Commit:** `docs: add CLAUDE.md and coding guidelines`.
 
 ### Phase 1 — Monorepo scaffold
