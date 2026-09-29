@@ -5,6 +5,30 @@
 
 ---
 
+## Where we are
+
+**Phases 0 and 1 are done and pushed.** `pnpm typecheck`, `test`, `lint` and `build` all pass.
+
+**Next: Phase 2 — theming.** Start by rendering `design-reference/` in a browser and
+looking at it; `notes/design-reference-findings.md` has the palette, typefaces, views and
+content shapes already extracted from the bundle, so that does not need repeating.
+
+Package names changed from section 2: `ui` → `components`, `styles` → `theming`,
+`content` → `formatting`, `system-page` → `design-system`, `tsconfig` →
+`typescript-config`. `core` was split up rather than renamed; `models`, `seo` and `cms`
+get created in the phases that fill them. Sections 3 and 4 are superseded by `CLAUDE.md`
+and `.claude/rules/`.
+
+Still unanswered, none blocking Phase 2:
+
+- Open questions 3–6 — project content location (Phase 5), hosting (9), analytics (9),
+  contact form (5).
+- The 16 content gaps in `docs/content-inventory.md` (git-ignored). The ones that bite
+  first: which case studies exist, whether PebblePad work can be shown visually at all,
+  Naomi's GitHub and Bluesky handles, and whether `naovixen.dev` is real or placeholder.
+
+---
+
 ## 0. Rules for the implementing agent
 
 1. **Read the latest official docs before each phase.** Your training data is out of date for most of this stack. Before writing code for a tool, fetch its current docs (getting started, config reference, migration notes) and check the latest stable version on npm. Record the versions you pinned in `docs/decisions.md`.
