@@ -1,24 +1,24 @@
 /* A wavy underline that appears on hover and stays on the current page. */
-.nx-link {
-  text-decoration: none;
-
-  & .nx-icon {
-    vertical-align: middle;
-  }
-
-  & .nx-icon:first-child {
-    margin-inline-end: var(--space-between-text);
-  }
-
-  & .nx-icon:last-child {
-    margin-inline-start: var(--space-between-text);
-  }
-}
-
 .nx-link__label {
   text-decoration: underline wavy transparent;
   text-decoration-thickness: var(--border-width-standout);
   transition: text-decoration-color var(--duration-fast) var(--easing-standard);
+}
+
+.nx-link {
+  text-decoration: none;
+
+  /* The reset makes every svg a block, which would put the icon on a line of its own. */
+  & .nx-icon {
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  /* Siblings rather than first and last child: external links end with hidden text. */
+  & .nx-icon + .nx-link__label,
+  & .nx-link__label + .nx-icon {
+    margin-inline-start: var(--space-between-text);
+  }
 }
 
 .nx-link:hover .nx-link__label,
