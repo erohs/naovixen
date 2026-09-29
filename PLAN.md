@@ -7,8 +7,9 @@
 
 ## Where we are
 
-**Phases 0–4 are done.** `pnpm typecheck`, `test`, `lint` and `build` all pass. Next:
-Phase 5, the portfolio app.
+**Phases 0–5 are done.** `pnpm typecheck`, `test`, `lint` and `build` all pass. Next:
+Phase 6, the design system page. Phase 5's pages carry placeholder copy (every file named
+`Placeholder*` in `apps/portfolio/src/constants`) until Naomi answers the content gaps.
 
 Still unanswered:
 
@@ -263,11 +264,12 @@ Reworked after review: the first cut was site widgets, not a component library.
 
 ### Phase 5 — Portfolio app
 
-- [ ] Root route: `<html lang="en-GB">`, theme cookie handling, head/meta, global CSS, provider, skip link, route announcer.
-- [ ] Routes per the Claude Design prototype's layout, rebuilt from scratch with semantic HTML and our components: `/`, `/about`, `/blog`, `/blog/$slug`, `/contact`, `/privacy`, custom 404. The work routes move to Phase 7 with the CMS.
-- [ ] Copy the CV cannot supply uses the prototype's placeholder text for now, kept in one clearly named placeholder file per route so it is easy to find and replace. It never deploys (see Phase 9).
-- [ ] SEO metadata + JSON-LD on every route; `sitemap.xml`, `robots.txt`.
+- [x] Root route: `<html lang="en-GB">`, theme cookie handling, head/meta, global CSS, provider, skip link, route announcer.
+- [x] Routes per the Claude Design prototype's layout, rebuilt from scratch with semantic HTML and our components: `/`, `/about`, `/blog`, `/blog/$slug`, `/contact`, `/privacy`, custom 404. The work routes move to Phase 7 with the CMS.
+- [x] Copy the CV cannot supply uses the prototype's placeholder text for now, kept in one clearly named placeholder file per route so it is easy to find and replace. It never deploys (see Phase 9).
+- [x] SEO metadata + JSON-LD on every route; `sitemap.xml`, `robots.txt`.
 - **Verify:** pages match the prototype's layout visually on mobile and desktop (compare screenshots side by side), with no code carried over from it; Lighthouse ≥ 95 across all four categories locally. **Commit** once this passes.
+- **Result:** mobile Lighthouse 97–98 performance and 100 for accessibility, best practices and SEO on every page, measured behind compression (see `docs/decisions.md`); 87–92 performance without it.
 
 ### Phase 6 — Design system page
 

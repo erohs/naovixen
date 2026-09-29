@@ -70,6 +70,38 @@ Every animation is CSS, and each stylesheet answers `prefers-reduced-motion` its
 JavaScript reads the preference. Add a service behind an injected media query only when a
 script-driven animation arrives.
 
+## The theme is set by an inline script, not by the server
+
+The plan had the server read the theme cookie. A prerendered page never sees a cookie, and
+reading one per request would stop the HTML being cached. Instead a small script inlined in
+`<head>` (`themeBootScript` in `theming`, rendered with TanStack's `ScriptOnce`, as its docs
+recommend) reads the cookie or the system setting and sets `data-theme` before first paint.
+
+The server always renders the same assumed state, and `useTheme` hydrates against it before
+moving to the real one, so React sees no mismatch. Without JavaScript, a
+`prefers-color-scheme` block in the generated tokens follows the system setting. The cookie
+stays, so a server could still read it one day.
+
+## Routes load through an injected repository
+
+Loaders read `context.blogRepository`, an `IBlogRepository` handed to the router. Until Phase
+7 it is an `InMemoryBlogRepository` holding placeholder posts; Sanity replaces it without a
+route changing.
+
+## Router links match exactly
+
+TanStack Router marks a link active by path prefix and then always sets
+`aria-current="page"`, which would call "All posts" the current page on every post. The
+app's router links (`RoutedLink`, `RouterLinkIcon`, `RouterLinkButton`) match exactly and
+never add the router's `active` class. A section link on a page beneath it is marked by
+NavigationList instead.
+
+## Lighthouse is measured behind compression
+
+`vite preview` serves without compression, which alone costs 5–10 performance points on a
+throttled mobile run. Local Lighthouse runs go through a compressing proxy, as the CDN will
+compress in production.
+
 ## Open
 
 - **Lighthouse CI** (`@lhci/cli`) has not been published since June 2025. Confirm it still
