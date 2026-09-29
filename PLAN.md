@@ -58,7 +58,7 @@ naovixen/
 ├── source-material/             # cv.pdf — content source; git-ignored so personal details never reach the repo
 ├── docs/
 │   ├── architecture.md
-│   ├── decisions.md             # ADR-style log incl. pinned versions
+│   ├── decisions.md             # decisions whose reasoning is not obvious from the code
 │   └── adding-a-new-site.md
 ├── CLAUDE.md                    # Permanent agent instructions + coding guidelines
 ├── PLAN.md                      # This file — delete when done
@@ -108,7 +108,7 @@ Apps consume the TypeScript source directly; Vite transpiles it. Verify in the T
 
 > **Superseded.** `CLAUDE.md` and `.claude/rules/` are now the
 > authority on every convention below. Naomi supplied her own house style in Phase 0 and it
-> won wherever the two disagreed — see `docs/decisions.md`, ADR-0010, for the differences.
+> won wherever the two disagreed.
 > This section is kept only as a record of what was originally proposed.
 
 ### 3.1 Confirmed by Naomi
@@ -549,7 +549,7 @@ Simple, accessible, professional, Scandinavian restraint with a playful hint of 
 - [x] First commit: `.gitignore` and `PLAN.md` only — `chore: initialise repository`.
 - [x] Ask Naomi whether to connect a remote now (e.g. a private GitHub repository). CI (Phase 8) and deployment (Phase 9) need one.
 - [x] Read current docs: pnpm workspaces, Turborepo, TanStack Start + Router, Vite, React, Sanity, Cloudflare deployment for TanStack Start, typescript-eslint, Stylelint, Vitest, Playwright. Record versions in `docs/decisions.md`.
-- [x] Ask Naomi to confirm/amend section 3.2 and answer section 12. **Section 3.2 is superseded by `CLAUDE.md` (ADR-0010). Questions 1 and 2 answered (ADR-0006, ADR-0008). Questions 3–6 still open.**
+- [x] Ask Naomi to confirm/amend section 3.2 and answer section 12. **Section 3.2 is superseded by `CLAUDE.md` and `.claude/rules/`. Questions 1 and 2 answered. Questions 3–6 still open.**
 - [x] Ask Naomi to place the Claude Design export (and/or screenshots) in `design-reference/` and her CV at `source-material/cv.pdf`.
 - [x] Add `source-material/` to `.gitignore` before anything is committed.
 - [x] Read the CV and write `docs/content-inventory.md` (also git-ignored): which page will use which CV information, plus a list of **content gaps** — everything the pages need that the CV doesn't cover. Ask Naomi to fill the gaps and confirm which contact details may be published.

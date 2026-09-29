@@ -5,120 +5,43 @@ import { createBaseConfig, createReactConfig, createTestConfig } from '@naovixen
 
 const repositoryRoot = dirname(fileURLToPath(import.meta.url));
 
-/**
- * The dependency rules from CLAUDE.md, enforced.
- *
- * These are written against package names rather than file paths because that is how the
- * imports are actually written — a rule that matches what you read in the import
- * statement is one you can reason about without resolving anything.
- */
-const dependencyDirectionConfig = [
-  {
-    name: 'naovixen/dependencies/core',
-    files: ['packages/core/**/*.ts'],
-    rules: {
-      '@typescript-eslint/no-restricted-imports': [
-        'error',
-        {
-          paths: [
-            {
-              name: 'react',
-              message:
-                'core is framework-free. Express the need as an interface and inject an implementation.',
-            },
-            {
-              name: 'react-dom',
-              message: 'core is framework-free and never touches the DOM.',
-            },
-          ],
-          patterns: [
-            {
-              group: ['@naovixen/*'],
-              message: 'core sits at the bottom of the graph and depends on nothing internal.',
-            },
-          ],
-        },
-      ],
-    },
-  },
-
-  {
-    name: 'naovixen/dependencies/styles',
-    files: ['packages/styles/**/*.ts'],
-    rules: {
-      '@typescript-eslint/no-restricted-imports': [
-        'error',
-        {
-          paths: [{ name: 'react', message: 'styles is plain CSS and token data.' }],
-          patterns: [
-            {
-              group: ['@naovixen/*'],
-              message: 'styles depends on nothing.',
-            },
-          ],
-        },
-      ],
-    },
-  },
-
-  {
-    name: 'naovixen/dependencies/content',
-    files: ['packages/content/**/*.ts'],
-    rules: {
-      '@typescript-eslint/no-restricted-imports': [
-        'error',
-        {
-          patterns: [
-            {
-              group: ['@naovixen/*', '!@naovixen/core'],
-              message: 'content may depend on core only.',
-            },
-          ],
-        },
-      ],
-    },
-  },
-
-  {
-    name: 'naovixen/dependencies/ui',
-    files: ['packages/ui/**/*.ts', 'packages/ui/**/*.tsx'],
-    rules: {
-      '@typescript-eslint/no-restricted-imports': [
-        'error',
-        {
-          patterns: [
-            {
-              group: ['@naovixen/*', '!@naovixen/core', '!@naovixen/styles'],
-              message: 'ui may depend on core and styles only.',
-            },
-          ],
-        },
-      ],
-    },
-  },
-
-  {
-    name: 'naovixen/dependencies/system-page',
-    files: ['packages/system-page/**/*.ts', 'packages/system-page/**/*.tsx'],
-    rules: {
-      '@typescript-eslint/no-restricted-imports': [
-        'error',
-        {
-          patterns: [
-            {
-              group: ['@naovixen/*', '!@naovixen/core', '!@naovixen/styles', '!@naovixen/ui'],
-              message: 'system-page may depend on core, styles and ui only.',
-            },
-          ],
-        },
-      ],
-    },
-  },
+const noReact = [
+  { name: 'react', message: 'This package is framework-free. Inject the capability instead.' },
+  { name: 'react-dom', message: 'This package is framework-free and never touches the DOM.' },
 ];
+
+/** Enforces the dependency direction in CLAUDE.md, written against package names. */
+function restrictImports(packageDirectory, { mayImport = [], paths = [] }) {
+  return {
+    name: `naovixen/dependencies/${packageDirectory}`,
+    files: [`packages/${packageDirectory}/**/*.ts`, `packages/${packageDirectory}/**/*.tsx`],
+    rules: {
+      '@typescript-eslint/no-restricted-imports': [
+        'error',
+        {
+          paths,
+          patterns: [
+            {
+              group: ['@naovixen/*', ...mayImport.map((name) => `!@naovixen/${name}`)],
+              message:
+                mayImport.length === 0
+                  ? 'This package sits at the bottom of the graph and depends on nothing internal.'
+                  : `This package may depend on ${mayImport.join(' and ')} only.`,
+            },
+          ],
+        },
+      ],
+    },
+  };
+}
 
 export default [
   ...createBaseConfig({ tsconfigRootDir: repositoryRoot }),
   ...createReactConfig(),
   ...createTestConfig(),
-  ...dependencyDirectionConfig,
+
+  restrictImports('theming', { paths: noReact }),
+  restrictImports('formatting', { paths: noReact }),
+  restrictImports('components', { mayImport: ['theming'] }),
+  restrictImports('design-system', { mayImport: ['components', 'theming'] }),
 ];

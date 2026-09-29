@@ -4,135 +4,79 @@ paths:
   - '**/*.tsx'
 ---
 
-# Naming, file names and TypeScript
+# Naming, file names, TypeScript
 
-## Casing by kind of thing
+## Casing
 
-**PascalCase** — classes, interfaces, type aliases, enums, enum members, React
-components, React contexts.
+**PascalCase** — classes, interfaces, type aliases, enums, enum members, React components
+and contexts. **camelCase** — everything else, including module-level constants. There is
+no SCREAMING_SNAKE_CASE here.
 
-**camelCase** — everything else: variables, constants, function names, parameters, object
-properties and methods, class properties and methods, static members, custom event names,
-hooks.
+| Pattern                         | Applies to                                         | Example                      |
+| ------------------------------- | -------------------------------------------------- | ---------------------------- |
+| `I` prefix                      | Every interface                                    | `IThemeStorage`              |
+| `I…Props`                       | Component props interfaces                         | `IProjectCardProps`          |
+| `_` prefix                      | Private class members, unexported module functions | `private _notifyListeners()` |
+| `use` prefix                    | Hooks                                              | `useTheme`                   |
+| `on` prefix                     | Handlers and callback props, simple present        | `onSelect`, not `onSelected` |
+| `is` / `has` / `should` / `can` | Booleans                                           | `isFeatured`                 |
 
-There is no SCREAMING_SNAKE_CASE in this codebase. A module-level constant is a camelCase
-`const` like any other binding.
+Enum names end in a singular noun; members are PascalCase. `interface` for object shapes,
+`type` for unions, aliases and mapped types.
 
-## Prefixes and suffixes that carry meaning
+Acronyms are cased as words: `SeoMetadata`, `IApiResponse`, `parseVttCue`.
 
-| Pattern                         | Applies to                                               | Example                        |
-| ------------------------------- | -------------------------------------------------------- | ------------------------------ |
-| `I` prefix                      | Every interface                                          | `IThemeStorage`, `IBlogPost`   |
-| `I…Props`                       | React component props interfaces                         | `IProjectCardProps`            |
-| `_` prefix                      | Private class members, and non-exported module functions | `private _notifyListeners()`   |
-| `use` prefix                    | React hooks                                              | `useTheme`, `useReducedMotion` |
-| `on` prefix                     | Event handlers and callback props, simple present        | `onSelect`, not `onSelected`   |
-| `is` / `has` / `should` / `can` | Booleans                                                 | `isFeatured`, `hasCoverImage`  |
+Write whole words — `button`, not `btn`. Exceptions: `id`, `props`, `ref`, `src`, `ui`,
+and `i` for a loop index.
 
-Enum type names end in a singular noun; members are PascalCase.
-
-```ts
-// enums/ThemePreference.ts
-export enum ThemePreference {
-  Light = 'light',
-  Dark = 'dark',
-  System = 'system',
-}
-```
-
-Interfaces describe object shapes and contracts. `type` is for unions, aliases and mapped
-types.
-
-```ts
-// types/ThemeChangeListener.ts
-export type ThemeChangeListener = (state: IThemeState) => void;
-```
-
-## Acronyms and initialisms
-
-Cased as ordinary words, never shouted. `SeoMetadata` not `SEOMetadata`. `IApiResponse`
-not `IAPIResponse`. `jsonLdScript` not `JSONLDScript`. `parseVttCue` not `parseVTTCue`.
-
-## Abbreviations
-
-Write the whole word. `button` not `btn`. `navigation` not `nav`. `element` not `el`.
-`dictionary` not `dict`.
-
-The exceptions are abbreviations that read as words in their own right: `id`, `props`,
-`ref`, `src`, `ui`, and `i` for a loop index. HTML element names keep their own spelling —
-a `<nav>` is a `<nav>`.
-
-## Choosing names
-
-Name things for what they mean, not for their type or where they sit. `publishedPosts`
-beats `postArray`; `resolvedTheme` beats `themeValue`. Functions and methods get verb
-phrases describing what they do. Collections get plural names, or names that read as a
-group.
-
----
+Name things for what they mean, not their type: `publishedPosts`, not `postArray`.
 
 ## File names
 
-A file is named after the single thing it exports, in PascalCase, plus a suffix saying
-what kind of thing it is. Directories stay kebab-case.
+PascalCase, named after the single thing exported, plus a role suffix. The casing applies
+to the file, not the export: `resolveTheme` lives in `ResolveTheme.function.ts` and
+`useTheme` in `UseTheme.hook.ts`. Directories stay kebab-case.
 
-The PascalCase rule applies to the _file_, not the export — a function exported as
-`resolveTheme` lives in `ResolveTheme.function.ts`, and a hook exported as `useTheme`
-lives in `UseTheme.hook.ts`.
+| Exports              | Suffix           |
+| -------------------- | ---------------- |
+| React component      | `.component.tsx` |
+| React hook           | `.hook.ts`       |
+| React context        | `.context.ts`    |
+| Function             | `.function.ts`   |
+| Constant or instance | `.const.ts`      |
+| Side effects only    | `.effect.ts`     |
+| Class                | none             |
+| Interface            | none             |
+| Enum                 | none             |
+| Type                 | none             |
 
-| Exports              | Suffix           | Example file                         |
-| -------------------- | ---------------- | ------------------------------------ |
-| React component      | `.component.tsx` | `ThemeToggle.component.tsx`          |
-| React hook           | `.hook.ts`       | `UseTheme.hook.ts`                   |
-| React context        | `.context.ts`    | `NaovixenContext.context.ts`         |
-| Class                | _none_           | `ThemeService.ts`                    |
-| Function             | `.function.ts`   | `CalculateContrastRatio.function.ts` |
-| Constant or instance | `.const.ts`      | `DefaultThemePreference.const.ts`    |
-| Interface            | _none_           | `IBlogPost.ts`                       |
-| Enum                 | _none_           | `ThemePreference.ts`                 |
-| Type                 | _none_           | `ThemeChangeListener.ts`             |
-| Side effects only    | `.effect.ts`     | `RouteAnnouncerPolyfill.effect.ts`   |
+JSX means `.tsx`. CSS files are the exception to PascalCase: kebab-case, named for the BEM
+block, so `ProjectCard.component.tsx` pairs with `styles/project-card.css`.
 
-Anything containing JSX is `.tsx`; everything else `.ts`.
+One exported thing per file. Named exports only, except where a framework requires
+otherwise (`export const Route`).
 
-CSS files are the exception to PascalCase — they are kebab-case, named for the BEM block
-they style, so `ProjectCard.component.tsx` is styled by `styles/project-card.css`.
+## Rules
 
-**One exported thing per file**, named after it. Named exports only, no default exports,
-except where a framework requires otherwise such as TanStack Router's `export const Route`.
+`strict`, plus `noUncheckedIndexedAccess` and `exactOptionalPropertyTypes`.
 
----
+- `var` is banned. `const`, or `let` where the binding changes.
+- `const enum` is banned — Vite transpiles one file at a time and cannot resolve it.
+- Explicit return types on exported functions, including `void`.
+- `any` needs a comment justifying it. Prefer `unknown` and narrow.
+- Functions 25 lines, files 400. A longer function wants splitting, not a bigger limit.
 
-## TypeScript rules
+## Comments
 
-`strict: true`, plus `noUncheckedIndexedAccess` and `exactOptionalPropertyTypes`.
+Only where the code genuinely cannot speak for itself: a non-obvious constraint, a
+workaround and its reason, a unit, an edge case. A comment restating the signature is
+noise. TSDoc on an exported symbol is welcome when it tells a caller something the types
+do not.
 
-- **`var` is banned.** `const` by default, `let` only where the binding genuinely changes.
-  Enforced by `no-var` and `prefer-const`.
-- **`const enum` is banned.** It cannot be transpiled a file at a time, which is how Vite
-  and esbuild build this project. Plain `enum` only.
-- **`erasableSyntaxOnly` stays off**, because plain enums emit runtime code. Deliberate
-  trade — see `docs/decisions.md`, ADR-0006.
-- **Explicit return types on every exported function**, including `void`.
-- **TSDoc on every exported symbol.** Say why it exists and what a caller needs to know.
-- **`any` needs a comment justifying it.** Prefer `unknown` and narrow.
+## Not enforced by lint
 
-Comments explain _why_. The code already says what.
+Watch for these in review — no rule catches them:
 
----
-
-## What lint cannot check
-
-Most of the above is enforced by ESLint. These are the parts that are not, so they need
-attention in review:
-
-- **One exported symbol per file.** `import-x/no-default-export` forces named exports,
-  and a `*.component.tsx` may not export an interface, type, enum or function beside its
-  component. Nothing counts the exports in a file in `interfaces/`, `enums/`, `types/` or
-  `functions/` — keep it to one.
-- **The file name matches the export.** No rule ties `ResolveTheme.function.ts` to
-  `resolveTheme`.
-- **The role suffix is the right one.** A class in a `.function.ts` file lints clean.
-- **A leading underscore on a non-exported module function.** The rule can require it on
-  `private` class members, but cannot tell an exported function from an unexported one.
-- **TSDoc on exported symbols**, and whether a comment explains _why_ rather than _what_.
+- More than one export in a file under `interfaces/`, `enums/`, `types/` or `functions/`.
+- A file name that does not match its export, or carries the wrong role suffix.
+- A leading underscore on an unexported module function.

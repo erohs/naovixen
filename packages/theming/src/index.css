@@ -1,0 +1,2 @@
+/* Layer order is declared once, here. A rule that loses a fight is in the wrong layer. */
+@layer reset, tokens, base, layout, components, utilities, overrides;

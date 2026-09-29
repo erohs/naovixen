@@ -18,8 +18,8 @@
   },
   "devDependencies": {
     "@naovixen/eslint-config": "workspace:*",
-    "@naovixen/tsconfig": "workspace:*",
-    "eslint": "9.39.5",
+    "@naovixen/typescript-config": "workspace:*",
+    "eslint": "10.11.0",
     "prettier": "3.9.9",
     "stylelint": "17.15.0",
     "stylelint-config-standard": "40.0.0",

@@ -1,6 +1,0 @@
-/*
- * Every component's stylesheet is imported here, into the `components` layer declared by
- * `@naovixen/styles`. Apps import this file once, after the styles package.
- *
- * Phase 4 fills this in as components are built.
- */

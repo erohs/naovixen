@@ -1,145 +1,71 @@
-# CLAUDE.md
+# naovixen
 
-Instructions for any agent working in this repository. These apply everywhere. The
-detailed conventions load on demand — see [Where the rest lives](#where-the-rest-lives).
+Naomi Shore's portfolio. pnpm workspaces and Turborepo, TanStack Start, TypeScript.
 
----
+## Working rules
 
-## How to work here
+- **Check a tool's current docs before using it.** This stack moves faster than training
+  data. Installed versions are in `pnpm-lock.yaml`, not in a document.
+- **Ask before deviating** from anything here. Never silently substitute an alternative.
+- **Readability over cleverness.** Functions 25 lines, files 400, both enforced. Comments
+  only where the code genuinely cannot speak for itself.
+- **WCAG 2.2 AA is the floor.** If a design detail cannot be built accessibly, ask.
 
-**Read the current documentation first.** This stack moves faster than any model's
-training data. Before writing code against a tool, fetch its current documentation and
-check the installed version. `docs/decisions.md` records every version this project was
-built against and why — add to it when a version changes or a decision is revisited.
+## Content
 
-Two live examples of why: TypeScript 7 is generally available but is _not_ what we use,
-because it shipped without a stable compiler API and typescript-eslint cannot run on it.
-TanStack Start looks like a stable v1 from its version number but is formally still a
-Release Candidate.
+Anything factual about Naomi comes from `source-material/cv.pdf` (git-ignored) or from
+Naomi. Never invent a project, a handle, a testimonial or a bio. The prototype's
+placeholder copy never ships.
 
-**Confirm before deviating.** If something here turns out to be wrong, outdated or
-impossible — an API changed, a package was deprecated, a convention fights the tooling —
-stop and ask Naomi. Do not quietly substitute an alternative.
+Never publish her phone number, home address or personal email unless she asks.
 
-**Readability over cleverness.** Prefer explicit and verbose to terse and clever. No
-dense one-liners, no indirection that saves five lines and costs an hour of reading. The
-test is whether Naomi can open any file in six months and understand it in one pass.
-
-**Accessibility is a floor, not a goal.** WCAG 2.2 AA everywhere. If a design detail
-cannot be built accessibly, ask rather than ship it.
-
----
-
-## Where content comes from
-
-Naomi's CV is the single source of truth for anything factual about her: roles,
-employers, dates, skills, education, links. It lives at `source-material/cv.pdf`, which
-is git-ignored and must stay that way.
-
-**Never invent or embellish.** If a page needs something the CV does not contain — a
-project write-up, an "about me" voice, a social handle, a testimonial — ask Naomi. The
-design prototype's placeholder copy is not content and must never ship.
-
-Never publish anything from the CV that says where Naomi lives or how to reach her
-privately — phone number, home address, personal email — unless she explicitly asks.
-
----
-
-## What the design prototype is for
+## Design reference
 
 `design-reference/` holds a Claude Design export. It is a picture, not a codebase.
 
-Take from it: layout, spacing rhythm, hierarchy, colour, typography, interaction, motion.
-Take nothing else. Its CSS, markup and JavaScript are never copied, imported or adapted.
-Everything is rebuilt from our own tokens, primitives and components, using the simplest
-CSS that reproduces the same result.
-
-Where the prototype gets its result through a hack — a magic number, absolute
-positioning, `!important`, a fixed pixel height, a stack of wrappers, a `<div>` doing a
-`<button>`'s job — find the clean equivalent. Where a detail cannot be rebuilt both
-cleanly and accessibly, ask Naomi rather than copying the hack.
-
----
+Take layout, spacing, hierarchy, colour, typography and motion from it. Never copy its
+CSS, markup or JavaScript — rebuild from our own tokens and components with the simplest
+CSS that gets the same result. If a detail needs a hack to reproduce, ask rather than
+copy it.
 
 ## Architecture
 
-Six layers. Dependencies only ever point downwards.
+Dependencies point one way, from apps down to leaf packages, and never sideways between
+siblings. The exact graph is enforced in `eslint.config.js`; read it there rather than
+keeping a second copy here.
 
-```
-apps/*        ──►  system-page, ui, content, styles, core
-system-page   ──►  ui, styles, core
-ui            ──►  styles, core
-content       ──►  core
-core          ──►  nothing internal
-styles        ──►  nothing
-```
+Only `components` and `design-system` may import React. Every other package runs
+unchanged in a browser, on a Worker, and in a test with no DOM — anything needing a
+browser capability declares an interface and has an implementation injected. The base
+tsconfig omits the `DOM` lib so this is a compile error, not a convention.
 
-1. **Models** (`core/src/models`) — plain interfaces describing domain data, no behaviour.
-2. **Services** (`core/src/services`) — framework-free logic; every dependency arrives
-   through an injected interface.
-3. **Controllers** (`core/src/controllers`) — framework-free state machines exposing
-   `getState()`, `subscribe(listener)` and intent methods.
-4. **Adapters** (`ui/src/hooks`) — thin React bindings, usually `useSyncExternalStore`.
-   No logic.
-5. **Components** (`ui/src/components`) — take models as props, render semantic HTML.
-6. **Routes** (`apps/*/src/routes`) — load data, map to models, compose, declare metadata.
+Layers: models (data, no behaviour) → services and controllers (logic, dependencies
+injected) → hooks (thin React bindings, no logic) → components (models in, semantic HTML
+out) → routes (load, map, compose).
 
-**`core` never imports React and never touches the DOM.** A browser capability it needs —
-`matchMedia`, cookies, `localStorage` — is expressed as an interface and injected. That
-is what makes it testable without a DOM and reusable outside React.
+Controllers expose `getState()`, `subscribe(listener)` and intent methods, so a hook can
+bind one with `useSyncExternalStore` and add nothing.
 
-Services reach React through a single `NaovixenProvider` in `ui`, wrapped around each
-app's root route.
+## Folders
 
----
+A component, service, controller or route owns a kebab-case folder. Its root holds the
+main file, its spec, and for components its showcase. Everything else goes in
+`interfaces/`, `types/`, `enums/`, `constants/`, `functions/` or `styles/`, created only
+when there is something to put in it.
 
-## One concern per folder
+One barrel per package, `src/index.ts`. No nested index files, no re-export chains.
 
-Every component, service, controller and route owns a kebab-case folder. The root holds
-only the main file, its test, and for components its showcase. Everything else goes in a
-subfolder named for what it holds: `interfaces/`, `types/`, `enums/`, `constants/`,
-`functions/`, `styles/`.
-
-Create a subfolder only when there is something to put in it — no empty placeholders.
-
-Something used by one owner lives in that owner's folder. The moment a second owner needs
-it, move it up to the package level rather than importing sideways between siblings.
-Domain models always live in `core/src/models`.
-
-Subfolders are imported by direct path. No nested `index.ts` files, no re-export chains —
-each package has exactly one barrel, `src/index.ts`, exporting its public surface.
-
----
+Something used by one owner lives with that owner. Once a second needs it, move it up to
+the package level rather than importing sideways.
 
 ## Commits
 
-[Conventional Commits](https://www.conventionalcommits.org), scoped to the package or app.
+Conventional Commits, scoped to the package: `feat(components): add ProjectCard`.
 
-```
-feat(ui): add ProjectCard
-fix(core): resolve system theme when no cookie is present
-chore(styles): regenerate tokens
-```
+Never commit `source-material/`, `.env`, or anything holding personal details.
 
-Never commit `source-material/`, `.env` files, or anything holding personal details or
-secrets.
+## Detail loads on demand
 
----
-
-## Where the rest lives
-
-These load automatically when relevant, so this file stays short. Read one directly only
-if you need it before touching a matching file.
-
-| Rules                                                                        | Load when you open           |
-| ---------------------------------------------------------------------------- | ---------------------------- |
-| `.claude/rules/typescript.md` — naming, casing, file names, TypeScript rules | any `.ts` or `.tsx`          |
-| `.claude/rules/react.md` — component form, props, component accessibility    | any `.tsx`                   |
-| `.claude/rules/testing.md` — what to test, test file names, test wording     | any `.spec.ts` / `.spec.tsx` |
-| `.claude/rules/styles.md` — BEM, tokens, cascade layers, theming             | any `.css`                   |
-
-Per-package instructions live in a `CLAUDE.md` inside each package and load when you read
-files there. They are created alongside each package as it is scaffolded.
-
-Background, not instructions: `docs/decisions.md` (pinned versions and ADRs),
-`docs/architecture.md`, `docs/adding-a-new-site.md`.
+`.claude/rules/` holds the conventions, each scoped to the files it applies to:
+`typescript.md`, `react.md`, `testing.md`, `styles.md`. Decisions whose reasoning is not
+obvious from the code are in `docs/decisions.md`.

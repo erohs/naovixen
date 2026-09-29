@@ -1,4 +1,4 @@
 {
-  "extends": "@naovixen/tsconfig/app.json",
+  "extends": "@naovixen/typescript-config/app.json",
   "include": ["src", "vite.config.ts"]
 }
