@@ -1,0 +1,10 @@
+/* Drawn in currentcolor, so forced colours swap in the system text colour on their own. */
+.nx-motion-lines {
+    flex-shrink: 0;
+    overflow: visible;
+    color: var(--color-border);
+    fill: none;
+    stroke: currentcolor;
+    stroke-width: 2.5;
+    stroke-linecap: round;
+}

@@ -4,6 +4,7 @@
     display: inline-flex;
     align-items: center;
     gap: var(--border-width-standout);
+    font-weight: var(--font-weight-regular);
     text-decoration: none;
 }
 

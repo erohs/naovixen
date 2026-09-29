@@ -4,3 +4,4 @@
 @import url('./fox-mascot/styles/fox-mascot.css') layer(components);
 @import url('./heart/styles/heart.css') layer(components);
 @import url('./paw/styles/paw.css') layer(components);
+@import url('./motion-lines/styles/motion-lines.css') layer(components);
