@@ -7,8 +7,8 @@
 
 ## Where we are
 
-**Phases 0–3 are done.** `pnpm typecheck`, `test`, `lint` and `build` all pass. Next:
-Phase 4, the components package.
+**Phases 0–4 are done.** `pnpm typecheck`, `test`, `lint` and `build` all pass. Next:
+Phase 5, the portfolio app.
 
 Still unanswered:
 
@@ -243,12 +243,12 @@ Simple, accessible, professional, Scandinavian restraint with a playful hint of 
 
 ### Phase 4 — Components package
 
-- [ ] `NaovixenProvider` and the `useTheme` adapter.
-- [ ] Primitives: `SkipLink`, `VisuallyHidden`, `Container`, `Stack`, `Cluster`, `Grid`, `Heading`, `Text`, `Link` (router-agnostic: accepts a link component via provider), `Button`, `Icon`, `Tag`.
-- [ ] Brand: `Logo` (`< naovixen />`, accessible name "naovixen"), `ThemeToggle`.
-- [ ] Composites from the design: `SiteHeader`, `SiteNavigation`, `SiteFooter`, `ProjectCard`, `BlogPostCard`, `Callout`, `CodeBlock`, `Figure`, plus whatever else the prototype contains.
-- [ ] Portable Text serializer map (`BlogContent` component).
-- [ ] Each component follows the folder rules in `CLAUDE.md`: component and showcase at the folder root, everything else in category folders, tests in `tests/`. Behaviour + axe tests on every component.
+- [x] `NaovixenProvider` and the `useTheme` adapter.
+- [x] Primitives: `SkipLink`, `VisuallyHidden`, `Container`, `Stack`, `Cluster`, `Grid`, `Heading`, `Text`, `Link` (router-agnostic: accepts a link component via provider), `Button`, `Icon`, `Tag`.
+- [x] Brand: `Logo` (`< naovixen />`, accessible name "naovixen"), `ThemeToggle`.
+- [x] Composites from the design: `SiteHeader`, `SiteNavigation`, `SiteFooter`, `ProjectCard`, `BlogPostCard`, `Callout`, `CodeBlock`, `Figure`, plus whatever else the prototype contains: `LinkTile`, `SpeechBubble`, `Breadcrumb`, `Pager`, `SectionHeading`, `BackToTop`, `HandDrawnRule`, `Heart`, `Paw`, and a redrawn line-art `FoxMascot`.
+- [x] Portable Text serializer map (`BlogContent` component).
+- [x] Each component follows the folder rules in `CLAUDE.md`: component and showcase at the folder root, everything else in category folders, tests in `tests/`. Behaviour + axe tests on every component.
 - **Verify:** all tests pass; ESLint and Stylelint clean; no component imports a raw palette token; no component file exports anything but its component. **Commit** once this passes.
 
 ### Phase 5 — Portfolio app
