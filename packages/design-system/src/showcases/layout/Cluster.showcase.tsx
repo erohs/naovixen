@@ -1,38 +1,20 @@
-import { Space } from '../enums/Space';
-import type { IShowcase } from '../interfaces/IShowcase';
-import { Cluster } from './Cluster.component';
+import { Tag } from '@naovixen/components';
+import { Cluster, Space } from '@naovixen/layout';
+
+import type { IShowcase } from '../../interfaces/IShowcase';
+
+const tags = ['TypeScript', 'React', 'Accessibility', 'CSS', 'Testing', 'Design systems'];
 
 export const clusterShowcase: IShowcase = {
-  name: 'Cluster',
-  examples: [
-    {
-      name: 'Default gap',
-      render: () => (
-        <Cluster>
-          <span>First</span>
-          <span>Second</span>
-          <span>Third</span>
-        </Cluster>
-      ),
-    },
-    {
-      name: 'Gap between text',
-      render: () => (
-        <Cluster gap={Space.BetweenText}>
-          <span>First</span>
-          <span>Second</span>
-          <span>Third</span>
-        </Cluster>
-      ),
-    },
-    {
-      name: 'As a list',
-      render: () => (
-        <Cluster as="ul" gap={Space.BetweenGroups}>
-          <li>First item</li>
-          <li>Second item</li>
-        </Cluster>
-      ),
-    },
-  ],
+    name: 'Cluster',
+    examples: [Space.BetweenText, Space.BetweenContent].map((gap) => ({
+        name: `Gap: ${gap}`,
+        render: () => (
+            <Cluster gap={gap}>
+                {tags.map((tag) => (
+                    <Tag key={tag}>{tag}</Tag>
+                ))}
+            </Cluster>
+        ),
+    })),
 };

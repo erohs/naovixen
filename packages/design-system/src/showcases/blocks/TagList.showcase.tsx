@@ -1,13 +1,13 @@
-import type { IShowcase } from '../interfaces/IShowcase';
-import { TagList } from './TagList.component';
+import { TagList } from '@naovixen/blocks';
+
+import type { IShowcase } from '../../interfaces/IShowcase';
 
 export const tagListShowcase: IShowcase = {
-  name: 'TagList',
-  examples: [
-    {
-      name: 'Several tags',
-      render: () => <TagList label="Tech stack" tags={['TypeScript', 'React', 'CSS']} />,
-    },
-    { name: 'One tag', render: () => <TagList label="Topics" tags={['Accessibility']} /> },
-  ],
+    name: 'TagList',
+    examples: [
+        {
+            name: 'Labelled list',
+            render: () => <TagList label="Tech stack" tags={['TypeScript', 'React', 'CSS']} />,
+        },
+    ],
 };

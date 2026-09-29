@@ -1,18 +1,11 @@
-import type { IShowcase } from '../interfaces/IShowcase';
-import { SpeechBubble } from './SpeechBubble.component';
-import { SpeechBubbleTail } from './enums/SpeechBubbleTail';
+import { SpeechBubble, SpeechBubbleTail } from '@naovixen/blocks';
+
+import type { IShowcase } from '../../interfaces/IShowcase';
 
 export const speechBubbleShowcase: IShowcase = {
-  name: 'SpeechBubble',
-  examples: [
-    { name: 'Tail at the bottom', render: () => <SpeechBubble>Example words</SpeechBubble> },
-    {
-      name: 'Tail at the top',
-      render: () => <SpeechBubble tail={SpeechBubbleTail.Top}>Example words</SpeechBubble>,
-    },
-    {
-      name: 'No tail',
-      render: () => <SpeechBubble tail={SpeechBubbleTail.None}>Example words</SpeechBubble>,
-    },
-  ],
+    name: 'SpeechBubble',
+    examples: Object.values(SpeechBubbleTail).map((tail) => ({
+        name: `Tail: ${tail}`,
+        render: () => <SpeechBubble tail={tail}>hello there!</SpeechBubble>,
+    })),
 };

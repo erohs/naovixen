@@ -1,0 +1,71 @@
+[
+    {
+        "_type": "block",
+        "_key": "heading",
+        "style": "h2",
+        "markDefs": [],
+        "children": [
+            { "_type": "span", "_key": "heading-text", "text": "Example heading", "marks": [] }
+        ]
+    },
+    {
+        "_type": "block",
+        "_key": "paragraph",
+        "style": "normal",
+        "markDefs": [{ "_type": "link", "_key": "example-link", "href": "https://example.com" }],
+        "children": [
+            { "_type": "span", "_key": "start", "text": "Example text with ", "marks": [] },
+            { "_type": "span", "_key": "strong", "text": "strong", "marks": ["strong"] },
+            { "_type": "span", "_key": "middle", "text": ", ", "marks": [] },
+            { "_type": "span", "_key": "code", "text": "code", "marks": ["code"] },
+            { "_type": "span", "_key": "and", "text": " and ", "marks": [] },
+            { "_type": "span", "_key": "link", "text": "a link", "marks": ["example-link"] },
+            { "_type": "span", "_key": "end", "text": ".", "marks": [] }
+        ]
+    },
+    {
+        "_type": "block",
+        "_key": "quote",
+        "style": "blockquote",
+        "markDefs": [],
+        "children": [
+            { "_type": "span", "_key": "quote-text", "text": "An example quotation.", "marks": [] }
+        ]
+    },
+    {
+        "_type": "block",
+        "_key": "item",
+        "style": "normal",
+        "listItem": "bullet",
+        "level": 1,
+        "markDefs": [],
+        "children": [
+            { "_type": "span", "_key": "item-text", "text": "An example list item", "marks": [] }
+        ]
+    },
+    {
+        "_type": "callout",
+        "_key": "callout",
+        "kind": "tip!",
+        "title": "Example title",
+        "text": "Example text inside a callout."
+    },
+    {
+        "_type": "code",
+        "_key": "code-block",
+        "code": "const example = true;",
+        "language": "TypeScript",
+        "filename": "example.ts"
+    },
+    {
+        "_type": "figure",
+        "_key": "figure",
+        "image": {
+            "src": "https://example.com/example-project.png",
+            "alt": "Example project home page",
+            "width": 1600,
+            "height": 900
+        },
+        "caption": "An example caption."
+    }
+]

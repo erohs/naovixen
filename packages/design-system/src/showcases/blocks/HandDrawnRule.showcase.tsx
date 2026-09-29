@@ -1,7 +1,8 @@
-import type { IShowcase } from '../interfaces/IShowcase';
-import { HandDrawnRule } from './HandDrawnRule.component';
+import { HandDrawnRule } from '@naovixen/blocks';
+
+import type { IShowcase } from '../../interfaces/IShowcase';
 
 export const handDrawnRuleShowcase: IShowcase = {
-  name: 'HandDrawnRule',
-  examples: [{ name: 'Default', render: () => <HandDrawnRule /> }],
+    name: 'HandDrawnRule',
+    examples: [{ name: 'Full width', render: () => <HandDrawnRule /> }],
 };

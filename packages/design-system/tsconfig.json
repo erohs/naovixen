@@ -1,4 +1,4 @@
 {
-  "extends": "@naovixen/typescript-config/react-library.json",
-  "include": ["src"]
+    "extends": "@naovixen/typescript-config/react-library.json",
+    "include": ["src"]
 }

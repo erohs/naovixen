@@ -1,17 +1,8 @@
-import type { IShowcase } from '../interfaces/IShowcase';
-import { Paw } from './Paw.component';
+import { Paw } from '@naovixen/brand';
+
+import type { IShowcase } from '../../interfaces/IShowcase';
 
 export const pawShowcase: IShowcase = {
-  name: 'Paw',
-  examples: [
-    { name: 'Default', render: () => <Paw /> },
-    {
-      name: 'Beside text',
-      render: () => (
-        <p>
-          Example text <Paw />
-        </p>
-      ),
-    },
-  ],
+    name: 'Paw',
+    examples: [{ name: 'Default', render: () => <Paw /> }],
 };

@@ -1,7 +1,8 @@
-import type { IShowcase } from '../interfaces/IShowcase';
-import { Logo } from './Logo.component';
+import { Logo } from '@naovixen/brand';
+
+import type { IShowcase } from '../../interfaces/IShowcase';
 
 export const logoShowcase: IShowcase = {
-  name: 'Logo',
-  examples: [{ name: 'Default', render: () => <Logo /> }],
+    name: 'Logo',
+    examples: [{ name: 'Default', render: () => <Logo /> }],
 };

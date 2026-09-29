@@ -1,36 +1,18 @@
-import { Space } from '../enums/Space';
-import type { IShowcase } from '../interfaces/IShowcase';
-import { Stack } from './Stack.component';
+import { Tag } from '@naovixen/components';
+import { Space, Stack } from '@naovixen/layout';
+
+import type { IShowcase } from '../../interfaces/IShowcase';
 
 export const stackShowcase: IShowcase = {
-  name: 'Stack',
-  examples: [
-    {
-      name: 'Default gap',
-      render: () => (
-        <Stack>
-          <p>First paragraph</p>
-          <p>Second paragraph</p>
-        </Stack>
-      ),
-    },
-    {
-      name: 'Gap between groups',
-      render: () => (
-        <Stack gap={Space.BetweenGroups}>
-          <p>First group</p>
-          <p>Second group</p>
-        </Stack>
-      ),
-    },
-    {
-      name: 'As a list',
-      render: () => (
-        <Stack as="ul" gap={Space.BetweenText}>
-          <li>First item</li>
-          <li>Second item</li>
-        </Stack>
-      ),
-    },
-  ],
+    name: 'Stack',
+    examples: Object.values(Space).map((gap) => ({
+        name: `Gap: ${gap}`,
+        render: () => (
+            <Stack gap={gap}>
+                <Tag>First</Tag>
+                <Tag>Second</Tag>
+                <Tag>Third</Tag>
+            </Stack>
+        ),
+    })),
 };

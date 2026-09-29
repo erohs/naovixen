@@ -1,24 +1,18 @@
-import type { IShowcase } from '../interfaces/IShowcase';
-import { Container } from './Container.component';
+import { Text } from '@naovixen/components';
+import { Container } from '@naovixen/layout';
+
+import type { IShowcase } from '../../interfaces/IShowcase';
 
 export const containerShowcase: IShowcase = {
-  name: 'Container',
-  examples: [
-    {
-      name: 'Default',
-      render: () => (
-        <Container>
-          <p>Example content at the page width.</p>
-        </Container>
-      ),
-    },
-    {
-      name: 'As a footer',
-      render: () => (
-        <Container as="footer">
-          <p>Example footer content.</p>
-        </Container>
-      ),
-    },
-  ],
+    name: 'Container',
+    examples: [
+        {
+            name: 'Page width with the page gutter',
+            render: () => (
+                <Container>
+                    <Text>Content is centred and never wider than the page width.</Text>
+                </Container>
+            ),
+        },
+    ],
 };

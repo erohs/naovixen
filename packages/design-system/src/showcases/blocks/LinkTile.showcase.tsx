@@ -1,40 +1,53 @@
-import { IconName } from '../enums/IconName';
-import { LinkDestination } from '../enums/LinkDestination';
-import type { IShowcase } from '../interfaces/IShowcase';
-import { LinkTile } from './LinkTile.component';
+import { LinkTile } from '@naovixen/blocks';
+import {
+    downloadIcon,
+    ExternalLink,
+    externalLinkIcon,
+    gitHubIcon,
+    mailIcon,
+} from '@naovixen/components';
+
+import type { IShowcase } from '../../interfaces/IShowcase';
 
 export const linkTileShowcase: IShowcase = {
-  name: 'LinkTile',
-  examples: [
-    {
-      name: 'To a page',
-      render: () => (
-        <LinkTile href="/" label="Example page" detail="example.com" icon={IconName.Mail} />
-      ),
-    },
-    {
-      name: 'To another site',
-      render: () => (
-        <LinkTile
-          href="https://example.com"
-          destination={LinkDestination.External}
-          label="Example site"
-          detail="example.com/example-handle"
-          icon={IconName.GitHub}
-        />
-      ),
-    },
-    {
-      name: 'To a file',
-      render: () => (
-        <LinkTile
-          href="/example.pdf"
-          destination={LinkDestination.Download}
-          label="Example file"
-          detail="PDF"
-          icon={IconName.Download}
-        />
-      ),
-    },
-  ],
+    name: 'LinkTile',
+    examples: [
+        {
+            name: 'Email',
+            render: () => (
+                <LinkTile
+                    href="mailto:name@example.com"
+                    icon={mailIcon}
+                    label="Email"
+                    detail="name@example.com"
+                />
+            ),
+        },
+        {
+            name: 'Another site',
+            render: () => (
+                <LinkTile
+                    href="https://example.com"
+                    icon={gitHubIcon}
+                    label="GitHub"
+                    detail="example.com/example"
+                    linkComponent={ExternalLink}
+                    trailingIcon={externalLinkIcon}
+                />
+            ),
+        },
+        {
+            name: 'A download',
+            render: () => (
+                <LinkTile
+                    href="#example"
+                    download
+                    icon={downloadIcon}
+                    label="Download"
+                    detail="PDF"
+                    trailingIcon={downloadIcon}
+                />
+            ),
+        },
+    ],
 };

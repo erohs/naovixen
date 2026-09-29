@@ -1,17 +1,8 @@
-import type { IShowcase } from '../interfaces/IShowcase';
-import { Heart } from './Heart.component';
+import { Heart } from '@naovixen/brand';
+
+import type { IShowcase } from '../../interfaces/IShowcase';
 
 export const heartShowcase: IShowcase = {
-  name: 'Heart',
-  examples: [
-    { name: 'Default', render: () => <Heart /> },
-    {
-      name: 'Beside text',
-      render: () => (
-        <p>
-          Example text <Heart />
-        </p>
-      ),
-    },
-  ],
+    name: 'Heart',
+    examples: [{ name: 'Default', render: () => <Heart /> }],
 };
