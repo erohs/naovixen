@@ -1,0 +1,18 @@
+{
+  "name": "@naovixen/cms",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@naovixen/models": "workspace:*"
+  },
+  "devDependencies": {
+    "@naovixen/typescript-config": "workspace:*"
+  }
+}
