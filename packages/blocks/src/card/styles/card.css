@@ -1,64 +1,72 @@
 /*
- * On hover the card's bottom corner folds up: the corner, shadow and all, is clipped away
- * along a diagonal and the fold is drawn on ::after where it was. The halo is on ::before.
+ * The folded corner is drawn to the design's exact measurements, so its sizes are written out
+ * rather than taken from the spacing scale: they only mean anything relative to each other.
+ *
+ * ::before covers the card's corner in the page colour, with the triangle of shadow the lifted
+ * card casts along the fold behind it. ::after is the turned-up flap, which casts its own
+ * shadow. Both spring out from the corner on hover or when focus is inside the card.
  */
 .nx-card {
-    --card-fold-size: var(--space-between-groups);
-    --card-clip-reach: var(--space-between-regions);
-
     position: relative;
-    isolation: isolate;
     display: flex;
     flex-direction: column;
-    gap: var(--space-between-content);
+    gap: 12px;
     block-size: 100%;
-    padding: var(--space-padding-container);
-    border: var(--border-width-standout) solid var(--color-border);
-    border-radius: var(--radius-medium);
+    padding: 24px 24px 20px;
+    border: 2px solid var(--color-border);
+    border-radius: 20px 12px 22px 14px / 12px 22px 14px 20px;
     background-color: var(--color-background-surface);
-    transition: box-shadow var(--duration-medium) var(--easing-standard);
+    box-shadow: 0 0 0 var(--color-shadow);
+    transition: box-shadow 0.2s ease;
 
     &::before,
     &::after {
         content: '';
         position: absolute;
         pointer-events: none;
+        opacity: 0;
+        scale: 0.2;
+        transform-origin: 100% 100%;
+        transition:
+            scale 0.3s cubic-bezier(0.3, 1.5, 0.5, 1),
+            opacity 0.15s ease;
+    }
+
+    &::before {
+        z-index: 2;
+        inset-block-end: -8px;
+        inset-inline-end: -8px;
+        inline-size: 36px;
+        block-size: 36px;
+        background:
+            linear-gradient(to top left, var(--color-background-page) 50%, transparent 50%) right 0
+                bottom 0 / 30px 30px no-repeat,
+            linear-gradient(to top left, var(--color-shadow) 50%, transparent 50%) right 6px bottom
+                6px / 30px 30px no-repeat;
     }
 
     &::after {
-        inset-block-end: calc(-1 * var(--border-width-standout));
-        inset-inline-end: calc(-1 * var(--border-width-standout));
-        inline-size: var(--card-fold-size);
-        block-size: var(--card-fold-size);
-        border-block-start: var(--border-width-standout) solid var(--color-border);
-        border-inline-start: var(--border-width-standout) solid var(--color-border);
-        border-start-start-radius: calc(var(--card-fold-size) / 5);
+        z-index: 3;
+        inset-block-end: -2px;
+        inset-inline-end: -2px;
+        inline-size: 30px;
+        block-size: 30px;
+        border-block-start: 2px solid var(--color-border);
+        border-inline-start: 2px solid var(--color-border);
+        border-start-start-radius: 6px;
         background: linear-gradient(
             to bottom right,
             var(--color-background-accent) 50%,
             transparent 50%
         );
-        opacity: 0;
-        scale: 0.2;
-        transform-origin: 100% 100%;
-        transition:
-            scale var(--duration-medium) var(--easing-bounce),
-            opacity var(--duration-fast) var(--easing-standard);
+        filter: drop-shadow(6px 6px 0 var(--color-shadow));
     }
 
     &:hover,
     &:focus-within {
-        box-shadow: var(--shadow-raised);
-        clip-path: polygon(
-            -50% -50%,
-            calc(100% + var(--card-clip-reach)) -50%,
-            calc(100% + var(--card-clip-reach))
-                calc(100% - var(--card-fold-size) - var(--card-clip-reach)),
-            calc(100% - var(--card-fold-size) - var(--card-clip-reach))
-                calc(100% + var(--card-clip-reach)),
-            -50% calc(100% + var(--card-clip-reach))
-        );
+        box-shadow: 6px 6px 0 var(--color-shadow);
 
+        &::before,
         &::after {
             opacity: 1;
             scale: 1;
@@ -66,41 +74,18 @@
     }
 }
 
-.nx-card--halo-dotted {
-    &::before {
-        z-index: -1;
-        inset: calc(-1 * var(--space-between-blocks));
-        background: radial-gradient(circle, var(--color-decoration-dots) 16%, transparent 21%) 0 0 /
-            var(--space-between-text) var(--space-between-text);
-        mask-image: radial-gradient(ellipse at 90% 8%, black, transparent 62%);
-        opacity: 0;
-        transition: opacity var(--duration-medium) var(--easing-standard);
-    }
-
-    &:hover::before,
-    &:focus-within::before {
-        opacity: 1;
-    }
-}
-
-/* The fold snaps into place instead of springing; the shadow still fades. */
+/* The fold appears without springing; the shadow still eases in. */
 @media (prefers-reduced-motion: reduce) {
+    .nx-card::before,
     .nx-card::after {
         transition: none;
     }
 }
 
-/* Both flourishes are drawn with backgrounds, which forced colours flatten. */
+/* The fold is drawn with backgrounds, which forced colours flatten. */
 @media (forced-colors: active) {
-    .nx-card {
-        &:hover,
-        &:focus-within {
-            clip-path: none;
-        }
-
-        &::after,
-        &.nx-card--halo-dotted::before {
-            display: none;
-        }
+    .nx-card::before,
+    .nx-card::after {
+        display: none;
     }
 }

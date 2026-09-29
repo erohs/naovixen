@@ -3,7 +3,6 @@ import { render, screen } from '@testing-library/react';
 import { createRef } from 'react';
 import { describe, expect, test } from 'vitest';
 
-import { CardHalo } from '../enums/CardHalo';
 import { Card } from '../Card.component';
 
 describe('Using Card', () => {
@@ -24,7 +23,7 @@ describe('Using Card', () => {
 
             test('then it should have no accessibility violations', async () => {
                 render(
-                    <Card halo={CardHalo.Dotted}>
+                    <Card>
                         <h3>Example project</h3>
                     </Card>,
                 );
@@ -34,18 +33,16 @@ describe('Using Card', () => {
         });
     });
 
-    describe('given a halo and a class name', () => {
+    describe('given a class name', () => {
         describe('when it renders', () => {
             test('then it should keep the class name alongside its own', () => {
                 render(
-                    <Card halo={CardHalo.Dotted} className="extra">
+                    <Card className="extra">
                         <h3>Example project</h3>
                     </Card>,
                 );
 
-                expect(screen.getByRole('article').className).toBe(
-                    'nx-card nx-card--halo-dotted extra',
-                );
+                expect(screen.getByRole('article').className).toBe('nx-card extra');
             });
         });
     });
