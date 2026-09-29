@@ -49,6 +49,7 @@
   --duration-slow: 450ms;
   --easing-standard: ease;
   --easing-bounce: cubic-bezier(0.34, 1.9, 0.5, 1);
+  --z-index-floating: 10;
 }
 
 :root,
@@ -68,6 +69,7 @@
   --color-focus: #4A3A5E;
   --color-decoration-dots: #8E7AAE;
   --color-decoration-paw: #F07C74;
+  --color-decoration-highlight: #FBF6EE;
 }
 
 [data-theme='dark'] {
@@ -86,4 +88,5 @@
   --color-focus: #C9B8E6;
   --color-decoration-dots: #8E7AAE;
   --color-decoration-paw: #F07C74;
+  --color-decoration-highlight: #FBF6EE;
 }

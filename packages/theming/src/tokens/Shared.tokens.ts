@@ -64,4 +64,7 @@ export const sharedTokens = {
   '--duration-slow': '450ms',
   '--easing-standard': 'ease',
   '--easing-bounce': 'cubic-bezier(0.34, 1.9, 0.5, 1)',
+
+  // Above the page for fixed controls such as the skip link and back-to-top link.
+  '--z-index-floating': '10',
 } as const;

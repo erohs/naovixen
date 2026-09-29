@@ -12,4 +12,5 @@ export interface IColorTheme {
   readonly '--color-focus': string;
   readonly '--color-decoration-dots': string;
   readonly '--color-decoration-paw': string;
+  readonly '--color-decoration-highlight': string;
 }

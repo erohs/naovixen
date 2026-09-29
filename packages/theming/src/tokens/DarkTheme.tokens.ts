@@ -15,4 +15,6 @@ export const darkTheme: IColorTheme = {
   '--color-focus': palette.lilac,
   '--color-decoration-dots': palette.lavender,
   '--color-decoration-paw': palette.coral,
+  // Pale fur and highlights on doodles, which stay light whatever the theme.
+  '--color-decoration-highlight': palette.cream,
 };
