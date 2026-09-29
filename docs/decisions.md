@@ -18,7 +18,7 @@ Checked against the npm registry on **2026-09-29**.
 
 | Package | Pinned | Latest available | Note |
 |---|---|---|---|
-| Node.js | *pending — see ADR-0002* | 26.x current, 24.x Active LTS, 22.x maintenance | Locally installed: 22.17.0 |
+| Node.js | 24 (Active LTS) | 26.x current, 24.x Active LTS, 22.x maintenance | Locally installed: 22.17.0 |
 | pnpm | 12.6.0 | 12.6.0 | Activated through Corepack |
 | turbo | 2.11.5 | 2.11.5 | |
 
@@ -26,7 +26,7 @@ Checked against the npm registry on **2026-09-29**.
 
 | Package | Pinned | Latest available | Note |
 |---|---|---|---|
-| typescript | *pending — see ADR-0001* | 7.0.2 | 6.0.3 is the newest release typescript-eslint supports |
+| typescript | 6.0.3 | 7.0.2 | 6.0.3 is the newest release typescript-eslint supports |
 | vite | 8.3.1 | 8.3.1 | Requires Node `^20.19.0 \|\| >=22.12.0` |
 | react / react-dom | 19.3.0 | 19.3.0 | |
 | @vitejs/plugin-react | 6.1.1 | 6.1.1 | |
@@ -73,8 +73,8 @@ Checked against the npm registry on **2026-09-29**.
 
 | Package | Pinned | Latest available | Note |
 |---|---|---|---|
-| sanity | 6.16.0 | 6.16.0 | Pending the answer to open question 2 |
-| @sanity/client | 8.8.0 | 8.8.0 | Pending the answer to open question 2 |
+| sanity | 6.16.0 | 6.16.0 | |
+| @sanity/client | 8.8.0 | 8.8.0 | |
 
 ### Fonts
 
@@ -93,7 +93,7 @@ can be self-hosted as WOFF2 with no Google Fonts request at runtime.
 ## ADR-0001 — TypeScript 6, not 7
 
 **Date:** 2026-09-29
-**Status:** Proposed — awaiting Naomi's decision
+**Status:** Accepted (Naomi, 2026-09-29)
 
 TypeScript 7.0 (the Go rewrite, "Project Corsa") reached general availability on
 2026-07-08 and is what `npm install typescript` gives you today. We are proposing to
@@ -117,7 +117,7 @@ TypeScript 7. Its `rc-v8` dist-tag suggests that work is underway.
 ## ADR-0002 — Node version
 
 **Date:** 2026-09-29
-**Status:** Proposed — awaiting Naomi's decision
+**Status:** Accepted (Naomi, 2026-09-29)
 
 Node 24 ("Krypton") is the Active LTS line; Node 22 ("Jod") is in maintenance and
 Node 26 is Current. `@tanstack/react-start` requires `node >=22.12.0` and `vitest@5`
@@ -126,6 +126,8 @@ requires `^22.12.0 || ^24.0.0 || >=26.0.0`.
 Proposing **Node 24 (Active LTS)** in `.nvmrc`, matched by the CI workflow and the
 Cloudflare build image. The machine this is being built on currently runs 22.17.0,
 which would need upgrading.
+
+Naomi confirmed Node 24 on 2026-09-29.
 
 ---
 
@@ -203,3 +205,30 @@ from Google Fonts. All four are published by Fontsource, so they are installed a
 dependencies and served from our own origin: no third-party request on page load, no
 `preconnect` to `fonts.googleapis.com`, and no data leaving the visitor's browser to
 Google. Three of the four have variable versions, which cuts the number of files.
+
+---
+
+## ADR-0008 — Sanity is the blog CMS
+
+**Date:** 2026-09-29
+**Status:** Accepted (Naomi, 2026-09-29)
+
+Resolves open question 2. The hard requirement in section 6.1 is publishing without
+a redeploy, which a git-based MDX blog cannot meet. Sanity stores posts as Portable
+Text, which is structured data rather than markup, so every block and mark is
+rendered by one of our own components and no raw HTML is ever injected. The schema
+can make alt text and excerpts required rather than merely encouraged.
+
+The coupling is confined to one adapter: `core` declares the `BlogRepository`
+interface and the `BlogPost` model, and `content` holds `SanityBlogRepository`.
+Changing CMS later means writing one new class.
+
+---
+
+## ADR-0009 — Git remote
+
+**Date:** 2026-09-29
+**Status:** Accepted (Naomi, 2026-09-29)
+
+`origin` is `git@github.com:erohs/naovixen.git` (private), tracking `main`.
+GitHub Actions in Phase 8 and the Cloudflare project in Phase 9 both build from it.
