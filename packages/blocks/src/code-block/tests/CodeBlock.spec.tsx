@@ -1,4 +1,5 @@
 import { render, screen } from '@testing-library/react';
+import { userEvent } from '@testing-library/user-event';
 import { describe, expect, test } from 'vitest';
 
 import { findAxeViolations } from '@naovixen/component-testing';
@@ -18,7 +19,13 @@ describe('Using CodeBlock', () => {
             test('then it should caption the code with the filename and the language', () => {
                 render(<CodeBlock code={code} language="TypeScript" filename="answer.ts" />);
 
-                expect(screen.getByRole('figure').textContent).toBe(`answer.tsTypeScript${code}`);
+                expect(screen.getByRole('figure').textContent).toBe(`answer.ts TypeScript${code}`);
+            });
+
+            test('then it should name the scrolling region by its caption', () => {
+                render(<CodeBlock code={code} language="TypeScript" filename="answer.ts" />);
+
+                expect(screen.getByRole('region', { name: 'answer.ts TypeScript' })).toBeDefined();
             });
 
             test('then it should have no accessibility violations', async () => {
@@ -35,6 +42,20 @@ describe('Using CodeBlock', () => {
                 render(<CodeBlock code={code} language="TypeScript" />);
 
                 expect(screen.getByRole('figure').textContent).toBe(`TypeScript${code}`);
+            });
+        });
+    });
+
+    describe('given a line too long to fit', () => {
+        describe('when someone presses Tab', () => {
+            test('then it should focus the code, so the arrow keys can scroll it', async () => {
+                render(<CodeBlock code={code} language="TypeScript" />);
+
+                await userEvent.setup().tab();
+
+                expect(screen.getByRole('region', { name: 'TypeScript' }).matches(':focus')).toBe(
+                    true,
+                );
             });
         });
     });

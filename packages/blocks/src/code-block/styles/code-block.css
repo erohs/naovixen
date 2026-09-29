@@ -25,6 +25,11 @@
 .nx-code-block__code {
     padding: var(--space-padding-container);
     line-height: var(--line-height-body);
-    white-space: pre-wrap;
-    overflow-wrap: anywhere;
+    overflow-x: auto;
+    white-space: pre;
+
+    /* Drawn inside, because the block's rounded corners clip anything outside. */
+    &:focus-visible {
+        outline-offset: calc(-1 * var(--border-width-highlight));
+    }
 }

@@ -25,6 +25,9 @@ export function createReactConfig() {
                 ...reactRecommended.rules,
                 ...jsxA11yX.configs.strict.rules,
                 ...reactHooks.configs.flat['recommended-latest'].rules,
+
+                /** A scrolling region, such as a code block, must take focus to scroll by keyboard. */
+                'jsx-a11y-x/no-noninteractive-tabindex': ['error', { tags: [], roles: ['region'] }],
             },
         },
 
