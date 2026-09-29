@@ -1,0 +1,42 @@
+/* Line art in the border colour, with one patch of accent fur. Block, so no baseline gap
+   opens between the drawing and the edge it peeks over. */
+.nx-fox-mascot {
+  display: block;
+  color: var(--color-border);
+  fill: none;
+  stroke: currentcolor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.nx-fox-mascot__face {
+  fill: var(--color-decoration-highlight);
+  stroke: none;
+}
+
+.nx-fox-mascot__fur {
+  fill: var(--color-background-accent);
+  stroke: none;
+}
+
+/* The eyes sit on the fur, so they take the colour made for text on the accent. */
+.nx-fox-mascot__eyes {
+  fill: var(--color-text-on-accent);
+  stroke: none;
+}
+
+@media (forced-colors: active) {
+  .nx-fox-mascot {
+    color: CanvasText;
+  }
+
+  .nx-fox-mascot__face,
+  .nx-fox-mascot__fur {
+    fill: none;
+  }
+
+  .nx-fox-mascot__eyes {
+    fill: currentcolor;
+  }
+}
