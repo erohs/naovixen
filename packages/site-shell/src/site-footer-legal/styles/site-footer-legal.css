@@ -1,10 +1,27 @@
+/*
+ * The row is tall enough to centre its text beside the fixed back-to-top link. Where the margin
+ * outside the page is too narrow to hold that link, the row pads its end so the two never overlap.
+ */
 .nx-site-footer-legal {
+    --site-footer-legal-link-room: calc(
+        var(--size-action-minimum) + 2 * var(--space-between-content)
+    );
+    --site-footer-legal-page-margin: max(
+        0rem,
+        (100vw - var(--layout-width-page)) / 2 - var(--space-padding-page)
+    );
+
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
-    gap: var(--space-between-content);
-    padding-block-start: var(--space-between-content);
+    gap: 0 var(--space-between-blocks);
+    min-block-size: calc(var(--size-action-minimum) + 2 * var(--space-between-groups));
+    padding-inline-end: max(
+        0rem,
+        var(--site-footer-legal-link-room) - var(--site-footer-legal-page-margin) -
+            var(--space-padding-page)
+    );
     border-block-start: var(--border-width-default) dashed var(--color-border);
     color: var(--color-text-secondary);
     font-size: var(--font-size-small);

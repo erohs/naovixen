@@ -1,6 +1,6 @@
 import type { FunctionComponent } from 'react';
 import { isCurrentHref } from '@naovixen/blocks';
-import { Link } from '@naovixen/components';
+import { Link, navigationLinkClassName } from '@naovixen/components';
 import { joinClassNames } from '@naovixen/formatting';
 
 import type { ISiteFooterLegalProps } from './interfaces/ISiteFooterLegalProps';
@@ -22,6 +22,7 @@ export const SiteFooterLegal: FunctionComponent<ISiteFooterLegalProps> = ({
             </p>
             <LinkComponent
                 href={privacyLink.path}
+                className={navigationLinkClassName}
                 aria-current={isCurrentHref(currentPath, privacyLink.path) ? 'page' : undefined}
             >
                 {privacyLink.label}

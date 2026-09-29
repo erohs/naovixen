@@ -7,7 +7,12 @@
     flex-wrap: wrap;
     align-items: center;
     gap: var(--space-between-content);
-    padding-block-start: var(--space-padding-container);
+    padding-block-start: calc(var(--space-between-content) + var(--space-between-lines));
+}
+
+/* The wordmark is a size up in the header, where it stands alone. */
+.nx-site-header__home .nx-wordmark {
+    font-size: var(--font-size-lead);
 }
 
 .nx-site-header__home {

@@ -1,5 +1,5 @@
 import type { FunctionComponent } from 'react';
-import { ExternalLink, Link } from '@naovixen/components';
+import { ExternalLink, Link, navigationLinkClassName } from '@naovixen/components';
 import { joinClassNames } from '@naovixen/formatting';
 
 import { isEmailAddress } from './functions/IsEmailAddress.function';
@@ -15,9 +15,13 @@ export const SocialLinkList: FunctionComponent<ISocialLinkListProps> = ({
         {links.map((link) => (
             <li key={link.url}>
                 {isEmailAddress(link.url) ? (
-                    <Link href={link.url}>{link.label}</Link>
+                    <Link href={link.url} className={navigationLinkClassName}>
+                        {link.label}
+                    </Link>
                 ) : (
-                    <ExternalLink href={link.url}>{link.label}</ExternalLink>
+                    <ExternalLink href={link.url} className={navigationLinkClassName}>
+                        {link.label}
+                    </ExternalLink>
                 )}
             </li>
         ))}

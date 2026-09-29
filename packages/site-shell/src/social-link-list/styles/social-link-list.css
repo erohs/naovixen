@@ -1,7 +1,7 @@
 .nx-social-link-list {
     display: flex;
     flex-direction: column;
-    gap: var(--space-between-text);
+    gap: var(--space-between-content);
     padding: 0;
     font-weight: var(--font-weight-semi-bold);
     list-style: none;

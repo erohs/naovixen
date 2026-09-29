@@ -9,3 +9,8 @@
 .nx-mobile-menu__panel {
     flex-basis: 100%;
 }
+
+/* Narrower than other buttons, so the header's row still fits on a small phone. */
+.nx-mobile-menu__button {
+    padding-inline: var(--space-between-content);
+}

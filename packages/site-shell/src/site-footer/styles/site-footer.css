@@ -1,7 +1,4 @@
-/*
- * The mascot stands on the top border, so only the part it draws above that edge shows. The
- * bottom padding keeps the last line clear of the fixed back-to-top link.
- */
+/* The mascot stands on the top border, so only the part it draws above that edge shows. */
 .nx-site-footer {
     position: relative;
     border-block-start: var(--border-width-standout) solid var(--color-border);
@@ -15,6 +12,5 @@
 }
 
 .nx-site-footer__content {
-    padding-block: var(--space-padding-panel)
-        calc(var(--size-action-minimum) + 2 * var(--space-between-content));
+    padding-block-start: var(--space-padding-panel);
 }

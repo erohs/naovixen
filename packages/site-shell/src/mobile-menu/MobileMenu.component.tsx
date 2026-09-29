@@ -26,6 +26,7 @@ export const MobileMenu: FunctionComponent<IMobileMenuProps> = ({
             isOpen={isOpen}
             onOpenChange={onOpenChange}
             className={joinClassNames('nx-mobile-menu', className)}
+            buttonClassName="nx-mobile-menu__button"
             panelClassName="nx-mobile-menu__panel"
         >
             <SiteNavigation {...navigationProps} layout={SiteNavigationLayout.Stacked} />
