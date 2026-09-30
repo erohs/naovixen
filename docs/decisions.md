@@ -123,7 +123,8 @@ cookie, and the CSP's `frame-ancestors` must allow the hosted Studio.
 
 Every page, the sitemap and the feed send `public, max-age=0, s-maxage=300,
 stale-while-revalidate=86400`: browsers always revalidate, the CDN refreshes within five
-minutes of a publish, and no visitor waits on Sanity. A webhook that purges on publish
+minutes of a publish, and no visitor waits on Sanity. Sanity's own API CDN, which the site
+reads through, adds up to about 75 seconds more, so a publish can take six minutes to show. A webhook that purges on publish
 could make it instant; it needs the Cloudflare setup, so it waits for Phase 9.
 
 ## Some pieces are drawn to the design's exact numbers

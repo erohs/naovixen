@@ -50,13 +50,6 @@ export const projectType = defineType({
         defineField({ name: 'role', type: 'string', validation: (rule) => rule.required() }),
         defineField({ name: 'timeline', type: 'string', validation: (rule) => rule.required() }),
         defineField({
-            name: 'tags',
-            description: 'A few, shown on the project card.',
-            type: 'array',
-            of: [defineArrayMember({ type: 'reference', to: [{ type: 'tag' }] })],
-            validation: (rule) => rule.unique().max(4),
-        }),
-        defineField({
             name: 'stack',
             title: 'Tech stack',
             type: 'array',

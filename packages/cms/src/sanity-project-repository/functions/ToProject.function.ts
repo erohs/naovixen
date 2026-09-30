@@ -14,7 +14,6 @@ export function toProject(
         tldr: project.tldr,
         role: project.role,
         timeline: project.timeline,
-        stack: project.stack,
         liveUrl: project.liveUrl ?? undefined,
         repositoryUrl: project.repositoryUrl ?? undefined,
         sections: project.sections.map((section) => ({

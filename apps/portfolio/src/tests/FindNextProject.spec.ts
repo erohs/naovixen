@@ -4,7 +4,7 @@ import { describe, expect, test } from 'vitest';
 import { findNextProject } from '../functions/FindNextProject.function';
 
 function createSummary(slug: string): IProjectSummary {
-    return { slug, title: slug, summary: '', tags: [], isFeatured: false };
+    return { slug, title: slug, summary: '', stack: [], isFeatured: false };
 }
 
 const projects = [createSummary('first'), createSummary('second'), createSummary('last')];

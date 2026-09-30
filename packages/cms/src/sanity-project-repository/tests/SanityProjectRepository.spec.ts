@@ -10,7 +10,6 @@ const projectFields = {
     slug: 'habit-tracker',
     title: 'Habit tracker',
     summary: 'A summary.',
-    tags: ['React'],
     isFeatured: true,
     screenshot: null,
     tldr: 'In short.',

@@ -12,7 +12,7 @@ export function toProjectSummary(
         slug: project.slug,
         title: project.title,
         summary: project.summary,
-        tags: project.tags,
+        stack: project.stack,
         isFeatured: project.isFeatured,
         screenshot:
             project.screenshot === null ? undefined : toImage(project.screenshot, imageUrls),

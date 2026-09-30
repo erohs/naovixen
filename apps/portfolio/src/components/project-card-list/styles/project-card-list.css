@@ -1,7 +1,7 @@
-/* As many equal columns as fit, dropping to one on narrow screens. */
+/* As many equal columns as fit, dropping to one on narrow screens. A lone card keeps its column's width. */
 .nv-project-card-list {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(18.75rem, 100%), 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(min(18.75rem, 100%), 1fr));
     gap: var(--space-between-groups);
     padding-inline-start: 0;
     list-style: none;

@@ -5,7 +5,7 @@ export const projectSummariesQuery = defineQuery(`
         "slug": slug.current,
         title,
         summary,
-        "tags": coalesce(tags[]->title, []),
+        stack,
         "isFeatured": coalesce(isFeatured, false),
         screenshot { alt, asset-> { url, metadata { dimensions { width, height } } } }
     }

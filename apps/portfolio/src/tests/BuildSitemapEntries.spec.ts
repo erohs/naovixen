@@ -7,7 +7,7 @@ import { buildSitemapEntries } from '../functions/BuildSitemapEntries.function';
 const projectRepository: IProjectRepository = {
     listProjects: () =>
         Promise.resolve([
-            { slug: 'habit-tracker', title: '', summary: '', tags: [], isFeatured: false },
+            { slug: 'habit-tracker', title: '', summary: '', stack: [], isFeatured: false },
         ]),
     getProjectBySlug: () => Promise.resolve(undefined),
 };

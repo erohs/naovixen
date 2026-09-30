@@ -13,6 +13,9 @@ import { joinClassNames } from '@naovixen/utilities';
 import { RouterLinkIcon } from '../router-link-icon/RouterLinkIcon.component';
 import type { IProjectCardProps } from './interfaces/IProjectCardProps';
 
+/** A card names only the main few technologies; the case study lists them all. */
+const cardStackLength = 3;
+
 const CaseStudyLink: FunctionComponent<Pick<IProjectCardProps, 'project'>> = ({ project }) => (
     <p className="nv-project-card__footer">
         <RouterLinkIcon
@@ -43,7 +46,11 @@ export const ProjectCard: FunctionComponent<IProjectCardProps> = ({
             </Heading>
             <Text className="nv-project-card__summary">{project.summary}</Text>
         </div>
-        <TagList tags={project.tags} label="Tech stack" className="nv-project-card__tags" />
+        <TagList
+            tags={project.stack.slice(0, cardStackLength)}
+            label="Tech stack"
+            className="nv-project-card__tags"
+        />
         <CaseStudyLink project={project} />
     </Card>
 );

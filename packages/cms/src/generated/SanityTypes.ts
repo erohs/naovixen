@@ -86,13 +86,6 @@ export type Tag = {
     title: string;
 };
 
-export type TagReference = {
-    _ref: string;
-    _type: 'reference';
-    _weak?: boolean;
-    [internalGroqTypeReferenceTo]?: 'tag';
-};
-
 export type Project = {
     _id: string;
     _type: 'project';
@@ -107,11 +100,6 @@ export type Project = {
     tldr: string;
     role: string;
     timeline: string;
-    tags?: Array<
-        {
-            _key: string;
-        } & TagReference
-    >;
     stack: Array<string>;
     screenshot?: {
         asset?: SanityImageAssetReference;
@@ -150,6 +138,13 @@ export type Slug = {
     _type: 'slug';
     current: string;
     source?: string;
+};
+
+export type TagReference = {
+    _ref: string;
+    _type: 'reference';
+    _weak?: boolean;
+    [internalGroqTypeReferenceTo]?: 'tag';
 };
 
 export type Post = {
@@ -309,11 +304,11 @@ export type AllSanitySchemaTypes =
     | Callout
     | ProjectSection
     | Tag
-    | TagReference
     | Project
     | SanityImageCrop
     | SanityImageHotspot
     | Slug
+    | TagReference
     | Post
     | Code
     | SanityImagePaletteSwatch
@@ -409,12 +404,11 @@ export type PostTagsQueryResult = Array<string>;
 
 // Source: ../../packages/cms/src/sanity-project-repository/constants/ProjectBySlugQuery.const.ts
 // Variable: projectBySlugQuery
-// Query: *[_type == "project" && slug.current == $slug][0] {        "slug": slug.current,        title,        summary,        "tags": coalesce(tags[]->title, []),        "isFeatured": coalesce(isFeatured, false),        screenshot { alt, asset-> { url, metadata { dimensions { width, height } } } },        tldr,        role,        timeline,        stack,        liveUrl,        repositoryUrl,        sections[] {            heading,            body[] {                ...,                _type == "figure" => {                    image { alt, asset-> { url, metadata { dimensions { width, height } } } }                }            }        }    }
+// Query: *[_type == "project" && slug.current == $slug][0] {        "slug": slug.current,        title,        summary,        "isFeatured": coalesce(isFeatured, false),        screenshot { alt, asset-> { url, metadata { dimensions { width, height } } } },        tldr,        role,        timeline,        stack,        liveUrl,        repositoryUrl,        sections[] {            heading,            body[] {                ...,                _type == "figure" => {                    image { alt, asset-> { url, metadata { dimensions { width, height } } } }                }            }        }    }
 export type ProjectBySlugQueryResult = {
     slug: string;
     title: string;
     summary: string;
-    tags: Array<string> | Array<never>;
     isFeatured: boolean | false;
     screenshot: {
         alt: string;
@@ -494,12 +488,12 @@ export type ProjectBySlugQueryResult = {
 
 // Source: ../../packages/cms/src/sanity-project-repository/constants/ProjectSummariesQuery.const.ts
 // Variable: projectSummariesQuery
-// Query: *[_type == "project" && defined(slug.current)] | order(position asc) {        "slug": slug.current,        title,        summary,        "tags": coalesce(tags[]->title, []),        "isFeatured": coalesce(isFeatured, false),        screenshot { alt, asset-> { url, metadata { dimensions { width, height } } } }    }
+// Query: *[_type == "project" && defined(slug.current)] | order(position asc) {        "slug": slug.current,        title,        summary,        stack,        "isFeatured": coalesce(isFeatured, false),        screenshot { alt, asset-> { url, metadata { dimensions { width, height } } } }    }
 export type ProjectSummariesQueryResult = Array<{
     slug: string;
     title: string;
     summary: string;
-    tags: Array<string> | Array<never>;
+    stack: Array<string>;
     isFeatured: boolean | false;
     screenshot: {
         alt: string;
