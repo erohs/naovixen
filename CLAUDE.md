@@ -39,11 +39,12 @@ copy it.
 ```
 apps/portfolio        naovixen.com
 apps/design-system    every token and component rendered, run locally, never deployed
+apps/studio           Sanity Studio for posts and projects, deployed to Sanity's hosting
 packages/nvpack       eslint, tsconfig and vitest presets
 packages/utilities    small framework-free helpers several packages use
 packages/theming      tokens, reset, base styles, fonts, the theme controller
-packages/cms          the blog repository and the blog and project types
-packages/seo          head tags, JSON-LD and the sitemap, with the types they read
+packages/cms          the Sanity blog and project repositories, and the types they return
+packages/seo          head tags, JSON-LD, the sitemap and the feed, with the types they read
 packages/components   generic HTML-level components, icons, the theme toggle
 packages/blocks       compositions, and naovixen's header, footer, logo and navigation
 packages/blog-content renders a post body with our components

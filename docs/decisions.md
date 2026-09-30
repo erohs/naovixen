@@ -37,10 +37,20 @@ It is generated, but `typecheck` and `build` are separate Turborepo tasks. On a 
 clone `typecheck` can run first, and without the file every `createFileRoute` call fails
 to compile. `pnpm build` rewrites it if it drifts.
 
-## Sanity for the blog
+## Sanity for the blog and projects
 
 The requirement is publishing without a redeploy, which a git-based blog cannot meet.
-Coupling is confined to one adapter behind `IBlogRepository`.
+Coupling is confined to the two repositories in `cms`, behind `IBlogRepository` and
+`IProjectRepository`. The Studio (`apps/studio`) is a standalone app; it never imports a
+package, it only writes `cms/src/generated/SanityTypes.ts` with `pnpm --filter studio
+typegen`, which is committed.
+
+TypeGen's `overloadClientMethods` is off: its `declare module '@sanity/client'` fails to
+compile in `cms`, which never imports the client. Repositories pass the result type to
+`IGroqClient.fetch` themselves.
+
+Sanity packages are pinned, and the Studio's `autoUpdates` is off, so the Studio runs the
+version in the lockfile rather than whatever Sanity ships that day.
 
 ## `AGENTS.md` belongs to Turborepo
 
@@ -91,9 +101,30 @@ stays, so a server could still read it one day.
 
 ## Routes load through an injected repository
 
-Loaders read `context.blogRepository`, an `IBlogRepository` handed to the router. Until Phase
-7 it is an `InMemoryBlogRepository` holding placeholder posts; Sanity replaces it without a
-route changing.
+Loaders read `context.blogRepository` and `context.projectRepository`, handed to the router.
+Their implementations call server functions, which build a Sanity repository per request.
+So Sanity is only ever reached from the server, in the same process while rendering and over
+RPC when the browser navigates, and a request can be switched to drafts without the token
+reaching the browser.
+
+## Draft preview uses a sealed session, not Sanity's cookie
+
+Sanity's framework-agnostic recipe checks the Studio's secret once, then trusts an unsigned
+`sanity-preview-perspective` cookie. Anyone could set that cookie by hand and the server
+would read drafts for them with its token. Instead `/api/preview/enable` starts TanStack
+Start's session, whose cookie is encrypted and signed with `PREVIEW_SESSION_SECRET`, and
+lasts an hour. It is `SameSite=None` and partitioned so it works inside the Studio's frame.
+
+A preview response sets `Cache-Control: private, no-store`, overriding the public default.
+For Phase 9: the CDN must also bypass its cache for requests carrying the `nv-preview`
+cookie, and the CSP's `frame-ancestors` must allow the hosted Studio.
+
+## Pages cache for five minutes at the edge
+
+Every page, the sitemap and the feed send `public, max-age=0, s-maxage=300,
+stale-while-revalidate=86400`: browsers always revalidate, the CDN refreshes within five
+minutes of a publish, and no visitor waits on Sanity. A webhook that purges on publish
+could make it instant; it needs the Cloudflare setup, so it waits for Phase 9.
 
 ## Some pieces are drawn to the design's exact numbers
 

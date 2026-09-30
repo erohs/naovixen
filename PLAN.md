@@ -7,10 +7,11 @@
 
 ## Where we are
 
-**Phases 0–6 are done** (Phase 5 closed on 2026-09-30), and the repo was restructured on 2026-09-30 (see "Fewer
-packages, split by reuse" in `docs/decisions.md`). `pnpm typecheck`, `test`, `lint` and
-`build` all pass. Next: Phase 7, the blog. Phase 5's pages carry placeholder copy (every
-file named `Placeholder*` in `apps/portfolio/src`) until Naomi answers the content gaps.
+**Phases 0–6 are done**, and Phase 7 is built but not yet verified (2026-09-30): its check
+needs a read token, content in Sanity and, for "the live site", Phase 9's deployment.
+Progress and Naomi's Phase 7 decisions are in `notes/phase-7-status.md`. `pnpm typecheck`,
+`test`, `lint` and `build` all pass. Phase 5's pages carry placeholder copy (every file
+named `Placeholder*` in `apps/portfolio/src`) until Naomi answers the content gaps.
 
 Still unanswered:
 
@@ -146,7 +147,7 @@ body. One test runs axe over each page.
 - [x] `<html lang="en-GB">`.
 - [x] JSON-LD: `Person` (details from the CV, only fields Naomi approved for publishing) + `WebSite` on the home page, `BlogPosting` on posts.
 - [x] `sitemap.xml` (static routes and posts) and `robots.txt`.
-- [ ] RSS feed (Phase 7).
+- [x] RSS feed at `/blog/feed.xml`.
 - [x] Semantic heading structure, descriptive link text, clean slugs.
 - [ ] Open Graph images (static per page initially; generated per post as a later enhancement).
 
@@ -170,7 +171,7 @@ body. One test runs axe over each page.
 - Build only when relevant: configure build watch paths (or `turbo-ignore`) so each app only rebuilds when its own folder or a `packages/*` it depends on changes. With one app today this mostly skips deploys for docs-only changes; it matters once a second site exists.
 - Preview deployments on every branch/PR.
 - Custom domain: `naovixen.com` (plus `www` redirect to the apex, or the reverse — pick one canonical host).
-- Environment variables (Sanity project ID, dataset, preview secret) documented in `.env.example` per app; secrets only in the hosting dashboard.
+- Environment variables (`SANITY_API_READ_TOKEN`, `PREVIEW_SESSION_SECRET`; see `apps/portfolio/.env.example`) documented in `.env.example` per app; secrets only in the hosting dashboard.
 - GitHub Actions CI on every PR: typecheck, lint (ESLint + Stylelint), unit tests, token-file freshness check, Playwright + axe, Lighthouse CI.
 - `docs/adding-a-new-site.md` explains how to spin up a new site in minutes (e.g. a future merch shop: new app folder, depend on the shared packages, set domain, create hosting project, deploy).
 
@@ -250,11 +251,11 @@ Reworked after review: the first cut was site widgets, not a component library.
 
 ### Phase 7 — Blog
 
-- [ ] Sanity project + `apps/studio` schemas (post, project, author, tag, custom blocks) with validation.
-- [ ] Project repository in `cms`, `/work` and `/work/$slug` routes, and the home page's featured work.
-- [ ] `SanityBlogRepository` in `cms`, mapping to its types, with tests against fixture data.
-- [ ] Blog routes with caching headers, tag filtering, pagination, RSS, sitemap entries.
-- [ ] Draft preview route (optional webhook cache purge).
+- [x] Sanity project + `apps/studio` schemas (post, project, tag, custom blocks) with validation. Author dropped at Naomi's request.
+- [x] Project repository in `cms`, `/work` and `/work/$slug` routes, and the home page's featured work.
+- [x] `SanityBlogRepository` in `cms`, mapping to its types, with tests against fixture data.
+- [x] Blog routes with caching headers, RSS, sitemap entries. Tag filtering and pagination dropped for now at Naomi's request.
+- [x] Draft preview route, from the Studio's Presentation tool. The webhook cache purge moves to Phase 9, which sets up the CDN.
 - **Verify:** publishing a post in Studio appears on the live site within the cache window with **no deployment**. **Commit** once this passes.
 
 ### Phase 8 — Quality gates and CI
@@ -265,7 +266,8 @@ Reworked after review: the first cut was site widgets, not a component library.
 ### Phase 9 — Deployment
 
 - [ ] Every Phase 5 placeholder replaced with real copy from the CV or Naomi.
-- [ ] Cloudflare project for the portfolio; Sanity Studio deployed.
+- [ ] Cloudflare project for the portfolio; Sanity Studio deployed (`pnpm --filter studio deploy`, then record the printed `appId` in `sanity.cli.ts`); `naovixen.com` added to Sanity's CORS origins.
+- [ ] CDN bypasses its cache for requests with the `nv-preview` cookie; CSP `frame-ancestors` allows the hosted Studio; optional Sanity webhook purging changed pages.
 - [ ] Custom domains, HTTPS, security headers (CSP, `Referrer-Policy`, `Permissions-Policy`, HSTS).
 - [ ] Build filtering configured per app.
 - **Verify:** `naovixen.com` live over HTTPS with the canonical host redirect working. **Commit** once this passes.
