@@ -1,0 +1,31 @@
+{
+    "name": "design-system",
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "dev": "vite",
+        "lint": "eslint .",
+        "typecheck": "tsc --noEmit",
+        "test": "vitest run"
+    },
+    "dependencies": {
+        "@naovixen/blocks": "workspace:*",
+        "@naovixen/blog-content": "workspace:*",
+        "@naovixen/components": "workspace:*",
+        "@naovixen/theming": "workspace:*",
+        "react": "catalog:",
+        "react-dom": "catalog:"
+    },
+    "devDependencies": {
+        "@naovixen/nvpack": "workspace:*",
+        "@testing-library/dom": "catalog:",
+        "@testing-library/react": "catalog:",
+        "@types/react": "catalog:",
+        "@types/react-dom": "catalog:",
+        "@vitejs/plugin-react": "catalog:",
+        "axe-core": "4.13.0",
+        "jsdom": "catalog:",
+        "vite": "catalog:",
+        "vitest": "catalog:"
+    }
+}

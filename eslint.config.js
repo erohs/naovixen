@@ -5,15 +5,15 @@ import { createBaseConfig, createReactConfig, createTestConfig } from '@naovixen
 
 const repositoryRoot = dirname(fileURLToPath(import.meta.url));
 
-/** Every React package may use the shared test setup in its specs. */
-const testing = ['nvpack'];
-
 const noReact = [
     { name: 'react', message: 'This package is framework-free. Inject the capability instead.' },
     { name: 'react-dom', message: 'This package is framework-free and never touches the DOM.' },
 ];
 
-/** Enforces the dependency direction in CLAUDE.md. */
+/**
+ * Enforces the dependency direction in CLAUDE.md. Every package may use nvpack, which is
+ * tooling rather than code the package ships.
+ */
 function restrictImports(packageDirectory, { mayImport = [], paths = [] }) {
     return {
         name: `naovixen/dependencies/${packageDirectory}`,
@@ -27,6 +27,7 @@ function restrictImports(packageDirectory, { mayImport = [], paths = [] }) {
                         {
                             group: [
                                 '@naovixen/*',
+                                '!@naovixen/nvpack',
                                 ...mayImport.map((name) => `!@naovixen/${name}`),
                             ],
                             message:
@@ -51,10 +52,10 @@ export default [
     restrictImports('cms', { mayImport: ['utilities'], paths: noReact }),
     restrictImports('seo', { mayImport: ['utilities'], paths: noReact }),
 
-    restrictImports('components', { mayImport: ['utilities', 'theming', ...testing] }),
-    restrictImports('blocks', { mayImport: ['components', 'utilities', ...testing] }),
+    restrictImports('components', { mayImport: ['utilities', 'theming'] }),
+    restrictImports('blocks', { mayImport: ['components', 'utilities'] }),
     restrictImports('blog-content', {
-        mayImport: ['blocks', 'components', 'utilities', 'cms', ...testing],
+        mayImport: ['blocks', 'components', 'utilities', 'cms'],
     }),
 
     {

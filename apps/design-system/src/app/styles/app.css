@@ -1,0 +1,19 @@
+.nx-design-system {
+    padding-block: var(--space-padding-panel) var(--space-padding-page-end);
+    padding-inline: var(--space-padding-page-centred);
+}
+
+.nx-design-system__header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-between-content);
+}
+
+.nx-design-system__contents {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-between-blocks);
+    padding-block: var(--space-between-blocks);
+}

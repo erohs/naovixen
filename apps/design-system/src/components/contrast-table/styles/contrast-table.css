@@ -1,0 +1,19 @@
+.nx-contrast-table {
+    border-collapse: collapse;
+    font-family: var(--font-family-code);
+    font-size: var(--font-size-meta);
+
+    & caption {
+        padding-block-end: var(--space-between-text);
+        font-family: var(--font-family-body);
+        font-size: var(--font-size-small);
+        text-align: start;
+    }
+
+    & th,
+    & td {
+        padding: var(--space-between-lines) var(--space-between-content);
+        border-block-end: var(--border-width-default) solid var(--color-border);
+        text-align: start;
+    }
+}
