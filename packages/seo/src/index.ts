@@ -2,11 +2,13 @@ export { buildBlogPostingStructuredData } from './functions/BuildBlogPostingStru
 export { buildHeadTags } from './functions/BuildHeadTags.function';
 export { buildPersonStructuredData } from './functions/BuildPersonStructuredData.function';
 export { buildWebSiteStructuredData } from './functions/BuildWebSiteStructuredData.function';
+export { buildRssFeedXml } from './functions/BuildRssFeedXml.function';
 export { buildSitemapXml } from './functions/BuildSitemapXml.function';
 export { serializeStructuredData } from './functions/SerializeStructuredData.function';
 export type { IBlogPostingStructuredData } from './interfaces/IBlogPostingStructuredData';
 export type { IHeadTags } from './interfaces/IHeadTags';
 export type { INamedMetaTag } from './interfaces/INamedMetaTag';
+export type { IFeedChannel } from './interfaces/IFeedChannel';
 export type { ISitemapEntry } from './interfaces/ISitemapEntry';
 export type { IPersonStructuredData } from './interfaces/IPersonStructuredData';
 export type { IPropertyMetaTag } from './interfaces/IPropertyMetaTag';
