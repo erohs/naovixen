@@ -1,6 +1,7 @@
 import { createRouter } from '@tanstack/react-router';
 
 import { blogRepository } from './constants/BlogRepository.const';
+import { projectRepository } from './constants/ProjectRepository.const';
 import { routeTree } from './routeTree.gen';
 
 /**
@@ -11,7 +12,7 @@ import { routeTree } from './routeTree.gen';
 export const getRouter = () =>
     createRouter({
         routeTree,
-        context: { blogRepository },
+        context: { blogRepository, projectRepository },
         scrollRestoration: true,
         /** A new page starts at its top straight away; only in-page links scroll smoothly. */
         scrollRestorationBehavior: 'instant',

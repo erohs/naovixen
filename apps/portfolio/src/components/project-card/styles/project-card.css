@@ -1,0 +1,48 @@
+/*
+ * Tighter than a post card, so the screenshot sits close to the edge. Drawn to the design's
+ * numbers like the card itself, with the corners mirrored so a row of mixed cards varies.
+ */
+.nv-project-card {
+    padding: 16px 16px 12px;
+    border-radius: 14px 22px 12px 20px / 22px 12px 20px 14px;
+}
+
+.nv-project-card__screenshot {
+    inline-size: 100%;
+    block-size: auto;
+    aspect-ratio: 16 / 10;
+    object-fit: cover;
+    border: var(--border-width-default) solid var(--color-border);
+    border-radius: var(--radius-small);
+}
+
+.nv-project-card__text,
+.nv-project-card__tags,
+.nv-project-card__footer {
+    padding-inline: var(--space-between-text);
+}
+
+.nv-project-card__text {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-between-text);
+}
+
+.nv-project-card__summary {
+    color: var(--color-text-secondary);
+}
+
+/* Pushed to the foot of the card, so a row of cards lines up whatever their summaries' length. */
+.nv-project-card__footer {
+    margin-block-start: auto;
+    padding-block-start: var(--space-between-text);
+    border-block-start: var(--border-width-default) dashed var(--color-border);
+    font-weight: 600;
+}
+
+/* Covers the card, so the whole card is one link without nesting everything inside it. */
+.nv-project-card__link::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+}

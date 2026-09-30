@@ -23,6 +23,7 @@ import {
 import { InterestList } from '../../components/interest-list/InterestList.component';
 import { PhotoPlaceholder } from '../../components/photo-placeholder/PhotoPlaceholder.component';
 import { PostCardList } from '../../components/post-card-list/PostCardList.component';
+import { ProjectCardList } from '../../components/project-card-list/ProjectCardList.component';
 import { RouterLinkButton } from '../../components/router-link-button/RouterLinkButton.component';
 import { RouterLinkIcon } from '../../components/router-link-icon/RouterLinkIcon.component';
 import { placeholderBlogIntro } from '../../constants/PlaceholderBlogIntro.const';
@@ -63,10 +64,15 @@ const HomeSection: FunctionComponent<IHomeSectionProps> = (props) => (
     </section>
 );
 
-/** "See my work" points at the experience until Phase 7 brings the projects back. */
-const HeroActions: FunctionComponent = () => (
+/** "See my work" points at the projects, or at the experience while none are featured. */
+const HeroActions: FunctionComponent<{ readonly hasFeaturedProjects: boolean }> = ({
+    hasFeaturedProjects,
+}) => (
     <div className="nv-hero-actions">
-        <LinkButton href="#experience" variant={ButtonVariant.Primary}>
+        <LinkButton
+            href={hasFeaturedProjects ? '#work' : '#experience'}
+            variant={ButtonVariant.Primary}
+        >
             See my work <Icon source={arrowDownIcon} />
         </LinkButton>
         <LinkButton href={placeholderCvPath} download>
@@ -76,7 +82,9 @@ const HeroActions: FunctionComponent = () => (
     </div>
 );
 
-const HeroSection: FunctionComponent = () => (
+const HeroSection: FunctionComponent<{ readonly hasFeaturedProjects: boolean }> = ({
+    hasFeaturedProjects,
+}) => (
     <section aria-labelledby="hero-title" className="nv-hero-section">
         <ExclamationBubble>{placeholderHomePage.greeting}</ExclamationBubble>
         <Heading level={1} size={HeadingSize.Display} id="hero-title">
@@ -89,9 +97,29 @@ const HeroSection: FunctionComponent = () => (
         <Text variant={TextVariant.Lead} className="nv-hero-section__summary">
             {placeholderHomePage.summary}
         </Text>
-        <HeroActions />
+        <HeroActions hasFeaturedProjects={hasFeaturedProjects} />
     </section>
 );
+
+/** Left out while no project is featured, rather than showing an empty section. */
+const FeaturedProjectsSection: FunctionComponent<Pick<IHomePageProps, 'featuredProjects'>> = ({
+    featuredProjects,
+}) =>
+    featuredProjects.length > 0 && (
+        <HomeSection
+            id="work"
+            heading="Featured projects"
+            headingId="work-title"
+            intro={placeholderHomePage.featuredProjectsIntro}
+            action={
+                <RouterLinkIcon to="/work" icon={arrowRightIcon}>
+                    All projects
+                </RouterLinkIcon>
+            }
+        >
+            <ProjectCardList projects={featuredProjects} headingLevel={3} />
+        </HomeSection>
+    );
 
 /** A short introduction, with a link to the full about page. */
 const AboutSummary: FunctionComponent = () => (
@@ -256,7 +284,9 @@ const TestimonialSection: FunctionComponent = () => (
     </section>
 );
 
-const LatestPostsSection: FunctionComponent<IHomePageProps> = ({ latestPosts }) => (
+const LatestPostsSection: FunctionComponent<Pick<IHomePageProps, 'latestPosts'>> = ({
+    latestPosts,
+}) => (
     <HomeSection
         heading="From the blog"
         headingId="blog-title"
@@ -292,10 +322,10 @@ const ContactBanner: FunctionComponent = () => (
     </section>
 );
 
-/** Featured projects join between the hero and about sections in Phase 7. */
-export const HomePage: FunctionComponent<IHomePageProps> = ({ latestPosts }) => (
+export const HomePage: FunctionComponent<IHomePageProps> = ({ featuredProjects, latestPosts }) => (
     <>
-        <HeroSection />
+        <HeroSection hasFeaturedProjects={featuredProjects.length > 0} />
+        <FeaturedProjectsSection featuredProjects={featuredProjects} />
         <AboutSection />
         <ExperienceSection />
         <SkillsSection />

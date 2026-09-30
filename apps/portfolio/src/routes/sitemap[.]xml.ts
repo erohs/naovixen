@@ -2,6 +2,7 @@ import { createFileRoute } from '@tanstack/react-router';
 import { buildSitemapXml } from '@naovixen/seo';
 
 import { createSanityBlogRepository } from '../functions/CreateSanityBlogRepository.function';
+import { createSanityProjectRepository } from '../functions/CreateSanityProjectRepository.function';
 import { site } from '../constants/Site.const';
 import { buildSitemapEntries } from '../functions/BuildSitemapEntries.function';
 
@@ -13,7 +14,10 @@ export const Route = createFileRoute('/sitemap.xml')({
             GET: async () =>
                 new Response(
                     buildSitemapXml(
-                        await buildSitemapEntries(createSanityBlogRepository(false)),
+                        await buildSitemapEntries(
+                            createSanityBlogRepository(false),
+                            createSanityProjectRepository(false),
+                        ),
                         site,
                     ),
                     {

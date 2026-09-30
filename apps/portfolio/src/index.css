@@ -7,6 +7,8 @@
 @import url('./components/page/styles/page.css') layer(components);
 @import url('./components/post-card/styles/post-card.css') layer(components);
 @import url('./components/post-card-list/styles/post-card-list.css') layer(components);
+@import url('./components/project-card/styles/project-card.css') layer(components);
+@import url('./components/project-card-list/styles/project-card-list.css') layer(components);
 @import url('./components/greeting-heading/styles/greeting-heading.css') layer(components);
 @import url('./components/interest-list/styles/interest-list.css') layer(components);
 @import url('./components/photo-placeholder/styles/photo-placeholder.css') layer(components);
@@ -14,6 +16,8 @@
 @import url('./pages/about/styles/about-page.css') layer(components);
 @import url('./pages/blog/styles/blog-page.css') layer(components);
 @import url('./pages/blog-post/styles/blog-post-page.css') layer(components);
+@import url('./pages/work/styles/work-page.css') layer(components);
+@import url('./pages/project/styles/project-page.css') layer(components);
 @import url('./pages/contact/styles/contact-page.css') layer(components);
 @import url('./pages/privacy/styles/privacy-page.css') layer(components);
 @import url('./pages/not-found/styles/not-found-page.css') layer(components);

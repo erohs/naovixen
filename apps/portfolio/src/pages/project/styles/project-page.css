@@ -1,0 +1,88 @@
+.nv-project-page__header {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-between-blocks);
+    max-inline-size: 820px;
+    margin-block-start: var(--space-below-heading);
+}
+
+.nv-project-page__tldr {
+    max-inline-size: 40ch;
+}
+
+.nv-project-page__tldr-label {
+    margin-inline-end: var(--space-between-text);
+    color: var(--color-text-accent);
+    font-family: var(--font-family-code);
+    font-size: 0.7em;
+    font-weight: 600;
+}
+
+/* Role and timeline sit side by side where they fit; the stack takes a row of its own. */
+.nv-project-page__facts {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
+    gap: var(--space-between-blocks) var(--space-between-groups);
+    margin-block: var(--space-between-regions) 0;
+    padding-block: var(--space-between-blocks);
+    border-block: var(--border-width-standout) solid var(--color-border);
+
+    & dt {
+        color: var(--color-text-accent);
+        font-family: var(--font-family-handwriting);
+        font-size: var(--font-size-h4);
+    }
+
+    & dd {
+        margin: 0;
+        font-weight: 600;
+    }
+}
+
+.nv-project-page__stack {
+    grid-column: 1 / -1;
+}
+
+.nv-project-page__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-between-blocks);
+    margin-block-start: var(--space-between-groups);
+}
+
+.nv-project-page__links + .nv-figure,
+.nv-project-page__facts + .nv-figure {
+    margin-block-start: var(--space-between-regions);
+}
+
+.nv-project-page__body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-between-sections);
+    max-inline-size: var(--layout-width-prose);
+    margin-block-start: var(--space-between-sections);
+}
+
+.nv-project-page__section {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-between-blocks);
+}
+
+/* Sets the case study's end apart from the links onward. */
+.nv-project-page__rule {
+    margin-block: var(--space-between-sections) var(--space-between-groups);
+}
+
+.nv-project-page__more {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-between-content);
+}
+
+.nv-project-page__next {
+    font-family: var(--font-family-heading);
+    font-size: var(--font-size-lead);
+}

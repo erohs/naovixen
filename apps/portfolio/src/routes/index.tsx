@@ -9,11 +9,20 @@ import { person } from '../constants/Person.const';
 import { site } from '../constants/Site.const';
 import { buildRouteHead } from '../functions/BuildRouteHead.function';
 
-const HomeComponent = (): ReactNode => <HomePage latestPosts={Route.useLoaderData()} />;
+const HomeComponent = (): ReactNode => <HomePage {...Route.useLoaderData()} />;
 
 export const Route = createFileRoute('/')({
-    loader: async ({ context }) =>
-        (await context.blogRepository.listPosts()).slice(0, latestPostCount),
+    loader: async ({ context }) => {
+        const [projects, posts] = await Promise.all([
+            context.projectRepository.listProjects(),
+            context.blogRepository.listPosts(),
+        ]);
+
+        return {
+            featuredProjects: projects.filter((project) => project.isFeatured),
+            latestPosts: posts.slice(0, latestPostCount),
+        };
+    },
     head: () =>
         buildRouteHead(
             {

@@ -1,7 +1,8 @@
 import { createServerFn } from '@tanstack/react-start';
 
-import { createRequestBlogRepository } from '../../functions/CreateRequestBlogRepository.function';
+import { createSanityBlogRepository } from '../../functions/CreateSanityBlogRepository.function';
+import { isPreviewResponse } from '../../functions/IsPreviewResponse.function';
 
 export const listTagsOnServer = createServerFn().handler(async () =>
-    (await createRequestBlogRepository()).listTags(),
+    createSanityBlogRepository(await isPreviewResponse()).listTags(),
 );
