@@ -44,6 +44,10 @@ function restrictImports(packageDirectory, { mayImport = [], paths = [] }) {
 
 export default [
     ...createBaseConfig({ tsconfigRootDir: repositoryRoot }),
+    {
+        name: 'naovixen/sanity-output',
+        ignores: ['apps/studio/.sanity/**', 'apps/studio/schema.json'],
+    },
     ...createReactConfig(),
     ...createTestConfig(),
 
@@ -57,6 +61,12 @@ export default [
     restrictImports('blog-content', {
         mayImport: ['blocks', 'components', 'utilities', 'cms'],
     }),
+
+    {
+        name: 'naovixen/sanity-cli-config',
+        files: ['apps/studio/sanity.cli.ts'],
+        rules: { 'import-x/no-default-export': 'off' },
+    },
 
     {
         /** Icon sources are static strings in this package's own files, never user input. */

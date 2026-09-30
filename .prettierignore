@@ -5,3 +5,5 @@ design-reference/
 .turbo/
 dist/
 .output/
+apps/studio/.sanity/
+apps/studio/schema.json
