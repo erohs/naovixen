@@ -5,6 +5,10 @@
 export const palette = {
     ink: '#1F1B22',
     cream: '#FBF6EE',
+    /** A warmer cream for text and shadows on the dark theme, softer than the light page. */
+    parchment: '#FBF1E4',
+    /** Dimmer again, for lines on the dark theme. */
+    linen: '#F3E2CC',
     sand: '#F3EADC',
     plumGrey: '#564E5A',
     wheat: '#E3CFBA',

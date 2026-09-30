@@ -66,8 +66,10 @@ dark text on it. Orange _text_ cannot be one colour: a value dark enough for 4.5
 light surface is too dark for 4.5:1 on the dark one. So `--color-text-accent` is `#A84C16`
 in light and `#E8894A` in dark.
 
-**Lines and shadows are the text colour** in both themes — hard offset shadows, not soft
-greys. That is the comic-book look; do not soften it.
+**Lines and shadows are hard and near the text colour** — offset shadows, not soft greys.
+That is the comic-book look. In light they are the text colour. In dark they follow the
+design's warmer creams instead of the light page's: text and shadows `#FBF1E4`, lines a
+step dimmer at `#F3E2CC`. Brighter cream there glared, so do not merge them back.
 
 ## Reduced motion is CSS only
 
