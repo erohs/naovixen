@@ -1,5 +1,5 @@
 {
-    "name": "@naovixen/portable-text",
+    "name": "@naovixen/blog-content",
     "private": true,
     "type": "module",
     "exports": {

@@ -1,4 +1,4 @@
-import type { BlogContentNode } from '@naovixen/portable-text';
+import type { BlogContentNode } from '@naovixen/blog-content';
 
 import { createPlaceholderTextBlock as block } from '../functions/CreatePlaceholderTextBlock.function';
 

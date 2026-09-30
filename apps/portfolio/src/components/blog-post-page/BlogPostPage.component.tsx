@@ -1,6 +1,6 @@
 import type { FunctionComponent } from 'react';
 import { Breadcrumb, HandDrawnRule } from '@naovixen/blocks';
-import { BlogContent } from '@naovixen/portable-text';
+import { BlogContent } from '@naovixen/blog-content';
 
 import { blogBreadcrumbTrail } from '../../constants/BlogBreadcrumbTrail.const';
 import type { IBlogPostPageData } from '../../interfaces/IBlogPostPageData';

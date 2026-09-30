@@ -12,10 +12,10 @@
     },
     "dependencies": {
         "@naovixen/blocks": "workspace:*",
+        "@naovixen/blog-content": "workspace:*",
         "@naovixen/cms": "workspace:*",
         "@naovixen/components": "workspace:*",
         "@naovixen/layout": "workspace:*",
-        "@naovixen/portable-text": "workspace:*",
         "@naovixen/seo": "workspace:*",
         "@naovixen/theming": "workspace:*",
         "@naovixen/utilities": "workspace:*",
