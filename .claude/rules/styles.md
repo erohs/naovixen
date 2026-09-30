@@ -12,7 +12,8 @@ Global stylesheets. No Tailwind, no CSS-in-JS, no CSS Modules.
 
 Classes are `nv-` prefixed BEM, enforced by Stylelint. One block per file, named after the
 block. A page's stylesheet is the exception: it holds the page's block and one for each of
-the sections written in the page's file.
+the sections written in the page's file. Files stay under 400 lines, as in TypeScript; when
+a page's would not, its larger sections take a file each beside it, named for the section.
 
 ```css
 .nv-card {

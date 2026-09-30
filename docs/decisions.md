@@ -59,11 +59,18 @@ the header is one Portable Text `body`, and every block is available on every do
 so a page's shape is chosen in the Studio rather than in code. The Studio rejects a body
 whose headings skip a level.
 
-Adding a block: its schema in `apps/studio` (listed in `SchemaTypes` and `BodyField`), then
-`pnpm --filter studio typegen`, then a renderer entry in `rich-content`'s
-`RichContentTypes`. The GROQ `bodyProjection` passes new fields through; it needs an edit
-only for an image or a reference, and `BodyNodeNormalisers` only for a field Sanity leaves
-optional.
+A block is named after the component that renders it, and its fields after that
+component's props, so the Studio, `cms` and `rich-content` speak of the same thing: a
+`callout` with a `label` and a `title` is a `Callout` with a `label` and a `title`. The
+compiler holds the chain together. `cms` declares one interface per block and the
+`ContentBlock` union; `BodyNodeNormalisers` needs an entry for every type the generated
+Sanity types contain, returning the block's interface; `RichContentTypes` needs a renderer
+for every member of the union.
+
+Adding a block: its schema in `apps/studio`, added to `bodyBlockTypes`, then
+`pnpm --filter studio typegen`, then its interface in `cms` joined to `ContentBlock`, and the
+normaliser and renderer the compiler now asks for. The GROQ `bodyProjection` passes new
+fields through; it needs an edit only for an image or a reference.
 
 ## `AGENTS.md` belongs to Turborepo
 
@@ -152,16 +159,22 @@ design's buttons use 4px.
 
 A link in content has a solid accent underline that turns wavy under the pointer. A link in
 a list of places to go (header, footer) has no underline until the pointer is on it or it is
-the current page. The second is a modifier class, `navigationLinkClassName`, that navigation
-lists pass to whatever link component renders them, since that may be a router's link.
+the current page. The second is a modifier class, `navigationLinkClassName`, on the same
+`Link`.
 
-## Router links match exactly
+## The router's link is provided once
+
+`Link` in `components` renders a page on this site through whatever `LinkProvider` above it
+supplies, and a plain anchor for everything else: another site, a fragment, `mailto:`, a new
+tab, a download. The portfolio provides `RoutedLink`, TanStack Router's link wrapped with
+`createLink`, at the root. So `LinkButton`, `LinkIcon`, `NavigationList`, `Breadcrumb` and
+the cards navigate on the client without a `linkComponent` prop each, and without a router
+wrapper per link component. The first cut had both, three times over.
 
 TanStack Router marks a link active by path prefix and then always sets
-`aria-current="page"`, which would call "All posts" the current page on every post. The
-app's router links (`RoutedLink`, `RouterLinkIcon`, `RouterLinkButton`) match exactly and
-never add the router's `active` class. A section link on a page beneath it is marked by
-NavigationList instead.
+`aria-current="page"`, which would call "All posts" the current page on every post.
+`RoutedLink` matches exactly and never adds the router's `active` class. A section link on
+a page beneath it is marked by NavigationList instead.
 
 ## Lighthouse is measured behind compression
 

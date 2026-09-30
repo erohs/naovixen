@@ -10,6 +10,7 @@
     },
     "dependencies": {
         "@naovixen/rich-content": "workspace:*",
+        "@naovixen/cms": "workspace:*",
         "@naovixen/components": "workspace:*",
         "@naovixen/theming": "workspace:*",
         "react": "catalog:",

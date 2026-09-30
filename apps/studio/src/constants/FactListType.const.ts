@@ -1,10 +1,10 @@
 import { defineArrayMember, defineField, defineType } from 'sanity';
 import { ThListIcon } from '@sanity/icons/ThList';
 
-/** Short labelled facts, such as a role and a timeline. */
+/** Renders as the site's FactList: short labelled facts, such as a role and a timeline. */
 export const factListType = defineType({
     name: 'factList',
-    title: 'Facts',
+    title: 'Fact list',
     type: 'object',
     icon: ThListIcon,
     fields: [

@@ -1,11 +1,24 @@
 export type { IBlogPost } from './interfaces/IBlogPost';
 export type { IBlogPostSummary } from './interfaces/IBlogPostSummary';
 export type { IBlogRepository } from './interfaces/IBlogRepository';
-export type { IImage } from './interfaces/IImage';
-export type { IProject } from './interfaces/IProject';
-export { InMemoryBlogRepository } from './in-memory-blog-repository/InMemoryBlogRepository';
-export { SanityBlogRepository } from './sanity-blog-repository/SanityBlogRepository';
+export type { IButtonGroupBlock } from './interfaces/IButtonGroupBlock';
+export type { ICalloutBlock } from './interfaces/ICalloutBlock';
+export type { ICodeBlock } from './interfaces/ICodeBlock';
+export type { IFact } from './interfaces/IFact';
+export type { IFactListBlock } from './interfaces/IFactListBlock';
+export type { IFigureBlock } from './interfaces/IFigureBlock';
 export type { IGroqClient } from './interfaces/IGroqClient';
+export type { IImage } from './interfaces/IImage';
+export type { ILinkButton } from './interfaces/ILinkButton';
+export type { IProject } from './interfaces/IProject';
 export type { IProjectRepository } from './interfaces/IProjectRepository';
 export type { IProjectSummary } from './interfaces/IProjectSummary';
+export type { ILinkMark } from './interfaces/ILinkMark';
+export type { ISectionHeadingBlock } from './interfaces/ISectionHeadingBlock';
+export type { ITextBlock } from './interfaces/ITextBlock';
+export type { ITextSpan } from './interfaces/ITextSpan';
+export type { BodyNode } from './types/BodyNode';
+export type { ContentBlock } from './types/ContentBlock';
+
+export { SanityBlogRepository } from './sanity-blog-repository/SanityBlogRepository';
 export { SanityProjectRepository } from './sanity-project-repository/SanityProjectRepository';

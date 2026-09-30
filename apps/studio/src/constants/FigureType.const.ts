@@ -3,9 +3,10 @@ import { ImageIcon } from '@sanity/icons/Image';
 
 import { imageField } from './ImageField.const';
 
+/** Renders as the site's Figure: the fields are its props. */
 export const figureType = defineType({
     name: 'figure',
-    title: 'Image',
+    title: 'Figure',
     type: 'object',
     icon: ImageIcon,
     fields: [

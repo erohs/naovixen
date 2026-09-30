@@ -1,5 +1,4 @@
-import { InMemoryBlogRepository } from '@naovixen/cms';
-import type { IProjectRepository } from '@naovixen/cms';
+import type { IBlogRepository, IProjectRepository } from '@naovixen/cms';
 import { describe, expect, test } from 'vitest';
 
 import { buildSitemapEntries } from '../functions/BuildSitemapEntries.function';
@@ -13,17 +12,20 @@ const projectRepository: IProjectRepository = {
 };
 
 describe('Using buildSitemapEntries, given one published post and one project, when the entries are built', () => {
-    const repository = new InMemoryBlogRepository([
-        {
-            slug: 'hello',
-            title: 'Hello',
-            excerpt: '',
-            publishedAt: '2026-09-02',
-            readingTimeInMinutes: 1,
-            tags: [],
-            body: [],
-        },
-    ]);
+    const repository: IBlogRepository = {
+        listPosts: () =>
+            Promise.resolve([
+                {
+                    slug: 'hello',
+                    title: 'Hello',
+                    excerpt: '',
+                    publishedAt: '2026-09-02',
+                    readingTimeInMinutes: 1,
+                    tags: [],
+                },
+            ]),
+        getPostBySlug: () => Promise.resolve(undefined),
+    };
 
     test('then it should list the post with its date', async () => {
         const entries = await buildSitemapEntries(repository, projectRepository);

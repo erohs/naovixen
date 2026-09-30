@@ -1,0 +1,58 @@
+.nv-skill-tile {
+    --skill-tile-size: calc(1.5 * var(--space-between-regions));
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-between-text);
+    font-size: var(--font-size-small);
+    line-height: var(--line-height-subheading);
+    text-align: center;
+}
+
+.nv-skill-tile__logo {
+    display: grid;
+    place-items: center;
+    inline-size: var(--skill-tile-size);
+    block-size: var(--skill-tile-size);
+    border: var(--border-width-standout) solid var(--color-border);
+    border-radius: var(--radius-medium);
+    background-color: var(--color-background-surface);
+    font-size: calc(1.3 * var(--font-size-h4));
+}
+
+/* The label takes a fixed column on a wide screen and sits above the tiles on a narrow one. */
+.nv-skill-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-between-content) var(--space-between-groups);
+    padding-block: var(--space-between-blocks);
+    border-block-start: var(--border-width-default) solid var(--color-border);
+}
+
+/* Level with the middle of the first row of tiles. */
+.nv-skill-group__label {
+    flex: 0 0 calc(4 * var(--space-between-regions));
+    padding-block-start: calc(var(--space-between-content) + var(--space-between-lines));
+    color: var(--color-text-accent);
+    font-family: var(--font-family-handwriting);
+    font-size: var(--font-size-h4);
+    font-weight: var(--font-weight-regular);
+}
+
+.nv-skill-group__skills {
+    display: grid;
+    flex: 1 1 calc(9 * var(--space-between-regions));
+    grid-template-columns: repeat(
+        auto-fill,
+        minmax(calc(2 * var(--space-between-regions) + var(--space-between-text)), 1fr)
+    );
+    gap: var(--space-between-blocks) var(--space-between-content);
+    padding: 0;
+    list-style: none;
+}
+
+.nv-skills-section__groups {
+    display: flex;
+    flex-direction: column;
+}

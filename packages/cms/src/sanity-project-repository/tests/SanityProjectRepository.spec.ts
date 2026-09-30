@@ -42,10 +42,10 @@ describe('Using SanityProjectRepository, given a project with no screenshot, whe
         expect(project?.body[0]).toMatchObject({ children: [] });
     });
 
-    test('then it should pass blocks with nothing to prepare through unchanged', async () => {
+    test('then it should number a section heading', async () => {
         const project = await repository.getProjectBySlug('habit-tracker');
 
-        expect(project?.body[1]).toStrictEqual(projectFields.body[1]);
+        expect(project?.body[1]).toStrictEqual({ ...projectFields.body[1], number: 1 });
     });
 });
 
@@ -54,5 +54,26 @@ describe('Using SanityProjectRepository, given no project has the slug, when it 
 
     test('then it should resolve to undefined', async () => {
         expect(await repository.getProjectBySlug('missing')).toBeUndefined();
+    });
+});
+
+describe('Using SanityProjectRepository, given a project with two section headings, when it is asked for', () => {
+    const repository = createRepositoryAnswering({
+        ...projectFields,
+        body: [
+            { _type: 'sectionHeading', _key: 'a', text: 'The problem' },
+            { _type: 'block', _key: 'b' },
+            { _type: 'sectionHeading', _key: 'c', text: 'The approach' },
+        ],
+    });
+
+    test('then it should number the headings by their order', async () => {
+        const project = await repository.getProjectBySlug('habit-tracker');
+
+        expect(project?.body.map((node) => ('number' in node ? node.number : null))).toEqual([
+            1,
+            null,
+            2,
+        ]);
     });
 });

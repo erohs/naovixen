@@ -44,8 +44,12 @@ A variant is a new component built from an existing one: `LinkIcon` renders `Lin
 inside. A variant that changes only the look is a modifier class, picked by an enum prop.
 
 Generic components know nothing of content types, routers or brand. Content types enter
-at `rich-content` and in the apps; a block takes its links and copy as props. Data loading
-belongs in routes, logic in services.
+at `rich-content` and in the apps; a component takes its links and copy as props. Data
+loading belongs in routes, logic in services.
+
+A link is always `Link`, or something built on it. An app hands its router's link to
+`LinkProvider` once, at the root, and every `Link` to a page on the site renders through
+it. Nothing takes a link component as a prop, except `LinkTile`, which may be external.
 
 ## The `on` prefix collides
 

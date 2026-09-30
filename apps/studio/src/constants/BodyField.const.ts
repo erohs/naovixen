@@ -2,10 +2,11 @@ import { defineArrayMember, defineField } from 'sanity';
 
 import { validateHeadingOrder } from '../functions/ValidateHeadingOrder.function';
 import type { IBodyNode } from '../interfaces/IBodyNode';
+import { bodyBlockTypes } from './BodyBlockTypes.const';
 
 /**
- * Every block the site renders, on every document type. The page owns the h1, so a body
- * starts at h2. Code blocks come from the code input plugin.
+ * Text, then every block the site renders, on every document type. The page owns the h1, so
+ * a body starts at h2. Code blocks come from the code input plugin.
  */
 export const bodyField = defineField({
     name: 'body',
@@ -45,19 +46,16 @@ export const bodyField = defineField({
                 ],
             },
         }),
-        defineArrayMember({ type: 'sectionHeading' }),
-        defineArrayMember({ type: 'callout' }),
         defineArrayMember({
             type: 'code',
+            title: 'Code block',
             options: { withFilename: true },
             validation: (rule) =>
                 rule.custom((value: { code?: string } | undefined) =>
                     value?.code === undefined || value.code.trim() === '' ? 'Add the code.' : true,
                 ),
         }),
-        defineArrayMember({ type: 'figure' }),
-        defineArrayMember({ type: 'factList' }),
-        defineArrayMember({ type: 'linkButtons' }),
+        ...bodyBlockTypes.map((blockType) => defineArrayMember({ type: blockType.name })),
     ],
     validation: (rule) => rule.required().custom<IBodyNode[]>(validateHeadingOrder),
 });

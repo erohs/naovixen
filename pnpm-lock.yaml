@@ -235,6 +235,9 @@ importers:
 
   apps/design-system:
     dependencies:
+      '@naovixen/cms':
+        specifier: workspace:*
+        version: link:../../packages/cms
       '@naovixen/components':
         specifier: workspace:*
         version: link:../../packages/components

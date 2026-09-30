@@ -15,9 +15,9 @@
 export declare const internalGroqTypeReferenceTo: unique symbol;
 
 // Source: schema.json
-export type LinkButtons = {
-    _type: 'linkButtons';
-    links: Array<{
+export type ButtonGroup = {
+    _type: 'buttonGroup';
+    buttons: Array<{
         label: string;
         href: string;
         variant: 'primary' | 'secondary';
@@ -59,7 +59,7 @@ export type Figure = {
 
 export type Callout = {
     _type: 'callout';
-    kind: string;
+    label: string;
     title: string;
     text: string;
 };
@@ -119,13 +119,13 @@ export type Project = {
           }
         | ({
               _key: string;
+          } & Code)
+        | ({
+              _key: string;
           } & SectionHeading)
         | ({
               _key: string;
           } & Callout)
-        | ({
-              _key: string;
-          } & Code)
         | ({
               _key: string;
           } & Figure)
@@ -134,7 +134,7 @@ export type Project = {
           } & FactList)
         | ({
               _key: string;
-          } & LinkButtons)
+          } & ButtonGroup)
     >;
 };
 
@@ -203,13 +203,13 @@ export type Post = {
           }
         | ({
               _key: string;
+          } & Code)
+        | ({
+              _key: string;
           } & SectionHeading)
         | ({
               _key: string;
           } & Callout)
-        | ({
-              _key: string;
-          } & Code)
         | ({
               _key: string;
           } & Figure)
@@ -218,7 +218,7 @@ export type Post = {
           } & FactList)
         | ({
               _key: string;
-          } & LinkButtons)
+          } & ButtonGroup)
     >;
 };
 
@@ -328,7 +328,7 @@ export type Geopoint = {
 };
 
 export type AllSanitySchemaTypes =
-    | LinkButtons
+    | ButtonGroup
     | FactList
     | SanityImageAssetReference
     | Figure
@@ -382,8 +382,19 @@ export type PostBySlugQueryResult = {
           }
         | {
               _key: string;
+              _type: 'buttonGroup';
+              buttons: Array<{
+                  label: string;
+                  href: string;
+                  variant: 'primary' | 'secondary';
+                  _type: 'linkButton';
+                  _key: string;
+              }>;
+          }
+        | {
+              _key: string;
               _type: 'callout';
-              kind: string;
+              label: string;
               title: string;
               text: string;
           }
@@ -422,17 +433,6 @@ export type PostBySlugQueryResult = {
               };
               caption?: string;
               shape: 'portrait' | 'wide';
-          }
-        | {
-              _key: string;
-              _type: 'linkButtons';
-              links: Array<{
-                  label: string;
-                  href: string;
-                  variant: 'primary' | 'secondary';
-                  _type: 'linkButton';
-                  _key: string;
-              }>;
           }
         | {
               _key: string;
@@ -501,8 +501,19 @@ export type ProjectBySlugQueryResult = {
           }
         | {
               _key: string;
+              _type: 'buttonGroup';
+              buttons: Array<{
+                  label: string;
+                  href: string;
+                  variant: 'primary' | 'secondary';
+                  _type: 'linkButton';
+                  _key: string;
+              }>;
+          }
+        | {
+              _key: string;
               _type: 'callout';
-              kind: string;
+              label: string;
               title: string;
               text: string;
           }
@@ -541,17 +552,6 @@ export type ProjectBySlugQueryResult = {
               };
               caption?: string;
               shape: 'portrait' | 'wide';
-          }
-        | {
-              _key: string;
-              _type: 'linkButtons';
-              links: Array<{
-                  label: string;
-                  href: string;
-                  variant: 'primary' | 'secondary';
-                  _type: 'linkButton';
-                  _key: string;
-              }>;
           }
         | {
               _key: string;

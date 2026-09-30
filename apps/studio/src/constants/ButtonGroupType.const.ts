@@ -1,15 +1,18 @@
 import { defineArrayMember, defineField, defineType } from 'sanity';
 import { LaunchIcon } from '@sanity/icons/Launch';
 
-/** Buttons to other sites, such as a live demo. Each opens in a new tab and says so. */
-export const linkButtonsType = defineType({
-    name: 'linkButtons',
-    title: 'Link buttons',
+/**
+ * Renders as the site's ButtonGroup of ExternalLinkButtons: buttons to other sites, such as
+ * a live demo. Each opens in a new tab and says so.
+ */
+export const buttonGroupType = defineType({
+    name: 'buttonGroup',
+    title: 'Button group',
     type: 'object',
     icon: LaunchIcon,
     fields: [
         defineField({
-            name: 'links',
+            name: 'buttons',
             type: 'array',
             of: [
                 defineArrayMember({
@@ -48,5 +51,5 @@ export const linkButtonsType = defineType({
             validation: (rule) => rule.required().min(1),
         }),
     ],
-    preview: { select: { title: 'links.0.label', subtitle: 'links.0.href' } },
+    preview: { select: { title: 'buttons.0.label', subtitle: 'buttons.0.href' } },
 });

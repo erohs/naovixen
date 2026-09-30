@@ -12,6 +12,9 @@
 @import url('./components/interest-list/styles/interest-list.css') layer(components);
 @import url('./components/photo-placeholder/styles/photo-placeholder.css') layer(components);
 @import url('./pages/home/styles/home-page.css') layer(components);
+@import url('./pages/home/styles/experience-section.css') layer(components);
+@import url('./pages/home/styles/skills-section.css') layer(components);
+@import url('./pages/home/styles/testimonial-section.css') layer(components);
 @import url('./pages/about/styles/about-page.css') layer(components);
 @import url('./pages/blog/styles/blog-page.css') layer(components);
 @import url('./pages/blog-post/styles/blog-post-page.css') layer(components);

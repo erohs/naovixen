@@ -1,3 +1,4 @@
+import type { BodyNode } from '@naovixen/cms';
 import { render, screen } from '@testing-library/react';
 import { describe, expect, test } from 'vitest';
 
@@ -17,7 +18,7 @@ describe('Using RichContent, given a body with every supported block, when it re
         expect(screen.getByRole('heading', { level: 2, name: 'Second part' })).toBeDefined();
     });
 
-    test('then it should number numbered headings by their order', () => {
+    test('then it should pad a section heading number to two digits', () => {
         render(<RichContent body={body} />);
 
         expect(screen.getByText('02')).toBeDefined();
@@ -119,7 +120,9 @@ describe('Using RichContent, given a body with every supported block, when it re
     });
 
     test('then it should print nothing for an unknown block type', () => {
-        render(<RichContent body={[...body, { _type: 'mystery', _key: 'mystery' }]} />);
+        /** Only content saved before a block was removed can carry a type the compiler never saw. */
+        const mystery = { _type: 'mystery', _key: 'mystery' } as unknown as BodyNode;
+        render(<RichContent body={[...body, mystery]} />);
 
         expect(screen.queryByText(/mystery/)).toBeNull();
     });

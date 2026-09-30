@@ -43,10 +43,11 @@ apps/studio           Sanity Studio for posts and projects, deployed to Sanity's
 packages/nvpack       eslint, tsconfig and vitest presets
 packages/utilities    small framework-free helpers several packages use
 packages/theming      tokens, reset, base styles, fonts, the theme controller
-packages/cms          the Sanity blog and project repositories, and the types they return
+packages/cms          the Sanity blog and project repositories, and the types they return,
+                      one interface per content block
 packages/seo          head tags, JSON-LD, the sitemap and the feed, with the types they read
 packages/components   every React component, from Button to Header, plus icons and the theme toggle
-packages/rich-content renders Portable Text content blocks with our components
+packages/rich-content renders a body from cms, each block as the component it is named for
 ```
 
 Dependencies point one way, from apps down, and never sideways between siblings. Lint

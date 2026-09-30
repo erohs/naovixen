@@ -1,10 +1,6 @@
 import type { ImageUrlBuilder } from '@sanity/image-url';
 
-import type {
-    PostBySlugQueryResult,
-    PostSummariesQueryResult,
-    PostTagsQueryResult,
-} from '../generated/SanityTypes';
+import type { PostBySlugQueryResult, PostSummariesQueryResult } from '../generated/SanityTypes';
 import type { IBlogPost } from '../interfaces/IBlogPost';
 import type { IBlogPostSummary } from '../interfaces/IBlogPostSummary';
 import type { IBlogRepository } from '../interfaces/IBlogRepository';
@@ -12,8 +8,6 @@ import type { IGroqClient } from '../interfaces/IGroqClient';
 import { toBody } from '../functions/ToBody.function';
 import { postBySlugQuery } from './constants/PostBySlugQuery.const';
 import { postSummariesQuery } from './constants/PostSummariesQuery.const';
-import { postTagsQuery } from './constants/PostTagsQuery.const';
-
 import { toPostSummary } from './functions/ToPostSummary.function';
 
 export class SanityBlogRepository implements IBlogRepository {
@@ -39,9 +33,5 @@ export class SanityBlogRepository implements IBlogRepository {
         }
 
         return { ...toPostSummary(post), body: toBody(post.body, this._imageUrls) };
-    }
-
-    public listTags(): Promise<readonly string[]> {
-        return this._client.fetch<PostTagsQueryResult>(postTagsQuery, {});
     }
 }

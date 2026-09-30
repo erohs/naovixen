@@ -1,7 +1,6 @@
 import type { ComponentPropsWithRef } from 'react';
-import type { TypedObject } from '@portabletext/types';
+import type { BodyNode } from '@naovixen/cms';
 
 export interface IRichContentProps extends Omit<ComponentPropsWithRef<'div'>, 'children'> {
-    /** Portable Text blocks. A block type with no renderer is left out. */
-    readonly body: readonly TypedObject[];
+    readonly body: readonly BodyNode[];
 }

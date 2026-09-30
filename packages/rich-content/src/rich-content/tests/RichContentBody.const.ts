@@ -1,12 +1,11 @@
-import { ButtonVariant } from '@naovixen/components';
+import type { BodyNode } from '@naovixen/cms';
 
-import type { RichContentNode } from '../types/RichContentNode';
-
-export const richContentBody: readonly RichContentNode[] = [
+export const richContentBody: readonly BodyNode[] = [
     {
         _type: 'sectionHeading',
         _key: 'first-section',
         text: 'First part',
+        number: 1,
     },
     {
         _type: 'block',
@@ -179,7 +178,7 @@ export const richContentBody: readonly RichContentNode[] = [
     {
         _type: 'callout',
         _key: 'callout',
-        kind: 'tip!',
+        label: 'tip!',
         title: 'Example title',
         text: 'Tip text',
     },
@@ -198,11 +197,13 @@ export const richContentBody: readonly RichContentNode[] = [
             width: 800,
             height: 450,
         },
+        shape: 'wide',
     },
     {
         _type: 'sectionHeading',
         _key: 'second-section',
         text: 'Second part',
+        number: 2,
     },
     {
         _type: 'factList',
@@ -210,14 +211,14 @@ export const richContentBody: readonly RichContentNode[] = [
         facts: [{ label: 'my role', value: 'Lead engineer' }],
     },
     {
-        _type: 'linkButtons',
+        _type: 'buttonGroup',
         _key: 'buttons',
-        links: [
+        buttons: [
             {
                 _key: 'demo',
                 label: 'Live demo',
                 href: 'https://example.com/demo',
-                variant: ButtonVariant.Primary,
+                variant: 'primary',
             },
         ],
     },

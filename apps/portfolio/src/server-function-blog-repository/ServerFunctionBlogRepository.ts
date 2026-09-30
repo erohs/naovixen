@@ -2,7 +2,6 @@ import type { IBlogPost, IBlogPostSummary, IBlogRepository } from '@naovixen/cms
 
 import { getPostBySlugOnServer } from './constants/GetPostBySlugOnServer.const';
 import { listPostsOnServer } from './constants/ListPostsOnServer.const';
-import { listTagsOnServer } from './constants/ListTagsOnServer.const';
 
 /**
  * Reads through server functions, so the CMS is only ever called from the server: in the
@@ -15,9 +14,5 @@ export class ServerFunctionBlogRepository implements IBlogRepository {
 
     public getPostBySlug(slug: string): Promise<IBlogPost | undefined> {
         return getPostBySlugOnServer({ data: slug });
-    }
-
-    public listTags(): Promise<readonly string[]> {
-        return listTagsOnServer();
     }
 }

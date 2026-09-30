@@ -1,7 +1,4 @@
-import type {
-    PortableTextReactComponents,
-    PortableTextTypeComponentProps,
-} from '@portabletext/react';
+import type { PortableTextTypeComponentProps } from '@portabletext/react';
 import {
     ButtonGroup,
     Callout,
@@ -12,43 +9,56 @@ import {
     SectionHeading,
     Text,
 } from '@naovixen/components';
+import type {
+    IButtonGroupBlock,
+    ICalloutBlock,
+    ICodeBlock,
+    IFactListBlock,
+    IFigureBlock,
+    ISectionHeadingBlock,
+} from '@naovixen/cms';
 
-import type { ICalloutBlockValue } from '../interfaces/ICalloutBlockValue';
-import type { ICodeBlockValue } from '../interfaces/ICodeBlockValue';
-import type { IFactListBlockValue } from '../interfaces/IFactListBlockValue';
-import type { IFigureBlockValue } from '../interfaces/IFigureBlockValue';
-import type { ILinkButtonsBlockValue } from '../interfaces/ILinkButtonsBlockValue';
-import type { ISectionHeadingBlockValue } from '../interfaces/ISectionHeadingBlockValue';
+import type { RichContentTypes } from '../types/RichContentTypes';
+import { buttonVariantByName } from './ButtonVariantByName.const';
+import { figureShapeByName } from './FigureShapeByName.const';
 
-/** One renderer per custom block type. A new block is a new entry here. */
-export const richContentTypes: PortableTextReactComponents['types'] = {
-    sectionHeading: ({ value }: PortableTextTypeComponentProps<ISectionHeadingBlockValue>) => (
+/** Each of the site's blocks and the component it renders as, one to one. */
+export const richContentTypes: RichContentTypes = {
+    sectionHeading: ({ value }: PortableTextTypeComponentProps<ISectionHeadingBlock>) => (
         <SectionHeading
-            number={value.number === undefined ? undefined : String(value.number).padStart(2, '0')}
+            number={String(value.number).padStart(2, '0')}
             className="nv-rich-content__section-heading"
         >
             {value.text}
         </SectionHeading>
     ),
-    callout: ({ value }: PortableTextTypeComponentProps<ICalloutBlockValue>) => (
-        <Callout label={value.kind} title={value.title}>
+    callout: ({ value }: PortableTextTypeComponentProps<ICalloutBlock>) => (
+        <Callout label={value.label} title={value.title}>
             <Text>{value.text}</Text>
         </Callout>
     ),
-    code: ({ value }: PortableTextTypeComponentProps<ICodeBlockValue>) => (
+    code: ({ value }: PortableTextTypeComponentProps<ICodeBlock>) => (
         <CodeBlock code={value.code} language={value.language} filename={value.filename} />
     ),
-    figure: ({ value }: PortableTextTypeComponentProps<IFigureBlockValue>) => (
-        <Figure image={value.image} caption={value.caption} shape={value.shape} />
+    figure: ({ value }: PortableTextTypeComponentProps<IFigureBlock>) => (
+        <Figure
+            image={value.image}
+            caption={value.caption}
+            shape={figureShapeByName[value.shape]}
+        />
     ),
-    factList: ({ value }: PortableTextTypeComponentProps<IFactListBlockValue>) => (
+    factList: ({ value }: PortableTextTypeComponentProps<IFactListBlock>) => (
         <FactList facts={value.facts} />
     ),
-    linkButtons: ({ value }: PortableTextTypeComponentProps<ILinkButtonsBlockValue>) => (
+    buttonGroup: ({ value }: PortableTextTypeComponentProps<IButtonGroupBlock>) => (
         <ButtonGroup>
-            {value.links.map((link) => (
-                <ExternalLinkButton key={link._key} href={link.href} variant={link.variant}>
-                    {link.label}
+            {value.buttons.map((button) => (
+                <ExternalLinkButton
+                    key={button._key}
+                    href={button.href}
+                    variant={buttonVariantByName[button.variant]}
+                >
+                    {button.label}
                 </ExternalLinkButton>
             ))}
         </ButtonGroup>

@@ -1,6 +1,7 @@
 import { defineField, defineType } from 'sanity';
 import { BulbOutlineIcon } from '@sanity/icons/BulbOutline';
 
+/** Renders as the site's Callout: the fields are its props. */
 export const calloutType = defineType({
     name: 'callout',
     title: 'Callout',
@@ -8,8 +9,7 @@ export const calloutType = defineType({
     icon: BulbOutlineIcon,
     fields: [
         defineField({
-            name: 'kind',
-            title: 'Label',
+            name: 'label',
             description: 'A short handwritten label, such as "tip!".',
             type: 'string',
             validation: (rule) => rule.required().max(20),
@@ -26,5 +26,5 @@ export const calloutType = defineType({
             validation: (rule) => rule.required(),
         }),
     ],
-    preview: { select: { title: 'title', subtitle: 'kind' } },
+    preview: { select: { title: 'title', subtitle: 'label' } },
 });
