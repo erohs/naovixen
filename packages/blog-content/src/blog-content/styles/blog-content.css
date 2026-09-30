@@ -1,4 +1,4 @@
-.nx-blog-content {
+.nv-blog-content {
     display: flex;
     flex-direction: column;
     gap: var(--space-between-blocks);
@@ -9,7 +9,7 @@
     }
 
     /* A little room either side, and for the bubble's tail beneath it. */
-    & .nx-blog-content__quote {
+    & .nv-blog-content__quote {
         margin-block: var(--space-between-content);
     }
 

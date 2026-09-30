@@ -34,7 +34,7 @@ export const ThemeToggle: FunctionComponent<
     return (
         <Button
             {...buttonProps}
-            className={joinClassNames('nx-theme-toggle', className)}
+            className={joinClassNames('nv-theme-toggle', className)}
             aria-pressed={isDark}
             onClick={onClick}
         >

@@ -18,9 +18,9 @@ function specimenStyle(property: string, token: string): CSSProperties {
 const Colours: FunctionComponent = () => (
     <Example name="Colours">
         {colorTokens.map((token) => (
-            <figure key={token} className="nx-tokens-page__swatch">
+            <figure key={token} className="nv-tokens-page__swatch">
                 <span
-                    className="nx-tokens-page__colour"
+                    className="nv-tokens-page__colour"
                     style={specimenStyle('backgroundColor', token)}
                 />
                 <figcaption>
@@ -35,7 +35,7 @@ const Colours: FunctionComponent = () => (
 
 const TypeScale: FunctionComponent = () => (
     <Example name="Type scale">
-        <div className="nx-tokens-page__column">
+        <div className="nv-tokens-page__column">
             {tokensStartingWith('--font-size-').map((token) => (
                 <p key={token} style={specimenStyle('fontSize', token)}>
                     {token}
@@ -47,7 +47,7 @@ const TypeScale: FunctionComponent = () => (
 
 const FontFamilies: FunctionComponent = () => (
     <Example name="Font families">
-        <div className="nx-tokens-page__column">
+        <div className="nv-tokens-page__column">
             {tokensStartingWith('--font-family-').map((token) => (
                 <p key={token} style={specimenStyle('fontFamily', token)}>
                     {token}: the quick brown fox jumps over the lazy dog
@@ -59,11 +59,11 @@ const FontFamilies: FunctionComponent = () => (
 
 const Spacing: FunctionComponent = () => (
     <Example name="Spacing">
-        <div className="nx-tokens-page__column">
+        <div className="nv-tokens-page__column">
             {tokensStartingWith('--space-between-').map((token) => (
-                <div key={token} className="nx-tokens-page__space">
+                <div key={token} className="nv-tokens-page__space">
                     <span
-                        className="nx-tokens-page__bar"
+                        className="nv-tokens-page__bar"
                         style={specimenStyle('inlineSize', token)}
                     />
                     {token}
@@ -78,7 +78,7 @@ const Radii: FunctionComponent = () => (
         {[...tokensStartingWith('--radius-'), ...tokensStartingWith('--shadow-')].map((token) => (
             <div
                 key={token}
-                className="nx-tokens-page__box"
+                className="nv-tokens-page__box"
                 style={specimenStyle(
                     token.startsWith('--radius-') ? 'borderRadius' : 'boxShadow',
                     token,

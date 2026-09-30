@@ -11,7 +11,7 @@ export const SocialLinkList: FunctionComponent<ISocialLinkListProps> = ({
     className,
     ...listProps
 }) => (
-    <ul {...listProps} className={joinClassNames('nx-social-link-list', className)}>
+    <ul {...listProps} className={joinClassNames('nv-social-link-list', className)}>
         {links.map((link) => (
             <li key={link.url}>
                 {isEmailAddress(link.url) ? (

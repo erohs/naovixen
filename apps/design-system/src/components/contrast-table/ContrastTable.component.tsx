@@ -5,7 +5,7 @@ import { formatContrast } from './functions/FormatContrast.function';
 
 /** Every colour pair the design uses, measured in both themes against WCAG 2.2 AA. */
 export const ContrastTable: FunctionComponent = () => (
-    <table className="nx-contrast-table">
+    <table className="nv-contrast-table">
         <caption>Contrast of each colour pair</caption>
         <thead>
             <tr>

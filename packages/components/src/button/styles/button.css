@@ -1,5 +1,5 @@
 /* Also worn by LinkButton. */
-.nx-button {
+.nv-button {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -45,18 +45,18 @@
     }
 }
 
-.nx-button--primary {
+.nv-button--primary {
     background-color: var(--color-background-accent);
     color: var(--color-text-on-accent);
 }
 
 /* The mirror of the primary's corners, so a pair of buttons does not look stamped out. */
-.nx-button--secondary {
+.nv-button--secondary {
     border-radius: var(--radius-medium-alternate);
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .nx-button {
+    .nv-button {
         transition: none;
 
         &:hover,

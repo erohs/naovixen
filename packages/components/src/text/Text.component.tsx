@@ -11,6 +11,6 @@ export const Text: FunctionComponent<ITextProps> = ({
 }) => (
     <p
         {...paragraphProps}
-        className={joinClassNames('nx-text', `nx-text--${variant}`, className)}
+        className={joinClassNames('nv-text', `nv-text--${variant}`, className)}
     />
 );

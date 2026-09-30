@@ -1,5 +1,5 @@
 /* Sized in em so an icon matches the text beside it. The svg draws in currentcolor. */
-.nx-icon {
+.nv-icon {
     display: inline-flex;
     flex-shrink: 0;
     inline-size: 1.1em;
@@ -16,35 +16,35 @@
  * Parts of the sticker icons, such as the heart and paw: filled in the text colour, outlined in
  * the line colour, with a fixed cream shine whatever the theme.
  */
-.nx-icon__fill {
+.nv-icon__fill {
     fill: currentcolor;
 }
 
-.nx-icon__outline {
+.nv-icon__outline {
     fill: var(--color-border);
 }
 
-.nx-icon__outlined {
+.nv-icon__outlined {
     stroke: var(--color-border);
     stroke-width: 5;
 }
 
-.nx-icon__shine {
+.nv-icon__shine {
     fill: #fbf6ee;
     opacity: 0.85;
 }
 
 @media (forced-colors: active) {
-    .nx-icon__fill,
-    .nx-icon__shine {
+    .nv-icon__fill,
+    .nv-icon__shine {
         fill: Canvas;
     }
 
-    .nx-icon__outline {
+    .nv-icon__outline {
         fill: CanvasText;
     }
 
-    .nx-icon__outlined {
+    .nv-icon__outlined {
         stroke: CanvasText;
     }
 }

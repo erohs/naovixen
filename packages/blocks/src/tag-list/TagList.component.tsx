@@ -10,7 +10,7 @@ export const TagList: FunctionComponent<ITagListProps> = ({
     className,
     ...listProps
 }) => (
-    <ul {...listProps} aria-label={label} className={joinClassNames('nx-tag-list', className)}>
+    <ul {...listProps} aria-label={label} className={joinClassNames('nv-tag-list', className)}>
         {tags.map((tag) => (
             <li key={tag}>
                 <Tag>{tag}</Tag>

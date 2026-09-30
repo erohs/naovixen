@@ -17,7 +17,7 @@ export const BlogContent: FunctionComponent<IBlogContentProps> = ({
     const components = useMemo(() => createBlogContentComponents(linkComponent), [linkComponent]);
 
     return (
-        <div {...divProps} className={joinClassNames('nx-blog-content', className)}>
+        <div {...divProps} className={joinClassNames('nv-blog-content', className)}>
             <PortableText value={[...body]} components={components} />
         </div>
     );

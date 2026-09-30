@@ -78,7 +78,7 @@ const Links: FunctionComponent = () => (
 
 const Headings: FunctionComponent = () => (
     <Example name="Heading">
-        <div className="nx-components-page__column">
+        <div className="nv-components-page__column">
             {Object.values(HeadingSize).map((size) => (
                 <Heading key={size} level={4} size={size}>
                     Heading at size {size}
@@ -91,7 +91,7 @@ const Headings: FunctionComponent = () => (
 const Texts: FunctionComponent = () => (
     <>
         <Example name="Text">
-            <div className="nx-components-page__column">
+            <div className="nv-components-page__column">
                 {Object.values(TextVariant).map((variant) => (
                     <Text key={variant} variant={variant}>
                         Text in the {variant} variant.
@@ -116,7 +116,7 @@ const Media: FunctionComponent = () => (
         </Example>
         <Example name="Icon">
             {icons.map((icon) => (
-                <span key={icon.name} className="nx-components-page__icon">
+                <span key={icon.name} className="nv-components-page__icon">
                     <Icon source={icon.source} />
                     {icon.name}
                 </span>

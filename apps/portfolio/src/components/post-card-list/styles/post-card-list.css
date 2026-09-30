@@ -1,5 +1,5 @@
 /* As many equal columns as fit, dropping to one on narrow screens. */
-.nx-post-card-list {
+.nv-post-card-list {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(18rem, 100%), 1fr));
     gap: var(--space-between-groups);

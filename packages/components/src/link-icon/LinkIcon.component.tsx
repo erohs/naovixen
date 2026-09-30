@@ -16,9 +16,9 @@ export const LinkIcon: FunctionComponent<ILinkIconProps> = ({
 }) => (
     <Link
         {...linkProps}
-        className={joinClassNames('nx-link-icon', `nx-link-icon--${iconPosition}`, className)}
+        className={joinClassNames('nv-link-icon', `nv-link-icon--${iconPosition}`, className)}
     >
         {children}
-        <Icon source={icon} className="nx-link-icon__icon" />
+        <Icon source={icon} className="nv-link-icon__icon" />
     </Link>
 );

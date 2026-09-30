@@ -4,4 +4,4 @@ import { joinClassNames } from '@naovixen/utilities';
 export const Tag: FunctionComponent<ComponentPropsWithRef<'span'>> = ({
     className,
     ...spanProps
-}) => <span {...spanProps} className={joinClassNames('nx-tag', className)} />;
+}) => <span {...spanProps} className={joinClassNames('nv-tag', className)} />;

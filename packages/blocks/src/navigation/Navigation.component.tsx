@@ -17,7 +17,7 @@ export const Navigation: FunctionComponent<INavigationProps> = ({
     <nav
         aria-label="Main"
         {...navProps}
-        className={joinClassNames('nx-navigation', `nx-navigation--${layout}`, className)}
+        className={joinClassNames('nv-navigation', `nv-navigation--${layout}`, className)}
     >
         <NavigationList items={items} currentHref={currentHref} linkComponent={linkComponent} />
     </nav>

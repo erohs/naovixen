@@ -1,17 +1,17 @@
-.nx-section-heading {
+.nv-section-heading {
     display: flex;
     flex-direction: column;
     gap: var(--space-between-content);
     max-inline-size: var(--layout-width-prose);
 }
 
-.nx-section-heading__title {
+.nv-section-heading__title {
     display: flex;
     align-items: center;
     gap: var(--space-between-content);
 }
 
-.nx-section-heading__number {
+.nv-section-heading__number {
     flex-shrink: 0;
     padding: var(--space-padding-chip);
     border: var(--border-width-standout) solid var(--color-border);
@@ -23,7 +23,7 @@
     rotate: -4deg;
 }
 
-.nx-section-heading__intro {
+.nv-section-heading__intro {
     max-inline-size: 52ch;
     color: var(--color-text-secondary);
 }

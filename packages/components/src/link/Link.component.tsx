@@ -8,7 +8,7 @@ import type { LinkProps } from './types/LinkProps';
  * TanStack Router's `createLink(Link)` gives a typed router link with this look.
  */
 export const Link: FunctionComponent<LinkProps> = ({ className, children, ...anchorProps }) => (
-    <a {...anchorProps} className={joinClassNames('nx-link', className)}>
+    <a {...anchorProps} className={joinClassNames('nv-link', className)}>
         {children}
     </a>
 );

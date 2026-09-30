@@ -1,6 +1,6 @@
-/** `nx-block__element--modifier`, with every part kebab-case and both parts optional. */
+/** `nv-block__element--modifier`, with every part kebab-case and both parts optional. */
 const bemClassPattern =
-    '^nx-[a-z0-9]+(-[a-z0-9]+)*(__[a-z0-9]+(-[a-z0-9]+)*)?(--[a-z0-9]+(-[a-z0-9]+)*)?$';
+    '^nv-[a-z0-9]+(-[a-z0-9]+)*(__[a-z0-9]+(-[a-z0-9]+)*)?(--[a-z0-9]+(-[a-z0-9]+)*)?$';
 
 /** The token categories from `.claude/rules/styles.md`. */
 const tokenCategories = [
@@ -35,7 +35,7 @@ export default {
             bemClassPattern,
             {
                 message: (selector) =>
-                    `Expected "${selector}" to be nx- prefixed BEM, for example .nx-project-card__title--featured`,
+                    `Expected "${selector}" to be nv- prefixed BEM, for example .nv-project-card__title--featured`,
             },
         ],
 

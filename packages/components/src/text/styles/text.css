@@ -1,17 +1,17 @@
-.nx-text--lead {
+.nv-text--lead {
     font-size: var(--font-size-lead);
 }
 
-.nx-text--body {
+.nv-text--body {
     font-size: var(--font-size-body);
 }
 
-.nx-text--small {
+.nv-text--small {
     color: var(--color-text-secondary);
     font-size: var(--font-size-small);
 }
 
-.nx-text--meta {
+.nv-text--meta {
     color: var(--color-text-secondary);
     font-family: var(--font-family-code);
     font-size: var(--font-size-meta);

@@ -2,7 +2,7 @@
  * Sits in the margin just beyond the page's right edge, as in the design; where that margin is
  * too narrow, it keeps a small gap from the window's edge instead.
  */
-.nx-back-to-top {
+.nv-back-to-top {
     --back-to-top-page-margin: calc(
         (100vw - var(--layout-width-page)) / 2 - var(--space-padding-page)
     );
@@ -58,7 +58,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .nx-back-to-top {
+    .nv-back-to-top {
         &:hover,
         &:active {
             translate: none;

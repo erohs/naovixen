@@ -1,8 +1,8 @@
 /*
- * Worn with .nx-button, which gives it the border and the press. A small round control, so it
+ * Worn with .nv-button, which gives it the border and the press. A small round control, so it
  * rests on the small shadow and lifts only as far as a button's resting one.
  */
-.nx-theme-toggle {
+.nv-theme-toggle {
     inline-size: var(--size-action-minimum);
     block-size: var(--size-action-minimum);
     padding: 0;
@@ -25,7 +25,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .nx-theme-toggle {
+    .nv-theme-toggle {
         &:hover,
         &:active {
             translate: none;
@@ -45,11 +45,11 @@
     }
 
     ::view-transition-new(root) {
-        animation: nx-theme-toggle-reveal var(--duration-slow) var(--easing-emphasized);
+        animation: nv-theme-toggle-reveal var(--duration-slow) var(--easing-emphasized);
     }
 }
 
-@keyframes nx-theme-toggle-reveal {
+@keyframes nv-theme-toggle-reveal {
     from {
         clip-path: circle(0 at var(--theme-toggle-reveal-x) var(--theme-toggle-reveal-y));
     }

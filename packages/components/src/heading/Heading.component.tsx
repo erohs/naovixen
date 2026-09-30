@@ -17,7 +17,7 @@ export const Heading: FunctionComponent<IHeadingProps> = ({
     return (
         <HeadingElement
             {...headingProps}
-            className={joinClassNames('nx-heading', `nx-heading--${size}`, className)}
+            className={joinClassNames('nv-heading', `nv-heading--${size}`, className)}
         >
             {children}
         </HeadingElement>

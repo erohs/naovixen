@@ -152,11 +152,11 @@ const SiteFrame: FunctionComponent = () => (
                 items={exampleNavigationItems}
                 currentHref="/"
                 actions={<Button>Action</Button>}
-                className="nx-blocks-page__wide"
+                className="nv-blocks-page__wide"
             />
         </Example>
         <Example name="Footer and FooterColumn">
-            <Footer smallPrint={<p>© 2026 Example Name</p>} className="nx-blocks-page__wide">
+            <Footer smallPrint={<p>© 2026 Example Name</p>} className="nv-blocks-page__wide">
                 <Logo />
                 <FooterColumn heading="site">
                     <NavigationList items={exampleNavigationItems} currentHref="/" />

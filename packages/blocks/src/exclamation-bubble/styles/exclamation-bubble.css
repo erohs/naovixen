@@ -1,11 +1,11 @@
-.nx-exclamation-bubble {
+.nv-exclamation-bubble {
     display: flex;
     align-items: end;
     gap: 14px;
 }
 
 /* Level with the middle of the bubble rather than its tail. Drawn to the design, so the sizes are its own. */
-.nx-exclamation-bubble__lines {
+.nv-exclamation-bubble__lines {
     inline-size: 24px;
     block-size: 19.5px;
     margin-block-end: 22px;

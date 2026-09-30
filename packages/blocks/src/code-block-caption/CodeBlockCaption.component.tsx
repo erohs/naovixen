@@ -8,12 +8,12 @@ export const CodeBlockCaption: FunctionComponent<ICodeBlockCaptionProps> = ({
     language,
     filename,
 }) => (
-    <figcaption id={id} className="nx-code-block__caption">
+    <figcaption id={id} className="nv-code-block__caption">
         {filename && (
             <>
-                <span className="nx-code-block__filename">{filename}</span>{' '}
+                <span className="nv-code-block__filename">{filename}</span>{' '}
             </>
         )}
-        <span className="nx-code-block__language">{language}</span>
+        <span className="nv-code-block__language">{language}</span>
     </figcaption>
 );

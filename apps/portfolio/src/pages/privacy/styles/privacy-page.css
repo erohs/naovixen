@@ -1,4 +1,4 @@
-.nx-privacy-page {
+.nv-privacy-page {
     display: flex;
     flex-direction: column;
     gap: var(--space-between-blocks);
@@ -7,6 +7,6 @@
 }
 
 /* Each topic starts a little further from the one before. */
-.nx-privacy-page__heading {
+.nv-privacy-page__heading {
     margin-block-start: var(--space-between-blocks);
 }

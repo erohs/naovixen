@@ -3,7 +3,7 @@
  * scale's. The tail is a square turned a little less than 45 degrees and skewed, so where it
  * crosses the bubble's edge the join looks drawn by hand; its fill hides the edge behind it.
  */
-.nx-speech-bubble {
+.nv-speech-bubble {
     position: relative;
     inline-size: fit-content;
     padding: 12px 22px 14px;
@@ -16,8 +16,8 @@
     rotate: -2deg;
 }
 
-.nx-speech-bubble--tail-bottom::after,
-.nx-speech-bubble--tail-top::after {
+.nv-speech-bubble--tail-bottom::after,
+.nv-speech-bubble--tail-top::after {
     content: '';
     position: absolute;
     inset-inline-start: 30px;
@@ -28,13 +28,13 @@
     transform: rotate(38deg) skew(6deg);
 }
 
-.nx-speech-bubble--tail-bottom::after {
+.nv-speech-bubble--tail-bottom::after {
     inset-block-end: -10px;
     border-block-end-width: 2px;
     border-inline-end-width: 2px;
 }
 
-.nx-speech-bubble--tail-top::after {
+.nv-speech-bubble--tail-top::after {
     inset-block-start: -10px;
     border-block-start-width: 2px;
     border-inline-start-width: 2px;

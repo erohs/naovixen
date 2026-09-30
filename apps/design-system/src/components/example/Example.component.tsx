@@ -8,11 +8,11 @@ export const Example: FunctionComponent<IExampleProps> = ({ name, children }) =>
     const headingId = useId();
 
     return (
-        <section aria-labelledby={headingId} className="nx-example">
-            <Heading level={3} id={headingId} className="nx-example__name">
+        <section aria-labelledby={headingId} className="nv-example">
+            <Heading level={3} id={headingId} className="nv-example__name">
                 {name}
             </Heading>
-            <div className="nx-example__stage">{children}</div>
+            <div className="nv-example__stage">{children}</div>
         </section>
     );
 };

@@ -2,15 +2,15 @@
  * The wrapper is layout-neutral, so the button sits in the header's row and the open panel
  * wraps onto a full-width line beneath it.
  */
-.nx-mobile-menu {
+.nv-mobile-menu {
     display: contents;
 }
 
-.nx-mobile-menu__panel {
+.nv-mobile-menu__panel {
     flex-basis: 100%;
 }
 
 /* Narrower than other buttons, so the header's row still fits on a small phone. */
-.nx-mobile-menu__button {
+.nv-mobile-menu__button {
     padding-inline: var(--space-between-content);
 }

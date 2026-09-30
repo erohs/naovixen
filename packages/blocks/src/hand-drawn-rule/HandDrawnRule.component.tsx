@@ -12,7 +12,7 @@ export const HandDrawnRule: FunctionComponent<Omit<ComponentPropsWithRef<'svg'>,
         viewBox="0 0 240 12"
         preserveAspectRatio="none"
         {...svgProps}
-        className={joinClassNames('nx-hand-drawn-rule', className)}
+        className={joinClassNames('nv-hand-drawn-rule', className)}
         aria-hidden="true"
         focusable="false"
     >

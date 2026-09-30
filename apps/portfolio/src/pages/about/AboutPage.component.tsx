@@ -23,8 +23,8 @@ import { placeholderPhotoDescription } from '../../constants/PlaceholderPhotoDes
 import { placeholderAboutPage } from './constants/PlaceholderAboutPage.const';
 
 const AboutIntroduction: FunctionComponent = () => (
-    <div className="nx-about-introduction">
-        <div className="nx-about-introduction__text">
+    <div className="nv-about-introduction">
+        <div className="nv-about-introduction__text">
             <GreetingHeading
                 greeting={<SpeechBubble>{placeholderAboutPage.greeting}</SpeechBubble>}
             >
@@ -37,29 +37,29 @@ const AboutIntroduction: FunctionComponent = () => (
         </div>
         <PhotoPlaceholder
             description={placeholderPhotoDescription}
-            className="nx-about-introduction__photo"
+            className="nv-about-introduction__photo"
         />
     </div>
 );
 
 const PrincipleList: FunctionComponent = () => (
-    <dl className="nx-principle-list">
+    <dl className="nv-principle-list">
         {placeholderAboutPage.principles.map((principle) => (
-            <div key={principle.title} className="nx-principle-list__item">
-                <dt className="nx-principle-list__title">{principle.title}</dt>
-                <dd className="nx-principle-list__description">{principle.description}</dd>
+            <div key={principle.title} className="nv-principle-list__item">
+                <dt className="nv-principle-list__title">{principle.title}</dt>
+                <dd className="nv-principle-list__description">{principle.description}</dd>
             </div>
         ))}
     </dl>
 );
 
 const AboutDetails: FunctionComponent = () => (
-    <div className="nx-about-details">
-        <section aria-labelledby="how-i-work-title" className="nx-about-details__section">
+    <div className="nv-about-details">
+        <section aria-labelledby="how-i-work-title" className="nv-about-details__section">
             <SectionHeading headingId="how-i-work-title">How I work</SectionHeading>
             <PrincipleList />
         </section>
-        <section aria-labelledby="interests-title" className="nx-about-details__section">
+        <section aria-labelledby="interests-title" className="nv-about-details__section">
             <SectionHeading headingId="interests-title">Away from the keyboard</SectionHeading>
             <InterestList interests={placeholderInterests} />
         </section>
@@ -67,7 +67,7 @@ const AboutDetails: FunctionComponent = () => (
 );
 
 const AboutActions: FunctionComponent = () => (
-    <div className="nx-about-actions">
+    <div className="nv-about-actions">
         <LinkButton href={placeholderCvPath} download variant={ButtonVariant.Primary}>
             Download CV <Icon source={downloadIcon} />
         </LinkButton>
@@ -80,9 +80,9 @@ const AboutActions: FunctionComponent = () => (
 export const AboutPage: FunctionComponent = () => (
     <Page>
         <Breadcrumb trail={homeBreadcrumbTrail} currentLabel="About" linkComponent={RoutedLink} />
-        <div className="nx-about-page__content">
+        <div className="nv-about-page__content">
             <AboutIntroduction />
-            <HandDrawnRule className="nx-about-page__rule" />
+            <HandDrawnRule className="nv-about-page__rule" />
             <AboutDetails />
             <AboutActions />
         </div>

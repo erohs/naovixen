@@ -1,11 +1,11 @@
-.nx-code-block {
+.nv-code-block {
     overflow: hidden;
     border: var(--border-width-standout) solid var(--color-border);
     border-radius: var(--radius-small);
     background-color: var(--color-background-surface);
 }
 
-.nx-code-block__caption {
+.nv-code-block__caption {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -17,12 +17,12 @@
     font-size: var(--font-size-meta);
 }
 
-.nx-code-block__language {
+.nv-code-block__language {
     margin-inline-start: auto;
     color: var(--color-text-secondary);
 }
 
-.nx-code-block__code {
+.nv-code-block__code {
     padding: var(--space-padding-container);
     line-height: var(--line-height-body);
     overflow-x: auto;

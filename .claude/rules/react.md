@@ -20,7 +20,7 @@ export const Button: FunctionComponent<IButtonProps> = ({
     <button
         {...buttonProps}
         type={type}
-        className={joinClassNames('nx-button', `nx-button--${variant}`, className)}
+        className={joinClassNames('nv-button', `nv-button--${variant}`, className)}
     >
         {children}
     </button>

@@ -19,15 +19,15 @@ export const Header: FunctionComponent<IHeaderProps> = ({
     const LinkComponent = navigationProps.linkComponent ?? Link;
 
     return (
-        <header className={joinClassNames('nx-header', className)}>
-            <LinkComponent href="/" className="nx-header__home">
+        <header className={joinClassNames('nv-header', className)}>
+            <LinkComponent href="/" className="nv-header__home">
                 <Logo />
             </LinkComponent>
-            <div className="nx-header__navigation">
+            <div className="nv-header__navigation">
                 <Navigation {...navigationProps} />
             </div>
             {actions}
-            <div className="nx-header__menu">
+            <div className="nv-header__menu">
                 <MobileMenu {...navigationProps} />
             </div>
         </header>

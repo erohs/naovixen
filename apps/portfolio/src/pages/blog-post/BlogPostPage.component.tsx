@@ -20,20 +20,20 @@ import type { IBlogPostPageData } from '../../interfaces/IBlogPostPageData';
 import { blogBreadcrumbTrail } from './constants/BlogBreadcrumbTrail.const';
 
 const PostHeader: FunctionComponent<{ readonly post: IBlogPostSummary }> = ({ post }) => (
-    <header className="nx-blog-post-page__header">
+    <header className="nv-blog-post-page__header">
         <Heading level={1} size={HeadingSize.Title} id="post-title">
             {post.title}
         </Heading>
-        <Text variant={TextVariant.Lead} className="nx-blog-post-page__excerpt">
+        <Text variant={TextVariant.Lead} className="nv-blog-post-page__excerpt">
             {post.excerpt}
         </Text>
-        <PostDetails post={post} className="nx-blog-post-page__details" />
+        <PostDetails post={post} className="nv-blog-post-page__details" />
     </header>
 );
 
 /** The oldest post has no next read, so it links back to the list alone. */
 const MorePosts: FunctionComponent<Pick<IBlogPostPageData, 'olderPost'>> = ({ olderPost }) => (
-    <nav aria-label="More posts" className="nx-blog-post-page__more">
+    <nav aria-label="More posts" className="nv-blog-post-page__more">
         <RouterLinkIcon to="/blog" icon={arrowLeftIcon} iconPosition={IconPosition.Start}>
             All posts
         </RouterLinkIcon>
@@ -42,7 +42,7 @@ const MorePosts: FunctionComponent<Pick<IBlogPostPageData, 'olderPost'>> = ({ ol
                 to="/blog/$slug"
                 params={{ slug: olderPost.slug }}
                 icon={arrowRightIcon}
-                className="nx-blog-post-page__next"
+                className="nv-blog-post-page__next"
             >
                 Next: {olderPost.title}
             </RouterLinkIcon>
@@ -58,10 +58,10 @@ export const BlogPostPage: FunctionComponent<IBlogPostPageData> = ({ post, older
                 currentLabel={post.title}
                 linkComponent={RoutedLink}
             />
-            <div className="nx-blog-post-page__body">
+            <div className="nv-blog-post-page__body">
                 <PostHeader post={post} />
                 <BlogContent body={post.body} linkComponent={RoutedLink} />
-                <HandDrawnRule className="nx-blog-post-page__rule" />
+                <HandDrawnRule className="nv-blog-post-page__rule" />
                 <MorePosts olderPost={olderPost} />
             </div>
         </article>

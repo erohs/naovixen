@@ -5,4 +5,4 @@ import { joinClassNames } from '@naovixen/utilities';
 export const Code: FunctionComponent<ComponentPropsWithRef<'code'>> = ({
     className,
     ...codeProps
-}) => <code {...codeProps} className={joinClassNames('nx-code', className)} />;
+}) => <code {...codeProps} className={joinClassNames('nv-code', className)} />;

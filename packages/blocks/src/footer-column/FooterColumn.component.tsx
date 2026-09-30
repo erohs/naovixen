@@ -16,14 +16,14 @@ export const FooterColumn: FunctionComponent<IFooterColumnProps> = ({
     return (
         <nav
             {...navProps}
-            className={joinClassNames('nx-footer-column', className)}
+            className={joinClassNames('nv-footer-column', className)}
             aria-labelledby={headingId}
         >
             <Heading
                 level={2}
                 size={HeadingSize.H3}
                 id={headingId}
-                className="nx-footer-column__heading"
+                className="nv-footer-column__heading"
             >
                 {heading}
             </Heading>

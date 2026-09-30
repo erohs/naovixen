@@ -16,11 +16,11 @@ const PrivacyNotice: FunctionComponent = () => (
             Last updated <time dateTime={copy.lastUpdated}>{formatDate(copy.lastUpdated)}</time>
         </Text>
         <Text variant={TextVariant.Lead}>{copy.intro}</Text>
-        <Heading level={2} size={HeadingSize.H3} className="nx-privacy-page__heading">
+        <Heading level={2} size={HeadingSize.H3} className="nv-privacy-page__heading">
             Cookies and analytics
         </Heading>
         <Text>{copy.cookies}</Text>
-        <Heading level={2} size={HeadingSize.H3} className="nx-privacy-page__heading">
+        <Heading level={2} size={HeadingSize.H3} className="nv-privacy-page__heading">
             Your rights
         </Heading>
         <Text>
@@ -39,7 +39,7 @@ export const PrivacyPage: FunctionComponent = () => (
                 currentLabel="Privacy notice"
                 linkComponent={RoutedLink}
             />
-            <div className="nx-privacy-page">
+            <div className="nv-privacy-page">
                 <Heading level={1} size={HeadingSize.Title} id="privacy-title">
                     Privacy notice
                 </Heading>

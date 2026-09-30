@@ -10,15 +10,15 @@ Global stylesheets. No Tailwind, no CSS-in-JS, no CSS Modules.
 
 ## Names
 
-Classes are `nx-` prefixed BEM, enforced by Stylelint. One block per file, named after the
+Classes are `nv-` prefixed BEM, enforced by Stylelint. One block per file, named after the
 block.
 
 ```css
-.nx-card {
+.nv-card {
 }
-.nx-card__title {
+.nv-card__title {
 }
-.nx-card--featured {
+.nv-card--featured {
 }
 ```
 
@@ -65,9 +65,9 @@ on the theme, and nothing outside the token files selects on `[data-theme]`.
 Style ARIA and `data-*` attributes, not state classes:
 
 ```css
-.nx-tab[aria-selected='true'] {
+.nv-tab[aria-selected='true'] {
 }
-.nx-disclosure[data-state='open'] {
+.nv-disclosure[data-state='open'] {
 }
 ```
 

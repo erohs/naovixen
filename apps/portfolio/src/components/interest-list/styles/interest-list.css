@@ -1,4 +1,4 @@
-.nx-interest-list {
+.nv-interest-list {
     display: flex;
     flex-direction: column;
     gap: var(--space-between-text);

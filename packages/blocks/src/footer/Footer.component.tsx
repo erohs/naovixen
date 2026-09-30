@@ -10,8 +10,8 @@ export const Footer: FunctionComponent<IFooterProps> = ({
     children,
     ...footerProps
 }) => (
-    <footer {...footerProps} className={joinClassNames('nx-footer', className)}>
-        <div className="nx-footer__columns">{children}</div>
-        <div className="nx-footer__small-print">{smallPrint}</div>
+    <footer {...footerProps} className={joinClassNames('nv-footer', className)}>
+        <div className="nv-footer__columns">{children}</div>
+        <div className="nv-footer__small-print">{smallPrint}</div>
     </footer>
 );

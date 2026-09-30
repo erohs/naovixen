@@ -14,15 +14,15 @@ export const Breadcrumb: FunctionComponent<IBreadcrumbProps> = ({
 
     return (
         <nav aria-label="Breadcrumb" {...navigationProps}>
-            <ol className="nx-breadcrumb">
+            <ol className="nv-breadcrumb">
                 {trail.map((item) => (
-                    <li key={item.href} className="nx-breadcrumb__item">
-                        <LinkComponent href={item.href} className="nx-breadcrumb__link">
+                    <li key={item.href} className="nv-breadcrumb__item">
+                        <LinkComponent href={item.href} className="nv-breadcrumb__link">
                             {item.label}
                         </LinkComponent>
                     </li>
                 ))}
-                <li className="nx-breadcrumb__item" aria-current="page">
+                <li className="nv-breadcrumb__item" aria-current="page">
                     {currentLabel}
                 </li>
             </ol>

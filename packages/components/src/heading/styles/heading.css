@@ -1,36 +1,36 @@
-.nx-heading--display {
+.nv-heading--display {
     font-size: var(--font-size-display);
 }
 
-.nx-heading--h1 {
+.nv-heading--h1 {
     font-size: var(--font-size-h1);
 }
 
-.nx-heading--title {
+.nv-heading--title {
     font-size: var(--font-size-title);
 }
 
-.nx-heading--h2 {
+.nv-heading--h2 {
     font-size: var(--font-size-h2);
 }
 
-.nx-heading--h3 {
+.nv-heading--h3 {
     font-size: var(--font-size-h3);
 }
 
-.nx-heading--h4 {
+.nv-heading--h4 {
     font-size: var(--font-size-h4);
 }
 
 /* Line height follows the size, not the element, so an h3 styled large stays tight. */
-.nx-heading--display,
-.nx-heading--h1,
-.nx-heading--title,
-.nx-heading--h2 {
+.nv-heading--display,
+.nv-heading--h1,
+.nv-heading--title,
+.nv-heading--h2 {
     line-height: var(--line-height-heading);
 }
 
-.nx-heading--h3,
-.nx-heading--h4 {
+.nv-heading--h3,
+.nv-heading--h4 {
     line-height: var(--line-height-subheading);
 }

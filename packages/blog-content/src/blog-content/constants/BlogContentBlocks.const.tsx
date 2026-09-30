@@ -19,7 +19,7 @@ export const blogContentBlocks: Readonly<Record<string, PortableTextBlockCompone
         </Heading>
     ),
     blockquote: ({ children }) => (
-        <blockquote className="nx-blog-content__quote">
+        <blockquote className="nv-blog-content__quote">
             <SpeechBubble>{children}</SpeechBubble>
         </blockquote>
     ),

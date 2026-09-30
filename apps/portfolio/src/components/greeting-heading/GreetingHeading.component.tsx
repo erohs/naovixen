@@ -8,7 +8,7 @@ export const GreetingHeading: FunctionComponent<IGreetingHeadingProps> = ({
     greeting,
     children,
 }) => (
-    <div className="nx-greeting-heading">
+    <div className="nv-greeting-heading">
         {greeting}
         <Heading level={1}>{children}</Heading>
     </div>

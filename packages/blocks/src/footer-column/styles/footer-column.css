@@ -1,4 +1,4 @@
-.nx-footer-column {
+.nv-footer-column {
     --navigation-list-gap: var(--space-between-content);
 
     display: flex;
@@ -7,7 +7,7 @@
     font-size: var(--font-size-small);
 }
 
-.nx-footer-column__heading {
+.nv-footer-column__heading {
     color: var(--color-text-accent);
     font-family: var(--font-family-handwriting);
     font-size: var(--font-size-lead);

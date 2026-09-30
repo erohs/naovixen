@@ -12,9 +12,9 @@ import type { IBlogPageProps } from './interfaces/IBlogPageProps';
 export const BlogPage: FunctionComponent<IBlogPageProps> = ({ posts }) => (
     <Page>
         <Breadcrumb trail={homeBreadcrumbTrail} currentLabel="Blog" linkComponent={RoutedLink} />
-        <header className="nx-blog-page__header">
+        <header className="nv-blog-page__header">
             <Heading level={1}>Blog</Heading>
-            <Text className="nx-blog-page__intro">{placeholderBlogIntro}</Text>
+            <Text className="nv-blog-page__intro">{placeholderBlogIntro}</Text>
         </header>
         {posts.length === 0 ? (
             <Text>There are no posts yet.</Text>

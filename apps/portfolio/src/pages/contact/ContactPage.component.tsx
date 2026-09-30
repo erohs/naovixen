@@ -34,7 +34,7 @@ const CvTile: FunctionComponent = () => (
 
 /** Profiles on other sites open in a new tab; the CV downloads. */
 const ContactLinks: FunctionComponent = () => (
-    <ul className="nx-contact-page__links">
+    <ul className="nv-contact-page__links">
         {placeholderContactLinks.map((contactLink) => (
             <li key={contactLink.url}>
                 <LinkTile
@@ -56,17 +56,17 @@ const ContactLinks: FunctionComponent = () => (
 export const ContactPage: FunctionComponent = () => (
     <Page>
         <Breadcrumb trail={homeBreadcrumbTrail} currentLabel="Contact" linkComponent={RoutedLink} />
-        <div className="nx-contact-page">
+        <div className="nv-contact-page">
             <GreetingHeading
                 greeting={<ExclamationBubble>{placeholderContactPage.greeting}</ExclamationBubble>}
             >
                 Let's talk
             </GreetingHeading>
-            <Text className="nx-contact-page__body">{placeholderContactPage.body}</Text>
+            <Text className="nv-contact-page__body">{placeholderContactPage.body}</Text>
             <LinkButton href={`mailto:${placeholderEmailAddress}`} variant={ButtonVariant.Primary}>
                 {placeholderEmailAddress} <Icon source={mailIcon} />
             </LinkButton>
-            <Heading level={2} className="nx-contact-page__elsewhere">
+            <Heading level={2} className="nv-contact-page__elsewhere">
                 or find me here
             </Heading>
             <ContactLinks />

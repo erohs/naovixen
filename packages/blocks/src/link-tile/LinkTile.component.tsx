@@ -17,15 +17,15 @@ export const LinkTile: FunctionComponent<ILinkTileProps> = ({
     const LinkComponent = linkComponent;
 
     return (
-        <LinkComponent {...linkProps} className={joinClassNames('nx-link-tile', className)}>
-            <span className="nx-link-tile__disc">
+        <LinkComponent {...linkProps} className={joinClassNames('nv-link-tile', className)}>
+            <span className="nv-link-tile__disc">
                 <Icon source={icon} />
             </span>
-            <span className="nx-link-tile__text">
-                <span className="nx-link-tile__label">{label}</span>{' '}
-                <span className="nx-link-tile__detail">{detail}</span>
+            <span className="nv-link-tile__text">
+                <span className="nv-link-tile__label">{label}</span>{' '}
+                <span className="nv-link-tile__detail">{detail}</span>
             </span>
-            <Icon source={trailingIcon} className="nx-link-tile__trailing" />
+            <Icon source={trailingIcon} className="nv-link-tile__trailing" />
         </LinkComponent>
     );
 };

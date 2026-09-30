@@ -1,5 +1,5 @@
 /* Written out to the design's measurements, like the cards it mostly sits in. */
-.nx-tag {
+.nv-tag {
     display: inline-block;
     padding: 7px 10px;
     border: var(--border-width-default) solid var(--color-border);

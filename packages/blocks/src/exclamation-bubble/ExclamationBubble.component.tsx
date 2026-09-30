@@ -6,8 +6,8 @@ import type { IExclamationBubbleProps } from './interfaces/IExclamationBubblePro
 
 /** A speech bubble with motion lines beside it, for a greeting said with some energy. */
 export const ExclamationBubble: FunctionComponent<IExclamationBubbleProps> = ({ children }) => (
-    <div className="nx-exclamation-bubble">
+    <div className="nv-exclamation-bubble">
         <SpeechBubble>{children}</SpeechBubble>
-        <Icon source={motionLinesIcon} className="nx-exclamation-bubble__lines" />
+        <Icon source={motionLinesIcon} className="nv-exclamation-bubble__lines" />
     </div>
 );

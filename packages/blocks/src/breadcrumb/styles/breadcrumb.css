@@ -1,4 +1,4 @@
-.nx-breadcrumb {
+.nv-breadcrumb {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
@@ -8,7 +8,7 @@
     list-style: none;
 }
 
-.nx-breadcrumb__item {
+.nv-breadcrumb__item {
     display: flex;
     align-items: center;
     gap: var(--space-between-text);
@@ -28,6 +28,6 @@
 }
 
 /* Taller than its text, so the link is easy to hit. */
-.nx-breadcrumb__link {
+.nv-breadcrumb__link {
     padding-block: var(--space-between-text);
 }

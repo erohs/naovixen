@@ -13,7 +13,7 @@ import { RouterLinkButton } from '../../components/router-link-button/RouterLink
 
 export const NotFoundPage: FunctionComponent = () => (
     <Page>
-        <div className="nx-not-found-page">
+        <div className="nv-not-found-page">
             <Heading level={1}>Page not found</Heading>
             <Text variant={TextVariant.Lead}>
                 There is nothing at this address. The page may have moved, or the link may have a

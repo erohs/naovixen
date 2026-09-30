@@ -1,10 +1,10 @@
-.nx-components-page__column {
+.nv-components-page__column {
     display: flex;
     flex-direction: column;
     gap: var(--space-between-text);
 }
 
-.nx-components-page__icon {
+.nv-components-page__icon {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -14,7 +14,7 @@
     font-size: var(--font-size-meta);
     text-align: center;
 
-    & .nx-icon {
+    & .nv-icon {
         font-size: var(--font-size-h3);
     }
 }

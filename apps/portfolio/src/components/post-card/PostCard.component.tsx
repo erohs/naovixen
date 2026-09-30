@@ -18,14 +18,14 @@ export const PostCard: FunctionComponent<IPostCardProps> = ({
     const LinkComponent = linkComponent;
 
     return (
-        <Card {...cardProps} className={joinClassNames('nx-post-card', className)}>
+        <Card {...cardProps} className={joinClassNames('nv-post-card', className)}>
             <Heading level={headingLevel} size={HeadingSize.H4}>
-                <LinkComponent href={href} className="nx-post-card__link">
+                <LinkComponent href={href} className="nv-post-card__link">
                     {post.title}
                 </LinkComponent>
             </Heading>
-            <Text className="nx-post-card__excerpt">{post.excerpt}</Text>
-            <PostDetails post={post} className="nx-post-card__details" />
+            <Text className="nv-post-card__excerpt">{post.excerpt}</Text>
+            <PostDetails post={post} className="nv-post-card__details" />
         </Card>
     );
 };

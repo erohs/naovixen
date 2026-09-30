@@ -16,7 +16,7 @@ export const SiteFrame: FunctionComponent<ISiteFrameProps> = ({ year, children }
     useDocumentTheme();
 
     return (
-        <div className="nx-site-frame">
+        <div className="nv-site-frame">
             <SkipLink href="#main">Skip to content</SkipLink>
             <Header
                 items={navigationItems}
@@ -24,7 +24,7 @@ export const SiteFrame: FunctionComponent<ISiteFrameProps> = ({ year, children }
                 linkComponent={RoutedLink}
                 actions={<ThemeToggle />}
             />
-            <main id="main" tabIndex={-1} className="nx-site-frame__main">
+            <main id="main" tabIndex={-1} className="nv-site-frame__main">
                 {children}
             </main>
             <SiteFooter currentPath={currentPath} year={year} />

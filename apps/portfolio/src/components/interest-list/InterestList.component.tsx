@@ -8,7 +8,7 @@ export const InterestList: FunctionComponent<IInterestListProps> = ({
     className,
     ...listProps
 }) => (
-    <ul {...listProps} className={joinClassNames('nx-interest-list', className)}>
+    <ul {...listProps} className={joinClassNames('nv-interest-list', className)}>
         {interests.map((interest) => (
             <li key={interest}>{interest}</li>
         ))}

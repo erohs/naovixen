@@ -1,4 +1,4 @@
-.nx-home-section {
+.nv-home-section {
     display: flex;
     flex-direction: column;
     gap: var(--space-below-heading);
@@ -7,7 +7,7 @@
 }
 
 /* The link beside the heading sits on the intro's last line. */
-.nx-home-section__header {
+.nv-home-section__header {
     display: flex;
     flex-wrap: wrap;
     align-items: end;
@@ -20,7 +20,7 @@
  * little above and right of centre. It sits behind the text, placed against the hero's own box,
  * so the hero keeps the page width itself rather than padding out to it.
  */
-.nx-hero-section {
+.nv-hero-section {
     position: relative;
     inline-size: 100%;
     max-inline-size: calc(var(--layout-width-page) + 2 * var(--space-padding-page));
@@ -57,12 +57,12 @@
 }
 
 /* Keeps the paw on the same line as the name it sits on. */
-.nx-hero-section__surname {
+.nv-hero-section__surname {
     white-space: nowrap;
 }
 
 /* A brush stroke under the surname, drawn behind the letters. */
-.nx-hero-section__highlight {
+.nv-hero-section__highlight {
     position: relative;
     z-index: 0;
     display: inline-block;
@@ -81,7 +81,7 @@
 }
 
 /* Sized and set off as the design does, in proportion to the heading. */
-.nx-hero-section__paw {
+.nv-hero-section__paw {
     display: inline-block;
     inline-size: calc(var(--font-size-display) * 0.3);
     block-size: calc(var(--font-size-display) * 0.3);
@@ -92,7 +92,7 @@
     rotate: 18deg;
 }
 
-.nx-hero-section__summary {
+.nv-hero-section__summary {
     max-inline-size: 34ch;
     font-size: calc(var(--font-size-lead) * 12 / 11);
     line-height: 1.5;
@@ -100,17 +100,17 @@
 }
 
 @media (forced-colors: active) {
-    .nx-hero-section::before {
+    .nv-hero-section::before {
         display: none;
     }
 
-    .nx-hero-section__highlight::after {
+    .nv-hero-section__highlight::after {
         background-color: CanvasText;
     }
 }
 
 /* A little further from the summary than the hero's other gaps. */
-.nx-hero-actions {
+.nv-hero-actions {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
@@ -118,57 +118,57 @@
     margin-block-start: var(--space-between-text);
 }
 
-.nx-hero-actions__file-type {
+.nv-hero-actions__file-type {
     font-family: var(--font-family-code);
     font-size: var(--font-size-meta);
     font-weight: var(--font-weight-regular);
 }
 
-.nx-about-summary {
+.nv-about-summary {
     display: flex;
     flex-direction: column;
     gap: var(--space-between-content);
     max-inline-size: 60ch;
 }
 
-.nx-about-summary__heading {
+.nv-about-summary__heading {
     margin-block-end: var(--space-between-text);
 }
 
-.nx-about-summary__body {
+.nv-about-summary__body {
     color: var(--color-text-secondary);
 }
 
 /* A small heading, the size of body text, a little apart from the paragraph above. */
-.nx-about-summary__subheading {
+.nv-about-summary__subheading {
     margin-block-start: var(--space-between-content);
     font-size: var(--font-size-body);
 }
 
-.nx-about-summary__more {
+.nv-about-summary__more {
     margin-block-start: var(--space-between-text);
 }
 
-.nx-about-section {
+.nv-about-section {
     padding-block: var(--space-between-sections);
     padding-inline: var(--space-padding-page-centred);
 }
 
 /* As many equal columns as fit, dropping to one on narrow screens. */
-.nx-about-section__columns {
+.nv-about-section__columns {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(18rem, 100%), 1fr));
     align-items: center;
     gap: var(--space-between-regions) calc(2 * var(--space-between-groups));
 }
 
-.nx-about-section__photo {
+.nv-about-section__photo {
     position: relative;
     justify-self: center;
     inline-size: min(100%, calc(var(--layout-width-prose) / 2));
 }
 
-.nx-about-section__heart {
+.nv-about-section__heart {
     position: absolute;
     inset-block-start: calc(-1 * var(--space-between-blocks));
     inset-inline-end: calc(-1 * var(--space-between-content));
@@ -182,7 +182,7 @@
  * The dot sits beside the title on ::after; ::before is the faint line running from it down
  * to the next role's dot.
  */
-.nx-employer-role {
+.nv-employer-role {
     --employer-role-dot-size: calc(var(--space-between-content) + var(--border-width-standout));
 
     position: relative;
@@ -218,7 +218,7 @@
     }
 }
 
-.nx-employer-role__header {
+.nv-employer-role__header {
     display: flex;
     flex-wrap: wrap;
     align-items: baseline;
@@ -226,30 +226,30 @@
     gap: 0 var(--space-between-content);
 }
 
-.nx-employer-role__title {
+.nv-employer-role__title {
     font-family: var(--font-family-body);
     font-size: var(--font-size-body);
 }
 
-.nx-employer-role__summary {
+.nv-employer-role__summary {
     max-inline-size: 60ch;
     color: var(--color-text-secondary);
 }
 
 @media (forced-colors: active) {
-    .nx-employer-role::before,
-    .nx-employer-role::after {
+    .nv-employer-role::before,
+    .nv-employer-role::after {
         background-color: CanvasText;
     }
 }
 
-.nx-employer-history {
+.nv-employer-history {
     display: flex;
     flex-direction: column;
     gap: var(--space-between-blocks);
 }
 
-.nx-employer-history__header {
+.nv-employer-history__header {
     display: flex;
     flex-wrap: wrap;
     align-items: baseline;
@@ -257,20 +257,20 @@
     gap: var(--space-between-lines) var(--space-between-blocks);
 }
 
-.nx-employer-history__name {
+.nv-employer-history__name {
     display: flex;
     flex-direction: column;
     gap: var(--space-between-lines);
 }
 
-.nx-employer-history__place {
+.nv-employer-history__place {
     color: var(--color-text-secondary);
     font-family: var(--font-family-body);
     font-size: var(--font-size-body);
     font-weight: var(--font-weight-regular);
 }
 
-.nx-employer-history__roles {
+.nv-employer-history__roles {
     display: flex;
     flex-direction: column;
     padding: 0;
@@ -278,7 +278,7 @@
 }
 
 /* Indented to line up with the roles above, with the cap where their dots are. */
-.nx-education-summary {
+.nv-education-summary {
     position: relative;
     display: flex;
     flex-direction: column;
@@ -288,14 +288,14 @@
     border-block-start: var(--border-width-default) solid var(--color-border);
 }
 
-.nx-education-summary__icon {
+.nv-education-summary__icon {
     position: absolute;
     inset-block-start: calc(var(--space-between-blocks) + var(--border-width-standout));
     inset-inline-start: 0;
     color: var(--color-background-accent);
 }
 
-.nx-education-summary__header {
+.nv-education-summary__header {
     display: flex;
     flex-wrap: wrap;
     align-items: baseline;
@@ -303,24 +303,24 @@
     gap: 0 var(--space-between-content);
 }
 
-.nx-education-summary__degree {
+.nv-education-summary__degree {
     font-family: var(--font-family-body);
     font-size: var(--font-size-body);
 }
 
-.nx-education-summary__note {
+.nv-education-summary__note {
     max-inline-size: 60ch;
     color: var(--color-text-secondary);
 }
 
-.nx-experience-section {
+.nv-experience-section {
     display: flex;
     flex-direction: column;
     gap: var(--space-between-regions);
     max-inline-size: var(--layout-width-prose);
 }
 
-.nx-skill-tile {
+.nv-skill-tile {
     --skill-tile-size: calc(1.5 * var(--space-between-regions));
 
     display: flex;
@@ -332,7 +332,7 @@
     text-align: center;
 }
 
-.nx-skill-tile__logo {
+.nv-skill-tile__logo {
     display: grid;
     place-items: center;
     inline-size: var(--skill-tile-size);
@@ -344,7 +344,7 @@
 }
 
 /* The label takes a fixed column on a wide screen and sits above the tiles on a narrow one. */
-.nx-skill-group {
+.nv-skill-group {
     display: flex;
     flex-wrap: wrap;
     gap: var(--space-between-content) var(--space-between-groups);
@@ -353,7 +353,7 @@
 }
 
 /* Level with the middle of the first row of tiles. */
-.nx-skill-group__label {
+.nv-skill-group__label {
     flex: 0 0 calc(4 * var(--space-between-regions));
     padding-block-start: calc(var(--space-between-content) + var(--space-between-lines));
     color: var(--color-text-accent);
@@ -362,7 +362,7 @@
     font-weight: var(--font-weight-regular);
 }
 
-.nx-skill-group__skills {
+.nv-skill-group__skills {
     display: grid;
     flex: 1 1 calc(9 * var(--space-between-regions));
     grid-template-columns: repeat(
@@ -374,12 +374,12 @@
     list-style: none;
 }
 
-.nx-skills-section__groups {
+.nv-skills-section__groups {
     display: flex;
     flex-direction: column;
 }
 
-.nx-testimonial-attribution {
+.nv-testimonial-attribution {
     display: flex;
     align-items: center;
     gap: var(--space-between-content);
@@ -387,7 +387,7 @@
 }
 
 /* Stripes in a faint tint of the line colour, like the other photo placeholders. */
-.nx-testimonial-attribution__photo {
+.nv-testimonial-attribution__photo {
     --testimonial-attribution-stripe: color-mix(
         in oklch,
         var(--color-border) 12%,
@@ -406,28 +406,28 @@
     );
 }
 
-.nx-testimonial-attribution__text {
+.nv-testimonial-attribution__text {
     display: flex;
     flex-direction: column;
     gap: var(--space-between-lines);
 }
 
-.nx-testimonial-attribution__name {
+.nv-testimonial-attribution__name {
     font-weight: var(--font-weight-semi-bold);
     line-height: var(--line-height-subheading);
 }
 
-.nx-testimonial-attribution__role {
+.nv-testimonial-attribution__role {
     color: var(--color-text-secondary);
     font-size: var(--font-size-small);
 }
 
-.nx-testimonial-section {
+.nv-testimonial-section {
     padding-block: var(--space-between-sections);
     padding-inline: var(--space-padding-page-centred);
 }
 
-.nx-testimonial-section__figure {
+.nv-testimonial-section__figure {
     display: flex;
     flex-direction: column;
     align-items: start;
@@ -439,7 +439,7 @@
  * A speech bubble: a handwritten opening quote hangs over its top edge on ::before, and ::after
  * is the tail pointing down at the attribution. Both are decoration, kept out of the quote's text.
  */
-.nx-testimonial-section__quote {
+.nv-testimonial-section__quote {
     position: relative;
     padding: var(--space-padding-panel) var(--space-below-heading) var(--space-between-groups);
     border: var(--border-width-standout) solid var(--color-border);
@@ -475,12 +475,12 @@
 }
 
 /* The last section on the home page, so it keeps the page's end space below it. */
-.nx-contact-banner {
+.nv-contact-banner {
     padding-block: var(--space-between-sections) var(--space-padding-page-end);
     padding-inline: var(--space-padding-page-centred);
 }
 
-.nx-contact-banner__panel {
+.nv-contact-banner__panel {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
@@ -492,7 +492,7 @@
     background-color: var(--color-background-surface);
 }
 
-.nx-contact-banner__text {
+.nv-contact-banner__text {
     display: flex;
     flex-direction: column;
     gap: var(--space-between-text);
@@ -504,7 +504,7 @@
     }
 }
 
-.nx-contact-banner__actions {
+.nv-contact-banner__actions {
     display: flex;
     flex-wrap: wrap;
     align-items: center;

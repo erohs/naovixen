@@ -1,5 +1,5 @@
 /* Keeps the footer at the bottom of a short page. */
-.nx-site-frame {
+.nv-site-frame {
     display: flex;
     flex-direction: column;
     min-block-size: 100dvh;
@@ -10,7 +10,7 @@
  * than the header above it, and a page cannot scroll above its top, so following either link
  * scrolls right to the top while focus still lands on the main content.
  */
-.nx-site-frame__main {
+.nv-site-frame__main {
     flex-grow: 1;
     scroll-margin-block-start: 100dvh;
 }

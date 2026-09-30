@@ -18,12 +18,12 @@ const DesignSystem: FunctionComponent = () => {
     useDocumentTheme();
 
     return (
-        <div className="nx-design-system">
-            <header className="nx-design-system__header">
+        <div className="nv-design-system">
+            <header className="nv-design-system__header">
                 <Heading level={1}>naovixen design system</Heading>
                 <ThemeToggle />
             </header>
-            <nav aria-label="Pages" className="nx-design-system__contents">
+            <nav aria-label="Pages" className="nv-design-system__contents">
                 {designSystemPages.map((page) => (
                     <a key={page.id} href={`#${page.id}`}>
                         {page.title}

@@ -11,7 +11,7 @@ export const LinkButton: FunctionComponent<ILinkButtonProps> = ({
     children,
     ...anchorProps
 }) => (
-    <a {...anchorProps} className={joinClassNames('nx-button', `nx-button--${variant}`, className)}>
+    <a {...anchorProps} className={joinClassNames('nv-button', `nv-button--${variant}`, className)}>
         {children}
     </a>
 );

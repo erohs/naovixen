@@ -1,4 +1,4 @@
-.nx-footer {
+.nv-footer {
     display: flex;
     flex-direction: column;
     gap: var(--space-between-groups);
@@ -9,7 +9,7 @@
 }
 
 /* As many equal columns as fit, dropping to one on narrow screens. */
-.nx-footer__columns {
+.nv-footer__columns {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(18rem, 100%), 1fr));
     gap: var(--space-between-groups);
@@ -19,7 +19,7 @@
  * The row is tall enough to centre its text beside the fixed back-to-top link. Where the margin
  * outside the page is too narrow to hold that link, the row pads its end so the two never overlap.
  */
-.nx-footer__small-print {
+.nv-footer__small-print {
     --footer-link-room: calc(
         var(--size-action-minimum) + var(--space-between-content) + var(--space-between-text) +
             var(--space-between-lines)

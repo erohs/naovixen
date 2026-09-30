@@ -9,16 +9,16 @@ export const Logo: FunctionComponent<Omit<ComponentPropsWithRef<'span'>, 'childr
     className,
     ...spanProps
 }) => (
-    <span {...spanProps} className={joinClassNames('nx-logo', className)}>
-        <span className="nx-logo__wordmark">
-            <span className="nx-logo__bracket" aria-hidden="true">
+    <span {...spanProps} className={joinClassNames('nv-logo', className)}>
+        <span className="nv-logo__wordmark">
+            <span className="nv-logo__bracket" aria-hidden="true">
                 &lt;
             </span>
             <span>naovixen</span>
-            <span className="nx-logo__bracket" aria-hidden="true">
+            <span className="nv-logo__bracket" aria-hidden="true">
                 /&gt;
             </span>
         </span>
-        <span className="nx-logo__cursor" aria-hidden="true" />
+        <span className="nv-logo__cursor" aria-hidden="true" />
     </span>
 );

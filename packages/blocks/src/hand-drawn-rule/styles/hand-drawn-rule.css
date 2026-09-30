@@ -1,5 +1,5 @@
 /* Drawn in currentcolor, so forced colours swap in the system text colour on their own. */
-.nx-hand-drawn-rule {
+.nv-hand-drawn-rule {
     inline-size: 100%;
     block-size: var(--space-between-content);
     overflow: visible;

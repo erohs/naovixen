@@ -1,5 +1,5 @@
 /* A link in content: a solid underline that turns wavy under the pointer. */
-.nx-link {
+.nv-link {
     color: var(--color-text-primary);
     font-weight: var(--font-weight-semi-bold);
     text-decoration: underline solid var(--color-text-accent);
@@ -29,7 +29,7 @@
  * current page, so a column of links reads as a menu. Navigation lists pass this class to
  * whichever link component renders them.
  */
-.nx-link--navigation {
+.nv-link--navigation {
     text-decoration-style: wavy;
     text-decoration-color: transparent;
 
@@ -40,7 +40,7 @@
 
 /* Forced colours drop backgrounds and shadows, so the outline has to come back. */
 @media (forced-colors: active) {
-    .nx-link:focus-visible {
+    .nv-link:focus-visible {
         outline: var(--border-width-highlight) solid;
     }
 }

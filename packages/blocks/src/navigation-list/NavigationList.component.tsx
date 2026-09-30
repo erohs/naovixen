@@ -16,9 +16,9 @@ export const NavigationList: FunctionComponent<INavigationListProps> = ({
     const LinkComponent = linkComponent;
 
     return (
-        <ul {...listProps} className={joinClassNames('nx-navigation-list', className)}>
+        <ul {...listProps} className={joinClassNames('nv-navigation-list', className)}>
             {items.map((item) => (
-                <li key={item.href} className="nx-navigation-list__item">
+                <li key={item.href} className="nv-navigation-list__item">
                     <LinkComponent
                         href={item.href}
                         className={navigationLinkClassName}

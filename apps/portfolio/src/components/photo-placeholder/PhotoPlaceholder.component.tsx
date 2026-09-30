@@ -14,9 +14,9 @@ export const PhotoPlaceholder: FunctionComponent<IPhotoPlaceholderProps> = ({
     <div
         role="img"
         aria-label={description}
-        className={joinClassNames('nx-photo-placeholder', className)}
+        className={joinClassNames('nv-photo-placeholder', className)}
     >
-        <span className="nx-photo-placeholder__label" aria-hidden="true">
+        <span className="nv-photo-placeholder__label" aria-hidden="true">
             Photo
         </span>
     </div>

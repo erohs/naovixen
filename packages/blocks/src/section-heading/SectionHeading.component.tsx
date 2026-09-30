@@ -13,10 +13,10 @@ export const SectionHeading: FunctionComponent<ISectionHeadingProps> = ({
     children,
     ...divProps
 }) => (
-    <div {...divProps} className={joinClassNames('nx-section-heading', className)}>
-        <div className="nx-section-heading__title">
+    <div {...divProps} className={joinClassNames('nv-section-heading', className)}>
+        <div className="nv-section-heading__title">
             {number && (
-                <span className="nx-section-heading__number" aria-hidden="true">
+                <span className="nv-section-heading__number" aria-hidden="true">
                     {number}
                 </span>
             )}
@@ -24,6 +24,6 @@ export const SectionHeading: FunctionComponent<ISectionHeadingProps> = ({
                 {children}
             </Heading>
         </div>
-        {intro && <p className="nx-section-heading__intro">{intro}</p>}
+        {intro && <p className="nv-section-heading__intro">{intro}</p>}
     </div>
 );

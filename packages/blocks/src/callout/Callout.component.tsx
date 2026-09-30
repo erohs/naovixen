@@ -11,9 +11,9 @@ export const Callout: FunctionComponent<ICalloutProps> = ({
     children,
     ...divProps
 }) => (
-    <div role="note" {...divProps} className={joinClassNames('nx-callout', className)}>
-        <p className="nx-callout__kind">{kind}</p>
-        <p className="nx-callout__heading">{heading}</p>
-        <div className="nx-callout__body">{children}</div>
+    <div role="note" {...divProps} className={joinClassNames('nv-callout', className)}>
+        <p className="nv-callout__kind">{kind}</p>
+        <p className="nv-callout__heading">{heading}</p>
+        <div className="nv-callout__body">{children}</div>
     </div>
 );

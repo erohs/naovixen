@@ -10,7 +10,7 @@ import type { IIconProps } from './interfaces/IIconProps';
 export const Icon: FunctionComponent<IIconProps> = ({ source, className, ...spanProps }) => (
     <span
         {...spanProps}
-        className={joinClassNames('nx-icon', className)}
+        className={joinClassNames('nv-icon', className)}
         aria-hidden="true"
         dangerouslySetInnerHTML={{ __html: source }}
     />

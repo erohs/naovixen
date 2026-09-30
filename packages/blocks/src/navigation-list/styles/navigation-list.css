@@ -1,5 +1,5 @@
 /* The landmark around it sets the custom properties that lay it out as a row or a column. */
-.nx-navigation-list {
+.nv-navigation-list {
     display: flex;
     flex-flow: var(--navigation-list-direction, column) wrap;
     gap: var(--navigation-list-gap, var(--space-between-text));
@@ -8,7 +8,7 @@
     list-style: none;
 }
 
-.nx-navigation-list__item {
+.nv-navigation-list__item {
     display: flex;
     align-items: center;
     min-block-size: var(--navigation-list-item-block-size, auto);

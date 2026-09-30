@@ -16,10 +16,10 @@ export const CodeBlock: FunctionComponent<ICodeBlockProps> = ({
     const captionId = useId();
 
     return (
-        <figure {...figureProps} className={joinClassNames('nx-code-block', className)}>
+        <figure {...figureProps} className={joinClassNames('nv-code-block', className)}>
             <CodeBlockCaption id={captionId} language={language} filename={filename} />
             <pre
-                className="nx-code-block__code"
+                className="nv-code-block__code"
                 role="region"
                 aria-labelledby={captionId}
                 tabIndex={0}

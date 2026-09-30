@@ -21,7 +21,7 @@ export const BackToTop: FunctionComponent<Omit<ComponentPropsWithRef<'a'>, 'chil
             {...anchorProps}
             href={href}
             variant={ButtonVariant.Primary}
-            className={joinClassNames('nx-back-to-top', className)}
+            className={joinClassNames('nv-back-to-top', className)}
             data-visible={isVisible}
         >
             <Icon source={arrowUpIcon} />

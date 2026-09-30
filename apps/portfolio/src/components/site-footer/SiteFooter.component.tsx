@@ -23,7 +23,7 @@ const SmallPrint: FunctionComponent<Pick<ISiteFooterProps, 'year'>> = ({ year })
 
 export const SiteFooter: FunctionComponent<ISiteFooterProps> = ({ currentPath, year }) => (
     <Footer smallPrint={<SmallPrint year={year} />}>
-        <div className="nx-site-footer__about">
+        <div className="nv-site-footer__about">
             <Logo />
             <Text variant={TextVariant.Small}>{placeholderFooterBlurb}</Text>
         </div>

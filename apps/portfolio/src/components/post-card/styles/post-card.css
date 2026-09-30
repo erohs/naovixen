@@ -1,11 +1,11 @@
 /* Covers the card, so the whole card is one link without nesting everything inside it. */
-.nx-post-card__link::before {
+.nv-post-card__link::before {
     content: '';
     position: absolute;
     inset: 0;
 }
 
-.nx-post-card__excerpt {
+.nv-post-card__excerpt {
     color: var(--color-text-secondary);
 }
 
@@ -13,7 +13,7 @@
  * Pushed to the foot of the card, so a row of cards lines up whatever their excerpts' length.
  * Its gap is the card's own, written out to the design like the card's other measurements.
  */
-.nx-post-card__details {
+.nv-post-card__details {
     display: flex;
     flex-direction: column;
     gap: 12px;

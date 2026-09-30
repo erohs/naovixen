@@ -6,7 +6,7 @@
  * card casts along the fold behind it. ::after is the turned-up flap, which casts its own
  * shadow. Both spring out from the corner on hover or when focus is inside the card.
  */
-.nx-card {
+.nv-card {
     position: relative;
     display: flex;
     flex-direction: column;
@@ -76,16 +76,16 @@
 
 /* The fold appears without springing; the shadow still eases in. */
 @media (prefers-reduced-motion: reduce) {
-    .nx-card::before,
-    .nx-card::after {
+    .nv-card::before,
+    .nv-card::after {
         transition: none;
     }
 }
 
 /* The fold is drawn with backgrounds, which forced colours flatten. */
 @media (forced-colors: active) {
-    .nx-card::before,
-    .nx-card::after {
+    .nv-card::before,
+    .nv-card::after {
         display: none;
     }
 }

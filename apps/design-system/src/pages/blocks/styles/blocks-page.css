@@ -1,4 +1,4 @@
 /* A header or footer spans the page, so its example takes the whole row. */
-.nx-blocks-page__wide {
+.nv-blocks-page__wide {
     flex-basis: 100%;
 }

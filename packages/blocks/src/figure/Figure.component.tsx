@@ -14,9 +14,9 @@ export const Figure: FunctionComponent<IFigureProps> = ({
 }) => (
     <figure
         {...figureProps}
-        className={joinClassNames('nx-figure', `nx-figure--${shape}`, className)}
+        className={joinClassNames('nv-figure', `nv-figure--${shape}`, className)}
     >
-        <Image {...image} className={joinClassNames('nx-figure__image', image.className)} />
-        {caption && <figcaption className="nx-figure__caption">{caption}</figcaption>}
+        <Image {...image} className={joinClassNames('nv-figure__image', image.className)} />
+        {caption && <figcaption className="nv-figure__caption">{caption}</figcaption>}
     </figure>
 );

@@ -1,4 +1,4 @@
-.nx-page-section {
+.nv-page-section {
     display: flex;
     flex-direction: column;
     gap: var(--space-between-regions);

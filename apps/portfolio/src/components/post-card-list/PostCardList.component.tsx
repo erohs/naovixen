@@ -5,7 +5,7 @@ import { RoutedLink } from '../routed-link/RoutedLink.component';
 import type { IPostCardListProps } from './interfaces/IPostCardListProps';
 
 export const PostCardList: FunctionComponent<IPostCardListProps> = ({ posts, headingLevel }) => (
-    <ul className="nx-post-card-list">
+    <ul className="nv-post-card-list">
         {posts.map((post) => (
             <li key={post.slug}>
                 <PostCard

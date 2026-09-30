@@ -10,7 +10,7 @@ export const SkipLink: FunctionComponent<ComponentPropsWithRef<'a'>> = ({
     children,
     ...anchorProps
 }) => (
-    <a {...anchorProps} className={joinClassNames('nx-skip-link', className)}>
+    <a {...anchorProps} className={joinClassNames('nv-skip-link', className)}>
         {children}
     </a>
 );

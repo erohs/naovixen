@@ -12,6 +12,6 @@ export const SpeechBubble: FunctionComponent<ISpeechBubbleProps> = ({
 }) => (
     <p
         {...paragraphProps}
-        className={joinClassNames('nx-speech-bubble', `nx-speech-bubble--tail-${tail}`, className)}
+        className={joinClassNames('nv-speech-bubble', `nv-speech-bubble--tail-${tail}`, className)}
     />
 );
