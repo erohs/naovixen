@@ -7,7 +7,7 @@
 
 ## Where we are
 
-**Phases 0–6 are done**, and the repo was restructured on 2026-09-30 (see "Fewer
+**Phases 0–6 are done** (Phase 5 closed on 2026-09-30), and the repo was restructured on 2026-09-30 (see "Fewer
 packages, split by reuse" in `docs/decisions.md`). `pnpm typecheck`, `test`, `lint` and
 `build` all pass. Next: Phase 7, the blog. Phase 5's pages carry placeholder copy (every
 file named `Placeholder*` in `apps/portfolio/src`) until Naomi answers the content gaps.
@@ -135,28 +135,32 @@ body. One test runs axe over each page.
 - [ ] Static pages prerendered at build; blog server-rendered with CDN caching.
 - [ ] Route-level code splitting (TanStack Router default — verify).
 - [ ] Minimal client JS: interactive islands only where needed; no heavy dependencies without justification in `docs/decisions.md`.
-- [ ] Fonts self-hosted, WOFF2, subset, `font-display: swap`, preload the primary face, fallback metric overrides (`size-adjust`, `ascent-override`) to avoid layout shift.
+- [x] Fonts self-hosted, WOFF2, subset, `font-display: swap`, fallback metric overrides (`size-adjust`, `ascent-override`) to avoid layout shift.
+- [ ] Preload the primary face.
 - [ ] Images: responsive `srcset`/`sizes`, AVIF/WebP, explicit `width`/`height`, `loading="lazy"` below the fold, `fetchpriority="high"` on the LCP image. Sanity images via its image URL builder.
 - [ ] Budgets (enforced in CI via Lighthouse CI): LCP < 2.5 s, INP < 200 ms, CLS < 0.1, Lighthouse Performance ≥ 95 on mobile.
 
 ### SEO
 
-- [ ] Per-route `title`, `description`, canonical URL, Open Graph and Twitter card tags via a `buildSeoMetadata()` function in `seo`.
-- [ ] `<html lang="en-GB">`.
-- [ ] JSON-LD: `Person` (details from the CV, only fields Naomi approved for publishing) + `WebSite` on the home page, `BlogPosting` on posts.
-- [ ] `sitemap.xml` (static routes + CMS posts), `robots.txt`, RSS feed.
-- [ ] Semantic heading structure, descriptive link text, clean slugs.
+- [x] Per-route `title`, `description`, canonical URL, Open Graph and Twitter card tags via `buildHeadTags()` in `seo`.
+- [x] `<html lang="en-GB">`.
+- [x] JSON-LD: `Person` (details from the CV, only fields Naomi approved for publishing) + `WebSite` on the home page, `BlogPosting` on posts.
+- [x] `sitemap.xml` (static routes and posts) and `robots.txt`.
+- [ ] RSS feed (Phase 7).
+- [x] Semantic heading structure, descriptive link text, clean slugs.
 - [ ] Open Graph images (static per page initially; generated per post as a later enhancement).
 
 ### Accessibility (target WCAG 2.2 AA)
 
-- [ ] Semantic landmarks, one `<h1>` per page, logical heading order.
-- [ ] Skip link, visible `:focus-visible` styles, focus moved and route change announced on navigation.
+- [x] Semantic landmarks, one `<h1>` per page, logical heading order.
+- [x] Skip link, visible `:focus-visible` styles, focus moved and route change announced on navigation.
 - [ ] Minimum 24×24 px target sizes; full keyboard support; no keyboard traps.
-- [ ] Colour contrast verified for all token pairs in both themes (a test in `theming`, shown in the design system).
-- [ ] `prefers-reduced-motion`, `forced-colors`, and `prefers-contrast` respected.
-- [ ] No information by colour alone; icons have accessible names or are `aria-hidden`.
-- [ ] `eslint-plugin-jsx-a11y` in lint; axe on every design-system page, and in Playwright on every route.
+- [x] Colour contrast verified for all token pairs in both themes (a test in `theming`, shown in the design system).
+- [x] `prefers-reduced-motion` and `forced-colors` respected.
+- [ ] `prefers-contrast` respected: no styles for it yet.
+- [x] No information by colour alone; icons have accessible names or are `aria-hidden`.
+- [x] `eslint-plugin-jsx-a11y` in lint; axe on every design-system page.
+- [ ] axe in Playwright on every route (Phase 8).
 
 ---
 
