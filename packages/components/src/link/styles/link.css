@@ -32,6 +32,7 @@
     text-decoration-style: wavy;
     text-decoration-color: transparent;
 
+    &:hover:not(:focus-visible),
     &[aria-current='page'] {
         text-decoration-color: var(--color-background-accent);
     }
