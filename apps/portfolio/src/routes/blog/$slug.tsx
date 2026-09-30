@@ -3,7 +3,7 @@ import { createFileRoute } from '@tanstack/react-router';
 import { OpenGraphType } from '@naovixen/seo';
 import { buildBlogPostingStructuredData } from '@naovixen/seo';
 
-import { BlogPostPage } from '../../components/blog-post-page/BlogPostPage.component';
+import { BlogPostPage } from '../../pages/blog-post/BlogPostPage.component';
 import { person } from '../../constants/Person.const';
 import { site } from '../../constants/Site.const';
 import { buildRouteHead } from '../../functions/BuildRouteHead.function';

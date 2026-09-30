@@ -7,7 +7,7 @@ import {
 } from '@tanstack/react-router';
 import { themeBootScript } from '@naovixen/theming';
 
-import { NotFoundPage } from '../components/not-found-page/NotFoundPage.component';
+import { NotFoundPage } from '../pages/not-found/NotFoundPage.component';
 import { SiteLayout } from '../components/site-layout/SiteLayout.component';
 import { site } from '../constants/Site.const';
 import { isNotFoundPage } from '../functions/IsNotFoundPage.function';
@@ -16,7 +16,6 @@ import type { IRouterContext } from '../interfaces/IRouterContext';
 /** Order matters: theming declares the cascade layers that the other stylesheets are filed into. */
 import '@naovixen/theming/styles.css';
 import '@naovixen/components/styles.css';
-import '@naovixen/layout/styles.css';
 import '@naovixen/blocks/styles.css';
 import '@naovixen/blog-content/styles.css';
 import '../index.css';

@@ -1,39 +1,19 @@
-/* Imported after the packages' stylesheets, so the app's cards win over the blocks they compose. */
-@import url('./components/post-card/styles/post-card.css') layer(components);
-@import url('./components/post-card-details/styles/post-card-details.css') layer(components);
+/*
+ * Imported after the packages' stylesheets, so the app's rules win over the blocks they
+ * compose. Shared components come before the pages that place them.
+ */
 @import url('./components/site-frame/styles/site-frame.css') layer(components);
+@import url('./components/site-footer/styles/site-footer.css') layer(components);
 @import url('./components/page/styles/page.css') layer(components);
-@import url('./components/not-found-page/styles/not-found-page.css') layer(components);
-@import url('./components/home-section/styles/home-section.css') layer(components);
-@import url('./components/hero-section/styles/hero-section.css') layer(components);
-@import url('./components/hero-actions/styles/hero-actions.css') layer(components);
-@import url('./components/exclamation-bubble/styles/exclamation-bubble.css') layer(components);
+@import url('./components/post-card/styles/post-card.css') layer(components);
+@import url('./components/post-card-list/styles/post-card-list.css') layer(components);
+@import url('./components/greeting-heading/styles/greeting-heading.css') layer(components);
 @import url('./components/interest-list/styles/interest-list.css') layer(components);
 @import url('./components/photo-placeholder/styles/photo-placeholder.css') layer(components);
-@import url('./components/about-summary/styles/about-summary.css') layer(components);
-@import url('./components/about-section/styles/about-section.css') layer(components);
-@import url('./components/employer-role/styles/employer-role.css') layer(components);
-@import url('./components/employer-history/styles/employer-history.css') layer(components);
-@import url('./components/education-summary/styles/education-summary.css') layer(components);
-@import url('./components/experience-section/styles/experience-section.css') layer(components);
-@import url('./components/skill-tile/styles/skill-tile.css') layer(components);
-@import url('./components/skill-group/styles/skill-group.css') layer(components);
-@import url('./components/skills-section/styles/skills-section.css') layer(components);
-@import url('./components/testimonial-attribution/styles/testimonial-attribution.css')
-layer(components);
-@import url('./components/testimonial-section/styles/testimonial-section.css') layer(components);
-@import url('./components/post-card-list/styles/post-card-list.css') layer(components);
-@import url('./components/contact-banner/styles/contact-banner.css') layer(components);
-@import url('./components/greeting-heading/styles/greeting-heading.css') layer(components);
-@import url('./components/principle-list/styles/principle-list.css') layer(components);
-@import url('./components/about-page/styles/about-page.css') layer(components);
-@import url('./components/about-introduction/styles/about-introduction.css') layer(components);
-@import url('./components/about-details/styles/about-details.css') layer(components);
-@import url('./components/page-header/styles/page-header.css') layer(components);
-@import url('./components/blog-post-header/styles/blog-post-header.css') layer(components);
-@import url('./components/post-navigation/styles/post-navigation.css') layer(components);
-@import url('./components/blog-post-page/styles/blog-post-page.css') layer(components);
-@import url('./components/contact-link-list/styles/contact-link-list.css') layer(components);
-@import url('./components/contact-page/styles/contact-page.css') layer(components);
-@import url('./components/privacy-notice/styles/privacy-notice.css') layer(components);
-@import url('./components/privacy-page/styles/privacy-page.css') layer(components);
+@import url('./pages/home/styles/home-page.css') layer(components);
+@import url('./pages/about/styles/about-page.css') layer(components);
+@import url('./pages/blog/styles/blog-page.css') layer(components);
+@import url('./pages/blog-post/styles/blog-post-page.css') layer(components);
+@import url('./pages/contact/styles/contact-page.css') layer(components);
+@import url('./pages/privacy/styles/privacy-page.css') layer(components);
+@import url('./pages/not-found/styles/not-found-page.css') layer(components);

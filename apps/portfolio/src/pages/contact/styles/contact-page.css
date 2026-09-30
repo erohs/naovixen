@@ -1,0 +1,31 @@
+.nx-contact-page {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: var(--space-between-blocks);
+    max-inline-size: calc(var(--layout-width-prose) * 7 / 9);
+    margin-block-start: var(--space-below-heading);
+}
+
+.nx-contact-page__body {
+    max-inline-size: 40ch;
+    color: var(--color-text-secondary);
+}
+
+/* A handwritten aside, set apart from the email button above; the tiles sit close beneath. */
+.nx-contact-page__elsewhere {
+    margin-block: var(--space-between-blocks) calc(-1 * var(--space-between-text));
+    color: var(--color-text-accent);
+    font-family: var(--font-family-handwriting);
+    font-size: var(--font-size-h4);
+    font-weight: var(--font-weight-regular);
+}
+
+.nx-contact-page__links {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-between-content);
+    inline-size: 100%;
+    padding-inline-start: 0;
+    list-style: none;
+}

@@ -1,13 +1,16 @@
 import type { FunctionComponent } from 'react';
+import { createLink } from '@tanstack/react-router';
 import type { LinkProps } from '@naovixen/components';
+import { Link } from '@naovixen/components';
 
 import { exactActiveOptions } from '../../constants/ExactActiveOptions.const';
 import { noActiveProps } from '../../constants/NoActiveProps.const';
-import { RouterLink } from '../router-link/RouterLink.component';
+
+const RouterLink = createLink(Link);
 
 /**
- * Takes `href` like any other link, so the shared packages can render router links without
- * knowing the router. For paths on this site only.
+ * The site's Link, navigating on the client. Takes `href` like any other link, so the shared
+ * packages can render router links without knowing the router. For paths on this site only.
  *
  * Matching exactly leaves a section link on a page beneath it to the caller, such as
  * NavigationList.

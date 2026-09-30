@@ -1,4 +1,0 @@
-/* Each topic starts a little further from the one before. */
-.nx-privacy-notice__heading {
-    margin-block-start: var(--space-between-blocks);
-}

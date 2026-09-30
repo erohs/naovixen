@@ -1,3 +1,4 @@
 .nx-page {
     padding-block: var(--space-padding-panel) var(--space-padding-page-end);
+    padding-inline: var(--space-padding-page-centred);
 }

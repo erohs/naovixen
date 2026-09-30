@@ -1,0 +1,8 @@
+import type { IBreadcrumbItem } from '@naovixen/blocks';
+
+import { homeBreadcrumbTrail } from '../../../constants/HomeBreadcrumbTrail.const';
+
+export const blogBreadcrumbTrail: readonly IBreadcrumbItem[] = [
+    ...homeBreadcrumbTrail,
+    { label: 'Blog', href: '/blog' },
+];

@@ -1,7 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { OpenGraphType } from '@naovixen/seo';
 
-import { PrivacyPage } from '../components/privacy-page/PrivacyPage.component';
+import { PrivacyPage } from '../pages/privacy/PrivacyPage.component';
 import { buildRouteHead } from '../functions/BuildRouteHead.function';
 
 export const Route = createFileRoute('/privacy')({

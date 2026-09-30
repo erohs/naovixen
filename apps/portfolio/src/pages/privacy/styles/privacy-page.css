@@ -1,0 +1,12 @@
+.nx-privacy-page {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-between-blocks);
+    max-inline-size: var(--layout-width-prose);
+    margin-block-start: var(--space-below-heading);
+}
+
+/* Each topic starts a little further from the one before. */
+.nx-privacy-page__heading {
+    margin-block-start: var(--space-between-blocks);
+}

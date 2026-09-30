@@ -1,7 +1,0 @@
-.nx-about-page__content {
-    margin-block-start: var(--space-below-heading);
-}
-
-.nx-about-page__rule {
-    max-inline-size: calc(var(--layout-width-prose) * 5 / 9);
-}

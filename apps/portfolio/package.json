@@ -15,7 +15,6 @@
         "@naovixen/blog-content": "workspace:*",
         "@naovixen/cms": "workspace:*",
         "@naovixen/components": "workspace:*",
-        "@naovixen/layout": "workspace:*",
         "@naovixen/seo": "workspace:*",
         "@naovixen/theming": "workspace:*",
         "@naovixen/utilities": "workspace:*",

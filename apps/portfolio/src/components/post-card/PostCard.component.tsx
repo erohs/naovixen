@@ -3,7 +3,7 @@ import { Card } from '@naovixen/blocks';
 import { Heading, HeadingSize, Link, Text } from '@naovixen/components';
 import { joinClassNames } from '@naovixen/utilities';
 
-import { PostCardDetails } from '../post-card-details/PostCardDetails.component';
+import { PostDetails } from '../post-details/PostDetails.component';
 import type { IPostCardProps } from './interfaces/IPostCardProps';
 
 /** The title's link stretches over the whole card, so anywhere on it opens the post. */
@@ -25,7 +25,7 @@ export const PostCard: FunctionComponent<IPostCardProps> = ({
                 </LinkComponent>
             </Heading>
             <Text className="nx-post-card__excerpt">{post.excerpt}</Text>
-            <PostCardDetails post={post} />
+            <PostDetails post={post} className="nx-post-card__details" />
         </Card>
     );
 };

@@ -12,6 +12,7 @@
 @import url('./link-tile/styles/link-tile.css') layer(components);
 @import url('./section-heading/styles/section-heading.css') layer(components);
 @import url('./speech-bubble/styles/speech-bubble.css') layer(components);
+@import url('./exclamation-bubble/styles/exclamation-bubble.css') layer(components);
 @import url('./tag-list/styles/tag-list.css') layer(components);
 @import url('./back-to-top/styles/back-to-top.css') layer(components);
 @import url('./navigation-list/styles/navigation-list.css') layer(components);

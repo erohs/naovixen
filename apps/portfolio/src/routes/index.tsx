@@ -3,7 +3,7 @@ import { createFileRoute } from '@tanstack/react-router';
 import { OpenGraphType } from '@naovixen/seo';
 import { buildPersonStructuredData, buildWebSiteStructuredData } from '@naovixen/seo';
 
-import { HomePage } from '../components/home-page/HomePage.component';
+import { HomePage } from '../pages/home/HomePage.component';
 import { latestPostCount } from '../constants/LatestPostCount.const';
 import { person } from '../constants/Person.const';
 import { site } from '../constants/Site.const';

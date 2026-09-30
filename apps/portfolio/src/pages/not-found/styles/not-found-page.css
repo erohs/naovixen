@@ -1,0 +1,6 @@
+.nx-not-found-page {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-between-groups);
+    max-inline-size: var(--layout-width-prose);
+}

@@ -1,7 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { OpenGraphType } from '@naovixen/seo';
 
-import { AboutPage } from '../components/about-page/AboutPage.component';
+import { AboutPage } from '../pages/about/AboutPage.component';
 import { buildRouteHead } from '../functions/BuildRouteHead.function';
 
 export const Route = createFileRoute('/about')({
