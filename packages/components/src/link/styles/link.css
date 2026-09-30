@@ -2,14 +2,13 @@
 .nv-link {
     color: var(--color-text-primary);
     font-weight: var(--font-weight-semi-bold);
-    text-decoration: underline solid var(--color-text-accent);
+    text-decoration: underline solid var(--color-background-accent);
     text-decoration-thickness: var(--border-width-standout);
     text-decoration-skip-ink: none;
     transition: text-decoration-color var(--duration-fast) var(--easing-standard);
 
     &:hover {
         text-decoration-style: wavy;
-        text-decoration-color: var(--color-background-accent);
     }
 
     /* Focus inverts the link into a solid block, which reads more clearly than a ring on text. */
