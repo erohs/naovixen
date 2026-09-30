@@ -1,7 +1,7 @@
 {
     "$schema": "https://json.schemastore.org/tsconfig",
     "display": "naovixen base",
-    "_comment": "Plain TypeScript with no DOM. packages/core extends this, which is what stops it reaching for browser globals.",
+    "_comment": "Plain TypeScript with no DOM, so the logic packages cannot reach for browser globals.",
     "compilerOptions": {
         "target": "ES2022",
         "lib": ["ES2023"],

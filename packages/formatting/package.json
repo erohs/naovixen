@@ -11,7 +11,7 @@
         "test": "vitest run"
     },
     "devDependencies": {
-        "@naovixen/typescript-config": "workspace:*",
-        "vitest": "5.0.2"
+        "@naovixen/nvpack": "workspace:*",
+        "vitest": "catalog:"
     }
 }

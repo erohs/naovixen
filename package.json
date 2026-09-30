@@ -17,8 +17,7 @@
         "format:check": "prettier --check ."
     },
     "devDependencies": {
-        "@naovixen/eslint-config": "workspace:*",
-        "@naovixen/typescript-config": "workspace:*",
+        "@naovixen/nvpack": "workspace:*",
         "eslint": "10.11.0",
         "prettier": "3.9.9",
         "stylelint": "17.15.0",

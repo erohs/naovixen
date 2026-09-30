@@ -1,0 +1,41 @@
+{
+    "name": "@naovixen/nvpack",
+    "private": true,
+    "type": "module",
+    "exports": {
+        "./eslint": "./src/eslint/index.js",
+        "./tsconfig/base.json": "./src/tsconfig/base.json",
+        "./tsconfig/react-library.json": "./src/tsconfig/react-library.json",
+        "./tsconfig/app.json": "./src/tsconfig/app.json",
+        "./vitest": "./src/vitest/ReactTestConfig.const.ts",
+        "./vitest-setup": "./src/vitest/VitestSetup.effect.ts",
+        "./testing": "./src/testing/FindAxeViolations.function.ts"
+    },
+    "scripts": {
+        "lint": "eslint .",
+        "typecheck": "tsc --noEmit"
+    },
+    "dependencies": {
+        "@eslint-react/eslint-plugin": "5.20.5",
+        "@eslint/js": "10.0.1",
+        "@vitest/eslint-plugin": "1.6.27",
+        "axe-core": "4.13.0",
+        "eslint-config-prettier": "10.1.8",
+        "eslint-import-resolver-typescript": "4.4.5",
+        "eslint-plugin-import-x": "4.17.1",
+        "eslint-plugin-jsx-a11y-x": "0.2.0",
+        "eslint-plugin-react-hooks": "7.1.1",
+        "eslint-plugin-testing-library": "7.16.2",
+        "globals": "17.12.0",
+        "typescript-eslint": "8.70.1"
+    },
+    "peerDependencies": {
+        "@testing-library/react": "catalog:",
+        "eslint": "^10.0.0",
+        "vitest": "catalog:"
+    },
+    "devDependencies": {
+        "@testing-library/react": "catalog:",
+        "vitest": "catalog:"
+    }
+}

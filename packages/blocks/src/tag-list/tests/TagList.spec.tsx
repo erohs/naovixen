@@ -1,7 +1,7 @@
 import { render, screen, within } from '@testing-library/react';
 import { describe, expect, test } from 'vitest';
 
-import { findAxeViolations } from '@naovixen/component-testing';
+import { findAxeViolations } from '@naovixen/nvpack/testing';
 import { TagList } from '../TagList.component';
 
 describe('Using TagList', () => {

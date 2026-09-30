@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react';
 import { describe, expect, test } from 'vitest';
 
 import { HeadingSize } from '../enums/HeadingSize';
-import { findAxeViolations } from '@naovixen/component-testing';
+import { findAxeViolations } from '@naovixen/nvpack/testing';
 import { Heading } from '../Heading.component';
 
 describe('Using Heading', () => {

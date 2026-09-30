@@ -1,4 +1,4 @@
-import { findAxeViolations } from '@naovixen/component-testing';
+import { findAxeViolations } from '@naovixen/nvpack/testing';
 import { render, screen } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
 import type { UserEvent } from '@testing-library/user-event';

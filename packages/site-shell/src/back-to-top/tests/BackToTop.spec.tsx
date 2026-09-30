@@ -1,4 +1,4 @@
-import { findAxeViolations } from '@naovixen/component-testing';
+import { findAxeViolations } from '@naovixen/nvpack/testing';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { afterEach, describe, expect, test } from 'vitest';
 

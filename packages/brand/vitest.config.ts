@@ -1,8 +1,3 @@
-import { defineConfig } from 'vitest/config';
+import { reactTestConfig } from '@naovixen/nvpack/vitest';
 
-export default defineConfig({
-    test: {
-        environment: 'jsdom',
-        setupFiles: ['@naovixen/component-testing/setup'],
-    },
-});
+export default reactTestConfig;

@@ -1,5 +1,5 @@
 import { downloadIcon, ExternalLink, externalLinkIcon, gitHubIcon } from '@naovixen/components';
-import { findAxeViolations } from '@naovixen/component-testing';
+import { findAxeViolations } from '@naovixen/nvpack/testing';
 import { render, screen } from '@testing-library/react';
 import { describe, expect, test } from 'vitest';
 

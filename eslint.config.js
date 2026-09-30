@@ -1,12 +1,12 @@
 import { fileURLToPath } from 'node:url';
 import { dirname } from 'node:path';
 
-import { createBaseConfig, createReactConfig, createTestConfig } from '@naovixen/eslint-config';
+import { createBaseConfig, createReactConfig, createTestConfig } from '@naovixen/nvpack/eslint';
 
 const repositoryRoot = dirname(fileURLToPath(import.meta.url));
 
 /** Every React package may use the shared test setup in its specs. */
-const testing = ['component-testing'];
+const testing = ['nvpack'];
 
 const noReact = [
     { name: 'react', message: 'This package is framework-free. Inject the capability instead.' },
@@ -51,7 +51,6 @@ export default [
     restrictImports('formatting', { paths: noReact }),
     restrictImports('cms', { mayImport: ['models'], paths: noReact }),
     restrictImports('seo', { mayImport: ['models'], paths: noReact }),
-    restrictImports('component-testing', {}),
 
     restrictImports('components', { mayImport: ['formatting', 'theming', ...testing] }),
     restrictImports('layout', { mayImport: ['formatting', 'theming', ...testing] }),

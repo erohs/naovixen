@@ -10,9 +10,9 @@
         "typecheck": "tsc --noEmit"
     },
     "dependencies": {
-        "@portabletext/types": "4.0.2"
+        "@portabletext/types": "catalog:"
     },
     "devDependencies": {
-        "@naovixen/typescript-config": "workspace:*"
+        "@naovixen/nvpack": "workspace:*"
     }
 }

@@ -1,5 +1,5 @@
 {
-    "extends": "@naovixen/typescript-config/base.json",
+    "extends": "@naovixen/nvpack/tsconfig/base.json",
     "compilerOptions": {
         "types": []
     },

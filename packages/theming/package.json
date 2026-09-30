@@ -13,10 +13,10 @@
         "test": "vitest run"
     },
     "devDependencies": {
-        "@naovixen/typescript-config": "workspace:*",
-        "@types/node": "24.19.0",
+        "@naovixen/nvpack": "workspace:*",
+        "@types/node": "catalog:",
         "tsx": "4.23.15",
-        "vitest": "5.0.2"
+        "vitest": "catalog:"
     },
     "dependencies": {
         "@fontsource-variable/fredoka": "5.3.0",

@@ -1,4 +1,4 @@
-import { findAxeViolations } from '@naovixen/component-testing';
+import { findAxeViolations } from '@naovixen/nvpack/testing';
 import { typeScriptIcon } from '@naovixen/components';
 import { render, screen } from '@testing-library/react';
 import { describe, expect, test } from 'vitest';
