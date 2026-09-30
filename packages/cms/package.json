@@ -11,7 +11,11 @@
         "test": "vitest run"
     },
     "dependencies": {
-        "@portabletext/types": "catalog:"
+        "@naovixen/utilities": "workspace:*",
+        "@portabletext/types": "catalog:",
+        "@sanity/client": "8.7.0",
+        "@sanity/image-url": "2.1.1",
+        "groq": "6.16.0"
     },
     "devDependencies": {
         "@naovixen/nvpack": "workspace:*",
