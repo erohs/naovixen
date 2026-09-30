@@ -1,5 +1,5 @@
 import type { FunctionComponent } from 'react';
-import { Heart } from '@naovixen/brand';
+import { heartIcon, Icon } from '@naovixen/components';
 import { Container, Grid } from '@naovixen/layout';
 
 import { placeholderPhotoDescription } from '../../constants/PlaceholderPhotoDescription.const';
@@ -12,7 +12,7 @@ export const AboutSection: FunctionComponent = () => (
             <AboutSummary />
             <div className="nx-about-section__photo">
                 <PhotoPlaceholder description={placeholderPhotoDescription} />
-                <Heart className="nx-about-section__heart" />
+                <Icon source={heartIcon} className="nx-about-section__heart" />
             </div>
         </Grid>
     </Container>

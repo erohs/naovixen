@@ -54,10 +54,6 @@ export default [
     restrictImports('components', { mayImport: ['utilities', 'theming', ...testing] }),
     restrictImports('layout', { mayImport: ['utilities', 'theming', ...testing] }),
     restrictImports('blocks', { mayImport: ['components', 'utilities', 'layout', ...testing] }),
-    restrictImports('brand', { mayImport: ['components', 'utilities', ...testing] }),
-    restrictImports('site-shell', {
-        mayImport: ['blocks', 'brand', 'components', 'utilities', 'layout', 'theming', ...testing],
-    }),
     restrictImports('portable-text', {
         mayImport: ['blocks', 'components', 'utilities', 'cms', ...testing],
     }),

@@ -235,9 +235,6 @@ importers:
       '@naovixen/blocks':
         specifier: workspace:*
         version: link:../../packages/blocks
-      '@naovixen/brand':
-        specifier: workspace:*
-        version: link:../../packages/brand
       '@naovixen/cms':
         specifier: workspace:*
         version: link:../../packages/cms
@@ -253,9 +250,6 @@ importers:
       '@naovixen/seo':
         specifier: workspace:*
         version: link:../../packages/seo
-      '@naovixen/site-shell':
-        specifier: workspace:*
-        version: link:../../packages/site-shell
       '@naovixen/theming':
         specifier: workspace:*
         version: link:../../packages/theming
@@ -352,46 +346,6 @@ importers:
         specifier: 'catalog:'
         version: 5.0.2(@types/node@24.19.0)(jsdom@30.1.1)(vite@8.3.1(@types/node@24.19.0)(jiti@2.7.0))
 
-  packages/brand:
-    dependencies:
-      '@naovixen/components':
-        specifier: workspace:*
-        version: link:../components
-      '@naovixen/utilities':
-        specifier: workspace:*
-        version: link:../utilities
-    devDependencies:
-      '@naovixen/nvpack':
-        specifier: workspace:*
-        version: link:../nvpack
-      '@testing-library/dom':
-        specifier: 'catalog:'
-        version: 10.4.2
-      '@testing-library/react':
-        specifier: 'catalog:'
-        version: 16.3.3(@testing-library/dom@10.4.2)(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
-      '@testing-library/user-event':
-        specifier: 'catalog:'
-        version: 14.6.7(@testing-library/dom@10.4.2)
-      '@types/react':
-        specifier: 'catalog:'
-        version: 19.3.0
-      '@types/react-dom':
-        specifier: 'catalog:'
-        version: 19.3.0(@types/react@19.3.0)
-      jsdom:
-        specifier: 'catalog:'
-        version: 30.1.1
-      react:
-        specifier: 'catalog:'
-        version: 19.3.0
-      react-dom:
-        specifier: 'catalog:'
-        version: 19.3.0(react@19.3.0)
-      vitest:
-        specifier: 'catalog:'
-        version: 5.0.2(@types/node@24.19.0)(jsdom@30.1.1)(vite@8.3.1(@types/node@24.19.0)(jiti@2.7.0))
-
   packages/cms:
     dependencies:
       '@portabletext/types':
@@ -407,6 +361,9 @@ importers:
 
   packages/components:
     dependencies:
+      '@naovixen/theming':
+        specifier: workspace:*
+        version: link:../theming
       '@naovixen/utilities':
         specifier: workspace:*
         version: link:../utilities
@@ -585,58 +542,6 @@ importers:
       '@naovixen/nvpack':
         specifier: workspace:*
         version: link:../nvpack
-      vitest:
-        specifier: 'catalog:'
-        version: 5.0.2(@types/node@24.19.0)(jsdom@30.1.1)(vite@8.3.1(@types/node@24.19.0)(jiti@2.7.0))
-
-  packages/site-shell:
-    dependencies:
-      '@naovixen/blocks':
-        specifier: workspace:*
-        version: link:../blocks
-      '@naovixen/brand':
-        specifier: workspace:*
-        version: link:../brand
-      '@naovixen/components':
-        specifier: workspace:*
-        version: link:../components
-      '@naovixen/layout':
-        specifier: workspace:*
-        version: link:../layout
-      '@naovixen/theming':
-        specifier: workspace:*
-        version: link:../theming
-      '@naovixen/utilities':
-        specifier: workspace:*
-        version: link:../utilities
-    devDependencies:
-      '@naovixen/nvpack':
-        specifier: workspace:*
-        version: link:../nvpack
-      '@testing-library/dom':
-        specifier: 'catalog:'
-        version: 10.4.2
-      '@testing-library/react':
-        specifier: 'catalog:'
-        version: 16.3.3(@testing-library/dom@10.4.2)(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
-      '@testing-library/user-event':
-        specifier: 'catalog:'
-        version: 14.6.7(@testing-library/dom@10.4.2)
-      '@types/react':
-        specifier: 'catalog:'
-        version: 19.3.0
-      '@types/react-dom':
-        specifier: 'catalog:'
-        version: 19.3.0(@types/react@19.3.0)
-      jsdom:
-        specifier: 'catalog:'
-        version: 30.1.1
-      react:
-        specifier: 'catalog:'
-        version: 19.3.0
-      react-dom:
-        specifier: 'catalog:'
-        version: 19.3.0(react@19.3.0)
       vitest:
         specifier: 'catalog:'
         version: 5.0.2(@types/node@24.19.0)(jsdom@30.1.1)(vite@8.3.1(@types/node@24.19.0)(jiti@2.7.0))

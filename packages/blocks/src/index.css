@@ -1,4 +1,8 @@
-/* Imported after the components' stylesheet, so a block's rules win over a component's. */
+/*
+ * Imported after the components' stylesheet, so a block's rules win over a component's. A
+ * block that composes another comes after it: the navigation after its list, the header after
+ * the logo and mobile menu, whose breakpoint rules it overrides.
+ */
 @import url('./breadcrumb/styles/breadcrumb.css') layer(components);
 @import url('./callout/styles/callout.css') layer(components);
 @import url('./card/styles/card.css') layer(components);
@@ -6,7 +10,15 @@
 @import url('./figure/styles/figure.css') layer(components);
 @import url('./hand-drawn-rule/styles/hand-drawn-rule.css') layer(components);
 @import url('./link-tile/styles/link-tile.css') layer(components);
-@import url('./navigation-list/styles/navigation-list.css') layer(components);
 @import url('./section-heading/styles/section-heading.css') layer(components);
 @import url('./speech-bubble/styles/speech-bubble.css') layer(components);
 @import url('./tag-list/styles/tag-list.css') layer(components);
+@import url('./back-to-top/styles/back-to-top.css') layer(components);
+@import url('./navigation-list/styles/navigation-list.css') layer(components);
+@import url('./navigation/styles/navigation.css') layer(components);
+@import url('./mobile-menu/styles/mobile-menu.css') layer(components);
+@import url('./logo/styles/logo.css') layer(components);
+@import url('./header/styles/header.css') layer(components);
+@import url('./social-link-list/styles/social-link-list.css') layer(components);
+@import url('./footer-column/styles/footer-column.css') layer(components);
+@import url('./footer/styles/footer.css') layer(components);

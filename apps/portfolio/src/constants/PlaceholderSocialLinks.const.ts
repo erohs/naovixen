@@ -1,4 +1,4 @@
-import type { ISocialLink } from '@naovixen/site-shell';
+import type { ISocialLink } from '@naovixen/blocks';
 
 import { placeholderEmailAddress } from './PlaceholderEmailAddress.const';
 

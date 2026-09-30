@@ -8,3 +8,4 @@
 @import url('./code/styles/code.css') layer(components);
 @import url('./tag/styles/tag.css') layer(components);
 @import url('./skip-link/styles/skip-link.css') layer(components);
+@import url('./theme-toggle/styles/theme-toggle.css') layer(components);

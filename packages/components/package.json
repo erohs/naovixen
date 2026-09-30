@@ -12,6 +12,7 @@
         "test": "vitest run"
     },
     "dependencies": {
+        "@naovixen/theming": "workspace:*",
         "@naovixen/utilities": "workspace:*"
     },
     "peerDependencies": {

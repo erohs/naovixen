@@ -1,0 +1,43 @@
+/*
+ * Media queries cannot read custom properties, so the breakpoint is written out: 51.25rem is
+ * 820px at the default size.
+ */
+.nx-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-between-content);
+    padding-block-start: calc(var(--space-between-content) + var(--space-between-lines));
+}
+
+.nx-header__home {
+    margin-inline-end: auto;
+    font-weight: var(--font-weight-regular);
+    text-decoration: none;
+}
+
+/* The logo is a size up in the header, where it stands alone. */
+.nx-header__home .nx-logo__wordmark {
+    font-size: var(--font-size-lead);
+}
+
+/* Together with the row's gap, the actions sit as far from the last link as the links sit from each other. */
+.nx-header__navigation {
+    margin-inline-end: calc(var(--space-between-groups) - var(--space-between-content));
+}
+
+.nx-header__menu {
+    display: contents;
+}
+
+@media (width < 51.25rem) {
+    .nx-header__navigation {
+        display: none;
+    }
+}
+
+@media (width >= 51.25rem) {
+    .nx-header__menu {
+        display: none;
+    }
+}

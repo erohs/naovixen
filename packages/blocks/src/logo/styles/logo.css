@@ -1,0 +1,52 @@
+.nx-logo {
+    --logo-cursor-block-size: 1em;
+
+    display: inline-flex;
+    align-items: center;
+    gap: var(--border-width-standout);
+}
+
+.nx-logo__wordmark {
+    display: inline-flex;
+    align-items: baseline;
+    gap: var(--space-between-text);
+    font-family: var(--font-family-code);
+    font-size: var(--font-size-body);
+    white-space: nowrap;
+}
+
+.nx-logo__bracket {
+    color: var(--color-text-accent);
+    font-weight: var(--font-weight-semi-bold);
+}
+
+.nx-logo__cursor {
+    inline-size: var(--border-width-standout);
+    block-size: var(--logo-cursor-block-size);
+    background-color: currentcolor;
+    opacity: 0;
+}
+
+a:is(:hover, :focus-visible) .nx-logo__cursor {
+    opacity: 1;
+    animation: nx-logo-blink calc(2 * var(--duration-slow)) steps(1) infinite;
+}
+
+@keyframes nx-logo-blink {
+    50% {
+        opacity: 0;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    a:is(:hover, :focus-visible) .nx-logo__cursor {
+        animation: none;
+    }
+}
+
+/* Forced colours drop background colours, so the cursor is drawn as a border instead. */
+@media (forced-colors: active) {
+    .nx-logo__cursor {
+        border-inline-start: var(--border-width-standout) solid;
+    }
+}

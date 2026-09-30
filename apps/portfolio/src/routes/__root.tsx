@@ -18,9 +18,7 @@ import '@naovixen/theming/styles.css';
 import '@naovixen/components/styles.css';
 import '@naovixen/layout/styles.css';
 import '@naovixen/blocks/styles.css';
-import '@naovixen/brand/styles.css';
 import '@naovixen/portable-text/styles.css';
-import '@naovixen/site-shell/styles.css';
 import '../index.css';
 
 /**

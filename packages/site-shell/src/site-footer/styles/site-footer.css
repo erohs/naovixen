@@ -1,8 +1,0 @@
-.nx-site-footer {
-    border-block-start: var(--border-width-standout) solid var(--color-border);
-    background-color: var(--color-background-surface);
-}
-
-.nx-site-footer__content {
-    padding-block-start: var(--space-padding-panel);
-}

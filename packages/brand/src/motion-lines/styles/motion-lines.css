@@ -1,7 +1,0 @@
-/* Filled in currentcolor, so forced colours swap in the system text colour on their own. */
-.nx-motion-lines {
-    flex-shrink: 0;
-    overflow: visible;
-    color: var(--color-border);
-    fill: currentcolor;
-}

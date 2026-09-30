@@ -1,6 +1,5 @@
 import type { FunctionComponent } from 'react';
-import { Paw } from '@naovixen/brand';
-import { Heading, HeadingSize, Text, TextVariant } from '@naovixen/components';
+import { Heading, HeadingSize, Icon, pawIcon, Text, TextVariant } from '@naovixen/components';
 import { Container } from '@naovixen/layout';
 
 import { placeholderHomePage } from '../../constants/PlaceholderHomePage.const';
@@ -14,7 +13,7 @@ export const HeroSection: FunctionComponent = () => (
             Naomi{' '}
             <span className="nx-hero-section__surname">
                 <span className="nx-hero-section__highlight">Shore</span>
-                <Paw className="nx-hero-section__paw" />
+                <Icon source={pawIcon} className="nx-hero-section__paw" />
             </span>
         </Heading>
         <Text variant={TextVariant.Lead} className="nx-hero-section__summary">

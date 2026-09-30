@@ -1,7 +1,7 @@
 import type { FunctionComponent } from 'react';
 import { useLocation } from '@tanstack/react-router';
-import { SkipLink } from '@naovixen/components';
-import { BackToTop, RouteAnnouncer, SiteHeader, useDocumentTheme } from '@naovixen/site-shell';
+import { BackToTop, Header, RouteAnnouncer } from '@naovixen/blocks';
+import { SkipLink, ThemeToggle, useDocumentTheme } from '@naovixen/components';
 
 import { navigationItems } from '../../constants/NavigationItems.const';
 import { PortfolioFooter } from '../portfolio-footer/PortfolioFooter.component';
@@ -18,10 +18,11 @@ export const SiteFrame: FunctionComponent<ISiteFrameProps> = ({ year, children }
     return (
         <div className="nx-site-frame">
             <SkipLink href="#main">Skip to content</SkipLink>
-            <SiteHeader
-                navigationItems={navigationItems}
-                currentPath={currentPath}
+            <Header
+                items={navigationItems}
+                currentHref={currentPath}
                 linkComponent={RoutedLink}
+                actions={<ThemeToggle />}
             />
             <main id="main" tabIndex={-1} className="nx-site-frame__main">
                 {children}
