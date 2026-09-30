@@ -1,6 +1,0 @@
-.nx-case-study-link {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--space-between-text);
-    font-weight: var(--font-weight-semi-bold);
-}

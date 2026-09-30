@@ -1,7 +1,0 @@
-/* Pressed reads as sunk into its shadow, so the state is not shown by colour alone. */
-.nx-toggle-button[aria-pressed='true'] {
-    translate: var(--size-shadow-offset-resting) var(--size-shadow-offset-resting);
-    box-shadow: none;
-    background-color: var(--color-background-accent);
-    color: var(--color-text-on-accent);
-}

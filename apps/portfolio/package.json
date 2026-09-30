@@ -15,7 +15,6 @@
         "@naovixen/brand": "workspace:*",
         "@naovixen/cms": "workspace:*",
         "@naovixen/components": "workspace:*",
-        "@naovixen/design-system": "workspace:*",
         "@naovixen/formatting": "workspace:*",
         "@naovixen/layout": "workspace:*",
         "@naovixen/models": "workspace:*",

@@ -71,19 +71,6 @@ export default [
     restrictImports('portable-text', {
         mayImport: ['blocks', 'components', 'formatting', 'models', ...testing],
     }),
-    restrictImports('design-system', {
-        mayImport: [
-            'blocks',
-            'brand',
-            'components',
-            'formatting',
-            'layout',
-            'models',
-            'portable-text',
-            'site-shell',
-            'theming',
-        ],
-    }),
 
     {
         /** Icon sources are static strings in this package's own files, never user input. */
