@@ -4,13 +4,16 @@ import type { SessionConfig } from '@tanstack/react-start/server';
 const previewLengthInSeconds = 60 * 60;
 
 /**
- * `undefined` when no secret is configured, which turns preview off rather than failing.
- * `SameSite=None` so the cookie also reaches the site inside the Studio's preview frame.
+ * `undefined` unless both the cookie secret and the read token are configured, which turns
+ * preview off rather than failing.
+ * `SameSite=None` and partitioned, so the cookie reaches the site inside the Studio's preview
+ * frame, and only there.
  */
 export function createPreviewSessionConfig(): SessionConfig | undefined {
     const password = process.env.PREVIEW_SESSION_SECRET;
+    const token = process.env.SANITY_API_READ_TOKEN;
 
-    if (password === undefined || password === '') {
+    if (password === undefined || password === '' || token === undefined || token === '') {
         return undefined;
     }
 
@@ -19,6 +22,6 @@ export function createPreviewSessionConfig(): SessionConfig | undefined {
         name: 'nv-preview',
         maxAge: previewLengthInSeconds,
         sessionHeader: false,
-        cookie: { httpOnly: true, secure: true, sameSite: 'none', path: '/' },
+        cookie: { httpOnly: true, secure: true, sameSite: 'none', partitioned: true, path: '/' },
     };
 }

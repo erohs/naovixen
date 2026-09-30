@@ -19,6 +19,8 @@ import { Route as BlogSlugRouteImport } from './routes/blog/$slug'
 import { Route as BlogFeedDotxmlRouteImport } from './routes/blog/feed[.]xml'
 import { Route as WorkIndexRouteImport } from './routes/work/index'
 import { Route as WorkSlugRouteImport } from './routes/work/$slug'
+import { Route as ApiPreviewDisableRouteImport } from './routes/api/preview/disable'
+import { Route as ApiPreviewEnableRouteImport } from './routes/api/preview/enable'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -70,6 +72,16 @@ const WorkSlugRoute = WorkSlugRouteImport.update({
   path: '/work/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPreviewDisableRoute = ApiPreviewDisableRouteImport.update({
+  id: '/api/preview/disable',
+  path: '/api/preview/disable',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiPreviewEnableRoute = ApiPreviewEnableRouteImport.update({
+  id: '/api/preview/enable',
+  path: '/api/preview/enable',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -82,6 +94,8 @@ export interface FileRoutesByFullPath {
   '/work/$slug': typeof WorkSlugRoute
   '/blog/': typeof BlogIndexRoute
   '/work/': typeof WorkIndexRoute
+  '/api/preview/disable': typeof ApiPreviewDisableRoute
+  '/api/preview/enable': typeof ApiPreviewEnableRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -94,6 +108,8 @@ export interface FileRoutesByTo {
   '/work/$slug': typeof WorkSlugRoute
   '/blog': typeof BlogIndexRoute
   '/work': typeof WorkIndexRoute
+  '/api/preview/disable': typeof ApiPreviewDisableRoute
+  '/api/preview/enable': typeof ApiPreviewEnableRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -107,6 +123,8 @@ export interface FileRoutesById {
   '/work/$slug': typeof WorkSlugRoute
   '/blog/': typeof BlogIndexRoute
   '/work/': typeof WorkIndexRoute
+  '/api/preview/disable': typeof ApiPreviewDisableRoute
+  '/api/preview/enable': typeof ApiPreviewEnableRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -121,6 +139,8 @@ export interface FileRouteTypes {
     | '/work/$slug'
     | '/blog/'
     | '/work/'
+    | '/api/preview/disable'
+    | '/api/preview/enable'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -133,6 +153,8 @@ export interface FileRouteTypes {
     | '/work/$slug'
     | '/blog'
     | '/work'
+    | '/api/preview/disable'
+    | '/api/preview/enable'
   id:
     | '__root__'
     | '/'
@@ -145,6 +167,8 @@ export interface FileRouteTypes {
     | '/work/$slug'
     | '/blog/'
     | '/work/'
+    | '/api/preview/disable'
+    | '/api/preview/enable'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -158,6 +182,8 @@ export interface RootRouteChildren {
   WorkSlugRoute: typeof WorkSlugRoute
   BlogIndexRoute: typeof BlogIndexRoute
   WorkIndexRoute: typeof WorkIndexRoute
+  ApiPreviewDisableRoute: typeof ApiPreviewDisableRoute
+  ApiPreviewEnableRoute: typeof ApiPreviewEnableRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -232,6 +258,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof WorkSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/preview/disable': {
+      id: '/api/preview/disable'
+      path: '/api/preview/disable'
+      fullPath: '/api/preview/disable'
+      preLoaderRoute: typeof ApiPreviewDisableRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/preview/enable': {
+      id: '/api/preview/enable'
+      path: '/api/preview/enable'
+      fullPath: '/api/preview/enable'
+      preLoaderRoute: typeof ApiPreviewEnableRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -246,6 +286,8 @@ const rootRouteChildren: RootRouteChildren = {
   WorkSlugRoute: WorkSlugRoute,
   BlogIndexRoute: BlogIndexRoute,
   WorkIndexRoute: WorkIndexRoute,
+  ApiPreviewDisableRoute: ApiPreviewDisableRoute,
+  ApiPreviewEnableRoute: ApiPreviewEnableRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

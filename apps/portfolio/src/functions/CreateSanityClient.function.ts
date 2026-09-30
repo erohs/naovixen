@@ -17,7 +17,7 @@ export function createSanityClient(isPreview: boolean): SanityClient {
 
     const token = process.env.SANITY_API_READ_TOKEN;
 
-    if (!isPreview || token === undefined) {
+    if (!isPreview || token === undefined || token === '') {
         return publishedClient;
     }
 
