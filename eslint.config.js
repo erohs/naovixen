@@ -57,9 +57,8 @@ export default [
     restrictImports('seo', { mayImport: ['utilities'], paths: noReact }),
 
     restrictImports('components', { mayImport: ['utilities', 'theming'] }),
-    restrictImports('blocks', { mayImport: ['components', 'utilities'] }),
     restrictImports('rich-content', {
-        mayImport: ['blocks', 'components', 'utilities', 'cms'],
+        mayImport: ['components', 'utilities', 'cms'],
     }),
 
     {

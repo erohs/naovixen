@@ -1,11 +1,11 @@
 import type { FunctionComponent, ReactNode } from 'react';
 import { useId } from 'react';
-import { ExclamationBubble, SectionHeading } from '@naovixen/blocks';
 import {
     arrowDownIcon,
     arrowRightIcon,
     ButtonVariant,
     downloadIcon,
+    ExclamationBubble,
     graduationCapIcon,
     Heading,
     HeadingSize,
@@ -15,6 +15,7 @@ import {
     LinkIcon,
     mailIcon,
     pawIcon,
+    SectionHeading,
     Text,
     TextVariant,
     VisuallyHidden,

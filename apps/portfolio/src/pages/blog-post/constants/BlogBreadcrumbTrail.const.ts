@@ -1,4 +1,4 @@
-import type { IBreadcrumbItem } from '@naovixen/blocks';
+import type { IBreadcrumbItem } from '@naovixen/components';
 
 import { homeBreadcrumbTrail } from '../../../constants/HomeBreadcrumbTrail.const';
 

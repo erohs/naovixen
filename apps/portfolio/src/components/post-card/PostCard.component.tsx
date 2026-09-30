@@ -1,6 +1,5 @@
 import type { FunctionComponent } from 'react';
-import { Card } from '@naovixen/blocks';
-import { Heading, HeadingSize, Link, Text } from '@naovixen/components';
+import { Card, Heading, HeadingSize, Link, Text } from '@naovixen/components';
 import { joinClassNames } from '@naovixen/utilities';
 
 import { PostDetails } from '../post-details/PostDetails.component';

@@ -1,4 +1,4 @@
-import type { FigureShape } from '@naovixen/blocks';
+import type { FigureShape } from '@naovixen/components';
 import type { IImage } from '@naovixen/cms';
 import type { TypedObject } from '@portabletext/types';
 

@@ -1,10 +1,11 @@
 import type { FunctionComponent } from 'react';
-import { Card, TagList } from '@naovixen/blocks';
 import {
     arrowRightIcon,
+    Card,
     Heading,
     HeadingSize,
     Image,
+    TagList,
     Text,
     VisuallyHidden,
 } from '@naovixen/components';

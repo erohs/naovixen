@@ -9,7 +9,6 @@
         "test": "vitest run"
     },
     "dependencies": {
-        "@naovixen/blocks": "workspace:*",
         "@naovixen/rich-content": "workspace:*",
         "@naovixen/components": "workspace:*",
         "@naovixen/theming": "workspace:*",

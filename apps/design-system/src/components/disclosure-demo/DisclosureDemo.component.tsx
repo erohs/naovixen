@@ -1,7 +1,6 @@
 import type { FunctionComponent } from 'react';
 import { useState } from 'react';
-import { Disclosure } from '@naovixen/blocks';
-import { Text } from '@naovixen/components';
+import { Disclosure, Text } from '@naovixen/components';
 
 import type { IDisclosureDemoProps } from './interfaces/IDisclosureDemoProps';
 

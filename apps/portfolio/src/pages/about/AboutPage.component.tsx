@@ -1,11 +1,14 @@
 import type { FunctionComponent } from 'react';
-import { Breadcrumb, HandDrawnRule, SectionHeading, SpeechBubble } from '@naovixen/blocks';
 import {
     arrowRightIcon,
+    Breadcrumb,
     ButtonVariant,
     downloadIcon,
+    HandDrawnRule,
     Icon,
     LinkButton,
+    SectionHeading,
+    SpeechBubble,
     Text,
     TextVariant,
 } from '@naovixen/components';

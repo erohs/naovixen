@@ -1,7 +1,13 @@
 import type { FunctionComponent } from 'react';
 import { useLocation } from '@tanstack/react-router';
-import { BackToTop, Header, RouteAnnouncer } from '@naovixen/blocks';
-import { SkipLink, ThemeToggle, useDocumentTheme } from '@naovixen/components';
+import {
+    BackToTop,
+    Header,
+    RouteAnnouncer,
+    SkipLink,
+    ThemeToggle,
+    useDocumentTheme,
+} from '@naovixen/components';
 
 import { navigationItems } from '../../constants/NavigationItems.const';
 import { SiteFooter } from '../site-footer/SiteFooter.component';

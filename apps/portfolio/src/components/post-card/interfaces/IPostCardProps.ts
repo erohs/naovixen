@@ -1,6 +1,5 @@
 import type { ComponentType } from 'react';
-import type { ICardProps } from '@naovixen/blocks';
-import type { HeadingLevel, LinkProps } from '@naovixen/components';
+import type { HeadingLevel, ICardProps, LinkProps } from '@naovixen/components';
 import type { IBlogPostSummary } from '@naovixen/cms';
 
 export interface IPostCardProps extends Omit<ICardProps, 'children'> {

@@ -1,16 +1,17 @@
 import type { FunctionComponent } from 'react';
-import { Breadcrumb, HandDrawnRule } from '@naovixen/blocks';
-import { RichContent } from '@naovixen/rich-content';
-import type { IBlogPostSummary } from '@naovixen/cms';
 import {
     arrowLeftIcon,
     arrowRightIcon,
+    Breadcrumb,
+    HandDrawnRule,
     Heading,
     HeadingSize,
     IconPosition,
     Text,
     TextVariant,
 } from '@naovixen/components';
+import { RichContent } from '@naovixen/rich-content';
+import type { IBlogPostSummary } from '@naovixen/cms';
 
 import { Page } from '../../components/page/Page.component';
 import { PostDetails } from '../../components/post-details/PostDetails.component';

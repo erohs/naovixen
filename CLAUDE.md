@@ -45,8 +45,7 @@ packages/utilities    small framework-free helpers several packages use
 packages/theming      tokens, reset, base styles, fonts, the theme controller
 packages/cms          the Sanity blog and project repositories, and the types they return
 packages/seo          head tags, JSON-LD, the sitemap and the feed, with the types they read
-packages/components   generic HTML-level components, icons, the theme toggle
-packages/blocks       compositions, and naovixen's header, footer, logo and navigation
+packages/components   every React component, from Button to Header, plus icons and the theme toggle
 packages/rich-content renders Portable Text content blocks with our components
 ```
 
@@ -61,9 +60,10 @@ omits the `DOM` lib, so reaching for `window` is a compile error. Types live wit
 package that owns them; a package that only reads a shape declares the small one it needs.
 
 `components` pass their element's intrinsic props and ref through and know nothing of
-routers or content. `blocks` compose them; brand and site pieces (Logo, Header, Footer)
-belong here, taking their links and content as props so any naovixen site can use them.
-Layout is plain CSS in the owner's stylesheet, not a component.
+routers or content. Larger pieces compose smaller ones in the same package; brand and site
+pieces (Logo, Header, Footer) belong there too, taking their links and content as props so
+any naovixen site can use them. Layout is plain CSS in the owner's stylesheet, not a
+component.
 
 Variation comes from composition, never from a switch: LinkIcon is Link plus Icon, not a
 `kind` prop on Link. A consumer that wants something different composes its own.
@@ -100,7 +100,7 @@ whose `src/` holds component folders and nothing else.
 In an app, `pages/<page>/` holds a page. Sections only that page uses are unexported
 functions in the page's own file, not folders of their own. `components/` holds what two
 or more pages share. Extract a component only when something reuses it, and when it is
-generic enough for another site, put it in `blocks` instead.
+generic enough for another site, put it in `components` instead.
 
 One barrel per package, `src/index.ts`. No nested index files, no re-export chains.
 

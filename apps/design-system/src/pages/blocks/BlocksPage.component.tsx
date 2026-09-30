@@ -2,6 +2,7 @@ import type { FunctionComponent } from 'react';
 import {
     BackToTop,
     Breadcrumb,
+    Button,
     Callout,
     Card,
     CodeBlock,
@@ -11,8 +12,11 @@ import {
     FigureShape,
     Footer,
     FooterColumn,
+    gitHubIcon,
     HandDrawnRule,
     Header,
+    Heading,
+    Link,
     LinkTile,
     Logo,
     MobileMenu,
@@ -24,8 +28,8 @@ import {
     SpeechBubble,
     SpeechBubbleTail,
     TagList,
-} from '@naovixen/blocks';
-import { Button, gitHubIcon, Heading, Link, Text } from '@naovixen/components';
+    Text,
+} from '@naovixen/components';
 
 import { DisclosureDemo } from '../../components/disclosure-demo/DisclosureDemo.component';
 import { Example } from '../../components/example/Example.component';

@@ -19,7 +19,6 @@ import type { IRouterContext } from '../interfaces/IRouterContext';
 /** Order matters: theming declares the cascade layers that the other stylesheets are filed into. */
 import '@naovixen/theming/styles.css';
 import '@naovixen/components/styles.css';
-import '@naovixen/blocks/styles.css';
 import '@naovixen/rich-content/styles.css';
 import '../index.css';
 

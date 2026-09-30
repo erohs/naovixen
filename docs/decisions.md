@@ -179,6 +179,12 @@ the packages that own each type; `layout` became CSS in each owner; `brand` and
 `site-shell` folded into `components` and `blocks`. Do not split a package back out for
 tidiness alone.
 
+Later the same day `blocks` folded into `components` as well. The split by kind (HTML-level
+versus composition) was not decidable at the point of use: `LinkIcon` composed and sat in
+`components`, `Card` was a leaf and sat in `blocks`. Both apps always imported both. One
+React package, with the design system grouping its pages by purpose, answers "which
+component do I use" better than a second package did.
+
 ## Tests check logic only
 
 A test that a prop or class name reaches the DOM fails only when the code is rewritten,

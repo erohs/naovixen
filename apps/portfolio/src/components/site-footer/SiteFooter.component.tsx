@@ -1,6 +1,14 @@
 import type { FunctionComponent } from 'react';
-import { Footer, FooterColumn, Logo, NavigationList, SocialLinkList } from '@naovixen/blocks';
-import { navigationLinkClassName, Text, TextVariant } from '@naovixen/components';
+import {
+    Footer,
+    FooterColumn,
+    Logo,
+    navigationLinkClassName,
+    NavigationList,
+    SocialLinkList,
+    Text,
+    TextVariant,
+} from '@naovixen/components';
 
 import { navigationItems } from '../../constants/NavigationItems.const';
 import { privacyLink } from '../../constants/PrivacyLink.const';

@@ -1,6 +1,5 @@
 import type { FunctionComponent } from 'react';
-import { Breadcrumb } from '@naovixen/blocks';
-import { Heading, HeadingSize, Link, Text, TextVariant } from '@naovixen/components';
+import { Breadcrumb, Heading, HeadingSize, Link, Text, TextVariant } from '@naovixen/components';
 import { formatDate } from '@naovixen/utilities';
 
 import { Page } from '../../components/page/Page.component';

@@ -1,4 +1,4 @@
-import type { INavigationItem } from '@naovixen/blocks';
+import type { INavigationItem } from '@naovixen/components';
 
 export const exampleNavigationItems: readonly INavigationItem[] = [
     { label: 'Home', href: '/' },

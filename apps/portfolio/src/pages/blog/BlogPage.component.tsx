@@ -1,6 +1,5 @@
 import type { FunctionComponent } from 'react';
-import { Breadcrumb } from '@naovixen/blocks';
-import { Heading, Text } from '@naovixen/components';
+import { Breadcrumb, Heading, Text } from '@naovixen/components';
 
 import { Page } from '../../components/page/Page.component';
 import { PostCardList } from '../../components/post-card-list/PostCardList.component';

@@ -1,16 +1,19 @@
 import type { FunctionComponent } from 'react';
-import { Breadcrumb, Figure, HandDrawnRule, TagList } from '@naovixen/blocks';
-import { RichContent } from '@naovixen/rich-content';
-import type { IProject } from '@naovixen/cms';
 import {
     arrowLeftIcon,
     arrowRightIcon,
+    Breadcrumb,
+    Figure,
+    HandDrawnRule,
     Heading,
     HeadingSize,
     IconPosition,
+    TagList,
     Text,
     TextVariant,
 } from '@naovixen/components';
+import { RichContent } from '@naovixen/rich-content';
+import type { IProject } from '@naovixen/cms';
 
 import { Page } from '../../components/page/Page.component';
 import { RoutedLink } from '../../components/routed-link/RoutedLink.component';

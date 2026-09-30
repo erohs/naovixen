@@ -2,8 +2,15 @@ import type {
     PortableTextReactComponents,
     PortableTextTypeComponentProps,
 } from '@portabletext/react';
-import { Callout, CodeBlock, FactList, Figure, SectionHeading } from '@naovixen/blocks';
-import { ExternalLinkButton, Text } from '@naovixen/components';
+import {
+    Callout,
+    CodeBlock,
+    ExternalLinkButton,
+    FactList,
+    Figure,
+    SectionHeading,
+    Text,
+} from '@naovixen/components';
 
 import type { ICalloutBlockValue } from '../interfaces/ICalloutBlockValue';
 import type { ICodeBlockValue } from '../interfaces/ICodeBlockValue';

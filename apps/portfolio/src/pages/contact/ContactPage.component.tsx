@@ -1,13 +1,15 @@
 import type { FunctionComponent } from 'react';
-import { Breadcrumb, ExclamationBubble, LinkTile } from '@naovixen/blocks';
 import {
+    Breadcrumb,
     ButtonVariant,
     downloadIcon,
+    ExclamationBubble,
     ExternalLink,
     externalLinkIcon,
     Heading,
     Icon,
     LinkButton,
+    LinkTile,
     mailIcon,
     Text,
 } from '@naovixen/components';

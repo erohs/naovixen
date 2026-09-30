@@ -1,6 +1,5 @@
 import type { PortableTextBlockComponent } from '@portabletext/react';
-import { SpeechBubble } from '@naovixen/blocks';
-import { Heading, HeadingSize, Text } from '@naovixen/components';
+import { Heading, HeadingSize, SpeechBubble, Text } from '@naovixen/components';
 
 /**
  * Text block styles. Headings in a post sit a size down from the page's own, and a quote is

@@ -12,7 +12,6 @@
         "test": "vitest run"
     },
     "dependencies": {
-        "@naovixen/blocks": "workspace:*",
         "@naovixen/cms": "workspace:*",
         "@naovixen/components": "workspace:*",
         "@naovixen/utilities": "workspace:*",
