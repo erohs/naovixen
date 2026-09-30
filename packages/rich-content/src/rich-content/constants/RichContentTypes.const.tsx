@@ -3,6 +3,7 @@ import type {
     PortableTextTypeComponentProps,
 } from '@portabletext/react';
 import {
+    ButtonGroup,
     Callout,
     CodeBlock,
     ExternalLinkButton,
@@ -30,7 +31,7 @@ export const richContentTypes: PortableTextReactComponents['types'] = {
         </SectionHeading>
     ),
     callout: ({ value }: PortableTextTypeComponentProps<ICalloutBlockValue>) => (
-        <Callout kind={value.kind} heading={value.title}>
+        <Callout label={value.kind} title={value.title}>
             <Text>{value.text}</Text>
         </Callout>
     ),
@@ -44,12 +45,12 @@ export const richContentTypes: PortableTextReactComponents['types'] = {
         <FactList facts={value.facts} />
     ),
     linkButtons: ({ value }: PortableTextTypeComponentProps<ILinkButtonsBlockValue>) => (
-        <div className="nv-rich-content__buttons">
+        <ButtonGroup>
             {value.links.map((link) => (
                 <ExternalLinkButton key={link._key} href={link.href} variant={link.variant}>
                     {link.label}
                 </ExternalLinkButton>
             ))}
-        </div>
+        </ButtonGroup>
     ),
 };

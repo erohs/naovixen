@@ -15,13 +15,13 @@
     color: var(--color-text-on-accent);
 }
 
-.nv-callout__kind {
+.nv-callout__label {
     font-family: var(--font-family-handwriting);
     font-size: var(--font-size-h4);
     line-height: var(--line-height-subheading);
 }
 
-.nv-callout__heading {
+.nv-callout__title {
     font-weight: var(--font-weight-semi-bold);
 }
 

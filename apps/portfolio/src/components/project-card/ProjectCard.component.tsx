@@ -5,13 +5,13 @@ import {
     Heading,
     HeadingSize,
     Image,
+    LinkIcon,
     TagList,
     Text,
     VisuallyHidden,
 } from '@naovixen/components';
 import { joinClassNames } from '@naovixen/utilities';
 
-import { RouterLinkIcon } from '../router-link-icon/RouterLinkIcon.component';
 import type { IProjectCardProps } from './interfaces/IProjectCardProps';
 
 /** A card names only the main few technologies; the case study lists them all. */
@@ -19,14 +19,13 @@ const cardStackLength = 3;
 
 const CaseStudyLink: FunctionComponent<Pick<IProjectCardProps, 'project'>> = ({ project }) => (
     <p className="nv-project-card__footer">
-        <RouterLinkIcon
-            to="/work/$slug"
-            params={{ slug: project.slug }}
+        <LinkIcon
+            href={`/work/${project.slug}`}
             icon={arrowRightIcon}
             className="nv-project-card__link"
         >
             Read case study<VisuallyHidden>: {project.title}</VisuallyHidden>
-        </RouterLinkIcon>
+        </LinkIcon>
     </p>
 );
 

@@ -1,37 +1,46 @@
 import type { FunctionComponent } from 'react';
-import { closeIcon } from '../icon/icons/Close.icon';
-import { Icon } from '../icon/Icon.component';
-import { menuIcon } from '../icon/icons/Menu.icon';
 import { joinClassNames } from '@naovixen/utilities';
 
 import { Disclosure } from '../disclosure/Disclosure.component';
-import { NavigationLayout } from '../navigation/enums/NavigationLayout';
-import { Navigation } from '../navigation/Navigation.component';
+import { Icon } from '../icon/Icon.component';
+import { closeIcon } from '../icon/icons/Close.icon';
+import { menuIcon } from '../icon/icons/Menu.icon';
+import { NavigationLayout } from '../navigation-list/enums/NavigationLayout';
+import { NavigationList } from '../navigation-list/NavigationList.component';
 import { useOpenOnPath } from './functions/UseOpenOnPath.hook';
 import type { IMobileMenuProps } from './interfaces/IMobileMenuProps';
 
+const MenuLabel: FunctionComponent<{ readonly isOpen: boolean }> = ({ isOpen }) => (
+    <>
+        <Icon source={isOpen ? closeIcon : menuIcon} />
+        Menu
+    </>
+);
+
 /** Closes when the page changes. */
 export const MobileMenu: FunctionComponent<IMobileMenuProps> = ({
+    items,
+    currentHref,
     className,
-    ...navigationProps
 }) => {
-    const [isOpen, onOpenChange] = useOpenOnPath(navigationProps.currentHref);
+    const [isOpen, onOpenChange] = useOpenOnPath(currentHref);
 
     return (
         <Disclosure
-            label={
-                <>
-                    <Icon source={isOpen ? closeIcon : menuIcon} />
-                    Menu
-                </>
-            }
+            label={<MenuLabel isOpen={isOpen} />}
             isOpen={isOpen}
             onOpenChange={onOpenChange}
             className={joinClassNames('nv-mobile-menu', className)}
             buttonClassName="nv-mobile-menu__button"
             panelClassName="nv-mobile-menu__panel"
         >
-            <Navigation {...navigationProps} layout={NavigationLayout.Stacked} />
+            <nav aria-label="Main">
+                <NavigationList
+                    items={items}
+                    currentHref={currentHref}
+                    layout={NavigationLayout.Menu}
+                />
+            </nav>
         </Disclosure>
     );
 };

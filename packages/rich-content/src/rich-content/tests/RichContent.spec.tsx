@@ -1,16 +1,8 @@
-import type { LinkProps } from '@naovixen/components';
 import { render, screen } from '@testing-library/react';
-import type { FunctionComponent } from 'react';
 import { describe, expect, test } from 'vitest';
 
 import { RichContent } from '../RichContent.component';
 import { richContentBody as body } from './RichContentBody.const';
-
-const RouterLink: FunctionComponent<LinkProps> = ({ children, ...anchorProps }) => (
-    <a {...anchorProps} data-routed="true">
-        {children}
-    </a>
-);
 
 describe('Using RichContent, given a body with every supported block, when it renders', () => {
     test('then it should render second-level headings', () => {
@@ -130,31 +122,5 @@ describe('Using RichContent, given a body with every supported block, when it re
         render(<RichContent body={[...body, { _type: 'mystery', _key: 'mystery' }]} />);
 
         expect(screen.queryByText(/mystery/)).toBeNull();
-    });
-});
-
-describe('Using RichContent, given a link component, when it renders', () => {
-    test('then it should render links to pages on the site with it', () => {
-        render(<RichContent body={body} linkComponent={RouterLink} />);
-
-        expect(screen.getByRole('link', { name: 'Our work' }).getAttribute('data-routed')).toBe(
-            'true',
-        );
-    });
-
-    test('then it should leave links to other sites alone', () => {
-        render(<RichContent body={body} linkComponent={RouterLink} />);
-
-        const link = screen.getByRole('link', { name: 'Example site (opens in new tab)' });
-
-        expect(link.hasAttribute('data-routed')).toBe(false);
-    });
-
-    test('then it should leave email links alone', () => {
-        render(<RichContent body={body} linkComponent={RouterLink} />);
-
-        expect(screen.getByRole('link', { name: 'Email me' }).hasAttribute('data-routed')).toBe(
-            false,
-        );
     });
 });

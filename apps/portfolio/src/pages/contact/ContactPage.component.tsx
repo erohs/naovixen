@@ -16,7 +16,6 @@ import {
 
 import { GreetingHeading } from '../../components/greeting-heading/GreetingHeading.component';
 import { Page } from '../../components/page/Page.component';
-import { RoutedLink } from '../../components/routed-link/RoutedLink.component';
 import { homeBreadcrumbTrail } from '../../constants/HomeBreadcrumbTrail.const';
 import { placeholderCvPath } from '../../constants/PlaceholderCvPath.const';
 import { placeholderEmailAddress } from '../../constants/PlaceholderEmailAddress.const';
@@ -57,7 +56,7 @@ const ContactLinks: FunctionComponent = () => (
 
 export const ContactPage: FunctionComponent = () => (
     <Page>
-        <Breadcrumb trail={homeBreadcrumbTrail} currentLabel="Contact" linkComponent={RoutedLink} />
+        <Breadcrumb trail={homeBreadcrumbTrail} currentLabel="Contact" />
         <div className="nv-contact-page">
             <GreetingHeading
                 greeting={<ExclamationBubble>{placeholderContactPage.greeting}</ExclamationBubble>}

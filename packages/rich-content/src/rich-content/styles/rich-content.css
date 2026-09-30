@@ -22,9 +22,3 @@
 .nv-rich-content__section-heading:not(:first-child) {
     margin-block-start: var(--space-between-regions);
 }
-
-.nv-rich-content__buttons {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-between-blocks);
-}

@@ -4,5 +4,6 @@
 @import url('./components/example/styles/example.css') layer(components);
 @import url('./components/contrast-table/styles/contrast-table.css') layer(components);
 @import url('./pages/tokens/styles/tokens-page.css') layer(components);
-@import url('./pages/components/styles/components-page.css') layer(components);
-@import url('./pages/blocks/styles/blocks-page.css') layer(components);
+@import url('./pages/text-and-media/styles/text-and-media-page.css') layer(components);
+@import url('./pages/content/styles/content-page.css') layer(components);
+@import url('./pages/site-frame/styles/site-frame-page.css') layer(components);

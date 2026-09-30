@@ -1,0 +1,12 @@
+.nv-more-navigation {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-between-content);
+}
+
+.nv-more-navigation__next {
+    font-family: var(--font-family-heading);
+    font-size: var(--font-size-lead);
+}

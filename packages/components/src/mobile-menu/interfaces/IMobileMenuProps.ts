@@ -1,8 +1,5 @@
-import type { INavigationProps } from '../../navigation/interfaces/INavigationProps';
+import type { INavigationListProps } from '../../navigation-list/interfaces/INavigationListProps';
 
-export interface IMobileMenuProps extends Pick<
-    INavigationProps,
-    'items' | 'currentHref' | 'linkComponent'
-> {
+export interface IMobileMenuProps extends Pick<INavigationListProps, 'items' | 'currentHref'> {
     readonly className?: string | undefined;
 }

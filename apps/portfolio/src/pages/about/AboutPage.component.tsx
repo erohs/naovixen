@@ -2,6 +2,7 @@ import type { FunctionComponent } from 'react';
 import {
     arrowRightIcon,
     Breadcrumb,
+    ButtonGroup,
     ButtonVariant,
     downloadIcon,
     HandDrawnRule,
@@ -17,8 +18,6 @@ import { GreetingHeading } from '../../components/greeting-heading/GreetingHeadi
 import { InterestList } from '../../components/interest-list/InterestList.component';
 import { Page } from '../../components/page/Page.component';
 import { PhotoPlaceholder } from '../../components/photo-placeholder/PhotoPlaceholder.component';
-import { RoutedLink } from '../../components/routed-link/RoutedLink.component';
-import { RouterLinkButton } from '../../components/router-link-button/RouterLinkButton.component';
 import { homeBreadcrumbTrail } from '../../constants/HomeBreadcrumbTrail.const';
 import { placeholderCvPath } from '../../constants/PlaceholderCvPath.const';
 import { placeholderInterests } from '../../constants/PlaceholderInterests.const';
@@ -70,19 +69,19 @@ const AboutDetails: FunctionComponent = () => (
 );
 
 const AboutActions: FunctionComponent = () => (
-    <div className="nv-about-actions">
+    <ButtonGroup>
         <LinkButton href={placeholderCvPath} download variant={ButtonVariant.Primary}>
             Download CV <Icon source={downloadIcon} />
         </LinkButton>
-        <RouterLinkButton to="/contact">
+        <LinkButton href="/contact">
             Get in touch <Icon source={arrowRightIcon} />
-        </RouterLinkButton>
-    </div>
+        </LinkButton>
+    </ButtonGroup>
 );
 
 export const AboutPage: FunctionComponent = () => (
     <Page>
-        <Breadcrumb trail={homeBreadcrumbTrail} currentLabel="About" linkComponent={RoutedLink} />
+        <Breadcrumb trail={homeBreadcrumbTrail} currentLabel="About" />
         <div className="nv-about-page__content">
             <AboutIntroduction />
             <HandDrawnRule className="nv-about-page__rule" />

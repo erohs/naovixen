@@ -1,3 +1,3 @@
-import type { IBreadcrumbItem } from '@naovixen/components';
+import type { ILink } from '@naovixen/components';
 
-export const homeBreadcrumbTrail: readonly IBreadcrumbItem[] = [{ label: 'Home', href: '/' }];
+export const homeBreadcrumbTrail: readonly ILink[] = [{ label: 'Home', href: '/' }];

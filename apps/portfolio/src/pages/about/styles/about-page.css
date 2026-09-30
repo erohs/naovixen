@@ -60,10 +60,3 @@
 .nv-principle-list__description {
     color: var(--color-text-secondary);
 }
-
-.nv-about-actions {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: var(--space-between-content);
-}

@@ -4,8 +4,8 @@ import { describe, expect, test } from 'vitest';
 import { SocialLinkList } from '../SocialLinkList.component';
 
 const links = [
-    { label: 'Example profile', url: 'https://example.com' },
-    { label: 'Email', url: 'mailto:hello@example.com' },
+    { label: 'Example profile', href: 'https://example.com' },
+    { label: 'Email', href: 'mailto:hello@example.com' },
 ];
 
 describe('Using SocialLinkList, given a profile and an email address, when it renders', () => {

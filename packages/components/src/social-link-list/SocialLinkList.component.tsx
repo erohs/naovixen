@@ -1,9 +1,9 @@
 import type { FunctionComponent } from 'react';
-import { ExternalLink } from '../external-link/ExternalLink.component';
-import { Link } from '../link/Link.component';
-import { navigationLinkClassName } from '../link/constants/NavigationLinkClassName.const';
 import { joinClassNames } from '@naovixen/utilities';
 
+import { ExternalLink } from '../external-link/ExternalLink.component';
+import { navigationLinkClassName } from '../link/constants/NavigationLinkClassName.const';
+import { Link } from '../link/Link.component';
 import { isEmailAddress } from './functions/IsEmailAddress.function';
 import type { ISocialLinkListProps } from './interfaces/ISocialLinkListProps';
 
@@ -15,13 +15,13 @@ export const SocialLinkList: FunctionComponent<ISocialLinkListProps> = ({
 }) => (
     <ul {...listProps} className={joinClassNames('nv-social-link-list', className)}>
         {links.map((link) => (
-            <li key={link.url}>
-                {isEmailAddress(link.url) ? (
-                    <Link href={link.url} className={navigationLinkClassName}>
+            <li key={link.href}>
+                {isEmailAddress(link.href) ? (
+                    <Link href={link.href} className={navigationLinkClassName}>
                         {link.label}
                     </Link>
                 ) : (
-                    <ExternalLink href={link.url} className={navigationLinkClassName}>
+                    <ExternalLink href={link.href} className={navigationLinkClassName}>
                         {link.label}
                     </ExternalLink>
                 )}

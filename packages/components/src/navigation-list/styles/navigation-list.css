@@ -1,8 +1,6 @@
-/* The landmark around it sets the custom properties that lay it out as a row or a column. */
 .nv-navigation-list {
     display: flex;
-    flex-flow: var(--navigation-list-direction, column) wrap;
-    gap: var(--navigation-list-gap, var(--space-between-text));
+    flex-wrap: wrap;
     padding: 0;
     font-weight: var(--font-weight-semi-bold);
     list-style: none;
@@ -11,10 +9,33 @@
 .nv-navigation-list__item {
     display: flex;
     align-items: center;
-    min-block-size: var(--navigation-list-item-block-size, auto);
-    border-block-end: var(--navigation-list-item-divider, none);
+}
 
-    &:last-child {
-        border-block-end: none;
+.nv-navigation-list--row {
+    flex-direction: row;
+    gap: var(--space-between-groups);
+
+    & .nv-navigation-list__item {
+        min-block-size: var(--size-action-minimum);
+    }
+}
+
+.nv-navigation-list--column {
+    flex-direction: column;
+    gap: var(--space-between-text);
+}
+
+.nv-navigation-list--menu {
+    flex-direction: column;
+    border-block: var(--border-width-standout) solid var(--color-border);
+    font-size: var(--font-size-lead);
+
+    & .nv-navigation-list__item {
+        min-block-size: calc(var(--size-action-minimum) + var(--space-between-text));
+        border-block-end: var(--border-width-default) dashed var(--color-border);
+
+        &:last-child {
+            border-block-end: none;
+        }
     }
 }

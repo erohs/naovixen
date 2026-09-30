@@ -1,0 +1,16 @@
+/* Keeps the footer at the bottom of a short page. */
+.nv-site-layout {
+    display: flex;
+    flex-direction: column;
+    min-block-size: 100dvh;
+}
+
+/*
+ * The skip link and back-to-top link both target the main content. Its scroll margin is taller
+ * than the header above it, and a page cannot scroll above its top, so following either link
+ * scrolls right to the top while focus still lands on the main content.
+ */
+.nv-site-layout__main {
+    flex-grow: 1;
+    scroll-margin-block-start: 100dvh;
+}

@@ -1,13 +1,10 @@
 import type { FunctionComponent } from 'react';
 import {
-    arrowLeftIcon,
-    arrowRightIcon,
     Breadcrumb,
     Figure,
     HandDrawnRule,
     Heading,
     HeadingSize,
-    IconPosition,
     TagList,
     Text,
     TextVariant,
@@ -15,9 +12,8 @@ import {
 import { RichContent } from '@naovixen/rich-content';
 import type { IProject } from '@naovixen/cms';
 
+import { MoreNavigation } from '../../components/more-navigation/MoreNavigation.component';
 import { Page } from '../../components/page/Page.component';
-import { RoutedLink } from '../../components/routed-link/RoutedLink.component';
-import { RouterLinkIcon } from '../../components/router-link-icon/RouterLinkIcon.component';
 import type { IProjectPageData } from '../../interfaces/IProjectPageData';
 import { workBreadcrumbTrail } from './constants/WorkBreadcrumbTrail.const';
 
@@ -41,27 +37,6 @@ const ProjectStack: FunctionComponent<{ readonly project: IProject }> = ({ proje
     </dl>
 );
 
-/** Wraps round to the first project, so every case study leads to another. */
-const MoreProjects: FunctionComponent<Pick<IProjectPageData, 'nextProject'>> = ({
-    nextProject,
-}) => (
-    <nav aria-label="More projects" className="nv-project-page__more">
-        <RouterLinkIcon to="/work" icon={arrowLeftIcon} iconPosition={IconPosition.Start}>
-            All projects
-        </RouterLinkIcon>
-        {nextProject && (
-            <RouterLinkIcon
-                to="/work/$slug"
-                params={{ slug: nextProject.slug }}
-                icon={arrowRightIcon}
-                className="nv-project-page__next"
-            >
-                Next: {nextProject.title}
-            </RouterLinkIcon>
-        )}
-    </nav>
-);
-
 /** The screenshot is the largest thing on the page, so it loads first rather than lazily. */
 const ProjectOverview: FunctionComponent<{ readonly project: IProject }> = ({ project }) => (
     <>
@@ -73,22 +48,24 @@ const ProjectOverview: FunctionComponent<{ readonly project: IProject }> = ({ pr
     </>
 );
 
+/** Wraps round to the first project, so every case study leads to another. */
 export const ProjectPage: FunctionComponent<IProjectPageData> = ({ project, nextProject }) => (
     <Page>
         <article aria-labelledby="project-title">
-            <Breadcrumb
-                trail={workBreadcrumbTrail}
-                currentLabel={project.title}
-                linkComponent={RoutedLink}
-            />
+            <Breadcrumb trail={workBreadcrumbTrail} currentLabel={project.title} />
             <ProjectOverview project={project} />
-            <RichContent
-                body={project.body}
-                linkComponent={RoutedLink}
-                className="nv-project-page__body"
-            />
+            <RichContent body={project.body} className="nv-project-page__body" />
             <HandDrawnRule className="nv-project-page__rule" />
-            <MoreProjects nextProject={nextProject} />
+            <MoreNavigation
+                label="More projects"
+                backLink={{ label: 'All projects', href: '/work' }}
+                nextLink={
+                    nextProject && {
+                        label: nextProject.title,
+                        href: `/work/${nextProject.slug}`,
+                    }
+                }
+            />
         </article>
     </Page>
 );

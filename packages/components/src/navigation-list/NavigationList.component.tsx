@@ -1,8 +1,9 @@
 import type { FunctionComponent } from 'react';
-import { Link } from '../link/Link.component';
-import { navigationLinkClassName } from '../link/constants/NavigationLinkClassName.const';
 import { joinClassNames } from '@naovixen/utilities';
 
+import { navigationLinkClassName } from '../link/constants/NavigationLinkClassName.const';
+import { Link } from '../link/Link.component';
+import { NavigationLayout } from './enums/NavigationLayout';
 import { isCurrentHref } from './functions/IsCurrentHref.function';
 import type { INavigationListProps } from './interfaces/INavigationListProps';
 
@@ -10,25 +11,24 @@ import type { INavigationListProps } from './interfaces/INavigationListProps';
 export const NavigationList: FunctionComponent<INavigationListProps> = ({
     items,
     currentHref,
-    linkComponent = Link,
+    layout = NavigationLayout.Column,
     className,
     ...listProps
-}) => {
-    const LinkComponent = linkComponent;
-
-    return (
-        <ul {...listProps} className={joinClassNames('nv-navigation-list', className)}>
-            {items.map((item) => (
-                <li key={item.href} className="nv-navigation-list__item">
-                    <LinkComponent
-                        href={item.href}
-                        className={navigationLinkClassName}
-                        aria-current={isCurrentHref(currentHref, item.href) ? 'page' : undefined}
-                    >
-                        {item.label}
-                    </LinkComponent>
-                </li>
-            ))}
-        </ul>
-    );
-};
+}) => (
+    <ul
+        {...listProps}
+        className={joinClassNames('nv-navigation-list', `nv-navigation-list--${layout}`, className)}
+    >
+        {items.map((item) => (
+            <li key={item.href} className="nv-navigation-list__item">
+                <Link
+                    href={item.href}
+                    className={navigationLinkClassName}
+                    aria-current={isCurrentHref(currentHref, item.href) ? 'page' : undefined}
+                >
+                    {item.label}
+                </Link>
+            </li>
+        ))}
+    </ul>
+);

@@ -2,9 +2,10 @@ import type { FunctionComponent } from 'react';
 import {
     Footer,
     FooterColumn,
+    Link,
     Logo,
-    navigationLinkClassName,
     NavigationList,
+    navigationLinkClassName,
     SocialLinkList,
     Text,
     TextVariant,
@@ -13,7 +14,6 @@ import {
 import { navigationItems } from '../../constants/NavigationItems.const';
 import { privacyLink } from '../../constants/PrivacyLink.const';
 import { site } from '../../constants/Site.const';
-import { RoutedLink } from '../routed-link/RoutedLink.component';
 import { placeholderFooterBlurb } from './constants/PlaceholderFooterBlurb.const';
 import { placeholderSocialLinks } from './constants/PlaceholderSocialLinks.const';
 import type { ISiteFooterProps } from './interfaces/ISiteFooterProps';
@@ -23,9 +23,9 @@ const SmallPrint: FunctionComponent<Pick<ISiteFooterProps, 'year'>> = ({ year })
         <p>
             © {year} {site.name}
         </p>
-        <RoutedLink href={privacyLink.href} className={navigationLinkClassName}>
+        <Link href={privacyLink.href} className={navigationLinkClassName}>
             {privacyLink.label}
-        </RoutedLink>
+        </Link>
     </>
 );
 
@@ -36,11 +36,7 @@ export const SiteFooter: FunctionComponent<ISiteFooterProps> = ({ currentPath, y
             <Text variant={TextVariant.Small}>{placeholderFooterBlurb}</Text>
         </div>
         <FooterColumn heading="site">
-            <NavigationList
-                items={navigationItems}
-                currentHref={currentPath}
-                linkComponent={RoutedLink}
-            />
+            <NavigationList items={navigationItems} currentHref={currentPath} />
         </FooterColumn>
         <FooterColumn heading="elsewhere">
             <SocialLinkList links={placeholderSocialLinks} />

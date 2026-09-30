@@ -5,15 +5,15 @@ import type { ICalloutProps } from './interfaces/ICalloutProps';
 
 /** Not a landmark, so it stays in the flow. */
 export const Callout: FunctionComponent<ICalloutProps> = ({
-    kind,
-    heading,
+    label,
+    title,
     className,
     children,
     ...divProps
 }) => (
     <div role="note" {...divProps} className={joinClassNames('nv-callout', className)}>
-        <p className="nv-callout__kind">{kind}</p>
-        <p className="nv-callout__heading">{heading}</p>
+        <p className="nv-callout__label">{label}</p>
+        <p className="nv-callout__title">{title}</p>
         <div className="nv-callout__body">{children}</div>
     </div>
 );

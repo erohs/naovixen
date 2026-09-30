@@ -1,6 +1,6 @@
-import type { INavigationItem } from '@naovixen/components';
+import type { ILink } from '@naovixen/components';
 
-export const navigationItems: readonly INavigationItem[] = [
+export const navigationItems: readonly ILink[] = [
     { label: 'Home', href: '/' },
     { label: 'Work', href: '/work' },
     { label: 'About', href: '/about' },

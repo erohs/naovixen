@@ -110,15 +110,11 @@
 }
 
 /* A little further from the summary than the hero's other gaps. */
-.nv-hero-actions {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: var(--space-between-content);
+.nv-hero-section__actions {
     margin-block-start: var(--space-between-text);
 }
 
-.nv-hero-actions__file-type {
+.nv-hero-section__file-type {
     font-family: var(--font-family-code);
     font-size: var(--font-size-meta);
     font-weight: var(--font-weight-regular);
@@ -502,11 +498,4 @@
     & > h2 {
         color: var(--color-text-primary);
     }
-}
-
-.nv-contact-banner__actions {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: var(--space-between-content);
 }

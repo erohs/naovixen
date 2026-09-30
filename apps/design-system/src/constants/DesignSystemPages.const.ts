@@ -1,13 +1,20 @@
 import type { IDesignSystemPage } from '../interfaces/IDesignSystemPage';
-import { BlocksPage } from '../pages/blocks/BlocksPage.component';
+import { ActionsAndLinksPage } from '../pages/actions-and-links/ActionsAndLinksPage.component';
+import { ContentPage } from '../pages/content/ContentPage.component';
 import { RichContentPage } from '../pages/rich-content/RichContentPage.component';
-import { ComponentsPage } from '../pages/components/ComponentsPage.component';
+import { SiteFramePage } from '../pages/site-frame/SiteFramePage.component';
+import { TextAndMediaPage } from '../pages/text-and-media/TextAndMediaPage.component';
 import { TokensPage } from '../pages/tokens/TokensPage.component';
 
-/** In reading order: the tokens everything is built from, then what is built from them. */
+/**
+ * In reading order: the tokens everything is built from, then the components grouped by what
+ * they are for, then what a CMS body renders as.
+ */
 export const designSystemPages: readonly IDesignSystemPage[] = [
     { id: 'tokens', title: 'Tokens', component: TokensPage },
-    { id: 'components', title: 'Components', component: ComponentsPage },
-    { id: 'blocks', title: 'Blocks', component: BlocksPage },
+    { id: 'actions-and-links', title: 'Actions and links', component: ActionsAndLinksPage },
+    { id: 'text-and-media', title: 'Text and media', component: TextAndMediaPage },
+    { id: 'content', title: 'Content', component: ContentPage },
+    { id: 'site-frame', title: 'Site frame', component: SiteFramePage },
     { id: 'rich-content', title: 'Rich content', component: RichContentPage },
 ];
