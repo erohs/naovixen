@@ -11,6 +11,8 @@ import { NotFoundPage } from '../pages/not-found/NotFoundPage.component';
 import { SiteLayout } from '../components/site-layout/SiteLayout.component';
 import { headingFontPreload } from '../constants/HeadingFontPreload.const';
 import { site } from '../constants/Site.const';
+import { blogFeedChannel } from '../constants/BlogFeedChannel.const';
+import { publicCacheControl } from '../constants/PublicCacheControl.const';
 import { isNotFoundPage } from '../functions/IsNotFoundPage.function';
 import type { IRouterContext } from '../interfaces/IRouterContext';
 
@@ -51,8 +53,18 @@ export const Route = createRootRouteWithContext<IRouterContext>()({
             { name: 'viewport', content: 'width=device-width, initial-scale=1' },
             { title: isNotFoundPage(matches) ? `Page not found — ${site.name}` : site.name },
         ],
-        links: [{ rel: 'icon', href: '/favicon.svg', type: 'image/svg+xml' }, headingFontPreload],
+        links: [
+            { rel: 'icon', href: '/favicon.svg', type: 'image/svg+xml' },
+            {
+                rel: 'alternate',
+                type: 'application/rss+xml',
+                title: blogFeedChannel.title,
+                href: blogFeedChannel.feedPath,
+            },
+            headingFontPreload,
+        ],
     }),
+    headers: () => ({ 'Cache-Control': publicCacheControl }),
     shellComponent: RootDocument,
     notFoundComponent: NotFoundPage,
 });

@@ -3,6 +3,7 @@ import { buildSitemapXml } from '@naovixen/seo';
 
 import { createSanityBlogRepository } from '../functions/CreateSanityBlogRepository.function';
 import { createSanityProjectRepository } from '../functions/CreateSanityProjectRepository.function';
+import { publicCacheControl } from '../constants/PublicCacheControl.const';
 import { site } from '../constants/Site.const';
 import { buildSitemapEntries } from '../functions/BuildSitemapEntries.function';
 
@@ -21,7 +22,10 @@ export const Route = createFileRoute('/sitemap.xml')({
                         site,
                     ),
                     {
-                        headers: { 'Content-Type': 'application/xml; charset=utf-8' },
+                        headers: {
+                            'Content-Type': 'application/xml; charset=utf-8',
+                            'Cache-Control': publicCacheControl,
+                        },
                     },
                 ),
         },

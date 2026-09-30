@@ -3,6 +3,7 @@ import { createFileRoute } from '@tanstack/react-router';
 import { OpenGraphType } from '@naovixen/seo';
 
 import { BlogPage } from '../../pages/blog/BlogPage.component';
+import { blogDescription } from '../../constants/BlogDescription.const';
 import { buildRouteHead } from '../../functions/BuildRouteHead.function';
 
 const BlogComponent = (): ReactNode => <BlogPage posts={Route.useLoaderData()} />;
@@ -12,8 +13,7 @@ export const Route = createFileRoute('/blog/')({
     head: () =>
         buildRouteHead({
             title: 'Blog',
-            description:
-                'Writing by Naomi Shore on front-end engineering, accessibility and building software.',
+            description: blogDescription,
             path: '/blog',
             type: OpenGraphType.Website,
         }),
