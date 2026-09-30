@@ -30,6 +30,7 @@
     --space-below-heading: clamp(2rem, 1.6087rem + 1.7391vw, 3rem);
     --space-between-sections: clamp(3rem, 1.8261rem + 5.2174vw, 6rem);
     --space-padding-page: clamp(1rem, 0.2174rem + 3.4783vw, 3rem);
+    --space-padding-page-centred: max(var(--space-padding-page), (100% - var(--layout-width-page)) / 2);
     --space-padding-page-end: clamp(6rem, 5.2174rem + 3.4783vw, 8rem);
     --space-padding-container: 1.5rem;
     --space-padding-panel: clamp(2rem, 1.2174rem + 3.4783vw, 4rem);

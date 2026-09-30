@@ -8,6 +8,7 @@
     align-items: center;
     gap: var(--space-between-content);
     padding-block-start: calc(var(--space-between-content) + var(--space-between-lines));
+    padding-inline: var(--space-padding-page-centred);
 }
 
 .nx-header__home {

@@ -1,5 +1,4 @@
 import type { FunctionComponent } from 'react';
-import { Container, Grid, Space, Stack } from '@naovixen/layout';
 import { joinClassNames } from '@naovixen/utilities';
 
 import type { IFooterProps } from './interfaces/IFooterProps';
@@ -12,11 +11,7 @@ export const Footer: FunctionComponent<IFooterProps> = ({
     ...footerProps
 }) => (
     <footer {...footerProps} className={joinClassNames('nx-footer', className)}>
-        <Container>
-            <Stack gap={Space.BetweenGroups} className="nx-footer__content">
-                <Grid>{children}</Grid>
-                <div className="nx-footer__small-print">{smallPrint}</div>
-            </Stack>
-        </Container>
+        <div className="nx-footer__columns">{children}</div>
+        <div className="nx-footer__small-print">{smallPrint}</div>
     </footer>
 );

@@ -1,6 +1,5 @@
 import type { FunctionComponent } from 'react';
 import { Link } from '@naovixen/components';
-import { Container } from '@naovixen/layout';
 import { joinClassNames } from '@naovixen/utilities';
 
 import { Logo } from '../logo/Logo.component';
@@ -20,7 +19,7 @@ export const Header: FunctionComponent<IHeaderProps> = ({
     const LinkComponent = navigationProps.linkComponent ?? Link;
 
     return (
-        <Container as="header" className={joinClassNames('nx-header', className)}>
+        <header className={joinClassNames('nx-header', className)}>
             <LinkComponent href="/" className="nx-header__home">
                 <Logo />
             </LinkComponent>
@@ -31,6 +30,6 @@ export const Header: FunctionComponent<IHeaderProps> = ({
             <div className="nx-header__menu">
                 <MobileMenu {...navigationProps} />
             </div>
-        </Container>
+        </header>
     );
 };

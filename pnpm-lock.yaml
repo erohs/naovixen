@@ -308,9 +308,6 @@ importers:
       '@naovixen/components':
         specifier: workspace:*
         version: link:../components
-      '@naovixen/layout':
-        specifier: workspace:*
-        version: link:../layout
       '@naovixen/utilities':
         specifier: workspace:*
         version: link:../utilities

@@ -53,7 +53,7 @@ export default [
 
     restrictImports('components', { mayImport: ['utilities', 'theming', ...testing] }),
     restrictImports('layout', { mayImport: ['utilities', 'theming', ...testing] }),
-    restrictImports('blocks', { mayImport: ['components', 'utilities', 'layout', ...testing] }),
+    restrictImports('blocks', { mayImport: ['components', 'utilities', ...testing] }),
     restrictImports('portable-text', {
         mayImport: ['blocks', 'components', 'utilities', 'cms', ...testing],
     }),

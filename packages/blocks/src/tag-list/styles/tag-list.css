@@ -1,5 +1,8 @@
-/* Wraps through the layout Cluster; this only drops the bullets. */
 .nx-tag-list {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-between-text);
     padding-inline-start: 0;
     list-style: none;
 }

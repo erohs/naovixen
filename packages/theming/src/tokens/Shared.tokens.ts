@@ -38,6 +38,13 @@ export const sharedTokens = {
     '--space-below-heading': createFluidValue(32, 48),
     '--space-between-sections': createFluidValue(48, 96),
     '--space-padding-page': createFluidValue(16, 48),
+    /**
+     * Inline padding that holds content at the page width, centred, with the page gutter either
+     * side. The percentage resolves against whatever element uses it, so a full-width band keeps
+     * its background while its content lines up with the page.
+     */
+    '--space-padding-page-centred':
+        'max(var(--space-padding-page), (100% - var(--layout-width-page)) / 2)',
     /** Below the last section of a page, before the footer. */
     '--space-padding-page-end': createFluidValue(96, 128),
     '--space-padding-container': convertPixelToRem(24),

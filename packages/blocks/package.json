@@ -13,7 +13,6 @@
     },
     "dependencies": {
         "@naovixen/components": "workspace:*",
-        "@naovixen/layout": "workspace:*",
         "@naovixen/utilities": "workspace:*"
     },
     "peerDependencies": {

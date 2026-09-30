@@ -1,10 +1,18 @@
 .nx-footer {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-between-groups);
+    padding-block-start: var(--space-padding-panel);
+    padding-inline: var(--space-padding-page-centred);
     border-block-start: var(--border-width-standout) solid var(--color-border);
     background-color: var(--color-background-surface);
 }
 
-.nx-footer__content {
-    padding-block-start: var(--space-padding-panel);
+/* As many equal columns as fit, dropping to one on narrow screens. */
+.nx-footer__columns {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(18rem, 100%), 1fr));
+    gap: var(--space-between-groups);
 }
 
 /*
