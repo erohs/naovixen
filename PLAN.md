@@ -136,7 +136,7 @@ body. One test runs axe over each page.
 - [ ] Route-level code splitting (TanStack Router default — verify).
 - [ ] Minimal client JS: interactive islands only where needed; no heavy dependencies without justification in `docs/decisions.md`.
 - [x] Fonts self-hosted, WOFF2, subset, `font-display: swap`, fallback metric overrides (`size-adjust`, `ascent-override`) to avoid layout shift.
-- [ ] Preload the primary face.
+- [x] Preload the primary face: Fredoka, which sets the headings.
 - [ ] Images: responsive `srcset`/`sizes`, AVIF/WebP, explicit `width`/`height`, `loading="lazy"` below the fold, `fetchpriority="high"` on the LCP image. Sanity images via its image URL builder.
 - [ ] Budgets (enforced in CI via Lighthouse CI): LCP < 2.5 s, INP < 200 ms, CLS < 0.1, Lighthouse Performance ≥ 95 on mobile.
 
@@ -157,7 +157,7 @@ body. One test runs axe over each page.
 - [ ] Minimum 24×24 px target sizes; full keyboard support; no keyboard traps.
 - [x] Colour contrast verified for all token pairs in both themes (a test in `theming`, shown in the design system).
 - [x] `prefers-reduced-motion` and `forced-colors` respected.
-- [ ] `prefers-contrast` respected: no styles for it yet.
+- [x] `prefers-contrast: more` respected: secondary text and lines take the text colour, thin lines thicken.
 - [x] No information by colour alone; icons have accessible names or are `aria-hidden`.
 - [x] `eslint-plugin-jsx-a11y` in lint; axe on every design-system page.
 - [ ] axe in Playwright on every route (Phase 8).

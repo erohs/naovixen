@@ -1,0 +1,14 @@
+/*
+ * For readers who ask for more contrast: secondary text and every line take the full text
+ * colour, and thin lines thicken. Each value refers to another token, so it follows whichever
+ * theme applies. The selectors match the theme blocks' own weight, and come after them, so
+ * these win with or without data-theme set.
+ */
+@media (prefers-contrast: more) {
+    :root:not([data-theme]),
+    [data-theme] {
+        --color-text-secondary: var(--color-text-primary);
+        --color-border: var(--color-text-primary);
+        --border-width-default: var(--border-width-standout);
+    }
+}

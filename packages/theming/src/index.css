@@ -8,5 +8,6 @@
 @import url('./styles/fonts.css');
 @import url('./styles/reset.css') layer(reset);
 @import url('./generated/tokens.css') layer(tokens);
+@import url('./styles/more-contrast.css') layer(tokens);
 @import url('./styles/base.css') layer(base);
 @import url('./styles/visually-hidden.css') layer(utilities);

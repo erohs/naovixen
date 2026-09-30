@@ -9,6 +9,7 @@ import { themeBootScript } from '@naovixen/theming';
 
 import { NotFoundPage } from '../pages/not-found/NotFoundPage.component';
 import { SiteLayout } from '../components/site-layout/SiteLayout.component';
+import { headingFontPreload } from '../constants/HeadingFontPreload.const';
 import { site } from '../constants/Site.const';
 import { isNotFoundPage } from '../functions/IsNotFoundPage.function';
 import type { IRouterContext } from '../interfaces/IRouterContext';
@@ -50,7 +51,7 @@ export const Route = createRootRouteWithContext<IRouterContext>()({
             { name: 'viewport', content: 'width=device-width, initial-scale=1' },
             { title: isNotFoundPage(matches) ? `Page not found — ${site.name}` : site.name },
         ],
-        links: [{ rel: 'icon', href: '/favicon.svg', type: 'image/svg+xml' }],
+        links: [{ rel: 'icon', href: '/favicon.svg', type: 'image/svg+xml' }, headingFontPreload],
     }),
     shellComponent: RootDocument,
     notFoundComponent: NotFoundPage,

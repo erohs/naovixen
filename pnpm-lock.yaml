@@ -164,6 +164,9 @@ settings:
 
 catalogs:
   default:
+    '@fontsource-variable/fredoka':
+      specifier: 5.3.0
+      version: 5.3.0
     '@portabletext/types':
       specifier: 4.0.2
       version: 4.0.2
@@ -284,6 +287,9 @@ importers:
 
   apps/portfolio:
     dependencies:
+      '@fontsource-variable/fredoka':
+        specifier: 'catalog:'
+        version: 5.3.0
       '@naovixen/blocks':
         specifier: workspace:*
         version: link:../../packages/blocks
@@ -555,7 +561,7 @@ importers:
   packages/theming:
     dependencies:
       '@fontsource-variable/fredoka':
-        specifier: 5.3.0
+        specifier: 'catalog:'
         version: 5.3.0
       '@fontsource-variable/jetbrains-mono':
         specifier: 5.3.0
