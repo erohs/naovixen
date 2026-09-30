@@ -122,6 +122,22 @@ NavigationList instead.
 throttled mobile run. Local Lighthouse runs go through a compressing proxy, as the CDN will
 compress in production.
 
+## Fewer packages, split by reuse
+
+The first cut had 16 workspaces, one per layer of an imagined component library, with a
+file per interface and a showcase per component. For one site it was mostly ceremony, so
+on 2026-09-30 it was cut to ten: a package exists only when more than one app could use
+it, and anything only the portfolio uses lives in the portfolio. `models` dissolved into
+the packages that own each type; `layout` became CSS in each owner; `brand` and
+`site-shell` folded into `components` and `blocks`. Do not split a package back out for
+tidiness alone.
+
+## Tests check logic only
+
+A test that a prop or class name reaches the DOM fails only when the code is rewritten,
+never when it breaks. Components without branches have no tests; axe runs once over the
+design system instead of in every component's spec.
+
 ## Open
 
 - **Lighthouse CI** (`@lhci/cli`) has not been published since June 2025. Confirm it still

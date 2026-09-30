@@ -7,9 +7,10 @@
 
 ## Where we are
 
-**Phases 0–5 are done.** `pnpm typecheck`, `test`, `lint` and `build` all pass. Next:
-Phase 6, the design system page. Phase 5's pages carry placeholder copy (every file named
-`Placeholder*` in `apps/portfolio/src/constants`) until Naomi answers the content gaps.
+**Phases 0–6 are done**, and the repo was restructured on 2026-09-30 (see "Fewer
+packages, split by reuse" in `docs/decisions.md`). `pnpm typecheck`, `test`, `lint` and
+`build` all pass. Next: Phase 7, the blog. Phase 5's pages carry placeholder copy (every
+file named `Placeholder*` in `apps/portfolio/src`) until Naomi answers the content gaps.
 
 Still unanswered:
 
@@ -36,57 +37,31 @@ Still unanswered:
 
 ## 1. Decision summary
 
-| Area                      | Decision                                                                                         | Notes                                                                                                                                                                                                                                            |
-| ------------------------- | ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Language                  | TypeScript, `strict: true`                                                                       | Plus `noUncheckedIndexedAccess`, `exactOptionalPropertyTypes`                                                                                                                                                                                    |
-| UI library                | React (latest stable)                                                                            |                                                                                                                                                                                                                                                  |
-| App framework / router    | **TanStack Start** (TanStack Router)                                                             | Type-safe file-based routing, SSR, prerendering, server functions, Vite-based. At time of planning it was at v1 release-candidate stage; **verify current status**. Fallback if unsuitable: React Router (framework mode). Ask before switching. |
-| Monorepo                  | **pnpm workspaces + Turborepo**                                                                  | Internal packages, no publishing, no versioning                                                                                                                                                                                                  |
-| Package linking           | `"workspace:*"` + packages export TypeScript source directly                                     | "Internal / just-in-time packages": no build step, no version numbers, edits are live in every app                                                                                                                                               |
-| Styling                   | Global CSS, prefixed BEM (`.nv-block__element--modifier`), CSS custom properties, cascade layers | **No Tailwind, no CSS-in-JS, no CSS Modules**                                                                                                                                                                                                    |
-| Theming                   | CSS variables + `data-theme` on `<html>`, light / dark / system                                  | Cookie-backed so SSR renders the right theme with no flash                                                                                                                                                                                       |
-| Framework-agnostic logic  | Pure TS packages: `models`, `formatting`, `seo`, `cms`, `theming`                                | React only appears in thin adapters (hooks) and components                                                                                                                                                                                       |
-| Blog                      | Headless CMS (**Sanity** proposed), fetched at request time with CDN caching                     | Publish without redeploying; rich content mapped to own components                                                                                                                                                                               |
-| Hosting                   | **Cloudflare** (Workers), one project per app                                                    | Verify TanStack Start's current Cloudflare deployment guide. Alternatives: Netlify, Vercel                                                                                                                                                       |
-| Domains                   | `naovixen.com` → portfolio                                                                       | Future sites (e.g. a merch shop) are **not built now**; the architecture only has to make adding one easy                                                                                                                                        |
-| Tests                     | Vitest (unit), Testing Library (components), Playwright + axe (end-to-end + accessibility)       |                                                                                                                                                                                                                                                  |
-| Linting                   | ESLint (flat config, typescript-eslint, jsx-a11y), Stylelint (BEM pattern enforced), Prettier    |                                                                                                                                                                                                                                                  |
-| Hidden design system page | `/system` route in every app, `noindex`, excluded from sitemap                                   |                                                                                                                                                                                                                                                  |
+| Area                     | Decision                                                                                         | Notes                                                                                                                                                                                                                                            |
+| ------------------------ | ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Language                 | TypeScript, `strict: true`                                                                       | Plus `noUncheckedIndexedAccess`, `exactOptionalPropertyTypes`                                                                                                                                                                                    |
+| UI library               | React (latest stable)                                                                            |                                                                                                                                                                                                                                                  |
+| App framework / router   | **TanStack Start** (TanStack Router)                                                             | Type-safe file-based routing, SSR, prerendering, server functions, Vite-based. At time of planning it was at v1 release-candidate stage; **verify current status**. Fallback if unsuitable: React Router (framework mode). Ask before switching. |
+| Monorepo                 | **pnpm workspaces + Turborepo**                                                                  | Internal packages, no publishing, no versioning                                                                                                                                                                                                  |
+| Package linking          | `"workspace:*"` + packages export TypeScript source directly                                     | "Internal / just-in-time packages": no build step, no version numbers, edits are live in every app                                                                                                                                               |
+| Styling                  | Global CSS, prefixed BEM (`.nv-block__element--modifier`), CSS custom properties, cascade layers | **No Tailwind, no CSS-in-JS, no CSS Modules**                                                                                                                                                                                                    |
+| Theming                  | CSS variables + `data-theme` on `<html>`, light / dark / system                                  | Cookie-backed so SSR renders the right theme with no flash                                                                                                                                                                                       |
+| Framework-agnostic logic | Pure TS packages: `utilities`, `seo`, `cms`, `theming`                                           | React only appears in thin adapters (hooks) and components                                                                                                                                                                                       |
+| Blog                     | Headless CMS (**Sanity** proposed), fetched at request time with CDN caching                     | Publish without redeploying; rich content mapped to own components                                                                                                                                                                               |
+| Hosting                  | **Cloudflare** (Workers), one project per app                                                    | Verify TanStack Start's current Cloudflare deployment guide. Alternatives: Netlify, Vercel                                                                                                                                                       |
+| Domains                  | `naovixen.com` → portfolio                                                                       | Future sites (e.g. a merch shop) are **not built now**; the architecture only has to make adding one easy                                                                                                                                        |
+| Tests                    | Vitest (unit), Testing Library (components), Playwright + axe (end-to-end + accessibility)       |                                                                                                                                                                                                                                                  |
+| Linting                  | ESLint (flat config, typescript-eslint, jsx-a11y), Stylelint (BEM pattern enforced), Prettier    |                                                                                                                                                                                                                                                  |
+| Design system            | `apps/design-system`, run locally, never deployed                                                |                                                                                                                                                                                                                                                  |
 
 ---
 
 ## 2. Repository structure
 
-```
-naovixen/
-├── apps/
-│   ├── portfolio/               # naovixen.com (TanStack Start)
-│   └── studio/                  # Sanity Studio — Phase 7
-├── packages/
-│   ├── models/                  # domain data shapes, no behaviour — Phase 3
-│   ├── formatting/              # text and date formatting
-│   ├── seo/                     # metadata and structured data — Phase 3
-│   ├── cms/                     # blog repository adapters — Phase 7
-│   ├── theming/                 # tokens, themes, fonts, reset, base, layout primitives
-│   ├── components/              # generic HTML-level React components
-│   ├── layout/                  # Container, Stack, Cluster, Grid
-│   ├── blocks/                  # generic compositions: Card, Breadcrumb, Disclosure…
-│   ├── brand/                   # logo, wordmark and doodles
-│   ├── site-shell/              # header, footer, theme toggle, back-to-top
-│   ├── portable-text/           # blog body renderer
-│   ├── component-testing/       # shared test setup and axe helper (dev only)
-│   ├── design-system/           # every showcase, and the hidden /system page
-│   ├── typescript-config/       # shared tsconfig bases
-│   └── eslint-config/           # shared lint rules
-├── design-reference/            # Claude Design export — visual reference only
-├── source-material/             # cv.pdf — git-ignored
-├── docs/
-├── CLAUDE.md
-└── PLAN.md                      # this file — delete when done
-```
-
-Packages are internal: no build step, no versions, each exports its TypeScript source from
-`src/index.ts`. The allowed dependency directions are enforced in `eslint.config.js`.
+The package list and what each holds is in `CLAUDE.md`, under Architecture. `apps/studio`
+(Sanity Studio) joins in Phase 7. Packages are internal: no build step, no versions, each
+exports its TypeScript source from `src/index.ts`. The allowed dependency directions are
+enforced in `eslint.config.js`.
 
 ---
 
@@ -104,9 +79,9 @@ Built in Phase 2 in `packages/theming`. Token data lives in `src/tokens/*.tokens
 `pnpm generate` writes `src/generated/tokens.css`, and lint fails if it is stale. The
 conventions are in `.claude/rules/styles.md`.
 
-`packages/components/src/index.css` imports every component's `styles/*.css` into
-`layer(components)`. Each app imports `@naovixen/theming/styles.css` then
-`@naovixen/components/styles.css` once, in its root route.
+Each React package's `src/index.css` imports its components' `styles/*.css` into
+`layer(components)`. Each app imports `@naovixen/theming/styles.css` first, then the other
+packages' stylesheets, then its own.
 
 ### 5.3 Theming
 
@@ -134,29 +109,22 @@ Simple, accessible, professional, Scandinavian restraint with a playful hint of 
 ### 6.2 Approach (proposed — confirm in open questions)
 
 - **Sanity** as headless CMS; Studio lives in `apps/studio` and is deployed to Sanity's hosted studio URL. Verify current free-tier limits.
-- Content is **Portable Text** (structured JSON), rendered by a serializer map in `components` so every block/mark becomes a `@naovixen/components` component. No raw HTML injection.
+- Content is **Portable Text** (structured JSON), rendered by `@naovixen/blog-content`, which maps every block and mark to our components. No raw HTML injection.
 - Schema enforces quality: required `alt` text on images, required excerpt/description (SEO), slug validation, published date, tags.
 - **Framework-agnostic boundary:**
-    - `models`: `BlogPost`, `BlogPostSummary`, `BlogRepository` interface (`listPosts`, `getPostBySlug`, `listTags`).
-    - `cms`: `SanityBlogRepository implements BlogRepository` — maps CMS documents to `models`. Swapping CMS later means writing one new adapter.
+    - `cms`: the `IBlogPost` and `IBlogPostSummary` types, the `IBlogRepository` interface (`listPosts`, `getPostBySlug`, `listTags`), and `SanityBlogRepository implements IBlogRepository`, which maps CMS documents to those types. Swapping CMS later means writing one new adapter.
 - **Freshness without deploys:** blog routes are server-rendered; responses sent with `Cache-Control` using `s-maxage` + `stale-while-revalidate` so the CDN serves fast and picks up new posts within minutes. Optional: a Sanity webhook that purges the CDN cache for instant publishing.
 - Draft preview: preview route guarded by a secret token, using Sanity's draft perspective. Verify current Sanity preview/visual-editing docs.
 - RSS/Atom feed at `/blog/feed.xml`; blog posts included in the sitemap.
 
 ---
 
-## 7. Hidden design system page (`/system`)
+## 7. Design system
 
-- Lives in `@naovixen/design-system` and is mounted as a route in every app, so each site shows the shared system rendered with its own theme.
-- Not linked anywhere, `<meta name="robots" content="noindex, nofollow">` plus `X-Robots-Tag` header, excluded from the sitemap. **Do not list it in `robots.txt`** (that advertises it). Hidden ≠ secret; nothing sensitive goes here.
-- Sections:
-    1. **Colours** — every semantic token, swatch in light and dark, value, and contrast ratio against its paired token (computed in `theming`).
-    2. **Typography** — type scale, families, weights, line heights, a specimen paragraph.
-    3. **Spacing, radii, shadows, motion** — visual scales generated from token data.
-    4. **Layout primitives** — container, stack, cluster, grid demos.
-    5. **Components** — each `*.showcase.tsx` file exports its variants/states; the page collects them automatically (e.g. via `import.meta.glob`).
-    6. **Theme switcher** at the top.
-- Showcases double as visual/accessibility test fixtures for Playwright.
+`apps/design-system`: a Vite app run locally with `pnpm --filter design-system dev`, never
+deployed, so nothing needs hiding. It renders the tokens (with every colour pair's contrast
+in both themes), every component and block with a few examples each, and a sample post
+body. One test runs axe over each page.
 
 ---
 
@@ -185,10 +153,10 @@ Simple, accessible, professional, Scandinavian restraint with a playful hint of 
 - [ ] Semantic landmarks, one `<h1>` per page, logical heading order.
 - [ ] Skip link, visible `:focus-visible` styles, focus moved and route change announced on navigation.
 - [ ] Minimum 24×24 px target sizes; full keyboard support; no keyboard traps.
-- [ ] Colour contrast verified for all token pairs in both themes (automated on `/system`).
+- [ ] Colour contrast verified for all token pairs in both themes (a test in `theming`, shown in the design system).
 - [ ] `prefers-reduced-motion`, `forced-colors`, and `prefers-contrast` respected.
 - [ ] No information by colour alone; icons have accessible names or are `aria-hidden`.
-- [ ] `eslint-plugin-jsx-a11y` in lint; axe checks in Playwright on every route and the `/system` page.
+- [ ] `eslint-plugin-jsx-a11y` in lint; axe on every design-system page, and in Playwright on every route.
 
 ---
 
@@ -273,14 +241,14 @@ Reworked after review: the first cut was site widgets, not a component library.
 
 ### Phase 6 — Design system page
 
-- [ ] Build `@naovixen/design-system` (section 7) and mount `/system` in the portfolio.
-- **Verify:** every token and every showcase appears automatically; page is `noindex` and absent from the sitemap. **Commit** once this passes.
+- [x] Build `apps/design-system` (section 7). Replaced the planned `/system` route and showcase package, at Naomi's request.
+- **Verify:** every token, component and block appears; axe passes on every page. **Commit** once this passes.
 
 ### Phase 7 — Blog
 
 - [ ] Sanity project + `apps/studio` schemas (post, project, author, tag, custom blocks) with validation.
 - [ ] Project repository in `cms`, `/work` and `/work/$slug` routes, and the home page's featured work.
-- [ ] `SanityBlogRepository` in `cms`, mapping to `models`, with tests against fixture data.
+- [ ] `SanityBlogRepository` in `cms`, mapping to its types, with tests against fixture data.
 - [ ] Blog routes with caching headers, tag filtering, pagination, RSS, sitemap entries.
 - [ ] Draft preview route (optional webhook cache purge).
 - **Verify:** publishing a post in Studio appears on the live site within the cache window with **no deployment**. **Commit** once this passes.
@@ -310,9 +278,9 @@ Reworked after review: the first cut was site widgets, not a component library.
 
 - Portfolio deployed to `naovixen.com` from a monorepo whose unversioned shared packages contain nothing portfolio-specific, so a new site can be added without touching them.
 - Blog posts publish without a deploy and render with naovixen components.
-- `/system` documents every token and component, generated from source.
+- The design system app shows every token and component.
 - WCAG 2.2 AA, Lighthouse ≥ 95 in all categories on mobile, CI enforcing it.
-- Only `components` and `design-system` import React; components are model-driven.
+- Logic packages never import React; React packages take content as props.
 - `PLAN.md` removed; `CLAUDE.md` and `docs/` hold the lasting knowledge.
 
 ---

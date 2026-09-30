@@ -11,7 +11,8 @@ Global stylesheets. No Tailwind, no CSS-in-JS, no CSS Modules.
 ## Names
 
 Classes are `nv-` prefixed BEM, enforced by Stylelint. One block per file, named after the
-block.
+block. A page's stylesheet is the exception: it holds the page's block and one for each of
+the sections written in the page's file.
 
 ```css
 .nv-card {
@@ -48,7 +49,7 @@ in `packages/theming`, and never hand-edit the generated CSS. Lint fails if it i
 Declared once, in `packages/theming/src/index.css`:
 
 ```css
-@layer reset, tokens, base, layout, components, utilities, overrides;
+@layer reset, tokens, base, components, utilities, overrides;
 ```
 
 Layer order settles precedence, so a rule that loses a fight is in the wrong layer.
@@ -73,13 +74,19 @@ Style ARIA and `data-*` attributes, not state classes:
 
 ## Accessibility
 
-- Every text/background pair meets WCAG 2.2 AA in **both** themes. The design system page
-  computes this — check it after changing a colour token.
+- Every text/background pair meets WCAG 2.2 AA in **both** themes. A test checks the pairs
+  in `ContrastRequirements.const.ts`, and the design system shows each ratio.
 - `:focus-visible` is always visible and never removed without a replacement.
 - Honour `prefers-reduced-motion` (drop transforms, keep opacity), `forced-colors` (use
   `currentColor`, let system colours through) and `prefers-contrast`.
 - Decorative flourishes are `aria-hidden` in the markup and toned down under reduced motion
   and forced colours.
+
+## Layout
+
+No layout components. A block or page lays itself out in its own stylesheet: `display`,
+`gap` with a space token, and `padding-inline: var(--space-padding-page-centred)` to hold
+content at the page width.
 
 ## Modern CSS
 

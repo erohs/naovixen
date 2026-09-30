@@ -36,35 +36,41 @@ copy it.
 
 ## Architecture
 
-Dependencies point one way, from apps down to leaf packages, and never sideways between
-siblings. Lint fails the build if that is broken.
+```
+apps/portfolio        naovixen.com
+apps/design-system    every token and component rendered, run locally, never deployed
+packages/nvpack       eslint, tsconfig and vitest presets
+packages/utilities    small framework-free helpers several packages use
+packages/theming      tokens, reset, base styles, fonts, the theme controller
+packages/cms          the blog repository and the blog and project types
+packages/seo          head tags, JSON-LD and the sitemap, with the types they read
+packages/components   generic HTML-level components, icons, the theme toggle
+packages/blocks       compositions, and naovixen's header, footer, logo and navigation
+packages/blog-content renders a post body with our components
+```
 
-Logic packages (`models`, `theming`, `formatting`, `seo`, `cms`) never import React. They
-run unchanged in a browser, on a Worker, and in a test with no DOM: anything needing a
-browser capability declares an interface and has an implementation injected. The base
-tsconfig omits the `DOM` lib, so reaching for `window` is a compile error rather than a
-convention.
+Dependencies point one way, from apps down, and never sideways between siblings. Lint
+fails the build if that is broken. A package is justified by reuse: if only the portfolio
+would use something, it lives in the portfolio.
 
-React packages build on each other, from generic to specific:
+Logic packages (`utilities`, `theming`, `cms`, `seo`) never import React. They run
+unchanged in a browser, on a Worker, and in a test with no DOM: anything needing a browser
+capability declares an interface and has an implementation injected. The base tsconfig
+omits the `DOM` lib, so reaching for `window` is a compile error. Types live with the
+package that owns them; a package that only reads a shape declares the small one it needs.
 
-- `components`: HTML-level and generic — Button, Link, Input, Heading, Icon. Each passes
-  its element's intrinsic props and ref through, and knows nothing of routers, models or
-  brand.
-- `layout`, `blocks`: generic compositions — Stack, Grid, Card, Breadcrumb, Disclosure.
-- `brand`, `site-shell`, `portable-text`: naovixen's own pieces, reusable by any naovixen
-  site. Models and theme bindings enter here.
-- `apps/*`: whatever only that site uses, and the router wiring, `createLink(Link)`.
-- `design-system`: every showcase. Nothing else holds one.
+`components` pass their element's intrinsic props and ref through and know nothing of
+routers or content. `blocks` compose them; brand and site pieces (Logo, Header, Footer)
+belong here, taking their links and content as props so any naovixen site can use them.
+Layout is plain CSS in the owner's stylesheet, not a component.
 
 Variation comes from composition, never from a switch: LinkIcon is Link plus Icon, not a
 `kind` prop on Link. A consumer that wants something different composes its own.
 
-Layers: models (data, no behaviour) → services and controllers (logic, dependencies
-injected) → hooks (thin React bindings, no logic) → components (props in, semantic HTML
-out) → routes (load, map, compose).
-
-Controllers expose `getState()`, `subscribe(listener)` and intent methods, so a hook binds
-one with `useSyncExternalStore` and adds nothing of its own.
+Layers: services and controllers (logic, dependencies injected) → hooks (thin React
+bindings, no logic) → components (props in, semantic HTML out) → routes (load, map,
+compose). Controllers expose `getState()`, `subscribe(listener)` and intent methods, so a
+hook binds one with `useSyncExternalStore` and adds nothing of its own.
 
 ## SOLID
 
@@ -90,17 +96,23 @@ main file. Everything else goes in `interfaces/`, `types/`, `enums/`, `constants
 Package-level code follows the same shape under `src/`, except in the React packages,
 whose `src/` holds component folders and nothing else.
 
+In an app, `pages/<page>/` holds a page. Sections only that page uses are unexported
+functions in the page's own file, not folders of their own. `components/` holds what two
+or more pages share. Extract a component only when something reuses it, and when it is
+generic enough for another site, put it in `blocks` instead.
+
 One barrel per package, `src/index.ts`. No nested index files, no re-export chains.
 
-Something used by one owner lives with that owner. Once a second needs it, move it up to
-the package level rather than importing sideways. A component composing another imports
-it directly: that is the design, not a sideways dependency.
+Something used by one owner lives with that owner. Once a second needs it, move it up
+rather than importing sideways. A component composing another imports it directly: that
+is the design, not a sideways dependency.
 
-Names say what is inside. No `core`, `utils`, `common`, `shared` or `helpers`.
+Names say what is inside. No `core`, `common`, `shared` or `helpers`; `utilities` is the
+one package of loose helpers, and only for framework-free functions several packages use.
 
 ## Commits
 
-Conventional Commits, scoped to the package: `feat(components): add BusyButton`.
+Conventional Commits, scoped to the package: `feat(components): add ThemeToggle`.
 
 Never commit `source-material/`, `notes/`, `.env`, or anything holding personal details.
 

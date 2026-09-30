@@ -32,18 +32,20 @@ straight through. React 19 removed `children` from `FunctionComponent`, so decla
 the props interface when a component that does not extend an element's props takes
 children.
 
-A component file holds the component and nothing else. Its props interface, enums,
-constants and helpers live in the sibling subfolders.
+A component file exports its component and nothing else. Its props interface, enums,
+constants and helpers live in the sibling subfolders. A page file may also hold the
+sections only that page uses, as unexported functions beside it, each within the usual
+limits.
 
 ## Compose, do not branch
 
 A variant is a new component built from an existing one: `LinkIcon` renders `Link` with an
-`Icon`; `BusyButton` renders `Button` with `aria-busy`. Never a `kind` prop with a switch
+`Icon`; `ExclamationBubble` renders `SpeechBubble` with motion lines. Never a `kind` prop with a switch
 inside. A variant that changes only the look is a modifier class, picked by an enum prop.
 
-Generic components know nothing of models, routers or brand. Models enter at the packages
-that build naovixen's own pieces (`site-shell`, `portable-text`) and in the apps. Data
-loading belongs in routes, logic in services.
+Generic components know nothing of content types, routers or brand. Content types enter
+at `blog-content` and in the apps; a block takes its links and copy as props. Data loading
+belongs in routes, logic in services.
 
 ## The `on` prefix collides
 
@@ -76,9 +78,9 @@ order, a meaningless `alt`, or a focus order that makes no sense.
 - Real `alt` text, or `alt=""` when genuinely decorative.
 - Anything animated respects `prefers-reduced-motion`.
 
-## Showcases
+## Design system
 
-Showcases live in `packages/design-system`, one per component, exporting its variants and
-states. Nothing outside the design system holds one. The design system page renders them
-and Playwright uses them as fixtures, so a showcase missing a state is that state going
-untested.
+`apps/design-system` renders every token and component with a few examples each: a new
+component gets its examples on the right page there, written as plain JSX. A component
+that needs state to show, such as a controlled disclosure, gets a small demo in that
+app's `components/`. Its one test runs axe over every page.
