@@ -10,7 +10,6 @@ export const palette = {
     /** Dimmer again, for lines on the dark theme. */
     linen: '#F3E2CC',
     sand: '#F3EADC',
-    plumGrey: '#564E5A',
     wheat: '#E3CFBA',
     espresso: '#2B1D14',
     cocoa: '#3B2A1E',
