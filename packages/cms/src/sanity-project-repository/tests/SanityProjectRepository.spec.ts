@@ -12,13 +12,11 @@ const projectFields = {
     summary: 'A summary.',
     isFeatured: true,
     screenshot: null,
-    tldr: 'In short.',
-    role: 'Lead engineer',
-    timeline: '12 weeks',
     stack: ['TypeScript'],
-    liveUrl: null,
-    repositoryUrl: 'https://github.com/example/habit-tracker',
-    sections: [{ heading: 'The problem', body: [{ _type: 'block', _key: 'a' }] }],
+    body: [
+        { _type: 'block', _key: 'a' },
+        { _type: 'sectionHeading', _key: 'b', text: 'The problem' },
+    ],
 };
 
 function createRepositoryAnswering(result: unknown): SanityProjectRepository {
@@ -29,14 +27,8 @@ function createRepositoryAnswering(result: unknown): SanityProjectRepository {
     return new SanityProjectRepository(client, imageUrls);
 }
 
-describe('Using SanityProjectRepository, given a project with a repository but no demo, when it is asked for', () => {
+describe('Using SanityProjectRepository, given a project with no screenshot, when it is asked for', () => {
     const repository = createRepositoryAnswering(projectFields);
-
-    test('then it should leave the demo link undefined', async () => {
-        const project = await repository.getProjectBySlug('habit-tracker');
-
-        expect(project?.liveUrl).toBeUndefined();
-    });
 
     test('then it should leave the screenshot undefined', async () => {
         const project = await repository.getProjectBySlug('habit-tracker');
@@ -44,10 +36,16 @@ describe('Using SanityProjectRepository, given a project with a repository but n
         expect(project?.screenshot).toBeUndefined();
     });
 
-    test('then it should prepare each section body for rendering', async () => {
+    test('then it should prepare text blocks for rendering', async () => {
         const project = await repository.getProjectBySlug('habit-tracker');
 
-        expect(project?.sections[0]?.body[0]).toMatchObject({ children: [] });
+        expect(project?.body[0]).toMatchObject({ children: [] });
+    });
+
+    test('then it should pass blocks with nothing to prepare through unchanged', async () => {
+        const project = await repository.getProjectBySlug('habit-tracker');
+
+        expect(project?.body[1]).toStrictEqual(projectFields.body[1]);
     });
 });
 

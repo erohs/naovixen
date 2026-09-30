@@ -5,7 +5,7 @@ import { createRoot } from 'react-dom/client';
 import '@naovixen/theming/styles.css';
 import '@naovixen/components/styles.css';
 import '@naovixen/blocks/styles.css';
-import '@naovixen/blog-content/styles.css';
+import '@naovixen/rich-content/styles.css';
 import './index.css';
 
 import { App } from './app/App.component';

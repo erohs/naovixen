@@ -1,8 +1,11 @@
 import { defineArrayMember, defineField } from 'sanity';
 
+import { validateHeadingOrder } from '../functions/ValidateHeadingOrder.function';
+import type { IBodyNode } from '../interfaces/IBodyNode';
+
 /**
- * Only what the site renders. The page owns the h1, so a body starts at h2. Code blocks come
- * from the code input plugin.
+ * Every block the site renders, on every document type. The page owns the h1, so a body
+ * starts at h2. Code blocks come from the code input plugin.
  */
 export const bodyField = defineField({
     name: 'body',
@@ -42,6 +45,7 @@ export const bodyField = defineField({
                 ],
             },
         }),
+        defineArrayMember({ type: 'sectionHeading' }),
         defineArrayMember({ type: 'callout' }),
         defineArrayMember({
             type: 'code',
@@ -52,6 +56,8 @@ export const bodyField = defineField({
                 ),
         }),
         defineArrayMember({ type: 'figure' }),
+        defineArrayMember({ type: 'factList' }),
+        defineArrayMember({ type: 'linkButtons' }),
     ],
-    validation: (rule) => rule.required(),
+    validation: (rule) => rule.required().custom<IBodyNode[]>(validateHeadingOrder),
 });

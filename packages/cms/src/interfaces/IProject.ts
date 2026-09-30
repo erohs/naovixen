@@ -1,12 +1,8 @@
-import type { IProjectSection } from './IProjectSection';
+import type { TypedObject } from '@portabletext/types';
+
 import type { IProjectSummary } from './IProjectSummary';
 
 export interface IProject extends IProjectSummary {
-    readonly tldr: string;
-    readonly role: string;
-    readonly timeline: string;
-    readonly liveUrl?: string | undefined;
-    readonly repositoryUrl?: string | undefined;
-    /** In reading order; a page numbers them from one. */
-    readonly sections: readonly IProjectSection[];
+    /** Portable Text, like a post's body. */
+    readonly body: readonly TypedObject[];
 }

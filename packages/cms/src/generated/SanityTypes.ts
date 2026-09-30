@@ -15,6 +15,27 @@
 export declare const internalGroqTypeReferenceTo: unique symbol;
 
 // Source: schema.json
+export type LinkButtons = {
+    _type: 'linkButtons';
+    links: Array<{
+        label: string;
+        href: string;
+        variant: 'primary' | 'secondary';
+        _type: 'linkButton';
+        _key: string;
+    }>;
+};
+
+export type FactList = {
+    _type: 'factList';
+    facts: Array<{
+        label: string;
+        value: string;
+        _type: 'fact';
+        _key: string;
+    }>;
+};
+
 export type SanityImageAssetReference = {
     _ref: string;
     _type: 'reference';
@@ -43,38 +64,9 @@ export type Callout = {
     text: string;
 };
 
-export type ProjectSection = {
-    _type: 'projectSection';
-    heading: string;
-    body: Array<
-        | {
-              children?: Array<{
-                  marks?: Array<string>;
-                  text?: string;
-                  _type: 'span';
-                  _key: string;
-              }>;
-              style?: 'normal' | 'h2' | 'h3' | 'blockquote';
-              listItem?: 'bullet' | 'number';
-              markDefs?: Array<{
-                  href: string;
-                  _type: 'link';
-                  _key: string;
-              }>;
-              level?: number;
-              _type: 'block';
-              _key: string;
-          }
-        | ({
-              _key: string;
-          } & Callout)
-        | ({
-              _key: string;
-          } & Code)
-        | ({
-              _key: string;
-          } & Figure)
-    >;
+export type SectionHeading = {
+    _type: 'sectionHeading';
+    text: string;
 };
 
 export type Tag = {
@@ -97,9 +89,6 @@ export type Project = {
     position: number;
     isFeatured?: boolean;
     summary: string;
-    tldr: string;
-    role: string;
-    timeline: string;
     stack: Array<string>;
     screenshot?: {
         asset?: SanityImageAssetReference;
@@ -109,12 +98,43 @@ export type Project = {
         alt: string;
         _type: 'image';
     };
-    liveUrl?: string;
-    repositoryUrl?: string;
-    sections: Array<
-        {
-            _key: string;
-        } & ProjectSection
+    body: Array<
+        | {
+              children?: Array<{
+                  marks?: Array<string>;
+                  text?: string;
+                  _type: 'span';
+                  _key: string;
+              }>;
+              style?: 'normal' | 'h2' | 'h3' | 'blockquote';
+              listItem?: 'bullet' | 'number';
+              markDefs?: Array<{
+                  href: string;
+                  _type: 'link';
+                  _key: string;
+              }>;
+              level?: number;
+              _type: 'block';
+              _key: string;
+          }
+        | ({
+              _key: string;
+          } & SectionHeading)
+        | ({
+              _key: string;
+          } & Callout)
+        | ({
+              _key: string;
+          } & Code)
+        | ({
+              _key: string;
+          } & Figure)
+        | ({
+              _key: string;
+          } & FactList)
+        | ({
+              _key: string;
+          } & LinkButtons)
     >;
 };
 
@@ -183,6 +203,9 @@ export type Post = {
           }
         | ({
               _key: string;
+          } & SectionHeading)
+        | ({
+              _key: string;
           } & Callout)
         | ({
               _key: string;
@@ -190,6 +213,12 @@ export type Post = {
         | ({
               _key: string;
           } & Figure)
+        | ({
+              _key: string;
+          } & FactList)
+        | ({
+              _key: string;
+          } & LinkButtons)
     >;
 };
 
@@ -299,10 +328,12 @@ export type Geopoint = {
 };
 
 export type AllSanitySchemaTypes =
+    | LinkButtons
+    | FactList
     | SanityImageAssetReference
     | Figure
     | Callout
-    | ProjectSection
+    | SectionHeading
     | Tag
     | Project
     | SanityImageCrop
@@ -322,7 +353,7 @@ export type AllSanitySchemaTypes =
 
 // Source: ../../packages/cms/src/sanity-blog-repository/constants/PostBySlugQuery.const.ts
 // Variable: postBySlugQuery
-// Query: *[_type == "post" && slug.current == $slug][0] {        "slug": slug.current,        title,        excerpt,        publishedAt,        "tags": coalesce(tags[]->title, []),        "plainText": pt::text(body),        body[] {            ...,            _type == "figure" => {                image { alt, asset-> { url, metadata { dimensions { width, height } } } }            }        }    }
+// Query: *[_type == "post" && slug.current == $slug][0] {        "slug": slug.current,        title,        excerpt,        publishedAt,        "tags": coalesce(tags[]->title, []),        "plainText": pt::text(body),        "body": coalesce(body[] {    ...,    _type == "figure" => {        image { alt, asset-> { url, metadata { dimensions { width, height } } } }    }}, [])    }
 export type PostBySlugQueryResult = {
     slug: string;
     title: string;
@@ -366,6 +397,16 @@ export type PostBySlugQueryResult = {
           }
         | {
               _key: string;
+              _type: 'factList';
+              facts: Array<{
+                  label: string;
+                  value: string;
+                  _type: 'fact';
+                  _key: string;
+              }>;
+          }
+        | {
+              _key: string;
               _type: 'figure';
               image: {
                   alt: string;
@@ -381,6 +422,22 @@ export type PostBySlugQueryResult = {
               };
               caption?: string;
               shape: 'portrait' | 'wide';
+          }
+        | {
+              _key: string;
+              _type: 'linkButtons';
+              links: Array<{
+                  label: string;
+                  href: string;
+                  variant: 'primary' | 'secondary';
+                  _type: 'linkButton';
+                  _key: string;
+              }>;
+          }
+        | {
+              _key: string;
+              _type: 'sectionHeading';
+              text: string;
           }
     >;
 } | null;
@@ -404,7 +461,7 @@ export type PostTagsQueryResult = Array<string>;
 
 // Source: ../../packages/cms/src/sanity-project-repository/constants/ProjectBySlugQuery.const.ts
 // Variable: projectBySlugQuery
-// Query: *[_type == "project" && slug.current == $slug][0] {        "slug": slug.current,        title,        summary,        "isFeatured": coalesce(isFeatured, false),        screenshot { alt, asset-> { url, metadata { dimensions { width, height } } } },        tldr,        role,        timeline,        stack,        liveUrl,        repositoryUrl,        sections[] {            heading,            body[] {                ...,                _type == "figure" => {                    image { alt, asset-> { url, metadata { dimensions { width, height } } } }                }            }        }    }
+// Query: *[_type == "project" && slug.current == $slug][0] {        "slug": slug.current,        title,        summary,        "isFeatured": coalesce(isFeatured, false),        screenshot { alt, asset-> { url, metadata { dimensions { width, height } } } },        stack,        "body": coalesce(body[] {    ...,    _type == "figure" => {        image { alt, asset-> { url, metadata { dimensions { width, height } } } }    }}, [])    }
 export type ProjectBySlugQueryResult = {
     slug: string;
     title: string;
@@ -422,68 +479,86 @@ export type ProjectBySlugQueryResult = {
             } | null;
         } | null;
     } | null;
-    tldr: string;
-    role: string;
-    timeline: string;
     stack: Array<string>;
-    liveUrl: string | null;
-    repositoryUrl: string | null;
-    sections: Array<{
-        heading: string;
-        body: Array<
-            | {
-                  children?: Array<{
-                      marks?: Array<string>;
-                      text?: string;
-                      _type: 'span';
-                      _key: string;
-                  }>;
-                  style?: 'blockquote' | 'h2' | 'h3' | 'normal';
-                  listItem?: 'bullet' | 'number';
-                  markDefs?: Array<{
-                      href: string;
-                      _type: 'link';
-                      _key: string;
-                  }>;
-                  level?: number;
-                  _type: 'block';
+    body: Array<
+        | {
+              children?: Array<{
+                  marks?: Array<string>;
+                  text?: string;
+                  _type: 'span';
                   _key: string;
-              }
-            | {
+              }>;
+              style?: 'blockquote' | 'h2' | 'h3' | 'normal';
+              listItem?: 'bullet' | 'number';
+              markDefs?: Array<{
+                  href: string;
+                  _type: 'link';
                   _key: string;
-                  _type: 'callout';
-                  kind: string;
-                  title: string;
-                  text: string;
-              }
-            | {
+              }>;
+              level?: number;
+              _type: 'block';
+              _key: string;
+          }
+        | {
+              _key: string;
+              _type: 'callout';
+              kind: string;
+              title: string;
+              text: string;
+          }
+        | {
+              _key: string;
+              _type: 'code';
+              language?: string;
+              filename?: string;
+              code?: string;
+              highlightedLines?: Array<number>;
+          }
+        | {
+              _key: string;
+              _type: 'factList';
+              facts: Array<{
+                  label: string;
+                  value: string;
+                  _type: 'fact';
                   _key: string;
-                  _type: 'code';
-                  language?: string;
-                  filename?: string;
-                  code?: string;
-                  highlightedLines?: Array<number>;
-              }
-            | {
-                  _key: string;
-                  _type: 'figure';
-                  image: {
-                      alt: string;
-                      asset: {
-                          url: string;
-                          metadata: {
-                              dimensions: {
-                                  width: number;
-                                  height: number;
-                              } | null;
+              }>;
+          }
+        | {
+              _key: string;
+              _type: 'figure';
+              image: {
+                  alt: string;
+                  asset: {
+                      url: string;
+                      metadata: {
+                          dimensions: {
+                              width: number;
+                              height: number;
                           } | null;
                       } | null;
-                  };
-                  caption?: string;
-                  shape: 'portrait' | 'wide';
-              }
-        >;
-    }>;
+                  } | null;
+              };
+              caption?: string;
+              shape: 'portrait' | 'wide';
+          }
+        | {
+              _key: string;
+              _type: 'linkButtons';
+              links: Array<{
+                  label: string;
+                  href: string;
+                  variant: 'primary' | 'secondary';
+                  _type: 'linkButton';
+                  _key: string;
+              }>;
+          }
+        | {
+              _key: string;
+              _type: 'sectionHeading';
+              text: string;
+          }
+    >;
 } | null;
 
 // Source: ../../packages/cms/src/sanity-project-repository/constants/ProjectSummariesQuery.const.ts

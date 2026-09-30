@@ -58,7 +58,7 @@ export default [
 
     restrictImports('components', { mayImport: ['utilities', 'theming'] }),
     restrictImports('blocks', { mayImport: ['components', 'utilities'] }),
-    restrictImports('blog-content', {
+    restrictImports('rich-content', {
         mayImport: ['blocks', 'components', 'utilities', 'cms'],
     }),
 

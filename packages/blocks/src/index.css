@@ -7,6 +7,7 @@
 @import url('./callout/styles/callout.css') layer(components);
 @import url('./card/styles/card.css') layer(components);
 @import url('./code-block/styles/code-block.css') layer(components);
+@import url('./fact-list/styles/fact-list.css') layer(components);
 @import url('./figure/styles/figure.css') layer(components);
 @import url('./hand-drawn-rule/styles/hand-drawn-rule.css') layer(components);
 @import url('./link-tile/styles/link-tile.css') layer(components);

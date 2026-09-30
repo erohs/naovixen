@@ -47,7 +47,7 @@ packages/cms          the Sanity blog and project repositories, and the types th
 packages/seo          head tags, JSON-LD, the sitemap and the feed, with the types they read
 packages/components   generic HTML-level components, icons, the theme toggle
 packages/blocks       compositions, and naovixen's header, footer, logo and navigation
-packages/blog-content renders a post body with our components
+packages/rich-content renders Portable Text content blocks with our components
 ```
 
 Dependencies point one way, from apps down, and never sideways between siblings. Lint

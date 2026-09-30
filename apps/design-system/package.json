@@ -10,7 +10,7 @@
     },
     "dependencies": {
         "@naovixen/blocks": "workspace:*",
-        "@naovixen/blog-content": "workspace:*",
+        "@naovixen/rich-content": "workspace:*",
         "@naovixen/components": "workspace:*",
         "@naovixen/theming": "workspace:*",
         "react": "catalog:",

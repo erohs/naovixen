@@ -110,7 +110,7 @@ Simple, accessible, professional, Scandinavian restraint with a playful hint of 
 ### 6.2 Approach (proposed — confirm in open questions)
 
 - **Sanity** as headless CMS; Studio lives in `apps/studio` and is deployed to Sanity's hosted studio URL. Verify current free-tier limits.
-- Content is **Portable Text** (structured JSON), rendered by `@naovixen/blog-content`, which maps every block and mark to our components. No raw HTML injection.
+- Content is **Portable Text** (structured JSON), rendered by `@naovixen/rich-content`, which maps every block and mark to our components. No raw HTML injection.
 - Schema enforces quality: required `alt` text on images, required excerpt/description (SEO), slug validation, published date, tags.
 - **Framework-agnostic boundary:**
     - `cms`: the `IBlogPost` and `IBlogPostSummary` types, the `IBlogRepository` interface (`listPosts`, `getPostBySlug`, `listTags`), and `SanityBlogRepository implements IBlogRepository`, which maps CMS documents to those types. Swapping CMS later means writing one new adapter.

@@ -9,16 +9,5 @@ export function toProject(
     project: NonNullable<ProjectBySlugQueryResult>,
     imageUrls: ImageUrlBuilder,
 ): IProject {
-    return {
-        ...toProjectSummary(project, imageUrls),
-        tldr: project.tldr,
-        role: project.role,
-        timeline: project.timeline,
-        liveUrl: project.liveUrl ?? undefined,
-        repositoryUrl: project.repositoryUrl ?? undefined,
-        sections: project.sections.map((section) => ({
-            heading: section.heading,
-            body: toBody(section.body, imageUrls),
-        })),
-    };
+    return { ...toProjectSummary(project, imageUrls), body: toBody(project.body, imageUrls) };
 }

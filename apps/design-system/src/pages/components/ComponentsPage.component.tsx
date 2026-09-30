@@ -8,6 +8,7 @@ import {
     Code,
     downloadIcon,
     ExternalLink,
+    ExternalLinkButton,
     Heading,
     HeadingSize,
     Icon,
@@ -44,6 +45,9 @@ const Buttons: FunctionComponent = () => (
             <LinkButton href="#components">
                 Download <Icon source={downloadIcon} />
             </LinkButton>
+        </Example>
+        <Example name="ExternalLinkButton">
+            <ExternalLinkButton href="https://example.com">Another site</ExternalLinkButton>
         </Example>
         <Example name="ThemeToggle">
             <ThemeToggle />

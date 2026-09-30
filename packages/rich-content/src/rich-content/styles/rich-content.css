@@ -1,0 +1,30 @@
+.nv-rich-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-between-blocks);
+    max-inline-size: var(--layout-width-prose);
+
+    & > :is(h2, h3) {
+        margin-block-start: var(--space-between-blocks);
+    }
+
+    /* A little room either side, and for the bubble's tail beneath it. */
+    & .nv-rich-content__quote {
+        margin-block: var(--space-between-content);
+    }
+
+    & :is(ul, ol) {
+        padding-inline-start: var(--space-indent-list);
+    }
+}
+
+/* A numbered heading starts a new part, so it stands further off what came before. */
+.nv-rich-content__section-heading:not(:first-child) {
+    margin-block-start: var(--space-between-regions);
+}
+
+.nv-rich-content__buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-between-blocks);
+}

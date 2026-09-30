@@ -7,6 +7,5 @@ export { InMemoryBlogRepository } from './in-memory-blog-repository/InMemoryBlog
 export { SanityBlogRepository } from './sanity-blog-repository/SanityBlogRepository';
 export type { IGroqClient } from './interfaces/IGroqClient';
 export type { IProjectRepository } from './interfaces/IProjectRepository';
-export type { IProjectSection } from './interfaces/IProjectSection';
 export type { IProjectSummary } from './interfaces/IProjectSummary';
 export { SanityProjectRepository } from './sanity-project-repository/SanityProjectRepository';

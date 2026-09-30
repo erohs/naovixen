@@ -6,6 +6,7 @@ import {
     Card,
     CodeBlock,
     ExclamationBubble,
+    FactList,
     Figure,
     FigureShape,
     Footer,
@@ -94,6 +95,14 @@ const Bubbles: FunctionComponent = () => (
         </Example>
         <Example name="ExclamationBubble">
             <ExclamationBubble>say hello!</ExclamationBubble>
+        </Example>
+        <Example name="FactList">
+            <FactList
+                facts={[
+                    { label: 'my role', value: 'Lead engineer' },
+                    { label: 'timeline', value: '12 weeks' },
+                ]}
+            />
         </Example>
         <Example name="TagList">
             <TagList tags={['Accessibility', 'TypeScript', 'CSS']} label="Topics" />

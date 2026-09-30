@@ -13,7 +13,7 @@
     "dependencies": {
         "@fontsource-variable/fredoka": "catalog:",
         "@naovixen/blocks": "workspace:*",
-        "@naovixen/blog-content": "workspace:*",
+        "@naovixen/rich-content": "workspace:*",
         "@naovixen/cms": "workspace:*",
         "@naovixen/components": "workspace:*",
         "@naovixen/seo": "workspace:*",

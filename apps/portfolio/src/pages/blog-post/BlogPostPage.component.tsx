@@ -1,6 +1,6 @@
 import type { FunctionComponent } from 'react';
 import { Breadcrumb, HandDrawnRule } from '@naovixen/blocks';
-import { BlogContent } from '@naovixen/blog-content';
+import { RichContent } from '@naovixen/rich-content';
 import type { IBlogPostSummary } from '@naovixen/cms';
 import {
     arrowLeftIcon,
@@ -60,7 +60,7 @@ export const BlogPostPage: FunctionComponent<IBlogPostPageData> = ({ post, older
             />
             <div className="nv-blog-post-page__body">
                 <PostHeader post={post} />
-                <BlogContent body={post.body} linkComponent={RoutedLink} />
+                <RichContent body={post.body} linkComponent={RoutedLink} />
                 <HandDrawnRule className="nv-blog-post-page__rule" />
                 <MorePosts olderPost={olderPost} />
             </div>

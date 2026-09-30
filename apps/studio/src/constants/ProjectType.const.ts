@@ -1,6 +1,7 @@
 import { defineArrayMember, defineField, defineType } from 'sanity';
 import { CaseIcon } from '@sanity/icons/Case';
 
+import { bodyField } from './BodyField.const';
 import { imageField } from './ImageField.const';
 
 export const projectType = defineType({
@@ -41,15 +42,6 @@ export const projectType = defineType({
             validation: (rule) => rule.required().max(200),
         }),
         defineField({
-            name: 'tldr',
-            title: 'TL;DR',
-            type: 'text',
-            rows: 2,
-            validation: (rule) => rule.required().max(200),
-        }),
-        defineField({ name: 'role', type: 'string', validation: (rule) => rule.required() }),
-        defineField({ name: 'timeline', type: 'string', validation: (rule) => rule.required() }),
-        defineField({
             name: 'stack',
             title: 'Tech stack',
             type: 'array',
@@ -58,24 +50,7 @@ export const projectType = defineType({
             validation: (rule) => rule.required().min(1),
         }),
         defineField({ ...imageField, name: 'screenshot' }),
-        defineField({
-            name: 'liveUrl',
-            title: 'Live demo',
-            type: 'url',
-            validation: (rule) => rule.uri({ scheme: ['https'] }),
-        }),
-        defineField({
-            name: 'repositoryUrl',
-            title: 'GitHub repository',
-            type: 'url',
-            validation: (rule) => rule.uri({ scheme: ['https'] }),
-        }),
-        defineField({
-            name: 'sections',
-            type: 'array',
-            of: [defineArrayMember({ type: 'projectSection' })],
-            validation: (rule) => rule.required().min(1),
-        }),
+        bodyField,
     ],
     orderings: [
         { title: 'Position', name: 'position', by: [{ field: 'position', direction: 'asc' }] },

@@ -1,5 +1,7 @@
 import { defineQuery } from 'groq';
 
+import { bodyProjection } from '../../constants/BodyProjection.const';
+
 export const postBySlugQuery = defineQuery(`
     *[_type == "post" && slug.current == $slug][0] {
         "slug": slug.current,
@@ -8,11 +10,6 @@ export const postBySlugQuery = defineQuery(`
         publishedAt,
         "tags": coalesce(tags[]->title, []),
         "plainText": pt::text(body),
-        body[] {
-            ...,
-            _type == "figure" => {
-                image { alt, asset-> { url, metadata { dimensions { width, height } } } }
-            }
-        }
+        ${bodyProjection}
     }
 `);

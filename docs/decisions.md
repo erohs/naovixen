@@ -52,6 +52,19 @@ compile in `cms`, which never imports the client. Repositories pass the result t
 Sanity packages are pinned, and the Studio's `autoUpdates` is off, so the Studio runs the
 version in the lockfile rather than whatever Sanity ships that day.
 
+## Content is blocks, not fixed fields
+
+A post or project fixes only what its header, cards, search and feed need. Everything below
+the header is one Portable Text `body`, and every block is available on every document type,
+so a page's shape is chosen in the Studio rather than in code. The Studio rejects a body
+whose headings skip a level.
+
+Adding a block: its schema in `apps/studio` (listed in `SchemaTypes` and `BodyField`), then
+`pnpm --filter studio typegen`, then a renderer entry in `rich-content`'s
+`RichContentTypes`. The GROQ `bodyProjection` passes new fields through; it needs an edit
+only for an image or a reference, and `BodyNodeNormalisers` only for a field Sanity leaves
+optional.
+
 ## `AGENTS.md` belongs to Turborepo
 
 `turbo` writes and re-adds it when it detects an agent. Committed so it does not dirty the
