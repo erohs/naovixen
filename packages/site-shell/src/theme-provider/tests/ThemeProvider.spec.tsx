@@ -14,45 +14,37 @@ const ResolvedThemeReport: FunctionComponent = () => {
     return <p>{resolvedTheme}</p>;
 };
 
-describe('Using ThemeProvider', () => {
-    describe('given a controller on a system in light mode', () => {
-        describe('when a component below reads the theme', () => {
-            test('then it should see the resolved theme', () => {
-                render(
-                    <ThemeProvider
-                        themeController={createThemeControllerForTests(ResolvedTheme.Light)}
-                    >
-                        <ResolvedThemeReport />
-                    </ThemeProvider>,
-                );
+describe('Using ThemeProvider, given a controller on a system in light mode, when a component below reads the theme', () => {
+    test('then it should see the resolved theme', () => {
+        render(
+            <ThemeProvider themeController={createThemeControllerForTests(ResolvedTheme.Light)}>
+                <ResolvedThemeReport />
+            </ThemeProvider>,
+        );
 
-                expect(screen.getByText(ResolvedTheme.Light)).toBeDefined();
-            });
-
-            describe('and the preference changes to dark', () => {
-                test('then it should see the new theme', () => {
-                    const themeController = createThemeControllerForTests(ResolvedTheme.Light);
-                    render(
-                        <ThemeProvider themeController={themeController}>
-                            <ResolvedThemeReport />
-                        </ThemeProvider>,
-                    );
-
-                    act(() => {
-                        themeController.setPreference(ThemePreference.Dark);
-                    });
-
-                    expect(screen.getByText(ResolvedTheme.Dark)).toBeDefined();
-                });
-            });
-        });
+        expect(screen.getByText(ResolvedTheme.Light)).toBeDefined();
     });
+});
 
-    describe('given no provider', () => {
-        describe('when a component reads the theme', () => {
-            test('then it should say a ThemeProvider is missing', () => {
-                expect(() => render(<ResolvedThemeReport />)).toThrow(/ThemeProvider/u);
-            });
+describe('Using ThemeProvider, given a controller on a system in light mode, when the preference changes to dark', () => {
+    test('then it should see the new theme', () => {
+        const themeController = createThemeControllerForTests(ResolvedTheme.Light);
+        render(
+            <ThemeProvider themeController={themeController}>
+                <ResolvedThemeReport />
+            </ThemeProvider>,
+        );
+
+        act(() => {
+            themeController.setPreference(ThemePreference.Dark);
         });
+
+        expect(screen.getByText(ResolvedTheme.Dark)).toBeDefined();
+    });
+});
+
+describe('Using ThemeProvider, given no provider, when a component reads the theme', () => {
+    test('then it should say a ThemeProvider is missing', () => {
+        expect(() => render(<ResolvedThemeReport />)).toThrow(/ThemeProvider/u);
     });
 });

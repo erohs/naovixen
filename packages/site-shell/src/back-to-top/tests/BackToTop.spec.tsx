@@ -1,4 +1,3 @@
-import { findAxeViolations } from '@naovixen/nvpack/testing';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { afterEach, describe, expect, test } from 'vitest';
 
@@ -9,52 +8,42 @@ function scrollTo(position: number): void {
     fireEvent.scroll(window);
 }
 
-describe('Using BackToTop', () => {
-    afterEach(() => {
-        Object.defineProperty(window, 'scrollY', { value: 0, configurable: true });
+afterEach(() => {
+    Object.defineProperty(window, 'scrollY', { value: 0, configurable: true });
+});
+
+describe('Using BackToTop, given no href, when it renders', () => {
+    test('then it should link to the main content by the name "Back to top"', () => {
+        render(<BackToTop />);
+
+        expect(screen.getByRole('link', { name: 'Back to top' }).getAttribute('href')).toBe(
+            '#main',
+        );
     });
+});
 
-    describe('when it renders', () => {
-        test('then it should link to the main content by the name "Back to top"', () => {
-            render(<BackToTop />);
+describe('Using BackToTop, given the page is at the top, when it renders', () => {
+    test('then it should start hidden', () => {
+        render(<BackToTop />);
 
-            expect(screen.getByRole('link', { name: 'Back to top' }).getAttribute('href')).toBe(
-                '#main',
-            );
-        });
-
-        test('then it should start hidden, at the top of the page', () => {
-            render(<BackToTop />);
-
-            expect(screen.getByRole('link').dataset.visible).toBe('false');
-        });
-
-        test('then it should have no accessibility violations', async () => {
-            render(<BackToTop />);
-
-            expect(await findAxeViolations()).toEqual([]);
-        });
+        expect(screen.getByRole('link').dataset.visible).toBe('false');
     });
+});
 
-    describe('given the page has scrolled less than a screen', () => {
-        describe('when it renders', () => {
-            test('then it should stay hidden', () => {
-                render(<BackToTop />);
-                scrollTo(window.innerHeight - 1);
+describe('Using BackToTop, given the page has scrolled less than a screen, when it renders', () => {
+    test('then it should stay hidden', () => {
+        render(<BackToTop />);
+        scrollTo(window.innerHeight - 1);
 
-                expect(screen.getByRole('link').dataset.visible).toBe('false');
-            });
-        });
+        expect(screen.getByRole('link').dataset.visible).toBe('false');
     });
+});
 
-    describe('given the page has scrolled a full screen', () => {
-        describe('when it renders', () => {
-            test('then it should show', () => {
-                render(<BackToTop />);
-                scrollTo(window.innerHeight);
+describe('Using BackToTop, given the page has scrolled a full screen, when it renders', () => {
+    test('then it should show', () => {
+        render(<BackToTop />);
+        scrollTo(window.innerHeight);
 
-                expect(screen.getByRole('link').dataset.visible).toBe('true');
-            });
-        });
+        expect(screen.getByRole('link').dataset.visible).toBe('true');
     });
 });

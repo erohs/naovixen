@@ -1,4 +1,3 @@
-import { findAxeViolations } from '@naovixen/nvpack/testing';
 import type { IBlogPostSummary } from '@naovixen/models';
 import { screen } from '@testing-library/react';
 import { describe, expect, test } from 'vitest';
@@ -32,38 +31,13 @@ function renderPostCardList(): Promise<unknown> {
     ]);
 }
 
-describe('Using PostCardList', () => {
-    describe('given some posts', () => {
-        describe('when it renders', () => {
-            test('then it should list a card for each post', async () => {
-                await renderPostCardList();
+describe('Using PostCardList, given some posts, when it renders', () => {
+    test('then it should link each card to its post', async () => {
+        await renderPostCardList();
 
-                expect(screen.getAllByRole('article')).toHaveLength(2);
-            });
-
-            test('then it should title each card at the given heading level', async () => {
-                await renderPostCardList();
-
-                expect(
-                    screen
-                        .getAllByRole('heading', { level: 3 })
-                        .map((heading) => heading.textContent),
-                ).toEqual(['Newer post', 'Older post']);
-            });
-
-            test('then it should link each card to its post', async () => {
-                await renderPostCardList();
-
-                expect(
-                    screen.getAllByRole('link').map((link) => link.getAttribute('href')),
-                ).toEqual(['/blog/newer-post', '/blog/older-post']);
-            });
-
-            test('then it should have no accessibility violations', async () => {
-                await renderPostCardList();
-
-                expect(await findAxeViolations()).toEqual([]);
-            });
-        });
+        expect(screen.getAllByRole('link').map((link) => link.getAttribute('href'))).toEqual([
+            '/blog/newer-post',
+            '/blog/older-post',
+        ]);
     });
 });

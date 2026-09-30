@@ -1,4 +1,4 @@
 {
     "extends": "@naovixen/nvpack/tsconfig/react-library.json",
-    "include": ["src", "vitest.config.ts"]
+    "include": ["src"]
 }

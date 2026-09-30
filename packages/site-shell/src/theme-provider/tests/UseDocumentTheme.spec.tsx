@@ -14,37 +14,31 @@ const DocumentThemeSync: FunctionComponent = () => {
     return null;
 };
 
-describe('Using useDocumentTheme', () => {
-    describe('given a controller on a system in dark mode', () => {
-        describe('when it is rendered', () => {
-            test('then it should put the resolved theme on the html element', () => {
-                render(
-                    <ThemeProvider
-                        themeController={createThemeControllerForTests(ResolvedTheme.Dark)}
-                    >
-                        <DocumentThemeSync />
-                    </ThemeProvider>,
-                );
+describe('Using useDocumentTheme, given a controller on a system in dark mode, when it is rendered', () => {
+    test('then it should put the resolved theme on the html element', () => {
+        render(
+            <ThemeProvider themeController={createThemeControllerForTests(ResolvedTheme.Dark)}>
+                <DocumentThemeSync />
+            </ThemeProvider>,
+        );
 
-                expect(document.documentElement.dataset.theme).toBe('dark');
-            });
+        expect(document.documentElement.dataset.theme).toBe('dark');
+    });
+});
 
-            describe('and the preference changes to light', () => {
-                test('then it should record the choice on the html element', () => {
-                    const themeController = createThemeControllerForTests(ResolvedTheme.Dark);
-                    render(
-                        <ThemeProvider themeController={themeController}>
-                            <DocumentThemeSync />
-                        </ThemeProvider>,
-                    );
+describe('Using useDocumentTheme, given a controller on a system in dark mode, when the preference changes to light', () => {
+    test('then it should record the choice on the html element', () => {
+        const themeController = createThemeControllerForTests(ResolvedTheme.Dark);
+        render(
+            <ThemeProvider themeController={themeController}>
+                <DocumentThemeSync />
+            </ThemeProvider>,
+        );
 
-                    act(() => {
-                        themeController.setPreference(ThemePreference.Light);
-                    });
-
-                    expect(document.documentElement.dataset.themePreference).toBe('light');
-                });
-            });
+        act(() => {
+            themeController.setPreference(ThemePreference.Light);
         });
+
+        expect(document.documentElement.dataset.themePreference).toBe('light');
     });
 });

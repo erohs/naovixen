@@ -33,34 +33,26 @@ function runBootScript(cookie: string, isSystemDark: boolean): IBootResult {
     };
 }
 
-describe('Using the theme boot script', () => {
-    describe('given no cookie and a dark system setting', () => {
-        describe('when the script runs', () => {
-            const result = runBootScript('', true);
+describe('Using the theme boot script, given no cookie and a dark system setting, when the script runs', () => {
+    const result = runBootScript('', true);
 
-            test('then it should resolve to the dark theme', () => {
-                expect(result.theme).toBe('dark');
-            });
-
-            test('then it should record the system preference', () => {
-                expect(result.preference).toBe('system');
-            });
-        });
+    test('then it should resolve to the dark theme', () => {
+        expect(result.theme).toBe('dark');
     });
 
-    describe('given a cookie choosing light among other cookies, and a dark system setting', () => {
-        describe('when the script runs', () => {
-            test('then it should resolve to the light theme', () => {
-                expect(runBootScript('a=1; theme-preference=light; b=2', true).theme).toBe('light');
-            });
-        });
+    test('then it should record the system preference', () => {
+        expect(result.preference).toBe('system');
     });
+});
 
-    describe('given a cookie holding an unrecognised value and a light system setting', () => {
-        describe('when the script runs', () => {
-            test('then it should fall back to the system preference', () => {
-                expect(runBootScript('theme-preference=sepia', false).preference).toBe('system');
-            });
-        });
+describe('Using the theme boot script, given a cookie choosing light among other cookies and a dark system setting, when the script runs', () => {
+    test('then it should resolve to the light theme', () => {
+        expect(runBootScript('a=1; theme-preference=light; b=2', true).theme).toBe('light');
+    });
+});
+
+describe('Using the theme boot script, given a cookie holding an unrecognised value and a light system setting, when the script runs', () => {
+    test('then it should fall back to the system preference', () => {
+        expect(runBootScript('theme-preference=sepia', false).preference).toBe('system');
     });
 });

@@ -15,43 +15,49 @@ function createPost(slug: string, publishedAt: string, tags: readonly string[]):
     };
 }
 
-describe('Using InMemoryBlogRepository', () => {
-    describe('given posts held out of date order', () => {
-        const repository = new InMemoryBlogRepository([
-            createPost('older', '2026-05-20', ['Process', 'CSS']),
-            createPost('newer', '2026-09-02', ['CSS']),
-        ]);
+function createRepositoryWithPostsOutOfDateOrder(): InMemoryBlogRepository {
+    return new InMemoryBlogRepository([
+        createPost('older', '2026-05-20', ['Process', 'CSS']),
+        createPost('newer', '2026-09-02', ['CSS']),
+    ]);
+}
 
-        describe('when the posts are listed', () => {
-            test('then it should list the newest first', async () => {
-                const posts = await repository.listPosts();
+describe('Using InMemoryBlogRepository, given posts held out of date order, when the posts are listed', () => {
+    const repository = createRepositoryWithPostsOutOfDateOrder();
 
-                expect(posts.map((post) => post.slug)).toEqual(['newer', 'older']);
-            });
+    test('then it should list the newest first', async () => {
+        const posts = await repository.listPosts();
 
-            test('then it should leave out the bodies', async () => {
-                const posts = await repository.listPosts();
+        expect(posts.map((post) => post.slug)).toEqual(['newer', 'older']);
+    });
 
-                expect(posts[0]).not.toHaveProperty('body');
-            });
-        });
+    test('then it should leave out the bodies', async () => {
+        const posts = await repository.listPosts();
 
-        describe('when a post is asked for by its slug', () => {
-            test('then it should return that post', async () => {
-                expect((await repository.getPostBySlug('older'))?.title).toBe('Post older');
-            });
-        });
+        expect(posts[0]).not.toHaveProperty('body');
+    });
+});
 
-        describe('when a post is asked for by an unknown slug', () => {
-            test('then it should return nothing', async () => {
-                expect(await repository.getPostBySlug('missing')).toBeUndefined();
-            });
-        });
+describe('Using InMemoryBlogRepository, given posts held out of date order, when a post is asked for by its slug', () => {
+    const repository = createRepositoryWithPostsOutOfDateOrder();
 
-        describe('when the tags are listed', () => {
-            test('then it should list each tag once, alphabetically', async () => {
-                expect(await repository.listTags()).toEqual(['CSS', 'Process']);
-            });
-        });
+    test('then it should return that post', async () => {
+        expect((await repository.getPostBySlug('older'))?.title).toBe('Post older');
+    });
+});
+
+describe('Using InMemoryBlogRepository, given posts held out of date order, when a post is asked for by an unknown slug', () => {
+    const repository = createRepositoryWithPostsOutOfDateOrder();
+
+    test('then it should return nothing', async () => {
+        expect(await repository.getPostBySlug('missing')).toBeUndefined();
+    });
+});
+
+describe('Using InMemoryBlogRepository, given posts held out of date order, when the tags are listed', () => {
+    const repository = createRepositoryWithPostsOutOfDateOrder();
+
+    test('then it should list each tag once, alphabetically', async () => {
+        expect(await repository.listTags()).toEqual(['CSS', 'Process']);
     });
 });

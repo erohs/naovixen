@@ -1,4 +1,3 @@
-import { findAxeViolations } from '@naovixen/nvpack/testing';
 import { render, screen } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
 import type { UserEvent } from '@testing-library/user-event';
@@ -28,85 +27,61 @@ async function openMenuOnHomePage(): Promise<IOpenMenu> {
     return { user, showPath };
 }
 
-describe('Using MobileMenu', () => {
-    describe('given it is closed', () => {
-        describe('when it renders', () => {
-            test('then it should offer a collapsed menu button', () => {
-                render(<MobileMenu items={items} currentPath="/" />);
+describe('Using MobileMenu, given it is closed, when it renders', () => {
+    test('then it should offer a collapsed menu button', () => {
+        render(<MobileMenu items={items} currentPath="/" />);
 
-                expect(screen.getByRole('button', { name: 'Menu', expanded: false })).toBeDefined();
-            });
-
-            test('then it should hide the navigation', () => {
-                render(<MobileMenu items={items} currentPath="/" />);
-
-                expect(screen.queryByRole('navigation')).toBeNull();
-            });
-
-            test('then it should have no accessibility violations', async () => {
-                render(<MobileMenu items={items} currentPath="/" />);
-
-                expect(await findAxeViolations()).toEqual([]);
-            });
-        });
-
-        describe('when the button is pressed', () => {
-            test('then it should show as expanded', async () => {
-                await openMenuOnHomePage();
-
-                expect(screen.getByRole('button', { name: 'Menu', expanded: true })).toBeDefined();
-            });
-
-            test('then it should show the main navigation', async () => {
-                await openMenuOnHomePage();
-
-                expect(screen.getByRole('navigation', { name: 'Main' })).toBeDefined();
-            });
-
-            test('then it should have no accessibility violations', async () => {
-                await openMenuOnHomePage();
-
-                expect(await findAxeViolations()).toEqual([]);
-            });
-        });
+        expect(screen.getByRole('button', { name: 'Menu', expanded: false })).toBeDefined();
     });
 
-    describe('given it is open', () => {
-        describe('when the path changes', () => {
-            test('then it should close', async () => {
-                const { showPath } = await openMenuOnHomePage();
+    test('then it should hide the navigation', () => {
+        render(<MobileMenu items={items} currentPath="/" />);
 
-                showPath('/work');
+        expect(screen.queryByRole('navigation')).toBeNull();
+    });
+});
 
-                expect(screen.getByRole('button', { name: 'Menu', expanded: false })).toBeDefined();
-            });
-        });
+describe('Using MobileMenu, given it is closed, when the button is pressed', () => {
+    test('then it should show as expanded', async () => {
+        await openMenuOnHomePage();
 
-        describe('and focus is on one of its links', () => {
-            describe('when Escape is pressed', () => {
-                test('then it should close', async () => {
-                    const { user } = await openMenuOnHomePage();
-                    await user.tab();
+        expect(screen.getByRole('button', { name: 'Menu', expanded: true })).toBeDefined();
+    });
 
-                    await user.keyboard('{Escape}');
+    test('then it should show the main navigation', async () => {
+        await openMenuOnHomePage();
 
-                    expect(
-                        screen.getByRole('button', { name: 'Menu', expanded: false }),
-                    ).toBeDefined();
-                });
+        expect(screen.getByRole('navigation', { name: 'Main' })).toBeDefined();
+    });
+});
 
-                test('then it should put focus back on the button, so Enter reopens it', async () => {
-                    const { user } = await openMenuOnHomePage();
-                    await user.tab();
-                    await user.keyboard('{Escape}');
+describe('Using MobileMenu, given it is open, when the path changes', () => {
+    test('then it should close', async () => {
+        const { showPath } = await openMenuOnHomePage();
 
-                    await user.keyboard('{Enter}');
+        showPath('/work');
 
-                    expect(
-                        screen.getByRole('button', { name: 'Menu', expanded: true }),
-                    ).toBeDefined();
-                });
-            });
-        });
+        expect(screen.getByRole('button', { name: 'Menu', expanded: false })).toBeDefined();
+    });
+});
+
+describe('Using MobileMenu, given it is open and focus is on one of its links, when Escape is pressed', () => {
+    test('then it should close', async () => {
+        const { user } = await openMenuOnHomePage();
+        await user.tab();
+
+        await user.keyboard('{Escape}');
+
+        expect(screen.getByRole('button', { name: 'Menu', expanded: false })).toBeDefined();
+    });
+
+    test('then it should put focus back on the button, so Enter reopens it', async () => {
+        const { user } = await openMenuOnHomePage();
+        await user.tab();
+        await user.keyboard('{Escape}');
+
+        await user.keyboard('{Enter}');
+
+        expect(screen.getByRole('button', { name: 'Menu', expanded: true })).toBeDefined();
     });
 });

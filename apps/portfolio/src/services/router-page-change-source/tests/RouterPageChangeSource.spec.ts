@@ -8,51 +8,73 @@ interface IRenderedEvent {
     readonly pathChanged: boolean;
 }
 
-describe('Using RouterPageChangeSource', () => {
-    let subscribedEventType: string;
-    let emitRendered: (event: IRenderedEvent) => void;
-    let listener: () => void;
+interface ISubscribedRouter {
+    readonly subscribedEventType: string;
+    readonly emitRendered: (event: IRenderedEvent) => void;
+    readonly listener: () => void;
+}
+
+function subscribeToFakeRouter(): ISubscribedRouter {
+    let subscribedEventType = '';
+    let emitRendered: (event: IRenderedEvent) => void = () => undefined;
+    const router = {
+        subscribe: (eventType: string, emit: (event: IRenderedEvent) => void) => {
+            subscribedEventType = eventType;
+            emitRendered = emit;
+
+            return () => undefined;
+        },
+    } as unknown as Pick<AnyRouter, 'subscribe'>;
+    const listener = vi.fn();
+    new RouterPageChangeSource(router).subscribe(listener);
+
+    return { subscribedEventType, emitRendered, listener };
+}
+
+describe('Using RouterPageChangeSource, when it subscribes', () => {
+    test('then it should wait for navigations to finish rendering', () => {
+        expect(subscribeToFakeRouter().subscribedEventType).toBe('onRendered');
+    });
+});
+
+describe('Using RouterPageChangeSource, when the first page renders', () => {
+    let subscribed: ISubscribedRouter;
 
     beforeEach(() => {
-        const router = {
-            subscribe: (eventType: string, emit: (event: IRenderedEvent) => void) => {
-                subscribedEventType = eventType;
-                emitRendered = emit;
-
-                return () => undefined;
-            },
-        } as unknown as Pick<AnyRouter, 'subscribe'>;
-        listener = vi.fn();
-        new RouterPageChangeSource(router).subscribe(listener);
+        subscribed = subscribeToFakeRouter();
     });
 
-    describe('when it subscribes', () => {
-        test('then it should wait for navigations to finish rendering', () => {
-            expect(subscribedEventType).toBe('onRendered');
-        });
+    test('then it should not report a page change', () => {
+        subscribed.emitRendered({ pathChanged: true });
+
+        expect(subscribed.listener).not.toHaveBeenCalled();
+    });
+});
+
+describe('Using RouterPageChangeSource, when a navigation to another path renders', () => {
+    let subscribed: ISubscribedRouter;
+
+    beforeEach(() => {
+        subscribed = subscribeToFakeRouter();
     });
 
-    describe('when the first page renders', () => {
-        test('then it should not report a page change', () => {
-            emitRendered({ pathChanged: true });
+    test('then it should report a page change', () => {
+        subscribed.emitRendered({ fromLocation: {}, pathChanged: true });
 
-            expect(listener).not.toHaveBeenCalled();
-        });
+        expect(subscribed.listener).toHaveBeenCalledOnce();
+    });
+});
+
+describe('Using RouterPageChangeSource, when a navigation that only changes the hash renders', () => {
+    let subscribed: ISubscribedRouter;
+
+    beforeEach(() => {
+        subscribed = subscribeToFakeRouter();
     });
 
-    describe('when a navigation to another path renders', () => {
-        test('then it should report a page change', () => {
-            emitRendered({ fromLocation: {}, pathChanged: true });
+    test('then it should not report a page change', () => {
+        subscribed.emitRendered({ fromLocation: {}, pathChanged: false });
 
-            expect(listener).toHaveBeenCalledOnce();
-        });
-    });
-
-    describe('when a navigation that only changes the hash renders', () => {
-        test('then it should not report a page change', () => {
-            emitRendered({ fromLocation: {}, pathChanged: false });
-
-            expect(listener).not.toHaveBeenCalled();
-        });
+        expect(subscribed.listener).not.toHaveBeenCalled();
     });
 });

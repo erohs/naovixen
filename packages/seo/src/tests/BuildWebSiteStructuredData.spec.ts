@@ -5,14 +5,12 @@ import { buildWebSiteStructuredData } from '../functions/BuildWebSiteStructuredD
 
 const site: ISite = { name: 'Example Person', origin: 'https://example.com', locale: 'en-GB' };
 
-describe('Using buildWebSiteStructuredData', () => {
-    describe('when building a website', () => {
-        test('then it should name the site and its language', () => {
-            expect(buildWebSiteStructuredData(site)).toMatchObject({
-                '@type': 'WebSite',
-                name: 'Example Person',
-                inLanguage: 'en-GB',
-            });
+describe('Using buildWebSiteStructuredData, when building a website', () => {
+    test('then it should name the site and its language', () => {
+        expect(buildWebSiteStructuredData(site)).toMatchObject({
+            '@type': 'WebSite',
+            name: 'Example Person',
+            inLanguage: 'en-GB',
         });
     });
 });

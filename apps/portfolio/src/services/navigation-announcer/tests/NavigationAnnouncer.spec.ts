@@ -20,56 +20,59 @@ class FakePageChangeSource implements IPageChangeSource {
     }
 }
 
-describe('Using NavigationAnnouncer', () => {
-    let pageChangeSource: FakePageChangeSource;
+function createAnnouncer(
+    pageChangeSource: IPageChangeSource,
+    focusMainContent: () => void,
+): NavigationAnnouncer {
+    const page: IAnnouncedPage = { readTitle: () => 'About — Naomi Shore', focusMainContent };
+
+    return new NavigationAnnouncer(pageChangeSource, page);
+}
+
+describe('Using NavigationAnnouncer, when it is first read', () => {
+    test('then it should have nothing to announce', () => {
+        const announcer = createAnnouncer(new FakePageChangeSource(), vi.fn());
+
+        expect(announcer.getState()).toBe('');
+    });
+});
+
+describe('Using NavigationAnnouncer, given a subscriber, when the page changes', () => {
     let focusMainContent: () => void;
+    let listener: () => void;
     let announcer: NavigationAnnouncer;
 
     beforeEach(() => {
-        pageChangeSource = new FakePageChangeSource();
+        const pageChangeSource = new FakePageChangeSource();
         focusMainContent = vi.fn();
-        const page: IAnnouncedPage = { readTitle: () => 'About — Naomi Shore', focusMainContent };
-        announcer = new NavigationAnnouncer(pageChangeSource, page);
+        listener = vi.fn();
+        announcer = createAnnouncer(pageChangeSource, focusMainContent);
+        announcer.subscribe(listener);
+        pageChangeSource.changePage();
     });
 
-    describe('when it is first read', () => {
-        test('then it should have nothing to announce', () => {
-            expect(announcer.getState()).toBe('');
-        });
+    test('then it should announce the new page title', () => {
+        expect(announcer.getState()).toBe('About — Naomi Shore');
     });
 
-    describe('given a subscriber', () => {
-        let listener: () => void;
+    test('then it should move focus to the main content', () => {
+        expect(focusMainContent).toHaveBeenCalledOnce();
+    });
 
-        beforeEach(() => {
-            listener = vi.fn();
-            announcer.subscribe(listener);
-        });
+    test('then it should tell the subscriber', () => {
+        expect(listener).toHaveBeenCalledOnce();
+    });
+});
 
-        describe('when the page changes', () => {
-            beforeEach(() => {
-                pageChangeSource.changePage();
-            });
+describe('Using NavigationAnnouncer, given a subscriber, when the subscriber stops listening', () => {
+    test('then it should stop listening for page changes', () => {
+        const pageChangeSource = new FakePageChangeSource();
+        const announcer = createAnnouncer(pageChangeSource, vi.fn());
+        const listener = vi.fn();
+        announcer.subscribe(listener);
 
-            test('then it should announce the new page title', () => {
-                expect(announcer.getState()).toBe('About — Naomi Shore');
-            });
+        announcer.subscribe(listener)();
 
-            test('then it should move focus to the main content', () => {
-                expect(focusMainContent).toHaveBeenCalledOnce();
-            });
-
-            test('then it should tell the subscriber', () => {
-                expect(listener).toHaveBeenCalledOnce();
-            });
-        });
-
-        describe('and the subscriber stops listening', () => {
-            test('then it should stop listening for page changes', () => {
-                announcer.subscribe(listener)();
-
-                expect(pageChangeSource.listeners.size).toBe(0);
-            });
-        });
+        expect(pageChangeSource.listeners.size).toBe(0);
     });
 });

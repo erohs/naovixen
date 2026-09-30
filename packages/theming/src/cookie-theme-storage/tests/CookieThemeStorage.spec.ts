@@ -16,44 +16,38 @@ class FakeCookieStore implements ICookieStore {
     }
 }
 
-describe('Using CookieThemeStorage', () => {
-    let cookieStore: FakeCookieStore;
-    let storage: CookieThemeStorage;
+let cookieStore: FakeCookieStore;
+let storage: CookieThemeStorage;
 
+beforeEach(() => {
+    cookieStore = new FakeCookieStore();
+    storage = new CookieThemeStorage(cookieStore);
+});
+
+describe('Using CookieThemeStorage, given no cookie, when the preference is read', () => {
+    test('then it should report no preference', () => {
+        expect(storage.readPreference()).toBeUndefined();
+    });
+});
+
+describe('Using CookieThemeStorage, given no cookie, when dark is written', () => {
     beforeEach(() => {
-        cookieStore = new FakeCookieStore();
-        storage = new CookieThemeStorage(cookieStore);
+        storage.writePreference(ThemePreference.Dark);
     });
 
-    describe('given no cookie', () => {
-        describe('when the preference is read', () => {
-            test('then it should report no preference', () => {
-                expect(storage.readPreference()).toBeUndefined();
-            });
-        });
-
-        describe('when dark is written', () => {
-            beforeEach(() => {
-                storage.writePreference(ThemePreference.Dark);
-            });
-
-            test('then it should read dark back', () => {
-                expect(storage.readPreference()).toBe(ThemePreference.Dark);
-            });
-
-            test('then it should store it in the theme-preference cookie', () => {
-                expect(cookieStore.cookies.get('theme-preference')).toBe('dark');
-            });
-        });
+    test('then it should read dark back', () => {
+        expect(storage.readPreference()).toBe(ThemePreference.Dark);
     });
 
-    describe('given a cookie holding an unrecognised value', () => {
-        describe('when the preference is read', () => {
-            test('then it should report no preference', () => {
-                cookieStore.cookies.set('theme-preference', 'sepia');
+    test('then it should store it in the theme-preference cookie', () => {
+        expect(cookieStore.cookies.get('theme-preference')).toBe('dark');
+    });
+});
 
-                expect(storage.readPreference()).toBeUndefined();
-            });
-        });
+describe('Using CookieThemeStorage, given a cookie holding an unrecognised value, when the preference is read', () => {
+    test('then it should report no preference', () => {
+        cookieStore.cookies.set('theme-preference', 'sepia');
+
+        expect(storage.readPreference()).toBeUndefined();
     });
 });

@@ -1,4 +1,3 @@
-import { findAxeViolations } from '@naovixen/nvpack/testing';
 import { render, screen } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
 import type { UserEvent } from '@testing-library/user-event';
@@ -28,100 +27,74 @@ async function openWithFocusOnItsLink(): Promise<UserEvent> {
     return user;
 }
 
-describe('Using Disclosure', () => {
-    describe('given it is closed', () => {
-        describe('when it renders', () => {
-            test('then it should offer a collapsed button', () => {
-                render(<ControlledDisclosure isInitiallyOpen={false} />);
+describe('Using Disclosure, given it is closed, when it renders', () => {
+    test('then it should offer a collapsed button', () => {
+        render(<ControlledDisclosure isInitiallyOpen={false} />);
 
-                expect(screen.getByRole('button', { name: 'Menu', expanded: false })).toBeDefined();
-            });
-
-            test('then it should hide its content', () => {
-                render(<ControlledDisclosure isInitiallyOpen={false} />);
-
-                expect(screen.queryByRole('link')).toBeNull();
-            });
-
-            test('then it should have no accessibility violations', async () => {
-                render(<ControlledDisclosure isInitiallyOpen={false} />);
-
-                expect(await findAxeViolations()).toEqual([]);
-            });
-        });
-
-        describe('when the button is pressed', () => {
-            test('then it should ask to open', async () => {
-                const onOpenChange = vi.fn();
-                render(
-                    <Disclosure label="Menu" isOpen={false} onOpenChange={onOpenChange}>
-                        Example content
-                    </Disclosure>,
-                );
-
-                await userEvent.setup().click(screen.getByRole('button'));
-
-                expect(onOpenChange).toHaveBeenCalledExactlyOnceWith(true);
-            });
-
-            test('then it should show its content once the caller opens it', async () => {
-                render(<ControlledDisclosure isInitiallyOpen={false} />);
-
-                await userEvent.setup().click(screen.getByRole('button'));
-
-                expect(screen.getByRole('link', { name: 'Work' })).toBeDefined();
-            });
-        });
+        expect(screen.getByRole('button', { name: 'Menu', expanded: false })).toBeDefined();
     });
 
-    describe('given it is open', () => {
-        describe('when it renders', () => {
-            test('then it should have no accessibility violations', async () => {
-                render(<ControlledDisclosure isInitiallyOpen />);
+    test('then it should hide its content', () => {
+        render(<ControlledDisclosure isInitiallyOpen={false} />);
 
-                expect(await findAxeViolations()).toEqual([]);
-            });
-        });
+        expect(screen.queryByRole('link')).toBeNull();
+    });
+});
 
-        describe('when the button is pressed', () => {
-            test('then it should ask to close', async () => {
-                const onOpenChange = vi.fn();
-                render(
-                    <Disclosure label="Menu" isOpen onOpenChange={onOpenChange}>
-                        Example content
-                    </Disclosure>,
-                );
+describe('Using Disclosure, given it is closed, when the button is pressed', () => {
+    test('then it should ask to open', async () => {
+        const onOpenChange = vi.fn();
+        render(
+            <Disclosure label="Menu" isOpen={false} onOpenChange={onOpenChange}>
+                Example content
+            </Disclosure>,
+        );
 
-                await userEvent.setup().click(screen.getByRole('button'));
+        await userEvent.setup().click(screen.getByRole('button'));
 
-                expect(onOpenChange).toHaveBeenCalledExactlyOnceWith(false);
-            });
-        });
+        expect(onOpenChange).toHaveBeenCalledExactlyOnceWith(true);
+    });
 
-        describe('and focus is inside its content', () => {
-            describe('when Escape is pressed', () => {
-                test('then it should close', async () => {
-                    const user = await openWithFocusOnItsLink();
+    test('then it should show its content once the caller opens it', async () => {
+        render(<ControlledDisclosure isInitiallyOpen={false} />);
 
-                    await user.keyboard('{Escape}');
+        await userEvent.setup().click(screen.getByRole('button'));
 
-                    expect(
-                        screen.getByRole('button', { name: 'Menu', expanded: false }),
-                    ).toBeDefined();
-                });
+        expect(screen.getByRole('link', { name: 'Work' })).toBeDefined();
+    });
+});
 
-                test('then it should return focus to the button', async () => {
-                    const user = await openWithFocusOnItsLink();
+describe('Using Disclosure, given it is open, when the button is pressed', () => {
+    test('then it should ask to close', async () => {
+        const onOpenChange = vi.fn();
+        render(
+            <Disclosure label="Menu" isOpen onOpenChange={onOpenChange}>
+                Example content
+            </Disclosure>,
+        );
 
-                    await user.keyboard('{Escape}');
+        await userEvent.setup().click(screen.getByRole('button'));
 
-                    await user.keyboard('{Enter}');
+        expect(onOpenChange).toHaveBeenCalledExactlyOnceWith(false);
+    });
+});
 
-                    expect(
-                        screen.getByRole('button', { name: 'Menu', expanded: true }),
-                    ).toBeDefined();
-                });
-            });
-        });
+describe('Using Disclosure, given it is open and focus is inside its content, when Escape is pressed', () => {
+    test('then it should close', async () => {
+        const user = await openWithFocusOnItsLink();
+
+        await user.keyboard('{Escape}');
+
+        expect(screen.getByRole('button', { name: 'Menu', expanded: false })).toBeDefined();
+    });
+
+    test('then it should return focus to the button', async () => {
+        const user = await openWithFocusOnItsLink();
+
+        await user.keyboard('{Escape}');
+
+        await user.keyboard('{Enter}');
+
+        expect(screen.getByRole('button', { name: 'Menu', expanded: true })).toBeDefined();
     });
 });

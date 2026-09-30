@@ -30,55 +30,57 @@ class FakeMediaQueryList implements IMediaQueryList {
     }
 }
 
-describe('Using MediaQuerySystemThemeSource', () => {
-    let mediaQueryList: FakeMediaQueryList | undefined;
-    let systemThemeSource: MediaQuerySystemThemeSource;
+let mediaQueryList: FakeMediaQueryList | undefined;
+let systemThemeSource: MediaQuerySystemThemeSource;
 
-    describe('given the system prefers a dark colour scheme', () => {
-        beforeEach(() => {
-            systemThemeSource = new MediaQuerySystemThemeSource((query) => {
-                mediaQueryList = new FakeMediaQueryList(query, true);
-                return mediaQueryList;
-            });
-        });
+function createSourceOnADarkSystem(): void {
+    systemThemeSource = new MediaQuerySystemThemeSource((query) => {
+        mediaQueryList = new FakeMediaQueryList(query, true);
+        return mediaQueryList;
+    });
+}
 
-        describe('when the theme is read', () => {
-            test('then it should report the dark theme', () => {
-                expect(systemThemeSource.getTheme()).toBe(ResolvedTheme.Dark);
-            });
+describe('Using MediaQuerySystemThemeSource, given the system prefers a dark colour scheme, when the theme is read', () => {
+    beforeEach(createSourceOnADarkSystem);
 
-            test('then it should have asked about the dark colour scheme', () => {
-                expect(mediaQueryList?.query).toBe('(prefers-color-scheme: dark)');
-            });
-        });
+    test('then it should report the dark theme', () => {
+        expect(systemThemeSource.getTheme()).toBe(ResolvedTheme.Dark);
+    });
 
-        describe('when the system switches to light while subscribed', () => {
-            test('then it should notify the subscriber', () => {
-                const listener = vi.fn();
-                systemThemeSource.subscribe(listener);
+    test('then it should have asked about the dark colour scheme', () => {
+        expect(mediaQueryList?.query).toBe('(prefers-color-scheme: dark)');
+    });
+});
 
-                mediaQueryList?.change(false);
+describe('Using MediaQuerySystemThemeSource, given the system prefers a dark colour scheme, when the system switches to light while subscribed', () => {
+    beforeEach(createSourceOnADarkSystem);
 
-                expect(listener).toHaveBeenCalledOnce();
-            });
+    test('then it should notify the subscriber', () => {
+        const listener = vi.fn();
+        systemThemeSource.subscribe(listener);
 
-            test('then it should report the light theme', () => {
-                mediaQueryList?.change(false);
+        mediaQueryList?.change(false);
 
-                expect(systemThemeSource.getTheme()).toBe(ResolvedTheme.Light);
-            });
-        });
+        expect(listener).toHaveBeenCalledOnce();
+    });
 
-        describe('when the system switches after unsubscribing', () => {
-            test('then it should not notify the former subscriber', () => {
-                const listener = vi.fn();
-                const unsubscribe = systemThemeSource.subscribe(listener);
-                unsubscribe();
+    test('then it should report the light theme', () => {
+        mediaQueryList?.change(false);
 
-                mediaQueryList?.change(false);
+        expect(systemThemeSource.getTheme()).toBe(ResolvedTheme.Light);
+    });
+});
 
-                expect(listener).not.toHaveBeenCalled();
-            });
-        });
+describe('Using MediaQuerySystemThemeSource, given the system prefers a dark colour scheme, when the system switches after unsubscribing', () => {
+    beforeEach(createSourceOnADarkSystem);
+
+    test('then it should not notify the former subscriber', () => {
+        const listener = vi.fn();
+        const unsubscribe = systemThemeSource.subscribe(listener);
+        unsubscribe();
+
+        mediaQueryList?.change(false);
+
+        expect(listener).not.toHaveBeenCalled();
     });
 });

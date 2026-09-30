@@ -13,14 +13,15 @@ export function createTestConfig() {
 
                 'vitest/consistent-test-it': ['error', { fn: 'test', withinDescribe: 'test' }],
 
-                /** Checks each title in isolation; it cannot see that the words nest in order. */
+                /** One flat describe per scenario, its title the whole sentence. */
+                'vitest/max-nested-describe': ['error', { max: 1 }],
                 'vitest/valid-title': [
                     'error',
                     {
                         mustMatch: {
                             describe: [
-                                '^(Using |given |and |when )',
-                                'A describe title must start with "Using " (outermost), or "given ", "and " or "when ".',
+                                '^Using ',
+                                'A describe title must start with "Using ", then any "given" context and the "when" action.',
                             ],
                             test: [
                                 '^then it should ',
