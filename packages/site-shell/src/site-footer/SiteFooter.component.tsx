@@ -1,5 +1,5 @@
 import type { FunctionComponent } from 'react';
-import { joinClassNames } from '@naovixen/formatting';
+import { joinClassNames } from '@naovixen/utilities';
 import { Container, Space, Stack } from '@naovixen/layout';
 
 import { SiteFooterDirectory } from '../site-footer-directory/SiteFooterDirectory.component';

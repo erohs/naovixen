@@ -1,4 +1,4 @@
-import type { IBlogPost } from '@naovixen/models';
+import type { IBlogPost } from '@naovixen/cms';
 
 import { placeholderBlogPostBody } from './PlaceholderBlogPostBody.const';
 

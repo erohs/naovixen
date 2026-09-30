@@ -1,6 +1,6 @@
 import type { FunctionComponent } from 'react';
 import { Tag } from '@naovixen/components';
-import { joinClassNames } from '@naovixen/formatting';
+import { joinClassNames } from '@naovixen/utilities';
 import { Cluster, Space } from '@naovixen/layout';
 
 import type { ITagListProps } from './interfaces/ITagListProps';

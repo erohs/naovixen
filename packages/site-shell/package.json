@@ -15,10 +15,9 @@
         "@naovixen/blocks": "workspace:*",
         "@naovixen/brand": "workspace:*",
         "@naovixen/components": "workspace:*",
-        "@naovixen/formatting": "workspace:*",
         "@naovixen/layout": "workspace:*",
-        "@naovixen/models": "workspace:*",
-        "@naovixen/theming": "workspace:*"
+        "@naovixen/theming": "workspace:*",
+        "@naovixen/utilities": "workspace:*"
     },
     "peerDependencies": {
         "react": "^19.0.0",

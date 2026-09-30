@@ -1,4 +1,5 @@
-import type { IBlogPost, IBlogPostSummary } from '@naovixen/models';
+import type { IBlogPost } from '../interfaces/IBlogPost';
+import type { IBlogPostSummary } from '../interfaces/IBlogPostSummary';
 
 import type { IBlogRepository } from '../interfaces/IBlogRepository';
 import { toBlogPostSummary } from './functions/ToBlogPostSummary.function';

@@ -1,6 +1,6 @@
 import type { FunctionComponent } from 'react';
 import { Heading, HeadingSize } from '@naovixen/components';
-import { joinClassNames } from '@naovixen/formatting';
+import { joinClassNames } from '@naovixen/utilities';
 
 import type { ISectionHeadingProps } from './interfaces/ISectionHeadingProps';
 

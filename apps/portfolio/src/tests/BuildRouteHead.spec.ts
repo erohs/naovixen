@@ -1,4 +1,4 @@
-import { OpenGraphType } from '@naovixen/models';
+import { OpenGraphType } from '@naovixen/seo';
 import { describe, expect, test } from 'vitest';
 
 import { buildRouteHead } from '../functions/BuildRouteHead.function';

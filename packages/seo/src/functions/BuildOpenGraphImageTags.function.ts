@@ -1,9 +1,12 @@
-import type { IImage } from '@naovixen/models';
+import type { IOpenGraphImage } from '../interfaces/IOpenGraphImage';
 
 import type { IPropertyMetaTag } from '../interfaces/IPropertyMetaTag';
 import { resolveAbsoluteUrl } from './ResolveAbsoluteUrl.function';
 
-export function buildOpenGraphImageTags(image: IImage, origin: string): IPropertyMetaTag[] {
+export function buildOpenGraphImageTags(
+    image: IOpenGraphImage,
+    origin: string,
+): IPropertyMetaTag[] {
     return [
         { property: 'og:image', content: resolveAbsoluteUrl(origin, image.src) },
         { property: 'og:image:alt', content: image.alt },

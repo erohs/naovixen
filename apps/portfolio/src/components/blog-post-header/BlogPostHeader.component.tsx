@@ -1,7 +1,7 @@
 import type { FunctionComponent } from 'react';
 import { TagList } from '@naovixen/blocks';
 import { Heading, HeadingSize, Text, TextVariant } from '@naovixen/components';
-import { formatDate, formatReadingTime } from '@naovixen/formatting';
+import { formatDate, formatReadingTime } from '@naovixen/utilities';
 
 import type { IBlogPostHeaderProps } from './interfaces/IBlogPostHeaderProps';
 

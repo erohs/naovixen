@@ -1,11 +1,13 @@
-import type { IBlogPostSummary, IPerson, ISite } from '@naovixen/models';
+import type { IPublishedPost } from '../interfaces/IPublishedPost';
+import type { IPerson } from '../interfaces/IPerson';
+import type { ISite } from '../interfaces/ISite';
 
 import { schemaOrgContext } from '../constants/SchemaOrgContext.const';
 import type { IBlogPostingStructuredData } from '../interfaces/IBlogPostingStructuredData';
 import { resolveAbsoluteUrl } from './ResolveAbsoluteUrl.function';
 
 export function buildBlogPostingStructuredData(
-    post: IBlogPostSummary,
+    post: IPublishedPost,
     author: IPerson,
     site: ISite,
 ): IBlogPostingStructuredData {

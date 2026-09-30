@@ -1,5 +1,5 @@
 import type { HeadingLevel } from '@naovixen/components';
-import type { IBlogPostSummary } from '@naovixen/models';
+import type { IBlogPostSummary } from '@naovixen/cms';
 
 export interface IPostCardListProps {
     readonly posts: readonly IBlogPostSummary[];

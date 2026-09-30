@@ -1,7 +1,7 @@
 import type { FunctionComponent } from 'react';
 import { useId } from 'react';
 import { Heading, HeadingSize } from '@naovixen/components';
-import { joinClassNames } from '@naovixen/formatting';
+import { joinClassNames } from '@naovixen/utilities';
 
 import type { ISiteFooterColumnProps } from './interfaces/ISiteFooterColumnProps';
 

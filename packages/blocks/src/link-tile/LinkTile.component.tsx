@@ -1,6 +1,6 @@
 import type { FunctionComponent } from 'react';
 import { arrowRightIcon, Icon, Link } from '@naovixen/components';
-import { joinClassNames } from '@naovixen/formatting';
+import { joinClassNames } from '@naovixen/utilities';
 
 import type { ILinkTileProps } from './interfaces/ILinkTileProps';
 

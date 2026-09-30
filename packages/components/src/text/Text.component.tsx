@@ -1,5 +1,5 @@
 import type { FunctionComponent } from 'react';
-import { joinClassNames } from '@naovixen/formatting';
+import { joinClassNames } from '@naovixen/utilities';
 
 import { TextVariant } from './enums/TextVariant';
 import type { ITextProps } from './interfaces/ITextProps';

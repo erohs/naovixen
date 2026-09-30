@@ -1,4 +1,5 @@
-import type { ISeoMetadata, ISite } from '@naovixen/models';
+import type { ISeoMetadata } from '../interfaces/ISeoMetadata';
+import type { ISite } from '../interfaces/ISite';
 
 import type { IHeadTags } from '../interfaces/IHeadTags';
 import { buildDocumentTitle } from './BuildDocumentTitle.function';

@@ -1,6 +1,6 @@
 import type { FunctionComponent } from 'react';
 import { Link } from '@naovixen/components';
-import { joinClassNames } from '@naovixen/formatting';
+import { joinClassNames } from '@naovixen/utilities';
 
 import { Wordmark } from '../wordmark/Wordmark.component';
 import type { ILogoProps } from './interfaces/ILogoProps';

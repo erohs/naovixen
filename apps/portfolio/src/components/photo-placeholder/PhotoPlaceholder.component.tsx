@@ -1,5 +1,5 @@
 import type { FunctionComponent } from 'react';
-import { joinClassNames } from '@naovixen/formatting';
+import { joinClassNames } from '@naovixen/utilities';
 
 import type { IPhotoPlaceholderProps } from './interfaces/IPhotoPlaceholderProps';
 

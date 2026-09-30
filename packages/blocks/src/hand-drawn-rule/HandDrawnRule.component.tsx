@@ -1,5 +1,5 @@
 import type { ComponentPropsWithRef, FunctionComponent } from 'react';
-import { joinClassNames } from '@naovixen/formatting';
+import { joinClassNames } from '@naovixen/utilities';
 
 import { handDrawnRulePath } from './constants/HandDrawnRulePath.const';
 

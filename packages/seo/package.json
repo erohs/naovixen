@@ -10,9 +10,6 @@
         "typecheck": "tsc --noEmit",
         "test": "vitest run"
     },
-    "dependencies": {
-        "@naovixen/models": "workspace:*"
-    },
     "devDependencies": {
         "@naovixen/nvpack": "workspace:*",
         "vitest": "catalog:"

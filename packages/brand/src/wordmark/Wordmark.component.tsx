@@ -1,5 +1,5 @@
 import type { ComponentPropsWithRef, FunctionComponent } from 'react';
-import { joinClassNames } from '@naovixen/formatting';
+import { joinClassNames } from '@naovixen/utilities';
 
 /** The brackets are drawing, so only the name itself is read out. */
 export const Wordmark: FunctionComponent<Omit<ComponentPropsWithRef<'span'>, 'children'>> = ({

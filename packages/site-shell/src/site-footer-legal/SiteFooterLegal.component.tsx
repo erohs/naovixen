@@ -1,7 +1,7 @@
 import type { FunctionComponent } from 'react';
 import { isCurrentHref } from '@naovixen/blocks';
 import { Link, navigationLinkClassName } from '@naovixen/components';
-import { joinClassNames } from '@naovixen/formatting';
+import { joinClassNames } from '@naovixen/utilities';
 
 import type { ISiteFooterLegalProps } from './interfaces/ISiteFooterLegalProps';
 

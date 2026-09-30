@@ -8,6 +8,7 @@ export type { ICodeBlockProps } from './code-block/interfaces/ICodeBlockProps';
 export type { IDisclosureProps } from './disclosure/interfaces/IDisclosureProps';
 export type { IFigureProps } from './figure/interfaces/IFigureProps';
 export type { ILinkTileProps } from './link-tile/interfaces/ILinkTileProps';
+export type { INavigationItem } from './navigation-list/interfaces/INavigationItem';
 export type { INavigationListItem } from './navigation-list/interfaces/INavigationListItem';
 export type { INavigationListProps } from './navigation-list/interfaces/INavigationListProps';
 export type { ISectionHeadingProps } from './section-heading/interfaces/ISectionHeadingProps';

@@ -1,4 +1,5 @@
-import type { IPerson, ISite } from '@naovixen/models';
+import type { IPerson } from '../interfaces/IPerson';
+import type { ISite } from '../interfaces/ISite';
 
 import { schemaOrgContext } from '../constants/SchemaOrgContext.const';
 import type { IPersonStructuredData } from '../interfaces/IPersonStructuredData';

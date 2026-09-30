@@ -1,6 +1,6 @@
 import type { ComponentPropsWithRef, FunctionComponent } from 'react';
 import { arrowUpIcon, ButtonVariant, Icon, LinkButton, VisuallyHidden } from '@naovixen/components';
-import { joinClassNames } from '@naovixen/formatting';
+import { joinClassNames } from '@naovixen/utilities';
 
 import { useIsPastFirstScreen } from './functions/UseIsPastFirstScreen.hook';
 

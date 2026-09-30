@@ -46,30 +46,20 @@ export default [
     ...createReactConfig(),
     ...createTestConfig(),
 
-    restrictImports('models', { paths: noReact }),
     restrictImports('theming', { paths: noReact }),
-    restrictImports('formatting', { paths: noReact }),
-    restrictImports('cms', { mayImport: ['models'], paths: noReact }),
-    restrictImports('seo', { mayImport: ['models'], paths: noReact }),
+    restrictImports('utilities', { paths: noReact }),
+    restrictImports('cms', { mayImport: ['utilities'], paths: noReact }),
+    restrictImports('seo', { mayImport: ['utilities'], paths: noReact }),
 
-    restrictImports('components', { mayImport: ['formatting', 'theming', ...testing] }),
-    restrictImports('layout', { mayImport: ['formatting', 'theming', ...testing] }),
-    restrictImports('blocks', { mayImport: ['components', 'formatting', 'layout', ...testing] }),
-    restrictImports('brand', { mayImport: ['components', 'formatting', ...testing] }),
+    restrictImports('components', { mayImport: ['utilities', 'theming', ...testing] }),
+    restrictImports('layout', { mayImport: ['utilities', 'theming', ...testing] }),
+    restrictImports('blocks', { mayImport: ['components', 'utilities', 'layout', ...testing] }),
+    restrictImports('brand', { mayImport: ['components', 'utilities', ...testing] }),
     restrictImports('site-shell', {
-        mayImport: [
-            'blocks',
-            'brand',
-            'components',
-            'formatting',
-            'layout',
-            'models',
-            'theming',
-            ...testing,
-        ],
+        mayImport: ['blocks', 'brand', 'components', 'utilities', 'layout', 'theming', ...testing],
     }),
     restrictImports('portable-text', {
-        mayImport: ['blocks', 'components', 'formatting', 'models', ...testing],
+        mayImport: ['blocks', 'components', 'utilities', 'cms', ...testing],
     }),
 
     {

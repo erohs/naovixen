@@ -1,6 +1,6 @@
 import type { FunctionComponent } from 'react';
 import { NavigationList } from '@naovixen/blocks';
-import { joinClassNames } from '@naovixen/formatting';
+import { joinClassNames } from '@naovixen/utilities';
 
 import { SiteNavigationLayout } from './enums/SiteNavigationLayout';
 import { toNavigationListItems } from './functions/ToNavigationListItems.function';

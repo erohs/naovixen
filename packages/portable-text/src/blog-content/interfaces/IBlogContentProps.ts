@@ -1,6 +1,6 @@
 import type { ComponentPropsWithRef, ComponentType } from 'react';
 import type { LinkProps } from '@naovixen/components';
-import type { IBlogPost } from '@naovixen/models';
+import type { IBlogPost } from '@naovixen/cms';
 
 export interface IBlogContentProps extends Omit<ComponentPropsWithRef<'div'>, 'children'> {
     readonly body: IBlogPost['body'];

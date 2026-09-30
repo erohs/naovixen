@@ -1,6 +1,6 @@
 import type { FunctionComponent } from 'react';
 import { Heading, HeadingSize, Link, Text, TextVariant } from '@naovixen/components';
-import { formatDate } from '@naovixen/formatting';
+import { formatDate } from '@naovixen/utilities';
 
 import { placeholderEmailAddress } from '../../constants/PlaceholderEmailAddress.const';
 import { placeholderPrivacyPage as copy } from '../../constants/PlaceholderPrivacyPage.const';

@@ -1,6 +1,6 @@
 import type { FunctionComponent } from 'react';
 import { Link, navigationLinkClassName } from '@naovixen/components';
-import { joinClassNames } from '@naovixen/formatting';
+import { joinClassNames } from '@naovixen/utilities';
 
 import { isCurrentHref } from './functions/IsCurrentHref.function';
 import type { INavigationListProps } from './interfaces/INavigationListProps';

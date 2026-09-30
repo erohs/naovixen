@@ -1,5 +1,5 @@
 import type { FunctionComponent } from 'react';
-import { joinClassNames } from '@naovixen/formatting';
+import { joinClassNames } from '@naovixen/utilities';
 
 import { Icon } from '../icon/Icon.component';
 import { Link } from '../link/Link.component';

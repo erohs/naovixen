@@ -1,6 +1,7 @@
 import type { ComponentType } from 'react';
 import type { LinkProps } from '@naovixen/components';
-import type { INavigationItem, ISocialLink } from '@naovixen/models';
+import type { INavigationItem } from '@naovixen/blocks';
+import type { ISocialLink } from '../../social-link-list/interfaces/ISocialLink';
 
 export interface ISiteFooterDirectoryProps {
     /** One line about the site, beside the wordmark. */

@@ -11,7 +11,7 @@
         "test": "vitest run"
     },
     "dependencies": {
-        "@naovixen/models": "workspace:*"
+        "@portabletext/types": "catalog:"
     },
     "devDependencies": {
         "@naovixen/nvpack": "workspace:*",

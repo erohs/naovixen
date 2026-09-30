@@ -1,5 +1,7 @@
 import { describe, expect, test } from 'vitest';
-import type { IBlogPostSummary, IPerson, ISite } from '@naovixen/models';
+import type { IPublishedPost } from '../interfaces/IPublishedPost';
+import type { IPerson } from '../interfaces/IPerson';
+import type { ISite } from '../interfaces/ISite';
 
 import { buildBlogPostingStructuredData } from '../functions/BuildBlogPostingStructuredData.function';
 
@@ -7,12 +9,11 @@ const site: ISite = { name: 'Example Person', origin: 'https://example.com', loc
 
 const author: IPerson = { name: 'Example Person', jobTitle: 'Software Engineer', socialLinks: [] };
 
-const post: IBlogPostSummary = {
+const post: IPublishedPost = {
     slug: 'hello-world',
     title: 'Hello, world',
     excerpt: 'A first post.',
     publishedAt: '2026-09-02',
-    readingTimeInMinutes: 3,
     tags: ['Accessibility'],
 };
 

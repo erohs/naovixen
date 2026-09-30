@@ -1,4 +1,4 @@
-import type { IBlogPost } from '@naovixen/models';
+import type { IBlogPost } from '../../interfaces/IBlogPost';
 import { describe, expect, test } from 'vitest';
 
 import { InMemoryBlogRepository } from '../InMemoryBlogRepository';

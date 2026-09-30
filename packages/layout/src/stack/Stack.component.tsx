@@ -1,6 +1,6 @@
 import type { FunctionComponent } from 'react';
 import { createElement } from 'react';
-import { joinClassNames } from '@naovixen/formatting';
+import { joinClassNames } from '@naovixen/utilities';
 
 import type { ILayoutProps } from './interfaces/ILayoutProps';
 

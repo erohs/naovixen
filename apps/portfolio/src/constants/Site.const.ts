@@ -1,4 +1,4 @@
-import type { ISite } from '@naovixen/models';
+import type { ISite } from '@naovixen/seo';
 
 export const site: ISite = {
     name: 'Naomi Shore',

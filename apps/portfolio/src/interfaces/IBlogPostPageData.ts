@@ -1,4 +1,4 @@
-import type { IBlogPost, IBlogPostSummary } from '@naovixen/models';
+import type { IBlogPost, IBlogPostSummary } from '@naovixen/cms';
 
 export interface IBlogPostPageData {
     readonly post: IBlogPost;

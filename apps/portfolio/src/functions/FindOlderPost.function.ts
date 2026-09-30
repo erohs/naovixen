@@ -1,4 +1,4 @@
-import type { IBlogPostSummary } from '@naovixen/models';
+import type { IBlogPostSummary } from '@naovixen/cms';
 
 /** The post after the given one in a newest-first list, or nothing when it is the oldest. */
 export function findOlderPost(

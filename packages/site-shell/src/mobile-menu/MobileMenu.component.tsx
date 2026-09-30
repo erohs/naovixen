@@ -1,7 +1,7 @@
 import type { FunctionComponent } from 'react';
 import { Disclosure } from '@naovixen/blocks';
 import { closeIcon, Icon, menuIcon } from '@naovixen/components';
-import { joinClassNames } from '@naovixen/formatting';
+import { joinClassNames } from '@naovixen/utilities';
 
 import { SiteNavigationLayout } from '../site-navigation/enums/SiteNavigationLayout';
 import { SiteNavigation } from '../site-navigation/SiteNavigation.component';

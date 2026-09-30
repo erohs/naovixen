@@ -1,6 +1,6 @@
 import type { FunctionComponent } from 'react';
 import { Image } from '@naovixen/components';
-import { joinClassNames } from '@naovixen/formatting';
+import { joinClassNames } from '@naovixen/utilities';
 
 import { FigureShape } from './enums/FigureShape';
 import type { IFigureProps } from './interfaces/IFigureProps';

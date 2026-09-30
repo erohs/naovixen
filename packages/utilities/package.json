@@ -1,5 +1,5 @@
 {
-    "name": "@naovixen/models",
+    "name": "@naovixen/utilities",
     "private": true,
     "type": "module",
     "exports": {
@@ -7,12 +7,11 @@
     },
     "scripts": {
         "lint": "eslint .",
-        "typecheck": "tsc --noEmit"
-    },
-    "dependencies": {
-        "@portabletext/types": "catalog:"
+        "typecheck": "tsc --noEmit",
+        "test": "vitest run"
     },
     "devDependencies": {
-        "@naovixen/nvpack": "workspace:*"
+        "@naovixen/nvpack": "workspace:*",
+        "vitest": "catalog:"
     }
 }

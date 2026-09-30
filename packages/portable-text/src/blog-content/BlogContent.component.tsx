@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import type { FunctionComponent } from 'react';
 import { PortableText } from '@portabletext/react';
 import { Link } from '@naovixen/components';
-import { joinClassNames } from '@naovixen/formatting';
+import { joinClassNames } from '@naovixen/utilities';
 
 import { createBlogContentComponents } from './functions/CreateBlogContentComponents.function';
 import type { IBlogContentProps } from './interfaces/IBlogContentProps';

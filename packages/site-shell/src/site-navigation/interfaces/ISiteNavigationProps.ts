@@ -1,6 +1,6 @@
 import type { ComponentPropsWithRef, ComponentType } from 'react';
 import type { LinkProps } from '@naovixen/components';
-import type { INavigationItem } from '@naovixen/models';
+import type { INavigationItem } from '@naovixen/blocks';
 
 import type { SiteNavigationLayout } from '../enums/SiteNavigationLayout';
 

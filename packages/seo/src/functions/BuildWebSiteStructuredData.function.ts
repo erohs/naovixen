@@ -1,4 +1,4 @@
-import type { ISite } from '@naovixen/models';
+import type { ISite } from '../interfaces/ISite';
 
 import { schemaOrgContext } from '../constants/SchemaOrgContext.const';
 import type { IWebSiteStructuredData } from '../interfaces/IWebSiteStructuredData';

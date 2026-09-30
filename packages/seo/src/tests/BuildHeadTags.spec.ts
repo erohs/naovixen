@@ -1,6 +1,7 @@
 import { beforeEach, describe, expect, test } from 'vitest';
-import type { ISeoMetadata, ISite } from '@naovixen/models';
-import { OpenGraphType } from '@naovixen/models';
+import type { ISeoMetadata } from '../interfaces/ISeoMetadata';
+import type { ISite } from '../interfaces/ISite';
+import { OpenGraphType } from '../enums/OpenGraphType';
 
 import { buildHeadTags } from '../functions/BuildHeadTags.function';
 import type { IHeadTags } from '../interfaces/IHeadTags';

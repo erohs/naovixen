@@ -1,5 +1,5 @@
 import type { FunctionComponent } from 'react';
-import { joinClassNames } from '@naovixen/formatting';
+import { joinClassNames } from '@naovixen/utilities';
 
 import { ButtonVariant } from '../button/enums/ButtonVariant';
 import type { ILinkButtonProps } from './interfaces/ILinkButtonProps';

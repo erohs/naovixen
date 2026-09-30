@@ -1,7 +1,7 @@
 import type { FunctionComponent } from 'react';
 import { Card } from '@naovixen/blocks';
 import { Heading, HeadingSize, Link, Text } from '@naovixen/components';
-import { joinClassNames } from '@naovixen/formatting';
+import { joinClassNames } from '@naovixen/utilities';
 
 import { PostCardDetails } from '../post-card-details/PostCardDetails.component';
 import type { IPostCardProps } from './interfaces/IPostCardProps';

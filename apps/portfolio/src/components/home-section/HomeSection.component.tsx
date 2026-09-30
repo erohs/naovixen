@@ -1,6 +1,6 @@
 import type { FunctionComponent } from 'react';
 import { SectionHeading } from '@naovixen/blocks';
-import { joinClassNames } from '@naovixen/formatting';
+import { joinClassNames } from '@naovixen/utilities';
 import { Container } from '@naovixen/layout';
 
 import type { IHomeSectionProps } from './interfaces/IHomeSectionProps';

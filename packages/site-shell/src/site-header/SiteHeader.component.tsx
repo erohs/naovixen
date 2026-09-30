@@ -1,6 +1,6 @@
 import type { FunctionComponent } from 'react';
 import { Logo } from '@naovixen/brand';
-import { joinClassNames } from '@naovixen/formatting';
+import { joinClassNames } from '@naovixen/utilities';
 import { Container } from '@naovixen/layout';
 
 import { MobileMenu } from '../mobile-menu/MobileMenu.component';

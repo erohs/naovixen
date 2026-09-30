@@ -1,6 +1,6 @@
 import type { FunctionComponent } from 'react';
 import { ExternalLink, Link, navigationLinkClassName } from '@naovixen/components';
-import { joinClassNames } from '@naovixen/formatting';
+import { joinClassNames } from '@naovixen/utilities';
 
 import { isEmailAddress } from './functions/IsEmailAddress.function';
 import type { ISocialLinkListProps } from './interfaces/ISocialLinkListProps';

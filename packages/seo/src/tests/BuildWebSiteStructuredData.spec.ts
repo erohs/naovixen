@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest';
-import type { ISite } from '@naovixen/models';
+import type { ISite } from '../interfaces/ISite';
 
 import { buildWebSiteStructuredData } from '../functions/BuildWebSiteStructuredData.function';
 

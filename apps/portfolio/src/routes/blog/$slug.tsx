@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
-import { OpenGraphType } from '@naovixen/models';
+import { OpenGraphType } from '@naovixen/seo';
 import { buildBlogPostingStructuredData } from '@naovixen/seo';
 
 import { BlogPostPage } from '../../components/blog-post-page/BlogPostPage.component';

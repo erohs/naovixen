@@ -1,4 +1,5 @@
-import type { ISeoMetadata, ISite } from '@naovixen/models';
+import type { ISeoMetadata } from '../interfaces/ISeoMetadata';
+import type { ISite } from '../interfaces/ISite';
 
 import type { IPropertyMetaTag } from '../interfaces/IPropertyMetaTag';
 import { buildOpenGraphImageTags } from './BuildOpenGraphImageTags.function';

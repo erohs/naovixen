@@ -244,15 +244,9 @@ importers:
       '@naovixen/components':
         specifier: workspace:*
         version: link:../../packages/components
-      '@naovixen/formatting':
-        specifier: workspace:*
-        version: link:../../packages/formatting
       '@naovixen/layout':
         specifier: workspace:*
         version: link:../../packages/layout
-      '@naovixen/models':
-        specifier: workspace:*
-        version: link:../../packages/models
       '@naovixen/portable-text':
         specifier: workspace:*
         version: link:../../packages/portable-text
@@ -265,6 +259,9 @@ importers:
       '@naovixen/theming':
         specifier: workspace:*
         version: link:../../packages/theming
+      '@naovixen/utilities':
+        specifier: workspace:*
+        version: link:../../packages/utilities
       '@portabletext/types':
         specifier: 'catalog:'
         version: 4.0.2
@@ -317,12 +314,12 @@ importers:
       '@naovixen/components':
         specifier: workspace:*
         version: link:../components
-      '@naovixen/formatting':
-        specifier: workspace:*
-        version: link:../formatting
       '@naovixen/layout':
         specifier: workspace:*
         version: link:../layout
+      '@naovixen/utilities':
+        specifier: workspace:*
+        version: link:../utilities
     devDependencies:
       '@naovixen/nvpack':
         specifier: workspace:*
@@ -360,9 +357,9 @@ importers:
       '@naovixen/components':
         specifier: workspace:*
         version: link:../components
-      '@naovixen/formatting':
+      '@naovixen/utilities':
         specifier: workspace:*
-        version: link:../formatting
+        version: link:../utilities
     devDependencies:
       '@naovixen/nvpack':
         specifier: workspace:*
@@ -397,9 +394,9 @@ importers:
 
   packages/cms:
     dependencies:
-      '@naovixen/models':
-        specifier: workspace:*
-        version: link:../models
+      '@portabletext/types':
+        specifier: 'catalog:'
+        version: 4.0.2
     devDependencies:
       '@naovixen/nvpack':
         specifier: workspace:*
@@ -410,12 +407,9 @@ importers:
 
   packages/components:
     dependencies:
-      '@naovixen/formatting':
+      '@naovixen/utilities':
         specifier: workspace:*
-        version: link:../formatting
-      '@naovixen/theming':
-        specifier: workspace:*
-        version: link:../theming
+        version: link:../utilities
     devDependencies:
       '@naovixen/nvpack':
         specifier: workspace:*
@@ -444,27 +438,15 @@ importers:
       react-dom:
         specifier: 'catalog:'
         version: 19.3.0(react@19.3.0)
-      vitest:
-        specifier: 'catalog:'
-        version: 5.0.2(@types/node@24.19.0)(jsdom@30.1.1)(vite@8.3.1(@types/node@24.19.0)(jiti@2.7.0))
-
-  packages/formatting:
-    devDependencies:
-      '@naovixen/nvpack':
-        specifier: workspace:*
-        version: link:../nvpack
       vitest:
         specifier: 'catalog:'
         version: 5.0.2(@types/node@24.19.0)(jsdom@30.1.1)(vite@8.3.1(@types/node@24.19.0)(jiti@2.7.0))
 
   packages/layout:
     dependencies:
-      '@naovixen/formatting':
+      '@naovixen/utilities':
         specifier: workspace:*
-        version: link:../formatting
-      '@naovixen/theming':
-        specifier: workspace:*
-        version: link:../theming
+        version: link:../utilities
     devDependencies:
       '@naovixen/nvpack':
         specifier: workspace:*
@@ -496,16 +478,6 @@ importers:
       vitest:
         specifier: 'catalog:'
         version: 5.0.2(@types/node@24.19.0)(jsdom@30.1.1)(vite@8.3.1(@types/node@24.19.0)(jiti@2.7.0))
-
-  packages/models:
-    dependencies:
-      '@portabletext/types':
-        specifier: 'catalog:'
-        version: 4.0.2
-    devDependencies:
-      '@naovixen/nvpack':
-        specifier: workspace:*
-        version: link:../nvpack
 
   packages/nvpack:
     dependencies:
@@ -561,15 +533,15 @@ importers:
       '@naovixen/blocks':
         specifier: workspace:*
         version: link:../blocks
+      '@naovixen/cms':
+        specifier: workspace:*
+        version: link:../cms
       '@naovixen/components':
         specifier: workspace:*
         version: link:../components
-      '@naovixen/formatting':
+      '@naovixen/utilities':
         specifier: workspace:*
-        version: link:../formatting
-      '@naovixen/models':
-        specifier: workspace:*
-        version: link:../models
+        version: link:../utilities
       '@portabletext/react':
         specifier: 8.0.1
         version: 8.0.1(react@19.3.0)
@@ -609,10 +581,6 @@ importers:
         version: 5.0.2(@types/node@24.19.0)(jsdom@30.1.1)(vite@8.3.1(@types/node@24.19.0)(jiti@2.7.0))
 
   packages/seo:
-    dependencies:
-      '@naovixen/models':
-        specifier: workspace:*
-        version: link:../models
     devDependencies:
       '@naovixen/nvpack':
         specifier: workspace:*
@@ -632,18 +600,15 @@ importers:
       '@naovixen/components':
         specifier: workspace:*
         version: link:../components
-      '@naovixen/formatting':
-        specifier: workspace:*
-        version: link:../formatting
       '@naovixen/layout':
         specifier: workspace:*
         version: link:../layout
-      '@naovixen/models':
-        specifier: workspace:*
-        version: link:../models
       '@naovixen/theming':
         specifier: workspace:*
         version: link:../theming
+      '@naovixen/utilities':
+        specifier: workspace:*
+        version: link:../utilities
     devDependencies:
       '@naovixen/nvpack':
         specifier: workspace:*
@@ -700,6 +665,15 @@ importers:
       tsx:
         specifier: 4.23.15
         version: 4.23.15
+      vitest:
+        specifier: 'catalog:'
+        version: 5.0.2(@types/node@24.19.0)(jsdom@30.1.1)(vite@8.3.1(@types/node@24.19.0)(jiti@2.7.0))
+
+  packages/utilities:
+    devDependencies:
+      '@naovixen/nvpack':
+        specifier: workspace:*
+        version: link:../nvpack
       vitest:
         specifier: 'catalog:'
         version: 5.0.2(@types/node@24.19.0)(jsdom@30.1.1)(vite@8.3.1(@types/node@24.19.0)(jiti@2.7.0))

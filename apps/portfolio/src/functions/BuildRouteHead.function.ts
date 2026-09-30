@@ -1,4 +1,4 @@
-import type { ISeoMetadata } from '@naovixen/models';
+import type { ISeoMetadata } from '@naovixen/seo';
 import { buildHeadTags, serializeStructuredData } from '@naovixen/seo';
 
 import { site } from '../constants/Site.const';

@@ -1,4 +1,4 @@
-import type { IBlogPostSummary } from '@naovixen/models';
+import type { IBlogPostSummary } from '@naovixen/cms';
 import { describe, expect, test } from 'vitest';
 
 import { findOlderPost } from '../functions/FindOlderPost.function';

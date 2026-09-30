@@ -1,5 +1,5 @@
 import type { OpenGraphType } from '../enums/OpenGraphType';
-import type { IImage } from './IImage';
+import type { IOpenGraphImage } from './IOpenGraphImage';
 
 export interface ISeoMetadata {
     readonly title: string;
@@ -7,5 +7,5 @@ export interface ISeoMetadata {
     /** Root-relative, such as `/blog/hello`. */
     readonly path: string;
     readonly type: OpenGraphType;
-    readonly image?: IImage;
+    readonly image?: IOpenGraphImage;
 }

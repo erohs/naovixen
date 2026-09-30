@@ -1,4 +1,4 @@
-import type { ISite } from '@naovixen/models';
+import type { ISite } from '../interfaces/ISite';
 
 import type { ISitemapEntry } from '../interfaces/ISitemapEntry';
 import { escapeXml } from './EscapeXml.function';

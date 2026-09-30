@@ -1,5 +1,5 @@
 import type { INavigationListItem } from '@naovixen/blocks';
-import type { INavigationItem } from '@naovixen/models';
+import type { INavigationItem } from '@naovixen/blocks';
 
 export function toNavigationListItems(
     items: readonly INavigationItem[],

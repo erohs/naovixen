@@ -1,4 +1,5 @@
-import type { IBlogPost, IBlogPostSummary } from '@naovixen/models';
+import type { IBlogPost } from '../../interfaces/IBlogPost';
+import type { IBlogPostSummary } from '../../interfaces/IBlogPostSummary';
 
 /** Leaves the body behind, so a listing does not carry every post's full content. */
 export function toBlogPostSummary(post: IBlogPost): IBlogPostSummary {

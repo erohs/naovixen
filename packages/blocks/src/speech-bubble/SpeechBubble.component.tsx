@@ -1,5 +1,5 @@
 import type { FunctionComponent } from 'react';
-import { joinClassNames } from '@naovixen/formatting';
+import { joinClassNames } from '@naovixen/utilities';
 
 import { SpeechBubbleTail } from './enums/SpeechBubbleTail';
 import type { ISpeechBubbleProps } from './interfaces/ISpeechBubbleProps';

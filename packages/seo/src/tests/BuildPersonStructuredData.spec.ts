@@ -1,5 +1,6 @@
 import { describe, expect, test } from 'vitest';
-import type { IPerson, ISite } from '@naovixen/models';
+import type { IPerson } from '../interfaces/IPerson';
+import type { ISite } from '../interfaces/ISite';
 
 import { buildPersonStructuredData } from '../functions/BuildPersonStructuredData.function';
 
@@ -9,8 +10,8 @@ const person: IPerson = {
     name: 'Example Person',
     jobTitle: 'Software Engineer',
     socialLinks: [
-        { label: 'GitHub', url: 'https://github.com/example' },
-        { label: 'Bluesky', url: 'https://bsky.app/profile/example' },
+        { url: 'https://github.com/example' },
+        { url: 'https://bsky.app/profile/example' },
     ],
 };
 

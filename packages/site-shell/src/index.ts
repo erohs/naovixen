@@ -7,6 +7,7 @@ export type { ISiteFooterLegalProps } from './site-footer-legal/interfaces/ISite
 export type { ISiteFooterProps } from './site-footer/interfaces/ISiteFooterProps';
 export type { ISiteHeaderProps } from './site-header/interfaces/ISiteHeaderProps';
 export type { ISiteNavigationProps } from './site-navigation/interfaces/ISiteNavigationProps';
+export type { ISocialLink } from './social-link-list/interfaces/ISocialLink';
 export type { ISocialLinkListProps } from './social-link-list/interfaces/ISocialLinkListProps';
 export type { IThemeProviderProps } from './theme-provider/interfaces/IThemeProviderProps';
 

@@ -1,7 +1,7 @@
 import type { FunctionComponent, MouseEvent } from 'react';
 import type { IButtonProps } from '@naovixen/components';
 import { Button, Icon, moonIcon, sunIcon, VisuallyHidden } from '@naovixen/components';
-import { joinClassNames } from '@naovixen/formatting';
+import { joinClassNames } from '@naovixen/utilities';
 import { ResolvedTheme, ThemePreference } from '@naovixen/theming';
 
 import { useTheme } from '../theme-provider/functions/UseTheme.hook';

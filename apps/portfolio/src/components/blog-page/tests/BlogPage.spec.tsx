@@ -1,4 +1,4 @@
-import type { IBlogPostSummary } from '@naovixen/models';
+import type { IBlogPostSummary } from '@naovixen/cms';
 import { screen } from '@testing-library/react';
 import { describe, expect, test } from 'vitest';
 

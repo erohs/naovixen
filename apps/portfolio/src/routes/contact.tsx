@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { OpenGraphType } from '@naovixen/models';
+import { OpenGraphType } from '@naovixen/seo';
 
 import { ContactPage } from '../components/contact-page/ContactPage.component';
 import { buildRouteHead } from '../functions/BuildRouteHead.function';

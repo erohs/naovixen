@@ -1,6 +1,6 @@
 import type { ComponentType } from 'react';
 import type { LinkProps } from '@naovixen/components';
-import type { INavigationItem } from '@naovixen/models';
+import type { INavigationItem } from '@naovixen/blocks';
 
 export interface ISiteFooterLegalProps {
     readonly copyrightHolder: string;
