@@ -95,4 +95,6 @@ export const sharedTokens = {
 
     /** Above the page for fixed controls such as the skip link and back-to-top link. */
     '--z-index-floating': '10',
+    /** Above the floating controls: the header, while its menu covers the page. */
+    '--z-index-overlay': '20',
 } as const;

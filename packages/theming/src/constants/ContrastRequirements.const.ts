@@ -15,6 +15,12 @@ export const contrastRequirements: readonly IContrastRequirement[] = [
             { foreground: '--color-focus', background, minimumRatio: nonText },
         ],
     ),
+    /** A navigation link under the pointer or focus, inverted into a solid block. */
+    {
+        foreground: '--color-background-surface',
+        background: '--color-shadow',
+        minimumRatio: text,
+    },
     {
         foreground: '--color-text-on-accent',
         background: '--color-background-accent',
