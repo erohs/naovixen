@@ -6,20 +6,23 @@
     padding-inline: var(--space-padding-page-centred);
 }
 
-/* The link beside the heading sits on the intro's last line. */
+/*
+ * The link beside the heading sits on the intro's last line. Where it wraps beneath, it keeps
+ * the same distance from the intro as the cards keep from it.
+ */
 .nv-home-section__header {
     display: flex;
     flex-wrap: wrap;
     align-items: end;
     justify-content: space-between;
-    gap: var(--space-between-text) var(--space-between-groups);
+    gap: var(--space-below-heading) var(--space-between-groups);
 }
 
 /* As many equal columns as fit, down to one on a narrow screen. A lone card keeps its column's width. */
 .nv-home-section__cards {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(min(18rem, 100%), 1fr));
-    gap: var(--space-between-groups);
+    grid-template-columns: repeat(auto-fill, minmax(min(20rem, 100%), 1fr));
+    gap: calc(var(--space-between-groups) + var(--space-between-text)) var(--space-between-groups);
     padding-inline-start: 0;
     list-style: none;
 }

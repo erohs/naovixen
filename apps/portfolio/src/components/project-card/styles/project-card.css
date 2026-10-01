@@ -1,9 +1,13 @@
 /*
- * Tighter than a post card, so the screenshot sits close to the edge. Drawn to the design's
- * numbers like the card itself, with the corners mirrored so a row of mixed cards varies.
+ * Tighter than a post card, so the screenshot sits close to the edge, and the text inside is
+ * inset again. The corners mirror the card's, so a row of mixed cards varies.
  */
 .nv-project-card {
-    padding: 16px 16px 12px;
+    --project-card-inset: calc(var(--space-between-text) + var(--space-between-lines));
+
+    gap: 0;
+    padding: var(--project-card-inset) var(--project-card-inset)
+        calc(var(--space-between-content) + var(--space-between-lines));
     border-radius: 14px 22px 12px 20px / 22px 12px 20px 14px;
 }
 
@@ -17,27 +21,33 @@
 }
 
 .nv-project-card__text,
-.nv-project-card__tags,
-.nv-project-card__footer {
-    padding-inline: var(--space-between-text);
+.nv-project-card__tags {
+    padding-inline: var(--project-card-inset);
 }
 
 .nv-project-card__text {
     display: flex;
     flex-direction: column;
     gap: var(--space-between-text);
+    padding-block-start: var(--space-between-blocks);
 }
 
 .nv-project-card__summary {
     color: var(--color-text-secondary);
 }
 
+.nv-project-card__tags {
+    padding-block: calc(var(--space-between-content) + var(--space-between-lines))
+        calc(var(--space-between-blocks) + var(--space-between-lines));
+}
+
 /* Pushed to the foot of the card, so a row of cards lines up whatever their summaries' length. */
 .nv-project-card__footer {
     margin-block-start: auto;
-    padding-block-start: var(--space-between-text);
+    margin-inline: var(--project-card-inset);
+    padding-block: calc(var(--space-between-content) + var(--space-between-lines))
+        var(--space-between-lines);
     border-block-start: var(--border-width-default) dashed var(--color-border);
-    font-weight: 600;
 }
 
 /* Covers the card, so the whole card is one link without nesting everything inside it. */

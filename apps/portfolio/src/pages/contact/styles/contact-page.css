@@ -12,9 +12,9 @@
     color: var(--color-text-secondary);
 }
 
-/* A handwritten aside, set apart from the email button above; the tiles sit close beneath. */
+/* A handwritten aside, set apart from the email button above. */
 .nv-contact-page__elsewhere {
-    margin-block: var(--space-between-blocks) calc(-1 * var(--space-between-text));
+    margin-block-start: var(--space-between-blocks);
     color: var(--color-text-accent);
     font-family: var(--font-family-handwriting);
     font-size: var(--font-size-h4);
@@ -24,7 +24,7 @@
 .nv-contact-page__links {
     display: flex;
     flex-direction: column;
-    gap: var(--space-between-content);
+    gap: calc(var(--space-between-blocks) + var(--space-between-lines));
     inline-size: 100%;
     padding-inline-start: 0;
     list-style: none;

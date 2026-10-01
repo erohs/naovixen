@@ -14,8 +14,8 @@
 /* As many equal columns as fit, down to one on a narrow screen. A lone card keeps its column's width. */
 .nv-blog-page__posts {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(min(18rem, 100%), 1fr));
-    gap: var(--space-between-groups);
+    grid-template-columns: repeat(auto-fill, minmax(min(20rem, 100%), 1fr));
+    gap: calc(var(--space-between-groups) + var(--space-between-text)) var(--space-between-groups);
     padding-inline-start: 0;
     list-style: none;
 }

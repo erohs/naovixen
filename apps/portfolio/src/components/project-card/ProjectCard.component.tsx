@@ -6,6 +6,7 @@ import {
     HeadingSize,
     Image,
     Link,
+    LinkVariant,
     TagList,
     Text,
     VisuallyHidden,
@@ -14,19 +15,23 @@ import { joinClassNames } from '@naovixen/utilities';
 
 import type { IProjectCardProps } from './interfaces/IProjectCardProps';
 
-/** A card names only the main few technologies; the case study lists them all. */
+/** A card names only the main few technologies; the project's page lists them all. */
 const cardStackLength = 3;
 
-const CaseStudyLink: FunctionComponent<Pick<IProjectCardProps, 'project'>> = ({ project }) => (
+const ProjectLink: FunctionComponent<Pick<IProjectCardProps, 'project'>> = ({ project }) => (
     <p className="nv-project-card__footer">
-        <Link href={`/work/${project.slug}`} className="nv-project-card__link">
-            Read case study<VisuallyHidden>: {project.title}</VisuallyHidden>{' '}
+        <Link
+            href={`/work/${project.slug}`}
+            variant={LinkVariant.Standalone}
+            className="nv-project-card__link"
+        >
+            View project<VisuallyHidden>: {project.title}</VisuallyHidden>{' '}
             <Link.Icon source={arrowRightIcon} />
         </Link>
     </p>
 );
 
-/** The "Read case study" link stretches over the whole card, so anywhere on it opens the project. */
+/** The "View project" link stretches over the whole card, so anywhere on it opens the project. */
 export const ProjectCard: FunctionComponent<IProjectCardProps> = ({
     project,
     headingLevel,
@@ -48,6 +53,6 @@ export const ProjectCard: FunctionComponent<IProjectCardProps> = ({
             label="Tech stack"
             className="nv-project-card__tags"
         />
-        <CaseStudyLink project={project} />
+        <ProjectLink project={project} />
     </Card>
 );

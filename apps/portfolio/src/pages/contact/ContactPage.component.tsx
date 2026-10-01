@@ -17,8 +17,8 @@ import { Page } from '../../components/page/Page.component';
 import { homeBreadcrumbTrail } from '../../constants/HomeBreadcrumbTrail.const';
 import { placeholderCvPath } from '../../constants/PlaceholderCvPath.const';
 import { placeholderEmailAddress } from '../../constants/PlaceholderEmailAddress.const';
-import { placeholderContactLinks } from './constants/PlaceholderContactLinks.const';
-import { placeholderContactPage } from './constants/PlaceholderContactPage.const';
+import { placeholderContactLinks } from '../../constants/PlaceholderContactLinks.const';
+import { placeholderContactPage } from '../../constants/PlaceholderContactPage.const';
 
 const CvTile: FunctionComponent = () => (
     <LinkTile

@@ -57,10 +57,18 @@
 /*
  * A speech bubble: a handwritten opening quote hangs over its top edge on ::before, and ::after
  * is the tail pointing down at the attribution. Both are decoration, kept out of the quote's text.
+ *
+ * The quote mark keeps one size at every width, as drawn in the design, and its offset is in em,
+ * so it always hangs over the edge by the same share of its height.
  */
 .nv-testimonial-section__quote {
     position: relative;
-    padding: var(--space-padding-panel) var(--space-below-heading) var(--space-between-groups);
+    padding: clamp(
+            var(--space-between-groups) + var(--space-between-text),
+            5vw,
+            var(--space-between-regions) + var(--space-between-text)
+        )
+        var(--space-below-heading) var(--space-between-groups);
     border: var(--border-width-standout) solid var(--color-border);
     border-radius: var(--radius-large);
     background-color: var(--color-background-surface);
@@ -69,11 +77,11 @@
     &::before {
         content: '\201C' / '';
         position: absolute;
-        inset-block-start: calc(-1 * (var(--space-between-groups) + var(--border-width-standout)));
-        inset-inline-start: var(--space-between-groups);
+        inset-block-start: -0.33em;
+        inset-inline-start: clamp(var(--space-between-content), 3vw, var(--space-between-groups));
         color: var(--color-background-accent);
         font-family: var(--font-family-handwriting);
-        font-size: var(--font-size-h1);
+        font-size: 6.5rem;
         line-height: 1;
         rotate: -6deg;
     }

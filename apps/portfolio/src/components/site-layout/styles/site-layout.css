@@ -13,4 +13,33 @@
 .nv-site-layout__main {
     flex-grow: 1;
     scroll-margin-block-start: 100dvh;
+
+    /*
+     * Focus lands here only to start the next Tab from the new page; it is not a control, so it
+     * draws no ring, which would otherwise run across the page under the header.
+     */
+    &:focus-visible {
+        outline: none;
+    }
+}
+
+/* The greeting, then the address and the profiles beneath it, all to the start. */
+.nv-site-layout__menu-footer {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: var(--space-between-content);
+}
+
+.nv-site-layout__email {
+    margin-block-start: var(--space-between-text);
+    font-size: var(--font-size-lead);
+}
+
+.nv-site-layout__elsewhere {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-between-content);
+    padding: 0;
+    list-style: none;
 }

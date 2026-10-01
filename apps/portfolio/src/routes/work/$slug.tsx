@@ -14,7 +14,7 @@ export const Route = createFileRoute('/work/$slug')({
     head: ({ loaderData }) =>
         loaderData
             ? buildRouteHead({
-                  title: `${loaderData.project.title} case study`,
+                  title: loaderData.project.title,
                   description: loaderData.project.summary,
                   path: `/work/${loaderData.project.slug}`,
                   type: OpenGraphType.Article,

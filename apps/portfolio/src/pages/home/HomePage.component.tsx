@@ -13,6 +13,7 @@ import {
     Icon,
     Link,
     LinkButton,
+    LinkVariant,
     mailIcon,
     pawIcon,
     SectionHeading,
@@ -111,7 +112,7 @@ const FeaturedProjectsSection: FunctionComponent<Pick<IHomePageProps, 'featuredP
             headingId="work-title"
             intro={placeholderHomePage.featuredProjectsIntro}
             action={
-                <Link href="/work">
+                <Link href="/work" variant={LinkVariant.Standalone}>
                     All projects <Link.Icon source={arrowRightIcon} />
                 </Link>
             }
@@ -139,7 +140,7 @@ const AboutSummary: FunctionComponent = () => (
         </Heading>
         <InterestList interests={placeholderInterests} />
         <p className="nv-about-summary__more">
-            <Link href="/about">
+            <Link href="/about" variant={LinkVariant.Standalone}>
                 More about me <Link.Icon source={arrowRightIcon} />
             </Link>
         </p>
@@ -214,7 +215,7 @@ const ExperienceSection: FunctionComponent = () => (
         headingId="experience-title"
         intro={placeholderHomePage.experienceIntro}
         action={
-            <Link href={placeholderCvPath} download>
+            <Link href={placeholderCvPath} download variant={LinkVariant.Standalone}>
                 Full CV<VisuallyHidden> (PDF)</VisuallyHidden> <Link.Icon source={arrowRightIcon} />
             </Link>
         }
@@ -297,7 +298,7 @@ const LatestPostsSection: FunctionComponent<Pick<IHomePageProps, 'latestPosts'>>
         headingId="blog-title"
         intro={placeholderBlogIntro}
         action={
-            <Link href="/blog">
+            <Link href="/blog" variant={LinkVariant.Standalone}>
                 All posts <Link.Icon source={arrowRightIcon} />
             </Link>
         }

@@ -6,18 +6,16 @@
 }
 
 .nv-post-card__excerpt {
+    margin-block-end: var(--space-between-blocks);
     color: var(--color-text-secondary);
 }
 
-/*
- * Pushed to the foot of the card, so a row of cards lines up whatever their excerpts' length.
- * Its gap is the card's own, written out to the design like the card's other measurements.
- */
+/* Pushed to the foot of the card, so a row of cards lines up whatever their excerpts' length. */
 .nv-post-card__details {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: var(--space-between-content);
     margin-block-start: auto;
-    padding-block-start: var(--space-between-content);
+    padding-block-start: calc(var(--space-between-content) + var(--space-between-lines));
     border-block-start: var(--border-width-default) dashed var(--color-border);
 }
