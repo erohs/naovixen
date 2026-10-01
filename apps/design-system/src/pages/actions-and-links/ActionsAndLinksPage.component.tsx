@@ -83,8 +83,8 @@ const Links: FunctionComponent = () => (
             </Link>
         </Example>
         <Example name="Link with a Link.Icon">
-            <Link href="#actions-and-links">
-                Icon at the end <Link.Icon source={arrowRightIcon} />
+            <Link href="#actions-and-links" variant={LinkVariant.Standalone}>
+                Standalone, icon at the end <Link.Icon source={arrowRightIcon} />
             </Link>
             <Link href="#actions-and-links">
                 <Link.Icon source={arrowLeftIcon} /> Icon at the start

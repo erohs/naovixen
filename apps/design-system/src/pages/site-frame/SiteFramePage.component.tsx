@@ -6,6 +6,7 @@ import {
     Logo,
     NavigationLayout,
     NavigationList,
+    Text,
 } from '@naovixen/components';
 
 import { Example } from '../../components/example/Example.component';
@@ -34,7 +35,7 @@ const Navigation: FunctionComponent = () => (
 
 /**
  * What every page of a site shares, with the site's own links and copy passed in. The header's
- * navigation becomes a menu behind a button on a narrow screen.
+ * navigation becomes a menu over the page, behind a button, on a narrow screen.
  */
 const Frame: FunctionComponent = () => (
     <>
@@ -43,6 +44,7 @@ const Frame: FunctionComponent = () => (
                 items={exampleNavigationItems}
                 currentHref="/"
                 actions={<Button>Action</Button>}
+                menuFooter={<Text>Beneath the links in the narrow-screen menu.</Text>}
                 className="nv-site-frame-page__wide"
             />
         </Example>
