@@ -4,6 +4,7 @@ import { joinClassNames } from '@naovixen/utilities';
 import { Link } from '../link/Link.component';
 import { Logo } from '../logo/Logo.component';
 import { NavigationLayout } from '../navigation-list/enums/NavigationLayout';
+import { isCurrentHref } from '../navigation-list/functions/IsCurrentHref.function';
 import { NavigationList } from '../navigation-list/NavigationList.component';
 import { HeaderMenu } from './HeaderMenu.component';
 import type { IHeaderProps } from './interfaces/IHeaderProps';
@@ -16,16 +17,21 @@ export const Header: FunctionComponent<IHeaderProps> = ({
     items,
     currentHref,
     actions,
+    menuFooter,
     className,
 }) => (
     <header className={joinClassNames('nv-header', className)}>
-        <Link href="/" className="nv-header__home">
+        <Link
+            href="/"
+            aria-current={isCurrentHref(currentHref, '/') ? 'page' : undefined}
+            className="nv-header__home"
+        >
             <Logo />
         </Link>
         <nav aria-label="Main" className="nv-header__navigation">
             <NavigationList items={items} currentHref={currentHref} layout={NavigationLayout.Row} />
         </nav>
         {actions}
-        <HeaderMenu items={items} currentHref={currentHref} />
+        <HeaderMenu items={items} currentHref={currentHref} menuFooter={menuFooter} />
     </header>
 );

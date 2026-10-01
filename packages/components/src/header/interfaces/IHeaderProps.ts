@@ -8,5 +8,7 @@ export interface IHeaderProps {
     readonly currentHref: string;
     /** Controls at the end of the row, such as a theme toggle. */
     readonly actions?: ReactNode;
+    /** Beneath the links in the narrow-screen menu, such as ways to get in touch. */
+    readonly menuFooter?: ReactNode;
     readonly className?: string | undefined;
 }

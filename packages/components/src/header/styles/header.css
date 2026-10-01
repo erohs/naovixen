@@ -1,13 +1,17 @@
 /*
- * Media queries cannot read custom properties, so the breakpoint is written out: 51.25rem is
- * 820px at the default size.
+ * Media queries cannot read custom properties, so the breakpoint is written out: 47.5rem is
+ * 760px at the default size.
+ *
+ * The header stacks above the page, so its row stays on top of the menu panel it holds.
  */
 .nv-header {
+    position: relative;
+    z-index: var(--z-index-overlay);
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     gap: var(--space-between-content);
-    padding-block-start: calc(var(--space-between-content) + var(--space-between-lines));
+    padding-block-start: var(--space-between-content);
     padding-inline: var(--space-padding-page-centred);
 }
 
@@ -27,31 +31,255 @@
     margin-inline-end: calc(var(--space-between-groups) - var(--space-between-content));
 }
 
-/*
- * The menu's wrapper is layout-neutral, so its button sits in the header's row and the open
- * panel wraps onto a full-width line beneath it.
- */
+/* Layout-neutral, so its button sits in the header's row. */
 .nv-header__menu {
     display: contents;
 }
 
-/* Narrower than other buttons, so the header's row still fits on a small phone. */
-.nv-header__menu-button {
-    padding-inline: var(--space-between-content);
+/*
+ * Three uneven lines that fold into a cross while the menu is open. They are placed to the
+ * design's exact measurements inside the button, so those are written out.
+ */
+.nv-header__menu-lines {
+    position: relative;
+    inline-size: 100%;
+    block-size: 100%;
 }
 
+.nv-header__menu-line {
+    position: absolute;
+    block-size: 2.5px;
+    border-radius: 2px;
+    background-color: currentcolor;
+    transition:
+        inset-block-start 0.3s cubic-bezier(0.3, 1.4, 0.5, 1),
+        inset-inline-start 0.3s ease,
+        inline-size 0.3s ease,
+        transform 0.35s cubic-bezier(0.3, 1.4, 0.5, 1),
+        opacity 0.2s ease;
+
+    &:nth-child(1) {
+        inset-block-start: 13px;
+        inset-inline-start: 12px;
+        inline-size: 20px;
+        transform: rotate(-3deg);
+    }
+
+    &:nth-child(2) {
+        inset-block-start: 20.5px;
+        inset-inline-start: 12px;
+        inline-size: 14px;
+        transform: rotate(2deg);
+    }
+
+    &:nth-child(3) {
+        inset-block-start: 28px;
+        inset-inline-start: 14px;
+        inline-size: 18px;
+        transform: rotate(-1deg);
+    }
+}
+
+.nv-header__menu-button[aria-expanded='true'] .nv-header__menu-line {
+    &:nth-child(1) {
+        inset-block-start: 20.5px;
+        inset-inline-start: 11px;
+        inline-size: 22px;
+        transform: rotate(43deg);
+    }
+
+    &:nth-child(2) {
+        opacity: 0;
+        transform: scaleX(0);
+    }
+
+    &:nth-child(3) {
+        inset-block-start: 20.5px;
+        inset-inline-start: 11px;
+        inline-size: 21px;
+        transform: rotate(-47deg);
+    }
+}
+
+/*
+ * A sheet of the page's colour that slides over the page from the side, under the header's row.
+ * Its leading edge is a wavy line: the same wave drawn twice, in the line colour and, just
+ * inside it, in the page colour. Dots gather in the far corner. Visibility waits for the slide
+ * to finish before hiding, which keeps a closed menu out of the tab order.
+ */
 .nv-header__menu-panel {
-    flex-basis: 100%;
+    --header-menu-wave: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 400' preserveAspectRatio='none'%3E%3Cpath d='M12 0Q2 25 12 50T12 100T12 150T12 200T12 250T12 300T12 350T12 400H24V0Z'/%3E%3C/svg%3E");
+    --header-menu-wave-overhang: 22px;
+
+    position: fixed;
+    z-index: -1;
+    inset: 0;
+    visibility: hidden;
+    translate: calc(100% + var(--space-between-groups)) 0;
+    background:
+        radial-gradient(ellipse 90% 60% at 100% 100%, transparent, var(--color-background-page)),
+        radial-gradient(
+                circle,
+                color-mix(in srgb, var(--color-decoration-dots) 60%, transparent) 15%,
+                transparent 20%
+            )
+            0 0 / var(--space-between-content) var(--space-between-content),
+        var(--color-background-page);
+    transition:
+        translate 0.5s cubic-bezier(0.7, 0, 0.25, 1),
+        visibility 0s linear 0.5s;
+
+    &::before,
+    &::after {
+        content: '';
+        position: absolute;
+        inset-block: 0;
+        inline-size: calc(var(--header-menu-wave-overhang) + 2px);
+        mask: var(--header-menu-wave) center / 100% 100% no-repeat;
+    }
+
+    &::before {
+        inset-inline-start: calc(
+            -1 * (var(--header-menu-wave-overhang) + var(--border-width-highlight))
+        );
+        background-color: var(--color-border);
+    }
+
+    &::after {
+        inset-inline-start: calc(-1 * var(--header-menu-wave-overhang));
+        background-color: var(--color-background-page);
+    }
 }
 
-@media (width < 51.25rem) {
+/* Clears the header's row at the top, and scrolls if a short screen cannot hold it all. */
+.nv-header__menu-content {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-between-regions);
+    padding: calc(var(--size-action-minimum) + 2 * var(--space-between-groups))
+        var(--space-padding-page) var(--space-between-regions);
+
+    /* The links slide in from the side, which must not make it scroll sideways. */
+    overflow: hidden auto;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+/* The links slide in one after another, then the footer rises into place. */
+.nv-header__menu-content .nv-navigation-list__item {
+    opacity: 0;
+    translate: var(--space-between-regions) 0;
+    transition:
+        opacity 0.25s ease,
+        translate 0.45s cubic-bezier(0.3, 1.5, 0.5, 1);
+}
+
+.nv-header__menu-footer {
+    margin-block-start: auto;
+    opacity: 0;
+    translate: 0 var(--space-between-content);
+    transition:
+        opacity 0.3s ease,
+        translate 0.4s ease;
+}
+
+.nv-header__menu-button[aria-expanded='true'] + .nv-header__menu-panel {
+    visibility: visible;
+    translate: none;
+    transition-delay: 0s;
+
+    & .nv-header__menu-content {
+        opacity: 1;
+        transition: opacity 0.25s ease 0.2s;
+    }
+
+    & .nv-navigation-list__item,
+    & .nv-header__menu-footer {
+        opacity: 1;
+        translate: none;
+    }
+
+    /* One after another, and any beyond the fifth with the fifth. */
+    & .nv-navigation-list__item {
+        transition-delay: 0.36s;
+
+        &:nth-child(1) {
+            transition-delay: 0.16s;
+        }
+
+        &:nth-child(2) {
+            transition-delay: 0.21s;
+        }
+
+        &:nth-child(3) {
+            transition-delay: 0.26s;
+        }
+
+        &:nth-child(4) {
+            transition-delay: 0.31s;
+        }
+    }
+
+    & .nv-header__menu-footer {
+        transition-delay: 0.42s;
+    }
+}
+
+@media (width < 47.5rem) {
     .nv-header__navigation {
+        display: none;
+    }
+
+    /* The page behind an open menu stays put. */
+    :root:has(.nv-header__menu-button[aria-expanded='true']) {
+        overflow: hidden;
+    }
+}
+
+@media (width >= 47.5rem) {
+    .nv-header__menu {
         display: none;
     }
 }
 
-@media (width >= 51.25rem) {
-    .nv-header__menu {
-        display: none;
+/* The menu fades in and out where it would otherwise slide. */
+@media (prefers-reduced-motion: reduce) {
+    .nv-header__menu-line {
+        transition: none;
+    }
+
+    .nv-header__menu-panel,
+    .nv-header__menu-content .nv-navigation-list__item,
+    .nv-header__menu-footer {
+        translate: none;
+    }
+
+    .nv-header__menu-panel {
+        opacity: 0;
+        transition:
+            opacity var(--duration-medium) var(--easing-standard),
+            visibility 0s linear var(--duration-medium);
+    }
+
+    .nv-header__menu-button[aria-expanded='true'] + .nv-header__menu-panel {
+        opacity: 1;
+    }
+}
+
+/* The wave is drawn with backgrounds, which forced colours drop, so a plain edge stands in. */
+@media (forced-colors: active) {
+    .nv-header__menu-line {
+        background-color: CanvasText;
+    }
+
+    .nv-header__menu-panel {
+        border-inline-start: var(--border-width-highlight) solid CanvasText;
+
+        &::before,
+        &::after {
+            display: none;
+        }
     }
 }

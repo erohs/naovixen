@@ -1,5 +1,6 @@
 import type { FunctionComponent } from 'react';
 
+import { LinkVariant } from '../link/enums/LinkVariant';
 import { Link } from '../link/Link.component';
 import type { IBreadcrumbProps } from './interfaces/IBreadcrumbProps';
 
@@ -13,7 +14,7 @@ export const Breadcrumb: FunctionComponent<IBreadcrumbProps> = ({
         <ol className="nv-breadcrumb">
             {trail.map((item) => (
                 <li key={item.href} className="nv-breadcrumb__item">
-                    <Link href={item.href} className="nv-breadcrumb__link">
+                    <Link href={item.href} variant={LinkVariant.Standalone}>
                         {item.label}
                     </Link>
                 </li>

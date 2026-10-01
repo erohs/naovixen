@@ -8,14 +8,22 @@
     background-color: var(--color-background-surface);
 }
 
-/* As many equal columns as fit, dropping to one on narrow screens. */
+/*
+ * Anything that is not a list of links, such as a logo and a line about the site, is twice as
+ * wide as a list. On a narrow screen it takes a row of its own and the lists share the next.
+ */
 .nv-footer__columns {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(18rem, 100%), 1fr));
-    gap: var(--space-between-groups);
+    display: flex;
+    flex-wrap: wrap;
+    gap: calc(var(--space-between-groups) + var(--space-between-text)) var(--space-between-groups);
+
+    & > * {
+        flex: 2 1 16rem;
+    }
 }
 
 .nv-footer__column {
+    flex: 1 1 9rem;
     display: flex;
     flex-direction: column;
     gap: var(--space-between-text);

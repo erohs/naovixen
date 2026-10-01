@@ -26,8 +26,3 @@
         font-weight: var(--font-weight-semi-bold);
     }
 }
-
-/* Taller than its text, so the link is easy to hit. */
-.nv-breadcrumb__link {
-    padding-block: var(--space-between-text);
-}

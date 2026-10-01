@@ -3,6 +3,6 @@ export enum NavigationLayout {
     Row = 'row',
     /** A plain column of links, as in a footer. */
     Column = 'column',
-    /** Full-width rows with dividers, one link each, as in a menu on narrow screens. */
+    /** Large links stacked, the current one marked by a bar, as in a menu that covers the page. */
     Menu = 'menu',
 }

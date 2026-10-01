@@ -20,22 +20,74 @@
     }
 }
 
+/* The links' own padding makes the rows tall enough to hit, so the gap only has to clear it. */
 .nv-navigation-list--column {
     flex-direction: column;
-    gap: var(--space-between-text);
+    gap: var(--space-between-content);
 }
 
+/*
+ * Large links stacked, as in a menu that covers the page. The current page is marked by a bar
+ * that springs up beside it, in place of the underline, and turns pale with the link it marks.
+ */
 .nv-navigation-list--menu {
     flex-direction: column;
-    border-block: var(--border-width-standout) solid var(--color-border);
-    font-size: var(--font-size-lead);
+    gap: var(--space-between-text);
+    font-family: var(--font-family-heading);
+    font-size: var(--font-size-h3);
+    line-height: var(--line-height-subheading);
+    letter-spacing: var(--letter-spacing-heading);
 
     & .nv-navigation-list__item {
-        min-block-size: calc(var(--size-action-minimum) + var(--space-between-text));
-        border-block-end: var(--border-width-default) dashed var(--color-border);
+        display: block;
+    }
 
-        &:last-child {
-            border-block-end: none;
+    & .nv-link {
+        --link-padding-inline: var(--space-between-content);
+
+        position: relative;
+        display: block;
+        padding-inline-start: calc(
+            var(--space-between-groups) + var(--space-between-text) + var(--space-between-lines)
+        );
+        border-radius: var(--radius-medium-alternate);
+        text-decoration-line: none;
+
+        &::before {
+            content: '';
+            position: absolute;
+            inset-block: 22%;
+            inset-inline-start: var(--space-between-content);
+            inline-size: 7px;
+            border-radius: 5px 3px 6px 2px / 3px 6px 2px 5px;
+            background-color: var(--color-text-accent);
+            transform: scaleY(0) rotate(-3deg);
+            transform-origin: 50% 100%;
+            transition:
+                transform 0.25s cubic-bezier(0.3, 1.5, 0.5, 1),
+                background-color var(--duration-fast) var(--easing-standard);
         }
+
+        &[aria-current='page']::before {
+            transform: scaleY(1) rotate(-3deg);
+        }
+
+        &:hover::before,
+        &:focus-visible::before {
+            background-color: var(--color-background-surface);
+        }
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .nv-navigation-list--menu .nv-link::before {
+        transition: none;
+    }
+}
+
+/* The bar is a background, which forced colours drop, so the underline comes back instead. */
+@media (forced-colors: active) {
+    .nv-navigation-list--menu .nv-link[aria-current='page'] {
+        text-decoration-line: underline;
     }
 }

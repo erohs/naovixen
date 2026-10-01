@@ -1,6 +1,7 @@
 /*
- * The folded corner is drawn to the design's exact measurements, so its sizes are written out
- * rather than taken from the spacing scale: they only mean anything relative to each other.
+ * The folded corner and the hand-drawn corners are drawn to the design's exact measurements, so
+ * their sizes are written out rather than taken from the spacing scale: they only mean anything
+ * relative to each other.
  *
  * ::before covers the card's corner in the page colour, with the triangle of shadow the lifted
  * card casts along the fold behind it. ::after is the turned-up flap, which casts its own
@@ -10,9 +11,10 @@
     position: relative;
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: var(--space-between-content);
     block-size: 100%;
-    padding: 24px 24px 20px;
+    padding: var(--space-between-groups) var(--space-padding-container)
+        var(--space-padding-container);
     border: 2px solid var(--color-border);
     border-radius: 20px 12px 22px 14px / 12px 22px 14px 20px;
     background-color: var(--color-background-surface);
