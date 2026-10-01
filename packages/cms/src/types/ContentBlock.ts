@@ -1,8 +1,8 @@
-import type { IButtonGroupBlock } from '../interfaces/IButtonGroupBlock';
 import type { ICalloutBlock } from '../interfaces/ICalloutBlock';
 import type { ICodeBlock } from '../interfaces/ICodeBlock';
 import type { IFactListBlock } from '../interfaces/IFactListBlock';
 import type { IFigureBlock } from '../interfaces/IFigureBlock';
+import type { ILinkButtonsBlock } from '../interfaces/ILinkButtonsBlock';
 import type { ISectionHeadingBlock } from '../interfaces/ISectionHeadingBlock';
 
 /**
@@ -15,4 +15,4 @@ export type ContentBlock =
     | ICodeBlock
     | IFigureBlock
     | IFactListBlock
-    | IButtonGroupBlock;
+    | ILinkButtonsBlock;

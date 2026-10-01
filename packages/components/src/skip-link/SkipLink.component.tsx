@@ -1,16 +1,23 @@
-import type { ComponentPropsWithRef, FunctionComponent } from 'react';
+import type { FunctionComponent } from 'react';
 import { joinClassNames } from '@naovixen/utilities';
 
+import { ButtonVariant } from '../button/enums/ButtonVariant';
+import type { ILinkButtonProps } from '../link-button/interfaces/ILinkButtonProps';
+import { LinkButton } from '../link-button/LinkButton.component';
+
 /**
- * Render it first in the body, pointing at the main content: `href="#main"`. The target
- * needs `tabIndex={-1}` to take focus.
+ * A LinkButton shown only while it has focus. Render it first in the body. It points at the main
+ * content, `#main`, unless given another `href`; the target needs `tabIndex={-1}` to take focus.
  */
-export const SkipLink: FunctionComponent<ComponentPropsWithRef<'a'>> = ({
+export const SkipLink: FunctionComponent<Omit<ILinkButtonProps, 'variant'>> = ({
+    href = '#main',
     className,
-    children,
-    ...anchorProps
+    ...linkButtonProps
 }) => (
-    <a {...anchorProps} className={joinClassNames('nv-skip-link', className)}>
-        {children}
-    </a>
+    <LinkButton
+        {...linkButtonProps}
+        href={href}
+        variant={ButtonVariant.Primary}
+        className={joinClassNames('nv-skip-link', className)}
+    />
 );

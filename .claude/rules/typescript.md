@@ -52,7 +52,7 @@ to the file, not the export: `resolveTheme` lives in `ResolveTheme.function.ts` 
 | Type                 | none             |
 
 JSX means `.tsx`. CSS files are the exception to PascalCase: kebab-case, named for the BEM
-block, so `LinkIcon.component.tsx` pairs with `styles/link-icon.css`.
+block, so `LinkTile.component.tsx` pairs with `styles/link-tile.css`.
 
 One exported thing per file. Named exports only, except where a framework requires
 otherwise (`export const Route`).

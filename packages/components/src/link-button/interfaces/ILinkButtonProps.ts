@@ -1,6 +1,7 @@
 import type { ButtonVariant } from '../../button/enums/ButtonVariant';
-import type { LinkProps } from '../../link/types/LinkProps';
+import type { ILinkProps } from '../../link/interfaces/ILinkProps';
 
-export interface ILinkButtonProps extends LinkProps {
+/** Its role and its answer to Space are its own, so neither can be passed in. */
+export interface ILinkButtonProps extends Omit<ILinkProps, 'variant' | 'role' | 'onKeyDown'> {
     readonly variant?: ButtonVariant | undefined;
 }

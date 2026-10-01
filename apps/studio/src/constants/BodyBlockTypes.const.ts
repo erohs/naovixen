@@ -1,7 +1,7 @@
-import { buttonGroupType } from './ButtonGroupType.const';
 import { calloutType } from './CalloutType.const';
 import { factListType } from './FactListType.const';
 import { figureType } from './FigureType.const';
+import { linkButtonsType } from './LinkButtonsType.const';
 import { sectionHeadingType } from './SectionHeadingType.const';
 
 /**
@@ -13,5 +13,5 @@ export const bodyBlockTypes = [
     calloutType,
     figureType,
     factListType,
-    buttonGroupType,
+    linkButtonsType,
 ];

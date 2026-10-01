@@ -1,5 +1,13 @@
-/* Also worn by LinkButton. */
+/*
+ * Worn by Button and by LinkButton. It rests on a shadow, lifts under the pointer and presses
+ * down onto the page; the properties say how far, so a shape can change them in one place.
+ */
 .nv-button {
+    --button-shadow: var(--shadow-resting);
+    --button-shadow-lifted: var(--shadow-raised);
+    --button-offset: var(--size-shadow-offset-resting);
+    --button-offset-lifted: var(--size-shadow-offset-raised);
+
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -9,7 +17,7 @@
     border: var(--border-width-standout) solid var(--color-border);
     border-radius: var(--radius-medium);
     background-color: var(--color-background-page);
-    box-shadow: var(--shadow-resting);
+    box-shadow: var(--button-shadow);
     color: var(--color-text-primary);
     font: inherit;
     font-weight: var(--font-weight-semi-bold);
@@ -19,30 +27,6 @@
     transition:
         translate var(--duration-fast) var(--easing-standard),
         box-shadow var(--duration-fast) var(--easing-standard);
-
-    &:hover {
-        --button-lift: calc(var(--size-shadow-offset-resting) - var(--size-shadow-offset-raised));
-
-        translate: var(--button-lift) var(--button-lift);
-        box-shadow: var(--shadow-raised);
-    }
-
-    &:active {
-        translate: var(--size-shadow-offset-resting) var(--size-shadow-offset-resting);
-        box-shadow: none;
-    }
-
-    &:disabled,
-    &[aria-disabled='true'] {
-        cursor: not-allowed;
-        translate: none;
-        box-shadow: var(--shadow-resting);
-    }
-
-    /* Clear of the shadow, so the ring is not drawn on top of it. */
-    &:focus-visible {
-        outline-offset: calc(var(--border-width-highlight) + var(--size-shadow-offset-raised));
-    }
 }
 
 .nv-button--primary {
@@ -53,6 +37,46 @@
 /* The mirror of the primary's corners, so a pair of buttons does not look stamped out. */
 .nv-button--secondary {
     border-radius: var(--radius-medium-alternate);
+}
+
+/*
+ * A button whose icon carries its name has no text, so it is a small round control: it rests on
+ * the small shadow and lifts only as far as a button's resting one.
+ */
+.nv-button:has(> .nv-button__name) {
+    --button-shadow: var(--shadow-small);
+    --button-shadow-lifted: var(--shadow-resting);
+    --button-offset: var(--size-shadow-offset-small);
+    --button-offset-lifted: var(--size-shadow-offset-resting);
+
+    inline-size: var(--size-action-minimum);
+    block-size: var(--size-action-minimum);
+    padding: 0;
+    border-radius: var(--radius-round);
+}
+
+.nv-button:hover {
+    --button-lift: calc(var(--button-offset) - var(--button-offset-lifted));
+
+    translate: var(--button-lift) var(--button-lift);
+    box-shadow: var(--button-shadow-lifted);
+}
+
+.nv-button:active {
+    translate: var(--button-offset) var(--button-offset);
+    box-shadow: none;
+}
+
+.nv-button:disabled,
+.nv-button[aria-disabled='true'] {
+    cursor: not-allowed;
+    translate: none;
+    box-shadow: var(--button-shadow);
+}
+
+/* Clear of the shadow, so the ring is not drawn on top of it. */
+.nv-button:focus-visible {
+    outline-offset: calc(var(--border-width-highlight) + var(--size-shadow-offset-raised));
 }
 
 @media (prefers-reduced-motion: reduce) {

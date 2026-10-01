@@ -1,15 +1,5 @@
 import type { FunctionComponent } from 'react';
-import {
-    Footer,
-    FooterColumn,
-    Link,
-    Logo,
-    NavigationList,
-    navigationLinkClassName,
-    SocialLinkList,
-    Text,
-    TextVariant,
-} from '@naovixen/components';
+import { Footer, Link, LinkVariant, Logo, Text, TextVariant } from '@naovixen/components';
 
 import { navigationItems } from '../../constants/NavigationItems.const';
 import { privacyLink } from '../../constants/PrivacyLink.const';
@@ -23,7 +13,7 @@ const SmallPrint: FunctionComponent<Pick<ISiteFooterProps, 'year'>> = ({ year })
         <p>
             © {year} {site.name}
         </p>
-        <Link href={privacyLink.href} className={navigationLinkClassName}>
+        <Link href={privacyLink.href} variant={LinkVariant.Navigation}>
             {privacyLink.label}
         </Link>
     </>
@@ -35,11 +25,7 @@ export const SiteFooter: FunctionComponent<ISiteFooterProps> = ({ currentPath, y
             <Logo />
             <Text variant={TextVariant.Small}>{placeholderFooterBlurb}</Text>
         </div>
-        <FooterColumn heading="site">
-            <NavigationList items={navigationItems} currentHref={currentPath} />
-        </FooterColumn>
-        <FooterColumn heading="elsewhere">
-            <SocialLinkList links={placeholderSocialLinks} />
-        </FooterColumn>
+        <Footer.Column heading="site" links={navigationItems} currentHref={currentPath} />
+        <Footer.Column heading="elsewhere" links={placeholderSocialLinks} />
     </Footer>
 );

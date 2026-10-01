@@ -15,8 +15,8 @@
 export declare const internalGroqTypeReferenceTo: unique symbol;
 
 // Source: schema.json
-export type ButtonGroup = {
-    _type: 'buttonGroup';
+export type LinkButtons = {
+    _type: 'linkButtons';
     buttons: Array<{
         label: string;
         href: string;
@@ -134,7 +134,7 @@ export type Project = {
           } & FactList)
         | ({
               _key: string;
-          } & ButtonGroup)
+          } & LinkButtons)
     >;
 };
 
@@ -218,7 +218,7 @@ export type Post = {
           } & FactList)
         | ({
               _key: string;
-          } & ButtonGroup)
+          } & LinkButtons)
     >;
 };
 
@@ -328,7 +328,7 @@ export type Geopoint = {
 };
 
 export type AllSanitySchemaTypes =
-    | ButtonGroup
+    | LinkButtons
     | FactList
     | SanityImageAssetReference
     | Figure
@@ -382,17 +382,6 @@ export type PostBySlugQueryResult = {
           }
         | {
               _key: string;
-              _type: 'buttonGroup';
-              buttons: Array<{
-                  label: string;
-                  href: string;
-                  variant: 'primary' | 'secondary';
-                  _type: 'linkButton';
-                  _key: string;
-              }>;
-          }
-        | {
-              _key: string;
               _type: 'callout';
               label: string;
               title: string;
@@ -436,6 +425,17 @@ export type PostBySlugQueryResult = {
           }
         | {
               _key: string;
+              _type: 'linkButtons';
+              buttons: Array<{
+                  label: string;
+                  href: string;
+                  variant: 'primary' | 'secondary';
+                  _type: 'linkButton';
+                  _key: string;
+              }>;
+          }
+        | {
+              _key: string;
               _type: 'sectionHeading';
               text: string;
           }
@@ -453,11 +453,6 @@ export type PostSummariesQueryResult = Array<{
     tags: Array<string> | Array<never>;
     plainText: string;
 }>;
-
-// Source: ../../packages/cms/src/sanity-blog-repository/constants/PostTagsQuery.const.ts
-// Variable: postTagsQuery
-// Query: *[_type == "tag" && count(*[_type == "post" && references(^._id)]) > 0] | order(title asc).title
-export type PostTagsQueryResult = Array<string>;
 
 // Source: ../../packages/cms/src/sanity-project-repository/constants/ProjectBySlugQuery.const.ts
 // Variable: projectBySlugQuery
@@ -501,17 +496,6 @@ export type ProjectBySlugQueryResult = {
           }
         | {
               _key: string;
-              _type: 'buttonGroup';
-              buttons: Array<{
-                  label: string;
-                  href: string;
-                  variant: 'primary' | 'secondary';
-                  _type: 'linkButton';
-                  _key: string;
-              }>;
-          }
-        | {
-              _key: string;
               _type: 'callout';
               label: string;
               title: string;
@@ -552,6 +536,17 @@ export type ProjectBySlugQueryResult = {
               };
               caption?: string;
               shape: 'portrait' | 'wide';
+          }
+        | {
+              _key: string;
+              _type: 'linkButtons';
+              buttons: Array<{
+                  label: string;
+                  href: string;
+                  variant: 'primary' | 'secondary';
+                  _type: 'linkButton';
+                  _key: string;
+              }>;
           }
         | {
               _key: string;

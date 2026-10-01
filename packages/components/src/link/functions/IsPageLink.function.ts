@@ -1,4 +1,4 @@
-import type { LinkProps } from '../types/LinkProps';
+import type { AnchorProps } from '../../link-provider/types/AnchorProps';
 
 /**
  * A page on this site is a path. Another site (`https://…`, `//host`), a fragment, another
@@ -8,7 +8,7 @@ export function isPageLink({
     href,
     target,
     download,
-}: Pick<LinkProps, 'href' | 'target' | 'download'>): boolean {
+}: Pick<AnchorProps, 'href' | 'target' | 'download'>): boolean {
     return (
         href !== undefined &&
         href.startsWith('/') &&

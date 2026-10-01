@@ -1,11 +1,11 @@
 import type { FunctionComponent } from 'react';
 import { joinClassNames } from '@naovixen/utilities';
 
+import { ButtonIcon } from './ButtonIcon.component';
 import { ButtonVariant } from './enums/ButtonVariant';
 import type { IButtonProps } from './interfaces/IButtonProps';
 
-/** A plain button unless told otherwise, so it never submits a form by accident. */
-export const Button: FunctionComponent<IButtonProps> = ({
+const ButtonRoot: FunctionComponent<IButtonProps> = ({
     variant = ButtonVariant.Secondary,
     type = 'button',
     className,
@@ -20,3 +20,10 @@ export const Button: FunctionComponent<IButtonProps> = ({
         {children}
     </button>
 );
+
+/**
+ * Something that acts. A plain button unless told otherwise, so it never submits a form by
+ * accident. Its children are its text and, on either side of it, a `Button.Icon`. For something
+ * that navigates, see LinkButton.
+ */
+export const Button = Object.assign(ButtonRoot, { Icon: ButtonIcon });

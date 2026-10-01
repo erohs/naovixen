@@ -1,9 +1,0 @@
-.nv-link-icon {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--space-between-text);
-}
-
-.nv-link-icon--start .nv-link-icon__icon {
-    order: -1;
-}

@@ -1,4 +1,4 @@
-/** Renders as ExternalLinkButton, with `label` as its text. */
+/** Renders as LinkButton, with `label` as its text. */
 export interface ILinkButton {
     readonly _key: string;
     readonly label: string;

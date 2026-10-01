@@ -1,8 +1,0 @@
-/* Drops to one column on narrow screens. A lone card keeps its column's width. */
-.nv-card-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(min(18rem, 100%), 1fr));
-    gap: var(--space-between-groups);
-    padding-inline-start: 0;
-    list-style: none;
-}

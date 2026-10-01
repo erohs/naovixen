@@ -1,16 +1,16 @@
 import type { PortableTextTypeComponentProps } from '@portabletext/react';
 import {
-    ButtonGroup,
     Callout,
     CodeBlock,
-    ExternalLinkButton,
+    externalLinkIcon,
     FactList,
     Figure,
+    LinkButton,
     SectionHeading,
     Text,
 } from '@naovixen/components';
 import type {
-    IButtonGroupBlock,
+    ILinkButtonsBlock,
     ICalloutBlock,
     ICodeBlock,
     IFactListBlock,
@@ -50,17 +50,17 @@ export const richContentTypes: RichContentTypes = {
     factList: ({ value }: PortableTextTypeComponentProps<IFactListBlock>) => (
         <FactList facts={value.facts} />
     ),
-    buttonGroup: ({ value }: PortableTextTypeComponentProps<IButtonGroupBlock>) => (
-        <ButtonGroup>
+    linkButtons: ({ value }: PortableTextTypeComponentProps<ILinkButtonsBlock>) => (
+        <div className="nv-rich-content__buttons">
             {value.buttons.map((button) => (
-                <ExternalLinkButton
+                <LinkButton
                     key={button._key}
                     href={button.href}
                     variant={buttonVariantByName[button.variant]}
                 >
-                    {button.label}
-                </ExternalLinkButton>
+                    {button.label} <LinkButton.Icon source={externalLinkIcon} />
+                </LinkButton>
             ))}
-        </ButtonGroup>
+        </div>
     ),
 };

@@ -1,3 +1,8 @@
+/*
+ * Read out but not seen. Absolutely positioned, so it is out of the flow: never a flex or grid
+ * item, never counted in a gap, and its text cannot widen or move what is beside it. This sits
+ * in the utilities layer, after components, so no component's rule can put it back in the flow.
+ */
 .nv-visually-hidden {
     position: absolute;
     inline-size: 1px;

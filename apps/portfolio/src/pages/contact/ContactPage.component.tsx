@@ -4,10 +4,8 @@ import {
     ButtonVariant,
     downloadIcon,
     ExclamationBubble,
-    ExternalLink,
     externalLinkIcon,
     Heading,
-    Icon,
     LinkButton,
     LinkTile,
     mailIcon,
@@ -44,7 +42,6 @@ const ContactLinks: FunctionComponent = () => (
                     detail={contactLink.detail}
                     icon={contactLink.icon}
                     trailingIcon={externalLinkIcon}
-                    linkComponent={ExternalLink}
                 />
             </li>
         ))}
@@ -65,7 +62,7 @@ export const ContactPage: FunctionComponent = () => (
             </GreetingHeading>
             <Text className="nv-contact-page__body">{placeholderContactPage.body}</Text>
             <LinkButton href={`mailto:${placeholderEmailAddress}`} variant={ButtonVariant.Primary}>
-                {placeholderEmailAddress} <Icon source={mailIcon} />
+                {placeholderEmailAddress} <LinkButton.Icon source={mailIcon} />
             </LinkButton>
             <Heading level={2} className="nv-contact-page__elsewhere">
                 or find me here

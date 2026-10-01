@@ -1,14 +1,14 @@
 import type { FunctionComponent } from 'react';
-import { arrowLeftIcon, arrowRightIcon, IconPosition, LinkIcon } from '@naovixen/components';
+import { arrowLeftIcon, arrowRightIcon, Link } from '@naovixen/components';
 import type { ILink } from '@naovixen/components';
 import { joinClassNames } from '@naovixen/utilities';
 
 import type { IMoreNavigationProps } from './interfaces/IMoreNavigationProps';
 
 const NextLink: FunctionComponent<{ readonly link: ILink }> = ({ link }) => (
-    <LinkIcon href={link.href} icon={arrowRightIcon} className="nv-more-navigation__next">
-        Next: {link.label}
-    </LinkIcon>
+    <Link href={link.href} className="nv-more-navigation__next">
+        Next: {link.label} <Link.Icon source={arrowRightIcon} />
+    </Link>
 );
 
 /** Back to the list at one end and, where there is one, the next read at the other. */
@@ -24,9 +24,9 @@ export const MoreNavigation: FunctionComponent<IMoreNavigationProps> = ({
         aria-label={label}
         className={joinClassNames('nv-more-navigation', className)}
     >
-        <LinkIcon href={backLink.href} icon={arrowLeftIcon} iconPosition={IconPosition.Start}>
-            {backLink.label}
-        </LinkIcon>
+        <Link href={backLink.href}>
+            <Link.Icon source={arrowLeftIcon} /> {backLink.label}
+        </Link>
         {nextLink && <NextLink link={nextLink} />}
     </nav>
 );

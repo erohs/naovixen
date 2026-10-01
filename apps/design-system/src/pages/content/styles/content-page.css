@@ -1,4 +1,0 @@
-/* A grid of cards needs the whole row to show its columns. */
-.nv-content-page__wide {
-    flex-basis: 100%;
-}

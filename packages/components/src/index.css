@@ -1,8 +1,6 @@
 /* Button first: its spin-offs further down override it. */
 @import url('./button/styles/button.css') layer(components);
-@import url('./button-group/styles/button-group.css') layer(components);
 @import url('./link/styles/link.css') layer(components);
-@import url('./link-icon/styles/link-icon.css') layer(components);
 @import url('./icon/styles/icon.css') layer(components);
 @import url('./heading/styles/heading.css') layer(components);
 @import url('./text/styles/text.css') layer(components);
@@ -12,13 +10,12 @@
 @import url('./theme-toggle/styles/theme-toggle.css') layer(components);
 
 /*
- * A component that composes another comes after it, so its rules win: the navigation list
- * before the header, the logo and mobile menu before the header whose breakpoints override them.
+ * A component that composes another comes after it, so its rules win: the navigation list and
+ * the logo before the header and the footer.
  */
 @import url('./breadcrumb/styles/breadcrumb.css') layer(components);
 @import url('./callout/styles/callout.css') layer(components);
 @import url('./card/styles/card.css') layer(components);
-@import url('./card-grid/styles/card-grid.css') layer(components);
 @import url('./code-block/styles/code-block.css') layer(components);
 @import url('./fact-list/styles/fact-list.css') layer(components);
 @import url('./figure/styles/figure.css') layer(components);
@@ -30,9 +27,6 @@
 @import url('./tag-list/styles/tag-list.css') layer(components);
 @import url('./back-to-top/styles/back-to-top.css') layer(components);
 @import url('./navigation-list/styles/navigation-list.css') layer(components);
-@import url('./mobile-menu/styles/mobile-menu.css') layer(components);
 @import url('./logo/styles/logo.css') layer(components);
 @import url('./header/styles/header.css') layer(components);
-@import url('./social-link-list/styles/social-link-list.css') layer(components);
-@import url('./footer-column/styles/footer-column.css') layer(components);
 @import url('./footer/styles/footer.css') layer(components);

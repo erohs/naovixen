@@ -1,13 +1,16 @@
 import type { FunctionComponent } from 'react';
 import { joinClassNames } from '@naovixen/utilities';
 
-import { navigationLinkClassName } from '../link/constants/NavigationLinkClassName.const';
+import { LinkVariant } from '../link/enums/LinkVariant';
 import { Link } from '../link/Link.component';
 import { NavigationLayout } from './enums/NavigationLayout';
 import { isCurrentHref } from './functions/IsCurrentHref.function';
 import type { INavigationListProps } from './interfaces/INavigationListProps';
 
-/** The links inside a navigation landmark. The landmark itself belongs to the caller. */
+/**
+ * The links inside a navigation landmark, to pages here or to other sites. The landmark itself
+ * belongs to the caller.
+ */
 export const NavigationList: FunctionComponent<INavigationListProps> = ({
     items,
     currentHref,
@@ -23,7 +26,7 @@ export const NavigationList: FunctionComponent<INavigationListProps> = ({
             <li key={item.href} className="nv-navigation-list__item">
                 <Link
                     href={item.href}
-                    className={navigationLinkClassName}
+                    variant={LinkVariant.Navigation}
                     aria-current={isCurrentHref(currentHref, item.href) ? 'page' : undefined}
                 >
                     {item.label}

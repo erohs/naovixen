@@ -1,5 +1,5 @@
 import type { FunctionComponent } from 'react';
-import { Breadcrumb, CardGrid, Heading, Text } from '@naovixen/components';
+import { Breadcrumb, Heading, Text } from '@naovixen/components';
 
 import { Page } from '../../components/page/Page.component';
 import { ProjectCard } from '../../components/project-card/ProjectCard.component';
@@ -17,13 +17,13 @@ export const WorkPage: FunctionComponent<IWorkPageProps> = ({ projects }) => (
         {projects.length === 0 ? (
             <Text>There are no projects yet.</Text>
         ) : (
-            <CardGrid>
+            <ul className="nv-work-page__projects">
                 {projects.map((project) => (
                     <li key={project.slug}>
                         <ProjectCard project={project} headingLevel={2} />
                     </li>
                 ))}
-            </CardGrid>
+            </ul>
         )}
     </Page>
 );

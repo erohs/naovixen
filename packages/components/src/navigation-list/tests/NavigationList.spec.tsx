@@ -36,3 +36,24 @@ describe('Using NavigationList, given a page whose path only starts like a secti
         expect(screen.queryAllByRole('link', { current: 'page' })).toEqual([]);
     });
 });
+
+describe('Using NavigationList, given a profile on another site and an email address, when it renders', () => {
+    const links = [
+        { label: 'Example profile', href: 'https://example.com' },
+        { label: 'Email', href: 'mailto:hello@example.com' },
+    ];
+
+    test('then it should open the profile in a new tab', () => {
+        render(<NavigationList items={links} />);
+
+        expect(
+            screen.getByRole('link', { name: /^Example profile ?\(opens in new tab\)$/ }),
+        ).toHaveProperty('target', '_blank');
+    });
+
+    test('then it should open the email address in place', () => {
+        render(<NavigationList items={links} />);
+
+        expect(screen.getByRole('link', { name: 'Email' }).hasAttribute('target')).toBe(false);
+    });
+});

@@ -22,3 +22,11 @@
 .nv-rich-content__section-heading:not(:first-child) {
     margin-block-start: var(--space-between-regions);
 }
+
+/* Buttons in a row, wrapping onto more rows where they do not fit. */
+.nv-rich-content__buttons {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-between-content);
+}

@@ -1,7 +1,8 @@
-import type { ComponentType, ReactNode } from 'react';
-import type { LinkProps } from '../../link/types/LinkProps';
+import type { ReactNode } from 'react';
 
-export interface ILinkTileProps extends Omit<LinkProps, 'children'> {
+import type { ILinkProps } from '../../link/interfaces/ILinkProps';
+
+export interface ILinkTileProps extends Omit<ILinkProps, 'children' | 'variant'> {
     readonly label: ReactNode;
     /** A second line under the label, such as a handle or an address. */
     readonly detail: ReactNode;
@@ -9,6 +10,4 @@ export interface ILinkTileProps extends Omit<LinkProps, 'children'> {
     readonly icon: string;
     /** An icon source at the end that says where the link goes. Defaults to `arrowRightIcon`. */
     readonly trailingIcon?: string | undefined;
-    /** Renders the link: `ExternalLink` for another site, a router's link for a page here. */
-    readonly linkComponent?: ComponentType<LinkProps> | undefined;
 }

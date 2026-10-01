@@ -1,39 +1,4 @@
 /*
- * Worn with .nv-button, which gives it the border and the press. A small round control, so it
- * rests on the small shadow and lifts only as far as a button's resting one.
- */
-.nv-theme-toggle {
-    inline-size: var(--size-action-minimum);
-    block-size: var(--size-action-minimum);
-    padding: 0;
-    border-radius: var(--radius-round);
-    box-shadow: var(--shadow-small);
-
-    &:hover {
-        --theme-toggle-lift: calc(
-            var(--size-shadow-offset-small) - var(--size-shadow-offset-resting)
-        );
-
-        translate: var(--theme-toggle-lift) var(--theme-toggle-lift);
-        box-shadow: var(--shadow-resting);
-    }
-
-    &:active {
-        translate: var(--size-shadow-offset-small) var(--size-shadow-offset-small);
-        box-shadow: none;
-    }
-}
-
-@media (prefers-reduced-motion: reduce) {
-    .nv-theme-toggle {
-        &:hover,
-        &:active {
-            translate: none;
-        }
-    }
-}
-
-/*
  * RevealThemeChange sets the centre and radius. The new theme grows over a still snapshot of
  * the old one; with reduced motion the browser's default crossfade stays instead.
  */

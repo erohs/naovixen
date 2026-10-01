@@ -1,7 +1,6 @@
 export type { IBlogPost } from './interfaces/IBlogPost';
 export type { IBlogPostSummary } from './interfaces/IBlogPostSummary';
 export type { IBlogRepository } from './interfaces/IBlogRepository';
-export type { IButtonGroupBlock } from './interfaces/IButtonGroupBlock';
 export type { ICalloutBlock } from './interfaces/ICalloutBlock';
 export type { ICodeBlock } from './interfaces/ICodeBlock';
 export type { IFact } from './interfaces/IFact';
@@ -10,6 +9,7 @@ export type { IFigureBlock } from './interfaces/IFigureBlock';
 export type { IGroqClient } from './interfaces/IGroqClient';
 export type { IImage } from './interfaces/IImage';
 export type { ILinkButton } from './interfaces/ILinkButton';
+export type { ILinkButtonsBlock } from './interfaces/ILinkButtonsBlock';
 export type { IProject } from './interfaces/IProject';
 export type { IProjectRepository } from './interfaces/IProjectRepository';
 export type { IProjectSummary } from './interfaces/IProjectSummary';

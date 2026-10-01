@@ -64,10 +64,13 @@ package that owns them; a package that only reads a shape declares the small one
 routers or content. Larger pieces compose smaller ones in the same package; brand and site
 pieces (Logo, Header, Footer) belong there too, taking their links and content as props so
 any naovixen site can use them. Layout is plain CSS in the owner's stylesheet, not a
-component.
+component: nothing like a ButtonGroup or a CardGrid, which only arranges its children. A
+grouping is a component when the HTML gives it a meaning of its own, as a radio group has.
 
-Variation comes from composition, never from a switch: LinkIcon is Link plus Icon, not a
-`kind` prop on Link. A consumer that wants something different composes its own.
+One job per component, down one path: a Button acts, a LinkButton navigates, and neither
+does both. No near-copies either: a look is a variant, not a second component. A component
+with parts is a compound whose parts hang off it (`Button.Icon`, `Footer.Column`), so its
+children are those parts and its text, and no prop repeats what the markup already says.
 
 Layers: services and controllers (logic, dependencies injected) → hooks (thin React
 bindings, no logic) → components (props in, semantic HTML out) → routes (load, map,
@@ -95,7 +98,8 @@ The architecture above is dependency inversion already applied. Keep the rest wi
 A component, service, controller or route owns a kebab-case folder. Its root holds the
 main file. Everything else goes in `interfaces/`, `types/`, `enums/`, `constants/`,
 `functions/`, `styles/` or `tests/`, created only when there is something to put in it.
-Package-level code follows the same shape under `src/`, except in the React packages,
+A part of a compound, such as a footer's column, sits beside the main file and stays out
+of the barrel. Package-level code follows the same shape under `src/`, except in the React packages,
 whose `src/` holds component folders and nothing else.
 
 In an app, `pages/<page>/` holds a page. Sections only that page uses are unexported

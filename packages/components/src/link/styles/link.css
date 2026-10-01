@@ -23,10 +23,16 @@
     }
 }
 
+/* A Link.Icon sits beside the text, on whichever side it was written. */
+.nv-link:has(> .nv-link__icon) {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-between-text);
+}
+
 /*
  * A link in a list of places to go: no underline until the pointer is on it or it is the
- * current page, so a column of links reads as a menu. Navigation lists pass this class to
- * whichever link component renders them.
+ * current page, so a column of links reads as a menu.
  */
 .nv-link--navigation {
     text-decoration-style: wavy;

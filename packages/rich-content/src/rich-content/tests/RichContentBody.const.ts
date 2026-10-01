@@ -211,7 +211,7 @@ export const richContentBody: readonly BodyNode[] = [
         facts: [{ label: 'my role', value: 'Lead engineer' }],
     },
     {
-        _type: 'buttonGroup',
+        _type: 'linkButtons',
         _key: 'buttons',
         buttons: [
             {

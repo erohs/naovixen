@@ -5,6 +5,13 @@
     margin-block-start: var(--space-below-heading);
 }
 
+.nv-about-page__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-between-content);
+}
+
 .nv-about-page__rule {
     max-inline-size: calc(var(--layout-width-prose) * 5 / 9);
 }

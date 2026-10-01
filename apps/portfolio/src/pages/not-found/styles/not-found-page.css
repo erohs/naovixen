@@ -4,3 +4,8 @@
     gap: var(--space-between-groups);
     max-inline-size: var(--layout-width-prose);
 }
+
+/* As wide as its text, not the column. */
+.nv-not-found-page__home {
+    align-self: start;
+}

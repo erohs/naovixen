@@ -2,11 +2,9 @@ import type { FunctionComponent } from 'react';
 import {
     arrowRightIcon,
     Breadcrumb,
-    ButtonGroup,
     ButtonVariant,
     downloadIcon,
     HandDrawnRule,
-    Icon,
     LinkButton,
     SectionHeading,
     SpeechBubble,
@@ -69,14 +67,14 @@ const AboutDetails: FunctionComponent = () => (
 );
 
 const AboutActions: FunctionComponent = () => (
-    <ButtonGroup>
+    <div className="nv-about-page__actions">
         <LinkButton href={placeholderCvPath} download variant={ButtonVariant.Primary}>
-            Download CV <Icon source={downloadIcon} />
+            Download CV <LinkButton.Icon source={downloadIcon} />
         </LinkButton>
         <LinkButton href="/contact">
-            Get in touch <Icon source={arrowRightIcon} />
+            Get in touch <LinkButton.Icon source={arrowRightIcon} />
         </LinkButton>
-    </ButtonGroup>
+    </div>
 );
 
 export const AboutPage: FunctionComponent = () => (

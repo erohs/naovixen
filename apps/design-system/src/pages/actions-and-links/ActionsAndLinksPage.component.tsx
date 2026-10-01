@@ -5,29 +5,22 @@ import {
     BackToTop,
     Breadcrumb,
     Button,
-    ButtonGroup,
     ButtonVariant,
     downloadIcon,
-    ExternalLink,
-    ExternalLinkButton,
+    externalLinkIcon,
     gitHubIcon,
-    Icon,
-    IconPosition,
     Link,
     LinkButton,
-    LinkIcon,
     LinkTile,
-    navigationLinkClassName,
+    LinkVariant,
     SkipLink,
-    SocialLinkList,
     Text,
     ThemeToggle,
 } from '@naovixen/components';
 
 import { Example } from '../../components/example/Example.component';
-import { exampleSocialLinks } from '../../constants/ExampleSocialLinks.const';
 
-/** Something that acts is a Button. */
+/** Something that acts is a Button: its text, and a Button.Icon on either side of it. */
 const Buttons: FunctionComponent = () => (
     <>
         <Example name="Button">
@@ -35,33 +28,36 @@ const Buttons: FunctionComponent = () => (
             <Button>Secondary</Button>
             <Button disabled>Disabled</Button>
         </Example>
-        <Example name="ButtonGroup">
-            <ButtonGroup>
-                <Button variant={ButtonVariant.Primary}>Save</Button>
-                <Button>Cancel</Button>
-                <LinkButton href="#actions-and-links">Read more</LinkButton>
-            </ButtonGroup>
+        <Example name="Button with a Button.Icon">
+            <Button>
+                <Button.Icon source={downloadIcon} /> Icon at the start
+            </Button>
+            <Button>
+                Icon at the end <Button.Icon source={arrowRightIcon} />
+            </Button>
+            <Button>
+                <Button.Icon source={downloadIcon} label="Only an icon, named by its label" />
+            </Button>
         </Example>
     </>
 );
 
-/** Something that navigates but should look like a button is a LinkButton. */
-const ButtonLinks: FunctionComponent = () => (
-    <>
-        <Example name="LinkButton">
-            <LinkButton href="#actions-and-links" variant={ButtonVariant.Primary}>
-                Primary <Icon source={arrowRightIcon} />
-            </LinkButton>
-            <LinkButton href="#actions-and-links">
-                Download <Icon source={downloadIcon} />
-            </LinkButton>
-        </Example>
-        <Example name="ExternalLinkButton">
-            <ExternalLinkButton href="https://example.com">Another site</ExternalLinkButton>
-        </Example>
-    </>
+/** Something that navigates but looks like a button is a LinkButton, announced as a button. */
+const LinkButtons: FunctionComponent = () => (
+    <Example name="LinkButton">
+        <LinkButton href="#actions-and-links" variant={ButtonVariant.Primary}>
+            Primary <LinkButton.Icon source={arrowRightIcon} />
+        </LinkButton>
+        <LinkButton href="#actions-and-links">
+            <LinkButton.Icon source={downloadIcon} /> Download
+        </LinkButton>
+        <LinkButton href="https://example.com">
+            Another site <LinkButton.Icon source={externalLinkIcon} />
+        </LinkButton>
+    </Example>
 );
 
+/** Buttons and link buttons with a job of their own. */
 const Controls: FunctionComponent = () => (
     <>
         <Example name="ThemeToggle">
@@ -71,46 +67,39 @@ const Controls: FunctionComponent = () => (
             <Text>Fixed at the bottom of the window, once you scroll a screen down.</Text>
             <BackToTop />
         </Example>
-    </>
-);
-
-/** Link for text, LinkIcon when an arrow helps. */
-const Links: FunctionComponent = () => (
-    <>
-        <Example name="Link">
-            <Link href="#actions-and-links">A link in content</Link>
-            <Link href="#actions-and-links" className={navigationLinkClassName}>
-                A navigation link
-            </Link>
-        </Example>
-        <Example name="LinkIcon">
-            <LinkIcon href="#actions-and-links" icon={arrowRightIcon}>
-                Icon at the end
-            </LinkIcon>
-            <LinkIcon
-                href="#actions-and-links"
-                icon={arrowLeftIcon}
-                iconPosition={IconPosition.Start}
-            >
-                Icon at the start
-            </LinkIcon>
-        </Example>
-    </>
-);
-
-/** ExternalLink for another site; SkipLink first in the page, for keyboards. */
-const SpecialLinks: FunctionComponent = () => (
-    <>
-        <Example name="ExternalLink">
-            <ExternalLink href="https://example.com">Another site</ExternalLink>
-        </Example>
         <Example name="SkipLink">
             <SkipLink href="#actions-and-links">Skip to content (shown on focus)</SkipLink>
         </Example>
     </>
 );
 
-/** Ways to get somewhere, laid out: a tile, a trail and a list of profiles. */
+/** One Link: a variant picks its look, a Link.Icon goes on either side of its text. */
+const Links: FunctionComponent = () => (
+    <>
+        <Example name="Link">
+            <Link href="#actions-and-links">A link in content</Link>
+            <Link href="#actions-and-links" variant={LinkVariant.Navigation}>
+                A navigation link
+            </Link>
+        </Example>
+        <Example name="Link with a Link.Icon">
+            <Link href="#actions-and-links">
+                Icon at the end <Link.Icon source={arrowRightIcon} />
+            </Link>
+            <Link href="#actions-and-links">
+                <Link.Icon source={arrowLeftIcon} /> Icon at the start
+            </Link>
+        </Example>
+        <Example name="Link to another site">
+            <Link href="https://example.com">Opens in a new tab</Link>
+            <Link href="https://example.com" opensInNewTab={false}>
+                Told to open in place
+            </Link>
+        </Example>
+    </>
+);
+
+/** Ways to get somewhere, laid out: a tile and a trail. */
 const Wayfinding: FunctionComponent = () => (
     <>
         <Example name="LinkTile">
@@ -127,19 +116,15 @@ const Wayfinding: FunctionComponent = () => (
                 currentLabel="Actions and links"
             />
         </Example>
-        <Example name="SocialLinkList">
-            <SocialLinkList links={exampleSocialLinks} />
-        </Example>
     </>
 );
 
 export const ActionsAndLinksPage: FunctionComponent = () => (
     <>
         <Buttons />
-        <ButtonLinks />
+        <LinkButtons />
         <Controls />
         <Links />
-        <SpecialLinks />
         <Wayfinding />
     </>
 );

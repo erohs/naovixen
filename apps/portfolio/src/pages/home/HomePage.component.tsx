@@ -3,9 +3,7 @@ import { useId } from 'react';
 import {
     arrowDownIcon,
     arrowRightIcon,
-    ButtonGroup,
     ButtonVariant,
-    CardGrid,
     downloadIcon,
     ExclamationBubble,
     graduationCapIcon,
@@ -13,8 +11,8 @@ import {
     HeadingSize,
     heartIcon,
     Icon,
+    Link,
     LinkButton,
-    LinkIcon,
     mailIcon,
     pawIcon,
     SectionHeading,
@@ -69,18 +67,18 @@ const HomeSection: FunctionComponent<IHomeSectionProps> = (props) => (
 const HeroActions: FunctionComponent<{ readonly hasFeaturedProjects: boolean }> = ({
     hasFeaturedProjects,
 }) => (
-    <ButtonGroup className="nv-hero-section__actions">
+    <div className="nv-hero-section__actions">
         <LinkButton
             href={hasFeaturedProjects ? '#work' : '#experience'}
             variant={ButtonVariant.Primary}
         >
-            See my work <Icon source={arrowDownIcon} />
+            See my work <LinkButton.Icon source={arrowDownIcon} />
         </LinkButton>
         <LinkButton href={placeholderCvPath} download>
             Download CV <span className="nv-hero-section__file-type">PDF</span>
-            <Icon source={downloadIcon} />
+            <LinkButton.Icon source={downloadIcon} />
         </LinkButton>
-    </ButtonGroup>
+    </div>
 );
 
 const HeroSection: FunctionComponent<{ readonly hasFeaturedProjects: boolean }> = ({
@@ -113,18 +111,18 @@ const FeaturedProjectsSection: FunctionComponent<Pick<IHomePageProps, 'featuredP
             headingId="work-title"
             intro={placeholderHomePage.featuredProjectsIntro}
             action={
-                <LinkIcon href="/work" icon={arrowRightIcon}>
-                    All projects
-                </LinkIcon>
+                <Link href="/work">
+                    All projects <Link.Icon source={arrowRightIcon} />
+                </Link>
             }
         >
-            <CardGrid>
+            <ul className="nv-home-section__cards">
                 {featuredProjects.map((project) => (
                     <li key={project.slug}>
                         <ProjectCard project={project} headingLevel={3} />
                     </li>
                 ))}
-            </CardGrid>
+            </ul>
         </HomeSection>
     );
 
@@ -141,9 +139,9 @@ const AboutSummary: FunctionComponent = () => (
         </Heading>
         <InterestList interests={placeholderInterests} />
         <p className="nv-about-summary__more">
-            <LinkIcon href="/about" icon={arrowRightIcon}>
-                More about me
-            </LinkIcon>
+            <Link href="/about">
+                More about me <Link.Icon source={arrowRightIcon} />
+            </Link>
         </p>
     </div>
 );
@@ -216,9 +214,9 @@ const ExperienceSection: FunctionComponent = () => (
         headingId="experience-title"
         intro={placeholderHomePage.experienceIntro}
         action={
-            <LinkIcon href={placeholderCvPath} download icon={arrowRightIcon}>
-                Full CV<VisuallyHidden> (PDF)</VisuallyHidden>
-            </LinkIcon>
+            <Link href={placeholderCvPath} download>
+                Full CV<VisuallyHidden> (PDF)</VisuallyHidden> <Link.Icon source={arrowRightIcon} />
+            </Link>
         }
     >
         <div className="nv-experience-section">
@@ -299,18 +297,18 @@ const LatestPostsSection: FunctionComponent<Pick<IHomePageProps, 'latestPosts'>>
         headingId="blog-title"
         intro={placeholderBlogIntro}
         action={
-            <LinkIcon href="/blog" icon={arrowRightIcon}>
-                All posts
-            </LinkIcon>
+            <Link href="/blog">
+                All posts <Link.Icon source={arrowRightIcon} />
+            </Link>
         }
     >
-        <CardGrid>
+        <ul className="nv-home-section__cards">
             {latestPosts.map((post) => (
                 <li key={post.slug}>
                     <PostCard post={post} headingLevel={3} />
                 </li>
             ))}
-        </CardGrid>
+        </ul>
     </HomeSection>
 );
 
@@ -323,14 +321,14 @@ const ContactBanner: FunctionComponent = () => (
                 </Heading>
                 <Text>{placeholderHomePage.contactBody}</Text>
             </div>
-            <ButtonGroup>
+            <div className="nv-contact-banner__actions">
                 <LinkButton href="/contact" variant={ButtonVariant.Primary}>
-                    Get in touch <Icon source={arrowRightIcon} />
+                    Get in touch <LinkButton.Icon source={arrowRightIcon} />
                 </LinkButton>
                 <LinkButton href={`mailto:${placeholderEmailAddress}`}>
-                    {placeholderEmailAddress} <Icon source={mailIcon} />
+                    {placeholderEmailAddress} <LinkButton.Icon source={mailIcon} />
                 </LinkButton>
-            </ButtonGroup>
+            </div>
         </div>
     </section>
 );

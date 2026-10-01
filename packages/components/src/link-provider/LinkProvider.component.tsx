@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 import type { FunctionComponent } from 'react';
 
-import type { LinkProps } from '../link/types/LinkProps';
+import type { AnchorProps } from './types/AnchorProps';
 import { PageLinkContext } from './constants/PageLinkContext.context';
 import type { ILinkProviderProps } from './interfaces/ILinkProviderProps';
 
@@ -15,7 +15,7 @@ export const LinkProvider: FunctionComponent<ILinkProviderProps> = ({
 }) => {
     const LinkComponent = linkComponent;
     const renderPageLink = useCallback(
-        (props: LinkProps) => <LinkComponent {...props} />,
+        (props: AnchorProps) => <LinkComponent {...props} />,
         [LinkComponent],
     );
 

@@ -1,10 +1,8 @@
 import type { FunctionComponent } from 'react';
 import {
     arrowRightIcon,
-    ButtonGroup,
     ButtonVariant,
     Heading,
-    Icon,
     LinkButton,
     Text,
     TextVariant,
@@ -20,12 +18,14 @@ export const NotFoundPage: FunctionComponent = () => (
                 There is nothing at this address. The page may have moved, or the link may have a
                 typo in it.
             </Text>
-            <ButtonGroup>
-                <LinkButton href="/" variant={ButtonVariant.Primary}>
-                    Go to the home page
-                    <Icon source={arrowRightIcon} />
-                </LinkButton>
-            </ButtonGroup>
+            <LinkButton
+                href="/"
+                variant={ButtonVariant.Primary}
+                className="nv-not-found-page__home"
+            >
+                Go to the home page
+                <LinkButton.Icon source={arrowRightIcon} />
+            </LinkButton>
         </div>
     </Page>
 );

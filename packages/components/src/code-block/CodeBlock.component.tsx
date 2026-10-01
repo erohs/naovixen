@@ -2,7 +2,7 @@ import { useId } from 'react';
 import type { FunctionComponent } from 'react';
 import { joinClassNames } from '@naovixen/utilities';
 
-import { CodeBlockCaption } from '../code-block-caption/CodeBlockCaption.component';
+import { CodeBlockCaption } from './CodeBlockCaption.component';
 import type { ICodeBlockProps } from './interfaces/ICodeBlockProps';
 
 /** Long lines scroll sideways. The code is a focusable region, so a keyboard can scroll it. */

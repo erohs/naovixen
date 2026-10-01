@@ -159,16 +159,41 @@ design's buttons use 4px.
 
 A link in content has a solid accent underline that turns wavy under the pointer. A link in
 a list of places to go (header, footer) has no underline until the pointer is on it or it is
-the current page. The second is a modifier class, `navigationLinkClassName`, on the same
-`Link`.
+the current page. Both are the same `Link`, picked by its `variant`. A third variant,
+unstyled, is for a caller that draws the link itself, such as a button or a tile.
+
+## One job per component, parts as compounds
+
+The package had grown near-copies: `LinkIcon` and `ExternalLink` beside `Link`,
+`ExternalLinkButton` beside `LinkButton`, `SocialLinkList` beside `NavigationList`. On
+2026-10-01 they were folded into the component each one varied: `Link` opens another site
+in a new tab by itself and takes its look from a variant.
+
+A first attempt also folded `LinkButton` into `Button`, switching on `href`, and marked a
+button of one icon with an `isIconOnly` prop. Both made `Button` do two jobs, so they were
+undone. `Button` and `LinkButton` are separate, and the parts of a component hang off it
+as a compound: `Button.Icon`, `LinkButton.Icon`, `Link.Icon`, `Footer.Column`. Parts live
+beside their owner and out of the barrel, as do the header's menu and the code block's
+caption. An icon given a `label` in place of text makes its button round, read from the
+markup by the stylesheet.
+
+`ButtonGroup` and `CardGrid` went the same day. Each was an element with a class that only
+arranged its children, so the page or block that places the buttons or cards now lays them
+out in its own stylesheet. The CMS block that was `buttonGroup` is now `linkButtons`,
+after the component it renders.
+
+`LinkButton` is an anchor with `role="button"`, and answers to Space. It looks like a
+button, so someone using voice control says "click … button"; as an anchor it can still be
+opened in a new tab or copied. `SkipLink` and `BackToTop` are that `LinkButton` with one
+job each, so the skip link took the primary button's look in place of its own chip.
 
 ## The router's link is provided once
 
 `Link` in `components` renders a page on this site through whatever `LinkProvider` above it
 supplies, and a plain anchor for everything else: another site, a fragment, `mailto:`, a new
 tab, a download. The portfolio provides `RoutedLink`, TanStack Router's link wrapped with
-`createLink`, at the root. So `LinkButton`, `LinkIcon`, `NavigationList`, `Breadcrumb` and
-the cards navigate on the client without a `linkComponent` prop each, and without a router
+`createLink`, at the root. So `LinkButton`, `NavigationList`, `Breadcrumb` and the
+cards navigate on the client without a `linkComponent` prop each, and without a router
 wrapper per link component. The first cut had both, three times over.
 
 TanStack Router marks a link active by path prefix and then always sets

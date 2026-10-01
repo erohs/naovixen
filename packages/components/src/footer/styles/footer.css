@@ -15,6 +15,26 @@
     gap: var(--space-between-groups);
 }
 
+.nv-footer__column {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-between-text);
+    font-size: var(--font-size-small);
+}
+
+.nv-footer__heading {
+    color: var(--color-text-accent);
+    font-family: var(--font-family-handwriting);
+    font-size: var(--font-size-lead);
+    font-weight: var(--font-weight-regular);
+    line-height: var(--line-height-subheading);
+    text-transform: lowercase;
+}
+
+.nv-footer__links {
+    gap: var(--space-between-content);
+}
+
 /*
  * The row is tall enough to centre its text beside the fixed back-to-top link. Where the margin
  * outside the page is too narrow to hold that link, the row pads its end so the two never overlap.

@@ -1,36 +1,17 @@
 import type { FunctionComponent } from 'react';
-import { Callout, Card, CardGrid, CodeBlock, Heading, Text } from '@naovixen/components';
+import { Callout, Card, CodeBlock, Heading, Text } from '@naovixen/components';
 
 import { DisclosureDemo } from '../../components/disclosure-demo/DisclosureDemo.component';
 import { Example } from '../../components/example/Example.component';
 
-const ExampleCard: FunctionComponent<{ readonly title: string }> = ({ title }) => (
-    <Card>
-        <Heading level={4}>{title}</Heading>
-        <Text>Anything that stands on its own, such as a post.</Text>
-    </Card>
-);
-
-/** Card holds one thing; CardGrid lays a list of them out. */
+/** Card holds one thing. Laying several out is the page's own stylesheet's job. */
 const Cards: FunctionComponent = () => (
-    <>
-        <Example name="Card">
-            <ExampleCard title="A card" />
-        </Example>
-        <Example name="CardGrid">
-            <CardGrid className="nv-content-page__wide">
-                <li>
-                    <ExampleCard title="First card" />
-                </li>
-                <li>
-                    <ExampleCard title="Second card" />
-                </li>
-                <li>
-                    <ExampleCard title="Third card" />
-                </li>
-            </CardGrid>
-        </Example>
-    </>
+    <Example name="Card">
+        <Card>
+            <Heading level={4}>A card</Heading>
+            <Text>Anything that stands on its own, such as a post.</Text>
+        </Card>
+    </Example>
 );
 
 /** Set-apart content within a body of text. */

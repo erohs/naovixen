@@ -1,6 +1,6 @@
 /*
- * Sits in the margin just beyond the page's right edge, as in the design; where that margin is
- * too narrow, it keeps a small gap from the window's edge instead.
+ * A round button that sits in the margin just beyond the page's right edge, as in the
+ * design; where that margin is too narrow, it keeps a small gap from the window's edge instead.
  */
 .nv-back-to-top {
     --back-to-top-page-margin: calc(
@@ -14,11 +14,6 @@
         var(--space-between-text) + var(--space-between-lines),
         var(--back-to-top-page-margin) - var(--size-action-minimum) - var(--space-between-content)
     );
-    inline-size: var(--size-action-minimum);
-    block-size: var(--size-action-minimum);
-    padding: 0;
-    border-radius: var(--radius-round);
-    box-shadow: var(--shadow-small);
 
     /*
      * Hidden until the reader has scrolled a full screen down. Visibility, not just opacity,
@@ -40,28 +35,5 @@
             translate var(--duration-fast) var(--easing-standard),
             box-shadow var(--duration-fast) var(--easing-standard),
             opacity var(--duration-medium) var(--easing-standard);
-    }
-
-    &:hover {
-        --back-to-top-lift: calc(
-            var(--size-shadow-offset-small) - var(--size-shadow-offset-resting)
-        );
-
-        translate: var(--back-to-top-lift) var(--back-to-top-lift);
-        box-shadow: var(--shadow-resting);
-    }
-
-    &:active {
-        translate: var(--size-shadow-offset-small) var(--size-shadow-offset-small);
-        box-shadow: none;
-    }
-}
-
-@media (prefers-reduced-motion: reduce) {
-    .nv-back-to-top {
-        &:hover,
-        &:active {
-            translate: none;
-        }
     }
 }

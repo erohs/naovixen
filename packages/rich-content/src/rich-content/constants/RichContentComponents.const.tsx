@@ -1,7 +1,6 @@
 import type { PortableTextComponents, PortableTextMarkComponentProps } from '@portabletext/react';
-import { Code } from '@naovixen/components';
+import { Code, Link } from '@naovixen/components';
 
-import { selectLinkComponent } from '../functions/SelectLinkComponent.function';
 import type { ILinkMarkValue } from '../interfaces/ILinkMarkValue';
 import { richContentBlocks } from './RichContentBlocks.const';
 import { richContentTypes } from './RichContentTypes.const';
@@ -15,14 +14,8 @@ export const richContentComponents: PortableTextComponents = {
     types: richContentTypes,
     marks: {
         code: ({ children }) => <Code>{children}</Code>,
-        link: ({ value, children }: PortableTextMarkComponentProps<ILinkMarkValue>) => {
-            if (!value) {
-                return children;
-            }
-            const LinkComponent = selectLinkComponent(value.href);
-
-            return <LinkComponent href={value.href}>{children}</LinkComponent>;
-        },
+        link: ({ value, children }: PortableTextMarkComponentProps<ILinkMarkValue>) =>
+            value ? <Link href={value.href}>{children}</Link> : children,
     },
     unknownType: () => null,
     unknownMark: ({ children }) => children,

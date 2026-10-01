@@ -3,9 +3,9 @@ import { joinClassNames } from '@naovixen/utilities';
 
 import { Link } from '../link/Link.component';
 import { Logo } from '../logo/Logo.component';
-import { MobileMenu } from '../mobile-menu/MobileMenu.component';
 import { NavigationLayout } from '../navigation-list/enums/NavigationLayout';
 import { NavigationList } from '../navigation-list/NavigationList.component';
+import { HeaderMenu } from './HeaderMenu.component';
 import type { IHeaderProps } from './interfaces/IHeaderProps';
 
 /**
@@ -26,8 +26,6 @@ export const Header: FunctionComponent<IHeaderProps> = ({
             <NavigationList items={items} currentHref={currentHref} layout={NavigationLayout.Row} />
         </nav>
         {actions}
-        <div className="nv-header__menu">
-            <MobileMenu items={items} currentHref={currentHref} />
-        </div>
+        <HeaderMenu items={items} currentHref={currentHref} />
     </header>
 );

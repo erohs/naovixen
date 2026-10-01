@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
 
-import type { LinkProps } from '../../link/types/LinkProps';
+import type { AnchorProps } from './AnchorProps';
 
-export type RenderPageLink = (props: LinkProps) => ReactNode;
+export type RenderPageLink = (props: AnchorProps) => ReactNode;

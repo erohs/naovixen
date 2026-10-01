@@ -27,8 +27,21 @@
     margin-inline-end: calc(var(--space-between-groups) - var(--space-between-content));
 }
 
+/*
+ * The menu's wrapper is layout-neutral, so its button sits in the header's row and the open
+ * panel wraps onto a full-width line beneath it.
+ */
 .nv-header__menu {
     display: contents;
+}
+
+/* Narrower than other buttons, so the header's row still fits on a small phone. */
+.nv-header__menu-button {
+    padding-inline: var(--space-between-content);
+}
+
+.nv-header__menu-panel {
+    flex-basis: 100%;
 }
 
 @media (width < 51.25rem) {

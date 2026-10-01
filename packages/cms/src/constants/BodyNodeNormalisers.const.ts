@@ -20,5 +20,5 @@ export const bodyNodeNormalisers: BodyNodeNormalisers = {
         return image === undefined ? undefined : { ...node, image };
     },
     factList: (node) => node,
-    buttonGroup: (node) => node,
+    linkButtons: (node) => node,
 };

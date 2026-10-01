@@ -1,5 +1,5 @@
 import type { FunctionComponent } from 'react';
-import { Breadcrumb, CardGrid, Heading, Text } from '@naovixen/components';
+import { Breadcrumb, Heading, Text } from '@naovixen/components';
 
 import { Page } from '../../components/page/Page.component';
 import { PostCard } from '../../components/post-card/PostCard.component';
@@ -17,13 +17,13 @@ export const BlogPage: FunctionComponent<IBlogPageProps> = ({ posts }) => (
         {posts.length === 0 ? (
             <Text>There are no posts yet.</Text>
         ) : (
-            <CardGrid>
+            <ul className="nv-blog-page__posts">
                 {posts.map((post) => (
                     <li key={post.slug}>
                         <PostCard post={post} headingLevel={2} />
                     </li>
                 ))}
-            </CardGrid>
+            </ul>
         )}
     </Page>
 );

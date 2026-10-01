@@ -33,10 +33,9 @@ describe('Using RichContent, given a body with every supported block, when it re
     test('then it should open link buttons in a new tab', () => {
         render(<RichContent body={body} />);
 
-        expect(screen.getByRole('link', { name: 'Live demo (opens in new tab)' })).toHaveProperty(
-            'target',
-            '_blank',
-        );
+        expect(
+            screen.getByRole('button', { name: /^Live demo ?\(opens in new tab\)$/ }),
+        ).toHaveProperty('target', '_blank');
     });
 
     test('then it should render third-level headings', () => {
@@ -85,7 +84,7 @@ describe('Using RichContent, given a body with every supported block, when it re
         render(<RichContent body={body} />);
 
         expect(
-            screen.getByRole('link', { name: 'Example site (opens in new tab)' }),
+            screen.getByRole('link', { name: /^Example site ?\(opens in new tab\)$/ }),
         ).toHaveProperty('target', '_blank');
     });
 

@@ -23,3 +23,9 @@ describe('Using isCurrentHref, when a section shares only the start of its name 
         expect(isCurrentHref('/workshop', '/work')).toBe(false);
     });
 });
+
+describe('Using isCurrentHref, when no page is shown', () => {
+    test('then it should not match', () => {
+        expect(isCurrentHref(undefined, '/work')).toBe(false);
+    });
+});

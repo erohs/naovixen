@@ -5,7 +5,7 @@ import {
     Heading,
     HeadingSize,
     Image,
-    LinkIcon,
+    Link,
     TagList,
     Text,
     VisuallyHidden,
@@ -19,13 +19,10 @@ const cardStackLength = 3;
 
 const CaseStudyLink: FunctionComponent<Pick<IProjectCardProps, 'project'>> = ({ project }) => (
     <p className="nv-project-card__footer">
-        <LinkIcon
-            href={`/work/${project.slug}`}
-            icon={arrowRightIcon}
-            className="nv-project-card__link"
-        >
-            Read case study<VisuallyHidden>: {project.title}</VisuallyHidden>
-        </LinkIcon>
+        <Link href={`/work/${project.slug}`} className="nv-project-card__link">
+            Read case study<VisuallyHidden>: {project.title}</VisuallyHidden>{' '}
+            <Link.Icon source={arrowRightIcon} />
+        </Link>
     </p>
 );
 

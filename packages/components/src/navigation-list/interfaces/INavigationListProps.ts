@@ -6,7 +6,7 @@ import type { NavigationLayout } from '../enums/NavigationLayout';
 export interface INavigationListProps extends Omit<ComponentPropsWithRef<'ul'>, 'children'> {
     readonly items: readonly ILink[];
     /** The path being shown; the item it falls under is marked as the current page. */
-    readonly currentHref: string;
+    readonly currentHref?: string | undefined;
     /** Defaults to a column. */
     readonly layout?: NavigationLayout | undefined;
 }

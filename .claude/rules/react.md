@@ -10,24 +10,19 @@ intrinsic props, spreads the rest onto the element, and merges its class names w
 caller's:
 
 ```tsx
-export const Button: FunctionComponent<IButtonProps> = ({
-    variant = ButtonVariant.Secondary,
-    type = 'button',
+export const Text: FunctionComponent<ITextProps> = ({
+    variant = TextVariant.Body,
     className,
-    children,
-    ...buttonProps
+    ...paragraphProps
 }) => (
-    <button
-        {...buttonProps}
-        type={type}
-        className={joinClassNames('nv-button', `nv-button--${variant}`, className)}
-    >
-        {children}
-    </button>
+    <p
+        {...paragraphProps}
+        className={joinClassNames('nv-text', `nv-text--${variant}`, className)}
+    />
 );
 ```
 
-`IButtonProps extends ComponentPropsWithRef<'button'>`, so `ref`, ARIA and event props pass
+`ITextProps extends ComponentPropsWithRef<'p'>`, so `ref`, ARIA and event props pass
 straight through. React 19 removed `children` from `FunctionComponent`, so declare it on
 the props interface when a component that does not extend an element's props takes
 children.
@@ -37,11 +32,30 @@ constants and helpers live in the sibling subfolders. A page file may also hold 
 sections only that page uses, as unexported functions beside it, each within the usual
 limits.
 
-## Compose, do not branch
+## One job each, parts as compounds
 
-A variant is a new component built from an existing one: `LinkIcon` renders `Link` with an
-`Icon`; `ExclamationBubble` renders `SpeechBubble` with motion lines. Never a `kind` prop with a switch
-inside. A variant that changes only the look is a modifier class, picked by an enum prop.
+A component does one job down one path. Two elements are two components: `Button` renders
+a `<button>` and `LinkButton` an anchor, never one component that picks between them. A new
+component is for a different job (`BackToTop` knows when to show itself) and is built on
+the one it resembles; a different look is a modifier class picked by an enum prop.
+
+A component with parts is a compound. The parts hang off it, and its children are those
+parts and its text, nothing looser:
+
+```tsx
+<Button>
+    <Button.Icon source={downloadIcon} /> Download
+</Button>
+
+<Footer smallPrint={smallPrint}>
+    <Footer.Column heading="site" links={navigationItems} />
+</Footer>
+```
+
+A part lives beside its owner's main file, is attached in that file with `Object.assign`,
+and is not exported on its own. The stylesheet reads the shape from the parts with
+`:has()`, so no prop repeats what the markup already says: a `Button.Icon` given a `label`
+in place of text makes the button round, with no `isIconOnly`.
 
 Generic components know nothing of content types, routers or brand. Content types enter
 at `rich-content` and in the apps; a component takes its links and copy as props. Data
@@ -49,7 +63,7 @@ loading belongs in routes, logic in services.
 
 A link is always `Link`, or something built on it. An app hands its router's link to
 `LinkProvider` once, at the root, and every `Link` to a page on the site renders through
-it. Nothing takes a link component as a prop, except `LinkTile`, which may be external.
+it. Nothing takes a link component as a prop.
 
 ## The `on` prefix collides
 
@@ -65,7 +79,9 @@ const onClick = (): void => {
 ## Markup
 
 Reach for a landmark, a heading, a `<button>` or an `<a>` before a `<div>`. A thing that
-navigates is an `<a>`; a thing that acts is a `<button>`.
+navigates is an `<a>`; a thing that acts is a `<button>`. A link drawn as a button is
+`LinkButton`: still an anchor, but announced as a button and answering to Space, so someone
+using voice control can say what they see.
 
 State goes on ARIA and `data-*` attributes, which the CSS then styles — so the accessible
 state and the visual state cannot drift apart.

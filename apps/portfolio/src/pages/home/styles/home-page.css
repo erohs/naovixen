@@ -15,6 +15,15 @@
     gap: var(--space-between-text) var(--space-between-groups);
 }
 
+/* As many equal columns as fit, down to one on a narrow screen. A lone card keeps its column's width. */
+.nv-home-section__cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(18rem, 100%), 1fr));
+    gap: var(--space-between-groups);
+    padding-inline-start: 0;
+    list-style: none;
+}
+
 /*
  * A field of dots fills the hero's right side and fades out towards every edge, strongest a
  * little above and right of centre. It sits behind the text, placed against the hero's own box,
@@ -111,6 +120,10 @@
 
 /* A little further from the summary than the hero's other gaps. */
 .nv-hero-section__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-between-content);
     margin-block-start: var(--space-between-text);
 }
 
@@ -190,6 +203,13 @@
     border: var(--border-width-standout) solid var(--color-border);
     border-radius: var(--radius-large-alternate);
     background-color: var(--color-background-surface);
+}
+
+.nv-contact-banner__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-between-content);
 }
 
 .nv-contact-banner__text {

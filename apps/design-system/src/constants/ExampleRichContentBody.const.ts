@@ -52,7 +52,7 @@ export const exampleRichContentBody: readonly BodyNode[] = [
         ],
     },
     {
-        _type: 'buttonGroup',
+        _type: 'linkButtons',
         _key: 'buttons',
         buttons: [
             {
