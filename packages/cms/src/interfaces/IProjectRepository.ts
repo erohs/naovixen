@@ -1,5 +1,5 @@
-import type { IProject } from './IProject';
-import type { IProjectSummary } from './IProjectSummary';
+import type { IProject } from "./IProject";
+import type { IProjectSummary } from "./IProjectSummary";
 
 export interface IProjectRepository {
     /** In the order Naomi set. */

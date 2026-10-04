@@ -1,4 +1,4 @@
-import { defineQuery } from 'groq';
+import { defineQuery } from "groq";
 
 export const postSummariesQuery = defineQuery(`
     *[_type == "post" && defined(slug.current)] | order(publishedAt desc) {

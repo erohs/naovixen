@@ -1,6 +1,5 @@
-import { defineQuery } from 'groq';
-
-import { bodyProjection } from '../../constants/BodyProjection.const';
+import { defineQuery } from "groq";
+import { bodyProjection } from "../../constants/BodyProjection.const";
 
 export const projectBySlugQuery = defineQuery(`
     *[_type == "project" && slug.current == $slug][0] {

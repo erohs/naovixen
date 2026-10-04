@@ -1,14 +1,13 @@
-import type { ImageUrlBuilder } from '@sanity/image-url';
-
-import type { PostBySlugQueryResult, PostSummariesQueryResult } from '../generated/SanityTypes';
-import type { IBlogPost } from '../interfaces/IBlogPost';
-import type { IBlogPostSummary } from '../interfaces/IBlogPostSummary';
-import type { IBlogRepository } from '../interfaces/IBlogRepository';
-import type { IGroqClient } from '../interfaces/IGroqClient';
-import { toBody } from '../functions/ToBody.function';
-import { postBySlugQuery } from './constants/PostBySlugQuery.const';
-import { postSummariesQuery } from './constants/PostSummariesQuery.const';
-import { toPostSummary } from './functions/ToPostSummary.function';
+import type { ImageUrlBuilder } from "@sanity/image-url";
+import type { PostBySlugQueryResult, PostSummariesQueryResult } from "../generated/SanityTypes";
+import type { IBlogPost } from "../interfaces/IBlogPost";
+import type { IBlogPostSummary } from "../interfaces/IBlogPostSummary";
+import type { IBlogRepository } from "../interfaces/IBlogRepository";
+import type { IGroqClient } from "../interfaces/IGroqClient";
+import { toBody } from "../functions/ToBody.function";
+import { postBySlugQuery } from "./constants/PostBySlugQuery.const";
+import { postSummariesQuery } from "./constants/PostSummariesQuery.const";
+import { toPostSummary } from "./functions/ToPostSummary.function";
 
 export class SanityBlogRepository implements IBlogRepository {
     private readonly _client: IGroqClient;

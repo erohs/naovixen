@@ -1,5 +1,5 @@
-import type { IBlogPost } from './IBlogPost';
-import type { IBlogPostSummary } from './IBlogPostSummary';
+import type { IBlogPost } from "./IBlogPost";
+import type { IBlogPostSummary } from "./IBlogPostSummary";
 
 export interface IBlogRepository {
     /** Newest first. */
