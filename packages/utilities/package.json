@@ -13,5 +13,8 @@
     "devDependencies": {
         "@naovixen/nvpack": "workspace:*",
         "vitest": "catalog:"
+    },
+    "dependencies": {
+        "i18next": "catalog:"
     }
 }

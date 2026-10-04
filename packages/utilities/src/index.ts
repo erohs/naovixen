@@ -1,5 +1,13 @@
-export { calculateReadingTime } from './functions/CalculateReadingTime.function';
-export { createExcerpt } from './functions/CreateExcerpt.function';
-export { formatDate } from './functions/FormatDate.function';
-export { formatReadingTime } from './functions/FormatReadingTime.function';
-export { joinClassNames } from './functions/JoinClassNames.function';
+export { defaultLocale } from "./constants/DefaultLocale.const";
+export { translator } from "./constants/Translator.const";
+export { calculateReadingTime } from "./functions/CalculateReadingTime.function";
+export { createExcerpt } from "./functions/CreateExcerpt.function";
+export { formatDate } from "./functions/FormatDate.function";
+export { formatReadingTime } from "./functions/FormatReadingTime.function";
+export { joinClassNames } from "./functions/JoinClassNames.function";
+export type { ILiveRegion } from "./live-announcer/interfaces/ILiveRegion";
+export type { IScheduler } from "./live-announcer/interfaces/IScheduler";
+export { LiveAnnouncer } from "./live-announcer/LiveAnnouncer";
+export { parseMessageMarkup } from "./functions/ParseMessageMarkup.function";
+export type { IMessageElement } from "./interfaces/IMessageElement";
+export type { MessageNode } from "./types/MessageNode";
