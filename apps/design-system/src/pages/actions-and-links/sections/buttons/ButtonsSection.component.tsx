@@ -1,5 +1,5 @@
 import type { FunctionComponent } from "react";
-import { arrowRightIcon, Button, ButtonVariant, downloadIcon } from "@naovixen/components";
+import { arrowRightIcon, Button, ButtonVariant, closeIcon, downloadIcon } from "@naovixen/components";
 import { Example } from "../../../../components/example/Example.component";
 import { translate } from "../../../../translate/Translate.const";
 
@@ -19,6 +19,11 @@ export const ButtonsSection: FunctionComponent = () => (
             </Button>
             <Button>
                 <Button.Icon source={downloadIcon} label={translate("actionsAndLinks.iconOnly")} />
+            </Button>
+        </Example>
+        <Example name={translate("actionsAndLinks.chip")}>
+            <Button variant={ButtonVariant.Chip}>
+                {translate("actionsAndLinks.removableChip")} <Button.Icon source={closeIcon} />
             </Button>
         </Example>
     </>

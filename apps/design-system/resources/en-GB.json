@@ -70,7 +70,14 @@
         "linkTileLabel": "GitHub",
         "linkTileDetail": "github.com/example",
         "breadcrumb": "Breadcrumb",
-        "home": "Home"
+        "home": "Home",
+        "chip": "Button, chip variant",
+        "removableChip": "Accessibility",
+        "textField": "TextField",
+        "searchLabel": "Search posts",
+        "checkbox": "Checkbox",
+        "checked": "Checked",
+        "unchecked": "Unchecked"
     },
     "textAndMedia": {
         "heading": "Heading",
