@@ -64,8 +64,12 @@ const { command, label, class: className } = Astro.props;
         }
     }
 
-    /* The close button inside the open menu folds its lines into a cross as the menu opens. */
-    :global(dialog[open]) .line {
+    /*
+     * Both buttons fold into a cross while the menu is open. The close button shows it; the
+     * header's button, hidden under the open menu, is the one seen unfolding as the menu closes
+     * and slides away beneath the header's row.
+     */
+    :global(:root:has(#menu[open])) .line {
         &:nth-child(1) {
             inset-block-start: 20.5px;
             inset-inline-start: 11px;
