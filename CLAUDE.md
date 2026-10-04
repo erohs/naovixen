@@ -120,10 +120,22 @@ of the barrel. Variants of one component sit flat in its folder, sharing its sub
 shape under `src/`, except in the React packages, whose `src/` holds component and behaviour
 folders and nothing else.
 
-One component per file, enforced by lint. In an app, `pages/<page>/` holds a page; the
-sections only that page uses are files of their own beside it, not folders. `components/` holds what two
-or more pages share. Extract a component only when something reuses it, and when it is
-generic enough for another site, put it in `components` instead.
+One component per file, enforced by lint.
+
+An app's `src/` is laid out by who uses what:
+
+- `routes/` holds route files and nothing else. A route only loads, builds the head and
+  hands props to its page, so leaving TanStack means rewriting this folder alone.
+- `pages/` mirrors the URLs: `/blog/$slug` is `pages/blog/post/`. A page folder holds the
+  page, what only it uses, and its child pages. Each section owns a folder under
+  `sections/`, with its parts, constants and styles.
+- `components/` holds what two or more pages share. Extract a component only when
+  something reuses it, and when it is generic enough for another site, put it in
+  `components` instead.
+- `features/<domain>/` holds logic two or more routes share, grouped by what it is about
+  (`blog`, `preview`, `seo`), never by kind. A service sits in its feature as a folder.
+
+Nothing app-wide sits in a flat `src/constants/` or `src/functions/`.
 
 One barrel per package, `src/index.ts`. No nested index files, no re-export chains.
 

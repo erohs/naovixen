@@ -36,7 +36,7 @@ for an alias such as an `Omit`, a type in `types/` (`BackToTopProps`).
 
 One component per file, enforced by lint. A component file exports its component and
 nothing else. Its props interface, enums, constants and helpers live in the sibling
-subfolders. A page's sections are files beside the page.
+subfolders. A page's sections each own a folder under its `sections/`.
 
 ## No custom hooks
 
