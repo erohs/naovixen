@@ -16,8 +16,10 @@ for (const route of routes) {
 
         test("carries structured data that parses", async ({ page }) => {
             await page.goto(route);
-            for (const script of await page.locator('script[type="application/ld+json"]').all()) {
-                expect(() => JSON.parse(script.textContent ?? "") as unknown).not.toThrow();
+            const blocks = await page.locator('script[type="application/ld+json"]').allTextContents();
+            expect(blocks.length).toBeGreaterThan(0);
+            for (const block of blocks) {
+                expect(() => JSON.parse(block) as unknown).not.toThrow();
             }
         });
 
