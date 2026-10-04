@@ -30,7 +30,7 @@ Never publish her phone number, home address or personal email unless she asks.
 
 ## Design reference
 
-`design-reference/` holds a Claude Design export. It is a picture, not a codebase.
+`design-reference/` (git-ignored) holds Claude Design exports. It is a picture, not a codebase.
 
 Take layout, spacing, hierarchy, colour, typography and motion from it. Never copy its
 CSS, markup or JavaScript — rebuild from our own tokens and components with the simplest

@@ -36,6 +36,9 @@ blob-report/
 # Content sources — Naomi's CV and other personal material must never reach the repo
 source-material/
 
+# Claude Design exports — local reference only, and they can embed the CV
+design-reference/
+
 # Working notes: CV details, and subagent findings written as they work
 docs/content-inventory.md
 notes/
