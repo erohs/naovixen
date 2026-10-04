@@ -1,9 +1,7 @@
-import type { PortableTextComponents, PortableTextMarkComponentProps } from '@portabletext/react';
-import { Code, Link } from '@naovixen/components';
-
-import type { ILinkMarkValue } from '../interfaces/ILinkMarkValue';
-import { richContentBlocks } from './RichContentBlocks.const';
-import { richContentTypes } from './RichContentTypes.const';
+import type { PortableTextComponents } from "@portabletext/react";
+import { richContentBlocks } from "./RichContentBlocks.const";
+import { richContentMarks } from "./RichContentMarks.const";
+import { richContentTypes } from "./RichContentTypes.const";
 
 /**
  * Lists and the strong and em marks keep the library's plain HTML. Unknown types render
@@ -12,11 +10,7 @@ import { richContentTypes } from './RichContentTypes.const';
 export const richContentComponents: PortableTextComponents = {
     block: richContentBlocks,
     types: richContentTypes,
-    marks: {
-        code: ({ children }) => <Code>{children}</Code>,
-        link: ({ value, children }: PortableTextMarkComponentProps<ILinkMarkValue>) =>
-            value ? <Link href={value.href}>{children}</Link> : children,
-    },
+    marks: richContentMarks,
     unknownType: () => null,
     unknownMark: ({ children }) => children,
 };

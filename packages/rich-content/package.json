@@ -16,7 +16,8 @@
         "@naovixen/components": "workspace:*",
         "@naovixen/utilities": "workspace:*",
         "@portabletext/react": "8.0.1",
-        "@portabletext/types": "catalog:"
+        "@portabletext/types": "catalog:",
+        "i18next": "catalog:"
     },
     "peerDependencies": {
         "react": "^19.0.0",

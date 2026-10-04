@@ -1,126 +1,133 @@
-import type { BodyNode } from '@naovixen/cms';
-import { render, screen } from '@testing-library/react';
-import { describe, expect, test } from 'vitest';
+import type { BodyNode } from "@naovixen/cms";
+import { render, screen } from "@testing-library/react";
+import { describe, expect, test } from "vitest";
+import { RichContent } from "../RichContent.component";
+import { richContentBody as body } from "./RichContentBody.const";
 
-import { RichContent } from '../RichContent.component';
-import { richContentBody as body } from './RichContentBody.const';
-
-describe('Using RichContent, given a body with every supported block, when it renders', () => {
-    test('then it should render second-level headings', () => {
+describe("Using RichContent, given a body with every supported block, when it renders", () => {
+    test("then it should render second-level headings", () => {
         render(<RichContent body={body} />);
 
-        expect(screen.getByRole('heading', { level: 2, name: 'Example heading' })).toBeDefined();
+        expect(screen.getByRole("heading", { level: 2, name: "Example heading" })).toBeDefined();
     });
 
-    test('then it should render numbered headings at the second level', () => {
+    test("then it should render section headings at the second level", () => {
         render(<RichContent body={body} />);
 
-        expect(screen.getByRole('heading', { level: 2, name: 'Second part' })).toBeDefined();
+        expect(screen.getByRole("heading", { level: 2, name: "Second part" })).toBeDefined();
     });
 
-    test('then it should pad a section heading number to two digits', () => {
+    test("then it should show a numbered section heading's number, padded to two digits", () => {
         render(<RichContent body={body} />);
 
-        expect(screen.getByText('02')).toBeDefined();
+        expect(screen.getByRole("heading", { name: "First part" }).textContent).toBe("01First part");
     });
 
-    test('then it should pair each fact with its label', () => {
+    test("then it should show an unnumbered section heading without a number", () => {
         render(<RichContent body={body} />);
 
-        expect(screen.getByRole('definition').textContent).toBe('Lead engineer');
+        expect(screen.getByRole("heading", { name: "Second part" }).textContent).toBe("Second part");
     });
 
-    test('then it should open link buttons in a new tab', () => {
+    test("then it should pair each fact with its label", () => {
         render(<RichContent body={body} />);
 
-        expect(
-            screen.getByRole('button', { name: /^Live demo ?\(opens in new tab\)$/ }),
-        ).toHaveProperty('target', '_blank');
+        expect(screen.getByRole("definition").textContent).toBe("Lead engineer");
     });
 
-    test('then it should render third-level headings', () => {
+    test("then it should open link buttons in a new tab", () => {
         render(<RichContent body={body} />);
 
-        expect(screen.getByRole('heading', { level: 3, name: 'Example subheading' })).toBeDefined();
+        expect(screen.getByRole("button", { name: /^Live demo ?\(opens in new tab\)$/ })).toHaveProperty(
+            "target",
+            "_blank",
+        );
     });
 
-    test('then it should render paragraphs', () => {
+    test("then it should render third-level headings", () => {
         render(<RichContent body={body} />);
 
-        expect(screen.getByText('Example paragraph')).toHaveProperty('tagName', 'P');
+        expect(screen.getByRole("heading", { level: 3, name: "Example subheading" })).toBeDefined();
     });
 
-    test('then it should render strong marks', () => {
+    test("then it should render paragraphs", () => {
         render(<RichContent body={body} />);
 
-        expect(screen.getByText('Strong words')).toHaveProperty('tagName', 'STRONG');
+        expect(screen.getByText("Example paragraph")).toHaveProperty("tagName", "P");
     });
 
-    test('then it should render inline code', () => {
+    test("then it should render strong marks", () => {
         render(<RichContent body={body} />);
 
-        expect(screen.getByText('npm test')).toHaveProperty('tagName', 'CODE');
+        expect(screen.getByText("Strong words")).toHaveProperty("tagName", "STRONG");
     });
 
-    test('then it should render block quotes', () => {
+    test("then it should render inline code", () => {
         render(<RichContent body={body} />);
 
-        expect(screen.getByRole('blockquote').textContent).toBe('Example quotation');
+        expect(screen.getByText("npm test")).toHaveProperty("tagName", "CODE");
     });
 
-    test('then it should render lists', () => {
+    test("then it should render block quotes", () => {
         render(<RichContent body={body} />);
 
-        expect(screen.getByRole('listitem').textContent).toBe('Example item');
+        expect(screen.getByRole("blockquote").textContent).toBe("Example quotation");
     });
 
-    test('then it should link to pages on the site in place', () => {
+    test("then it should render lists", () => {
         render(<RichContent body={body} />);
 
-        expect(screen.getByRole('link', { name: 'Our work' })).toHaveProperty('target', '');
+        expect(screen.getByRole("listitem").textContent).toBe("Example item");
     });
 
-    test('then it should open other sites in a new tab', () => {
+    test("then it should link to pages on the site in place", () => {
         render(<RichContent body={body} />);
 
-        expect(
-            screen.getByRole('link', { name: /^Example site ?\(opens in new tab\)$/ }),
-        ).toHaveProperty('target', '_blank');
+        expect(screen.getByRole("link", { name: "Our work" })).toHaveProperty("target", "");
     });
 
-    test('then it should link email addresses in place', () => {
+    test("then it should open other sites in a new tab", () => {
         render(<RichContent body={body} />);
 
-        expect(screen.getByRole('link', { name: 'Email me' })).toHaveProperty('target', '');
+        expect(screen.getByRole("link", { name: /^Example site ?\(opens in new tab\)$/ })).toHaveProperty(
+            "target",
+            "_blank",
+        );
     });
 
-    test('then it should keep the text of an unknown mark', () => {
+    test("then it should link email addresses in place", () => {
         render(<RichContent body={body} />);
 
-        expect(screen.getByText('Oddly marked')).toHaveProperty('tagName', 'P');
+        expect(screen.getByRole("link", { name: "Email me" })).toHaveProperty("target", "");
     });
 
-    test('then it should render callouts', () => {
+    test("then it should keep the text of an unknown mark", () => {
         render(<RichContent body={body} />);
 
-        expect(screen.getByRole('note').textContent).toBe('tip!Example titleTip text');
+        expect(screen.getByText("Oddly marked")).toHaveProperty("tagName", "P");
     });
 
-    test('then it should render code blocks', () => {
+    test("then it should render callouts", () => {
         render(<RichContent body={body} />);
 
-        expect(screen.getByText('const answer = 42;')).toHaveProperty('tagName', 'CODE');
+        expect(screen.getByRole("note").textContent).toBe("tip!Example titleTip text");
     });
 
-    test('then it should render figures', () => {
+    test("then it should render code blocks", () => {
         render(<RichContent body={body} />);
 
-        expect(screen.getByRole('img', { name: 'Example picture' })).toBeDefined();
+        expect(screen.getByText("const answer = 42;")).toHaveProperty("tagName", "CODE");
     });
 
-    test('then it should print nothing for an unknown block type', () => {
+    test("then it should render figures", () => {
+        render(<RichContent body={body} />);
+
+        expect(screen.getByRole("img", { name: "Example picture" })).toBeDefined();
+    });
+
+    test("then it should print nothing for an unknown block type", () => {
         /** Only content saved before a block was removed can carry a type the compiler never saw. */
-        const mystery = { _type: 'mystery', _key: 'mystery' } as unknown as BodyNode;
+        const mystery = { _type: "mystery", _key: "mystery" } as unknown as BodyNode;
         render(<RichContent body={[...body, mystery]} />);
 
         expect(screen.queryByText(/mystery/)).toBeNull();

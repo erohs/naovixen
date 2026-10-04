@@ -8,7 +8,6 @@
         margin-block-start: var(--space-between-blocks);
     }
 
-    /* A little room either side, and for the bubble's tail beneath it. */
     & .nv-rich-content__quote {
         margin-block: var(--space-between-content);
     }
@@ -18,12 +17,11 @@
     }
 }
 
-/* A numbered heading starts a new part, so it stands further off what came before. */
+/* A section heading starts a new part, so it stands further off than a subheading. */
 .nv-rich-content__section-heading:not(:first-child) {
     margin-block-start: var(--space-between-regions);
 }
 
-/* Buttons in a row, wrapping onto more rows where they do not fit. */
 .nv-rich-content__buttons {
     display: flex;
     flex-wrap: wrap;

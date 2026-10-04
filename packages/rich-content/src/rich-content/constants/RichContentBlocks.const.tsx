@@ -1,9 +1,9 @@
-import type { PortableTextBlockComponent } from '@portabletext/react';
-import { Heading, HeadingSize, SpeechBubble, Text } from '@naovixen/components';
+import type { PortableTextBlockComponent } from "@portabletext/react";
+import { Heading, HeadingSize, SpeechBubble, Text } from "@naovixen/components";
 
 /**
- * Text block styles. Headings in a post sit a size down from the page's own, and a quote is
- * said aloud in a speech bubble. Anything else, such as h4, keeps the library's plain element.
+ * Text block styles. Headings in a post sit a size down from the page's own, and a quote is said aloud in
+ * a speech bubble. Anything else, such as h4, keeps the library's plain element.
  */
 export const richContentBlocks: Readonly<Record<string, PortableTextBlockComponent>> = {
     normal: ({ children }) => <Text>{children}</Text>,
