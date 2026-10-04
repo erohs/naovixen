@@ -24,3 +24,13 @@ test("back to top settles level with the footer's buttons", async ({ page }) => 
     );
     expect(bottoms[0]).toBe(bottoms[1]);
 });
+
+test("back to top shows itself when it takes focus before it has scrolled into view", async ({ page, browserName }) => {
+    test.skip(browserName === "webkit", "Playwright's WebKit does not tab to links; check by hand in Safari.");
+    await page.goto("/");
+    await page.locator("footer").getByRole("link").last().focus();
+    await page.keyboard.press("Tab");
+    const backToTop = page.getByRole("link", { name: "Back to top" });
+    await expect(backToTop).toBeFocused();
+    await expect(backToTop).toBeInViewport();
+});

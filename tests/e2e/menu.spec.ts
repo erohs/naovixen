@@ -56,3 +56,22 @@ test("keeps sliding closed across the change of page after a link is followed", 
     await expect(page.getByRole("dialog", { name: "Menu" })).toBeHidden();
     await expect.poll(() => page.evaluate(() => "menuClosing" in document.documentElement.dataset)).toBe(false);
 });
+
+test("keeps focus inside, wrapping from its last control to its first", async ({
+    page,
+    browserName,
+    javaScriptEnabled,
+}) => {
+    test.skip(!javaScriptEnabled, "Wrapping needs script; without it the browser's toolbar follows.");
+    test.skip(browserName === "webkit", "Playwright's WebKit does not tab to links; check by hand in Safari.");
+    await page.getByRole("button", { name: "Menu", exact: true }).focus();
+    await page.keyboard.press("Enter");
+    await page
+        .getByRole("dialog")
+        .getByRole("link", { name: /Bluesky/ })
+        .focus();
+    await page.keyboard.press("Tab");
+    await expect(page.getByRole("dialog").getByRole("link", { name: "naovixen", exact: true })).toBeFocused();
+    await page.keyboard.press("Shift+Tab");
+    await expect(page.getByRole("dialog").getByRole("link", { name: /Bluesky/ })).toBeFocused();
+});

@@ -36,5 +36,18 @@ import Icon from "../ui/Icon.astro";
         position: sticky;
         inset-block-start: calc(100svh - var(--size-action-minimum) - var(--resting-gap));
         pointer-events: auto;
+
+        /*
+         * The link can take focus before it has scrolled into view, so focus pins it where it
+         * rests, in the window, as a skip link shows itself on focus.
+         */
+        &:focus-visible {
+            position: fixed;
+            inset-block: auto var(--resting-gap);
+            inset-inline-end: max(
+                var(--space-between-text) + var(--space-between-lines),
+                var(--page-margin) - var(--size-action-minimum) - var(--space-between-content)
+            );
+        }
     }
 </style>
