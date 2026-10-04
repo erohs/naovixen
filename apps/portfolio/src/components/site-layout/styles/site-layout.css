@@ -34,11 +34,3 @@
     margin-block-start: var(--space-between-text);
     font-size: var(--font-size-lead);
 }
-
-.nv-site-layout__elsewhere {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-between-content);
-    padding: 0;
-    list-style: none;
-}

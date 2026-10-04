@@ -6,7 +6,8 @@
     margin-block-start: var(--space-below-heading);
 }
 
-/* Each topic starts a little further from the one before. */
-.nv-privacy-page__heading {
-    margin-block-start: var(--space-between-blocks);
+.nv-privacy-page__header {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-between-content);
 }

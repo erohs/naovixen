@@ -6,7 +6,7 @@ import { translate } from "../../translate/Translate.const";
 
 /** Profiles on other sites and the CV, each a round button named by its icon's label. */
 export const ElsewhereList: FunctionComponent = () => (
-    <ul aria-label={translate("site.elsewhere")} className="nv-site-layout__elsewhere">
+    <ul aria-label={translate("site.elsewhere")} className="nv-elsewhere-list">
         {placeholderContactLinks.map((contactLink) => (
             <li key={contactLink.url}>
                 <LinkButton href={contactLink.url}>

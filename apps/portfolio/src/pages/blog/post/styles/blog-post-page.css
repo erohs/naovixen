@@ -28,3 +28,19 @@
 .nv-blog-post-page__more {
     margin-block-start: var(--space-between-sections);
 }
+
+.nv-blog-post-page__related {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-between-blocks);
+    margin-block-start: var(--space-between-sections);
+}
+
+/* Two cards side by side where they fit, one above the other where they do not. */
+.nv-blog-post-page__related-posts {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(18rem, 100%), 1fr));
+    gap: var(--space-between-groups);
+    padding-inline-start: 0;
+    list-style: none;
+}

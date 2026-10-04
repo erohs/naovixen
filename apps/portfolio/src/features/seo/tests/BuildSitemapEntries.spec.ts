@@ -9,7 +9,7 @@ const projectRepository: IProjectRepository = {
 };
 
 describe("Using buildSitemapEntries, given one published post and one project, when the entries are built", () => {
-    const repository: IBlogRepository = {
+    const repository: Pick<IBlogRepository, "listPosts"> = {
         listPosts: () =>
             Promise.resolve([
                 {
@@ -21,7 +21,6 @@ describe("Using buildSitemapEntries, given one published post and one project, w
                     tags: [],
                 },
             ]),
-        getPostBySlug: () => Promise.resolve(undefined),
     };
 
     test("then it should list the post with its date", async () => {

@@ -32,7 +32,7 @@ export const SiteLayout: FunctionComponent<ISiteLayoutProps> = ({ year, children
                 <main id="main" tabIndex={-1} className="nv-site-layout__main">
                     {children}
                 </main>
-                <SiteFooter currentPath={currentPath} year={year} />
+                <SiteFooter year={year} />
                 <BackToTop />
                 <LiveRegion announcer={globalAnnouncer} />
             </div>

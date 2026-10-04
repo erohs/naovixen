@@ -5,6 +5,7 @@
 @import url("./styles/page.css") layer(components);
 @import url("./components/logo/styles/logo.css") layer(components);
 @import url("./components/speech-bubble/styles/exclamation-bubble.css") layer(components);
+@import url("./components/elsewhere-list/styles/elsewhere-list.css") layer(components);
 @import url("./components/site-layout/styles/site-layout.css") layer(components);
 @import url("./components/site-footer/styles/site-footer.css") layer(components);
 @import url("./components/more-navigation/styles/more-navigation.css") layer(components);
@@ -19,6 +20,7 @@
 @import url("./pages/home/sections/testimonial/styles/testimonial-section.css") layer(components);
 @import url("./pages/about/styles/about-page.css") layer(components);
 @import url("./pages/blog/styles/blog-page.css") layer(components);
+@import url("./pages/blog/sections/post-search/styles/post-search.css") layer(components);
 @import url("./pages/blog/post/styles/blog-post-page.css") layer(components);
 @import url("./pages/work/styles/work-page.css") layer(components);
 @import url("./pages/work/project/styles/project-page.css") layer(components);

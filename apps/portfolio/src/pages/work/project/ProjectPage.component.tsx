@@ -9,7 +9,7 @@ import { ProjectHeader } from "./sections/project-header/ProjectHeader.component
 import { ProjectStack } from "./sections/project-stack/ProjectStack.component";
 
 /** The screenshot is the largest thing on the page, so it loads first rather than lazily. */
-export const ProjectPage: FunctionComponent<IProjectPageData> = ({ project, nextProject }) => (
+export const ProjectPage: FunctionComponent<IProjectPageData> = ({ project, previousProject, nextProject }) => (
     <article aria-labelledby="project-title" className="nv-page">
         <Breadcrumb trail={workBreadcrumbTrail} currentLabel={project.title} />
         <ProjectHeader project={project} />
@@ -19,6 +19,7 @@ export const ProjectPage: FunctionComponent<IProjectPageData> = ({ project, next
         <MoreNavigation
             label={translate("project.moreProjects")}
             backLink={{ label: translate("project.allProjects"), href: "/work" }}
+            previousLink={previousProject && { label: previousProject.title, href: `/work/${previousProject.slug}` }}
             nextLink={nextProject && { label: nextProject.title, href: `/work/${nextProject.slug}` }}
             className="nv-project-page__more"
         />

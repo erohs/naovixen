@@ -1,13 +1,15 @@
 import type { FunctionComponent } from "react";
 import { arrowLeftIcon, Link, LinkVariant } from "@naovixen/components";
 import { joinClassNames } from "@naovixen/utilities";
+import { AdjacentLink } from "./AdjacentLink.component";
+import { AdjacentDirection } from "./enums/AdjacentDirection";
 import type { IMoreNavigationProps } from "./interfaces/IMoreNavigationProps";
-import { NextLink } from "./NextLink.component";
 
-/** Back to the list at one end and, where there is one, the next read at the other. */
+/** Back to the list, then the reads either side of this one, where there are any. */
 export const MoreNavigation: FunctionComponent<IMoreNavigationProps> = ({
     label,
     backLink,
+    previousLink,
     nextLink,
     className,
     ...navProps
@@ -16,6 +18,9 @@ export const MoreNavigation: FunctionComponent<IMoreNavigationProps> = ({
         <Link href={backLink.href} variant={LinkVariant.Standalone}>
             <Link.Icon source={arrowLeftIcon} /> {backLink.label}
         </Link>
-        {nextLink && <NextLink link={nextLink} />}
+        <div className="nv-more-navigation__adjacent-links">
+            {previousLink && <AdjacentLink link={previousLink} direction={AdjacentDirection.Previous} />}
+            {nextLink && <AdjacentLink link={nextLink} direction={AdjacentDirection.Next} />}
+        </div>
     </nav>
 );

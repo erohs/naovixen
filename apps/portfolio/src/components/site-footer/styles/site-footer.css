@@ -1,5 +1,11 @@
-.nv-site-footer__about {
+/* The logo, the copyright and the privacy link share a line while there is room. */
+.nv-site-footer__details {
     display: flex;
-    flex-direction: column;
-    gap: var(--space-between-content);
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--space-between-lines) var(--space-between-blocks);
+}
+
+.nv-site-footer__logo {
+    color: var(--color-text-primary);
 }

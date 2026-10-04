@@ -27,16 +27,22 @@ const paths = ["/", "/blog", "/blog/$slug"];
 
 describe("Using BlogPostPage, given an older post, when it renders", () => {
     test("then it should link to the older post as the next read", async () => {
-        await renderWithRouter(<BlogPostPage post={post} olderPost={olderPost} />, paths);
+        await renderWithRouter(
+            <BlogPostPage post={post} newerPost={undefined} olderPost={olderPost} relatedPosts={[]} />,
+            paths,
+        );
 
-        expect(screen.getByRole("link", { name: "Next: Older post" }).getAttribute("href")).toBe("/blog/older-post");
+        expect(screen.getByRole("link", { name: "Next Older post" }).getAttribute("href")).toBe("/blog/older-post");
     });
 });
 
 describe("Using BlogPostPage, given no older post, when it renders", () => {
     test("then it should offer no next read", async () => {
-        await renderWithRouter(<BlogPostPage post={post} olderPost={undefined} />, paths);
+        await renderWithRouter(
+            <BlogPostPage post={post} newerPost={undefined} olderPost={undefined} relatedPosts={[]} />,
+            paths,
+        );
 
-        expect(screen.queryByRole("link", { name: /^Next:/ })).toBeNull();
+        expect(screen.queryByRole("link", { name: /^Next/ })).toBeNull();
     });
 });

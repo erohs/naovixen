@@ -3,7 +3,7 @@ import { Link, LinkVariant } from "@naovixen/components";
 import { placeholderEmailAddress } from "../../features/site/constants/PlaceholderEmailAddress.const";
 import { translate } from "../../translate/Translate.const";
 import { ExclamationBubble } from "../speech-bubble/ExclamationBubble.component";
-import { ElsewhereList } from "./ElsewhereList.component";
+import { ElsewhereList } from "../elsewhere-list/ElsewhereList.component";
 
 /** Ways to get in touch, beneath the links in the narrow-screen menu. */
 export const MenuFooter: FunctionComponent = () => (

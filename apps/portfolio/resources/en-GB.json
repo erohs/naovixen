@@ -15,10 +15,6 @@
         "privacy": "Privacy notice"
     },
     "footer": {
-        "blurb": "Naomi Shore, Software Engineer II at PebblePad. Based in Telford, UK.",
-        "siteColumn": "site",
-        "elsewhereColumn": "elsewhere",
-        "email": "Email",
         "copyright": "© {{year}} {{name}}"
     },
     "cv": {
@@ -34,12 +30,14 @@
         "of": "Photo placeholder: {{name}}"
     },
     "moreNavigation": {
-        "next": "Next: {{title}}"
+        "previous": "Previous",
+        "next": "Next"
     },
     "post": {
         "topics": "Topics",
         "allPosts": "All posts",
-        "morePosts": "More posts"
+        "morePosts": "More posts",
+        "relatedPosts": "Related posts"
     },
     "project": {
         "techStack": "Tech stack",
@@ -156,7 +154,28 @@
         "title": "Blog",
         "description": "Writing by Naomi Shore on front-end engineering, accessibility and building software.",
         "intro": "Notes on accessibility, front-end craft and working well with AI.",
-        "empty": "There are no posts yet."
+        "empty": "There are no posts yet.",
+        "search": "Search posts",
+        "topics": "Topics",
+        "allTopics": "All topics",
+        "topicsSelected_one": "{{count}} topic selected",
+        "topicsSelected_other": "{{count}} topics selected",
+        "topicsHint": "Choose as many as you like. Posts with any of them are shown.",
+        "topicOption": "{{topic}} <count>({{postCount}})</count>",
+        "selectedTopics": "Selected topics",
+        "removeTopic": "{{topic}}<hidden>, remove filter</hidden>",
+        "clearFilters": "Clear filters",
+        "results": {
+            "all_one": "{{count}} post",
+            "all_other": "{{count}} posts",
+            "matching_one": "Showing {{count}} of {{total}} posts matching “{{query}}”",
+            "matching_other": "Showing {{count}} of {{total}} posts matching “{{query}}”",
+            "tagged_one": "Showing {{count}} of {{total}} posts tagged {{topics}}",
+            "tagged_other": "Showing {{count}} of {{total}} posts tagged {{topics}}",
+            "taggedMatching_one": "Showing {{count}} of {{total}} posts tagged {{topics}} matching “{{query}}”",
+            "taggedMatching_other": "Showing {{count}} of {{total}} posts tagged {{topics}} matching “{{query}}”"
+        },
+        "noResults": "No posts match that. Try a different word or topic."
     },
     "work": {
         "title": "Work",
@@ -169,7 +188,8 @@
         "greeting": "say hello!",
         "heading": "Let's talk",
         "body": "Whether it's a role, a project or a quick question, email is the fastest way to reach me. I usually reply within two working days.",
-        "elsewhere": "or find me here"
+        "elsewhere": "or find me here",
+        "privacy": "How I use your email is explained in my <privacy>privacy notice</privacy>."
     },
     "notFound": {
         "heading": "Page not found",
@@ -177,15 +197,6 @@
         "home": "Go to the home page"
     },
     "privacy": {
-        "title": "Privacy notice",
-        "description": "What this site collects about you, and why.",
-        "lastUpdated": "Last updated <date>{{date}}</date>",
-        "intro": "This site collects as little as possible. Here's exactly what, and why.",
-        "emailHeading": "If you email me",
-        "email": "I use your name, email address and message only to reply to you. They're never shared, sold or added to a mailing list, and I delete old conversations after 12 months.",
-        "cookiesHeading": "Cookies and analytics",
-        "cookies": "No tracking cookies and no analytics. Your light or dark mode choice is saved in your browser so it's remembered next time.",
-        "rightsHeading": "Your rights",
-        "rights": "You can ask to see or delete anything you've sent me. Email <email>{{email}}</email> and I'll sort it within a month."
+        "lastUpdated": "Last updated <date>{{date}}</date>"
     }
 }

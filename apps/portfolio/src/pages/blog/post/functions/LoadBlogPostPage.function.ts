@@ -1,7 +1,9 @@
 import { notFound } from "@tanstack/react-router";
 import type { IBlogRepository } from "@naovixen/cms";
 import type { IBlogPostPageData } from "../interfaces/IBlogPostPageData";
+import { findNewerPost } from "./FindNewerPost.function";
 import { findOlderPost } from "./FindOlderPost.function";
+import { findRelatedPosts } from "./FindRelatedPosts.function";
 
 /** Throws the router's not-found for an unknown slug, which renders the 404 with a 404 status. */
 export const loadBlogPostPage = async (blogRepository: IBlogRepository, slug: string): Promise<IBlogPostPageData> => {
@@ -12,5 +14,10 @@ export const loadBlogPostPage = async (blogRepository: IBlogRepository, slug: st
         throw notFound();
     }
 
-    return { post, olderPost: findOlderPost(posts, slug) };
+    return {
+        post,
+        newerPost: findNewerPost(posts, slug),
+        olderPost: findOlderPost(posts, slug),
+        relatedPosts: findRelatedPosts(posts, post),
+    };
 };

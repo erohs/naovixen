@@ -1,6 +1,7 @@
-import type { IBlogPostSummary } from "@naovixen/cms";
+import type { IPostSearchCriteria } from "@naovixen/cms";
+import type { IBlogPageData } from "./IBlogPageData";
 
-export interface IBlogPageProps {
-    /** Newest first. */
-    readonly posts: readonly IBlogPostSummary[];
+export interface IBlogPageProps extends IBlogPageData {
+    /** Shows the posts matching the criteria. */
+    readonly onSearch: (criteria: IPostSearchCriteria) => void;
 }

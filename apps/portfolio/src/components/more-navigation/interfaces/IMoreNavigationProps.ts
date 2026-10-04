@@ -5,6 +5,8 @@ export interface IMoreNavigationProps extends Omit<ComponentPropsWithRef<"nav">,
     /** Names the landmark, such as "More posts". */
     readonly label: string;
     readonly backLink: ILink;
-    /** Missing on the last item, which then only links back. */
+    /** Missing on the first item. */
+    readonly previousLink?: ILink | undefined;
+    /** Missing on the last item. */
     readonly nextLink?: ILink | undefined;
 }

@@ -2,6 +2,7 @@ import { notFound } from "@tanstack/react-router";
 import type { IProjectRepository } from "@naovixen/cms";
 import type { IProjectPageData } from "../interfaces/IProjectPageData";
 import { findNextProject } from "./FindNextProject.function";
+import { findPreviousProject } from "./FindPreviousProject.function";
 
 /** Throws the router's not-found for an unknown slug, which renders the 404 with a 404 status. */
 export const loadProjectPage = async (
@@ -18,5 +19,9 @@ export const loadProjectPage = async (
         throw notFound();
     }
 
-    return { project, nextProject: findNextProject(projects, slug) };
+    return {
+        project,
+        previousProject: findPreviousProject(projects, slug),
+        nextProject: findNextProject(projects, slug),
+    };
 };

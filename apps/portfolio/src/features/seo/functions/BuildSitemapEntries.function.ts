@@ -3,7 +3,7 @@ import type { ISitemapEntry } from "@naovixen/seo";
 import { indexedPagePaths } from "../constants/IndexedPagePaths.const";
 
 export const buildSitemapEntries = async (
-    blogRepository: IBlogRepository,
+    blogRepository: Pick<IBlogRepository, "listPosts">,
     projectRepository: IProjectRepository,
 ): Promise<ISitemapEntry[]> => {
     const [posts, projects] = await Promise.all([blogRepository.listPosts(), projectRepository.listProjects()]);
