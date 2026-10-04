@@ -17,4 +17,5 @@
     gap: var(--space-between-content);
     margin-block-start: auto;
     padding-block-start: calc(var(--space-between-content) + var(--space-between-lines));
+    border-block-start: var(--border-width-default) dashed var(--color-border);
 }

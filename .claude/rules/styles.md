@@ -103,7 +103,9 @@ Style ARIA and `data-*` attributes, not state classes:
 ## Separation
 
 No dividers. Content is separated by space and grouping, never by an `<hr>`, a rule, or a
-border between sections or list items. A border outlines a box; it never splits one. In
+border between sections or list items. A border outlines a box; it never splits one. The
+exceptions are the design's: the solid edge along the top of the footer, and a dashed rule
+above the footer's small print and above a card's details. In
 forced colours, where backgrounds vanish, a box that relies on its fill keeps a
 `transparent` border so the system draws one.
 
