@@ -11,10 +11,12 @@ import Icon from "../ui/Icon.astro";
 
 <style>
     /*
-     * No script: the link rides a track down the side of the main content that starts two screens
-     * down, held to the bottom of the window by sticky positioning, so it scrolls into view once the
-     * reader is a screen in and rests at the end of the content. A page too short for that never
-     * shows it. It sits beyond the page's right edge where the margin is wide enough.
+     * No script: the link rides a track down the side of the page, held to the bottom of the
+     * window by sticky positioning. The track starts two screens down, so the link scrolls into
+     * view once the reader is a screen in, and ends at the foot of the page, where the link
+     * settles level with the footer's buttons. On a page too short for that, the track has no
+     * height and the link never shows. It sits beyond the page's right edge where the margin is
+     * wide enough.
      */
     .track {
         --page-margin: calc((100% - var(--layout-width-page)) / 2 - var(--space-padding-page));
@@ -22,7 +24,7 @@ import Icon from "../ui/Icon.astro";
 
         position: absolute;
         z-index: var(--z-index-floating);
-        inset-block: calc(200svh - var(--size-action-minimum) - var(--resting-gap)) 0;
+        inset-block: min(200svh - var(--size-action-minimum) - var(--resting-gap), 100%) 0;
         inset-inline-end: max(
             var(--space-between-text) + var(--space-between-lines),
             var(--page-margin) - var(--size-action-minimum) - var(--space-between-content)

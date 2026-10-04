@@ -4,6 +4,7 @@ import HeaderBar from "./HeaderBar.astro";
 import MenuButton from "./MenuButton.astro";
 import MobileMenu from "./MobileMenu.astro";
 import NavList from "./NavList.astro";
+import ThemeToggle from "./ThemeToggle.astro";
 ---
 
 <header>
@@ -11,6 +12,7 @@ import NavList from "./NavList.astro";
         <nav aria-label="Main" class="navigation">
             <NavList items={site.navigation} layout="row" />
         </nav>
+        <ThemeToggle />
         <MenuButton command="show-modal" label="Menu" class="open" />
     </HeaderBar>
     <MobileMenu />
@@ -29,6 +31,11 @@ import NavList from "./NavList.astro";
             position: relative;
             z-index: var(--z-index-raised);
         }
+    }
+
+    /* Together with the row's gap, the switch sits as far from the last link as the links sit from each other. */
+    .navigation {
+        margin-inline-end: calc(var(--space-between-groups) - var(--space-between-content));
     }
 
     /* Media queries cannot read custom properties: 47.5rem is 760px at the default size. */

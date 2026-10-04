@@ -16,6 +16,6 @@ paths:
   layout helpers live in `src/styles/layout.css`.
 - Content blocks are components passed to `<Content components={…} />` in `Prose.astro`, so
   MDX files need no imports. A new block is a component there and a line in that map.
-- Anything that depends on a fact Naomi has not confirmed (`site.email`, `site.cvPath`)
+- Anything that depends on a fact Naomi has not supplied (`site.cvPath`)
   renders only when it is set.
 - Interactive markup works without script. If it cannot, ask before adding any.

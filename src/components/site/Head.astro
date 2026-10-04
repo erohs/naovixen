@@ -1,6 +1,7 @@
 ---
 import { Font } from "astro:assets";
-import menuHandoff from "../../scripts/menu-handoff.js?raw";
+import applyTheme from "../../scripts/apply-theme.js?raw";
+import menu from "../../scripts/menu.js?raw";
 import { site } from "../../site";
 
 export interface Props {
@@ -22,10 +23,11 @@ const canonical = new URL(Astro.url.pathname, Astro.site).href;
 <title>{documentTitle}</title>
 <meta name="description" content={description} />
 {isCanonical && <link rel="canonical" href={canonical} />}
-<script is:inline set:html={menuHandoff} />
+<script is:inline set:html={applyTheme} />
+<script is:inline set:html={menu} />
 <Font cssVariable="--font-fredoka" preload />
-<Font cssVariable="--font-schibsted-grotesk" />
-<Font cssVariable="--font-jetbrains-mono" />
+<Font cssVariable="--font-schibsted-grotesk" preload />
+<Font cssVariable="--font-jetbrains-mono" preload />
 <Font cssVariable="--font-gochi-hand" />
 <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
 <link rel="alternate" type="application/rss+xml" title={`${site.name}'s blog`} href="/blog/feed.xml" />

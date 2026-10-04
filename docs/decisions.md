@@ -8,22 +8,29 @@ otherwise undo by mistake. Versions live in `pnpm-lock.yaml`.
 The site was a TanStack Start and React monorepo reading from Sanity. For one author and
 seven mostly static pages, the CMS, the package boundaries and about 160 KB of client script
 cost more than they gave. It is now one Astro package that builds to plain HTML, with content
-as MDX in the repo. Publishing is a push; a branch gets a preview on Cloudflare.
+as MDX in the repo. Publishing is a push; a branch gets a preview on Cloudflare. The old code
+is at the `pre-astro` tag.
 
-What went with it: editing in a browser, draft preview (use a branch), and free-text blog
-search. Topic pages replace search for now; if the blog grows enough to need it, a build-time
-index is the next step. The old code is at the `pre-astro` tag.
+Blog search runs in the browser over `/blog/search.json`, with the old matching rules. Without
+script, the topic pages stand in for it.
 
-## One inline script, and only for one animation
+## Two small inline scripts, and two bundled ones
 
-Everything else is HTML and CSS. The narrow-screen menu is a modal `<dialog>` opened by an
+Pages work fully without script. The narrow-screen menu is a modal `<dialog>` opened by an
 invoker command (`commandfor`/`command`), so opening, focus, Escape and the inert page behind
-it need no script. The script in `src/scripts/menu-handoff.js` only carries the menu's closing
-slide across a page load, which a multi-page site cannot do otherwise. Cross-document view
-transitions would, but Firefox has not shipped them; revisit when it does.
+it need none. What script adds:
 
-The content security policy in `public/_headers` allows that script by its hash. A unit test
-fails if the script changes and the hash does not.
+- `apply-theme.js`, inline before first paint, applies a chosen theme and marks that script
+  runs, so the theme switch can show.
+- `menu.js`, inline, gives Safari's opening menu focus, which Safari withholds from a dialog
+  that was hidden while closed. It also carries the menu's closing slide across a page change:
+  the click starts the slide and records when, and the next page resumes it from that point
+  with a negative `animation-delay`. Native cross-document view transitions would do this, but
+  Firefox has not shipped them and they cannot be polyfilled. Revisit when it does.
+- `theme-toggle.ts` and `post-search.ts` are bundled modules, loaded only where they are used.
+
+The content security policy in `public/_headers` allows the inline scripts by their hashes. A
+unit test fails if either changes and its hash does not.
 
 ## The closed menu stays rendered
 
@@ -33,10 +40,11 @@ run, and the `overlay` property that prevents that is Chromium's alone. So the m
 as the old panel did. A hidden dialog is out of the tab order and the accessibility tree, and
 with page styles off the browser's own stylesheet still hides it.
 
-## The theme follows the system setting
+## The theme follows the system setting until the reader chooses
 
-There is no toggle. Colours are `light-dark()` pairs, so a reader's light or dark setting
-applies with no script and no stored preference, and code blocks follow it too.
+Colours are `light-dark()` pairs, so the system setting applies with no script, code blocks
+included. The switch sets `data-theme`, which sets `color-scheme`, and remembers the choice in
+`localStorage`. It is hidden without script, when there would be nothing to switch.
 
 ## Experience and skills are TypeScript lists, not collections
 
@@ -47,7 +55,25 @@ and skill groups are ordered by meaning. A typed list keeps its order and is as 
 
 Astro 7 defaults to `'jsx'`, which drops the space where markup breaks across lines between
 inline elements. Prettier breaks long lines, so copy lost its spaces ("NaomiShore"). The
-classic setting collapses whitespace to one space instead.
+classic setting collapses whitespace to one space instead. Where even one space is wrong, as
+between a surname and its paw, the parent is a flex container, which ignores it.
+
+## Fonts use `font-display: optional`
+
+Every page is a new document, so a font swapping in after the first paint moved the
+right-aligned navigation on each page change. `optional` uses a cached or preloaded font from
+the first frame and otherwise keeps the size-matched fallback for that page.
+
+## Icon defaults have no specificity
+
+An icon's own size and the size its parent gives it tied on specificity, so stylesheet order
+decided, and that order differs between dev and a build. The icon's defaults sit in `:where()`.
+
+## No-script checks strip scripts rather than switch them off
+
+With script disabled, Playwright's own timers stop, so axe hangs and clicks cannot wait for an
+element to settle. Accessibility is scanned with script on, and again on each page served with
+its scripts removed, which renders exactly as it does with script off.
 
 ## TypeScript 6, not 7
 

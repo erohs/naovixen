@@ -91,3 +91,12 @@
         --border-width-default: var(--border-width-standout);
     }
 }
+
+/* A theme the reader chose with the switch overrides the system setting. */
+:root[data-theme="light"] {
+    color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+    color-scheme: dark;
+}

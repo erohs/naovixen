@@ -6,9 +6,16 @@ import ElsewhereList from "./ElsewhereList.astro";
 import HeaderBar from "./HeaderBar.astro";
 import MenuButton from "./MenuButton.astro";
 import NavList from "./NavList.astro";
+import ThemeToggle from "./ThemeToggle.astro";
 ---
 
 <dialog id="menu" class="menu" aria-label="Menu">
+    <div class="row">
+        <HeaderBar>
+            <ThemeToggle />
+            <MenuButton command="close" label="Close menu" />
+        </HeaderBar>
+    </div>
     <div class="sheet">
         <div class="content">
             <nav aria-label="Main">
@@ -24,11 +31,6 @@ import NavList from "./NavList.astro";
                 <ElsewhereList />
             </div>
         </div>
-    </div>
-    <div class="row">
-        <HeaderBar>
-            <MenuButton command="close" label="Close menu" />
-        </HeaderBar>
     </div>
 </dialog>
 
@@ -53,7 +55,7 @@ import NavList from "./NavList.astro";
         margin: 0;
         padding: 0;
         border: 0;
-        overflow: hidden;
+        overflow: clip;
         visibility: hidden;
         background: transparent;
         color: inherit;
@@ -64,8 +66,10 @@ import NavList from "./NavList.astro";
         }
     }
 
+    /* First in the markup, so focus meets the logo and close button before the links, as it did in the header. */
     .row {
         position: relative;
+        z-index: var(--z-index-raised);
     }
 
     /*
@@ -180,19 +184,18 @@ import NavList from "./NavList.astro";
         }
     }
 
-    /* While a link from the menu loads, its links fade as the sheet waits to slide away. */
-    :global(html[data-menu-leaving]) .menu[open] .content {
-        opacity: 0;
-        transition: opacity 0.2s ease;
-    }
+    /*
+     * After a link in the menu is followed, the new page arrives with the sheet part-way through
+     * its slide and carries on from there: the delay is the time already spent on the old page.
+     */
+    :global(html[data-menu-closing]) .menu:not([open]) {
+        --elapsed: var(--menu-slide-elapsed, 0ms);
 
-    /* The new page arrives with the empty sheet in place, and slides it away once. */
-    :global(html[data-menu-leaving]) .menu:not([open]) {
         pointer-events: none;
-        animation: leave 0.5s;
+        animation: leave 0.5s var(--elapsed);
 
         & .sheet {
-            animation: slide-away 0.5s cubic-bezier(0.7, 0, 0.25, 1);
+            animation: slide-away 0.5s cubic-bezier(0.7, 0, 0.25, 1) var(--elapsed);
         }
 
         /* The real header's button unfolds in its place. */
@@ -236,8 +239,8 @@ import NavList from "./NavList.astro";
             opacity: 1;
         }
 
-        :global(html[data-menu-leaving]) .menu:not([open]) {
-            animation: fade-away var(--duration-medium) var(--easing-standard);
+        :global(html[data-menu-closing]) .menu:not([open]) {
+            animation: fade-away var(--duration-medium) var(--easing-standard) var(--elapsed);
 
             & .sheet {
                 animation: none;

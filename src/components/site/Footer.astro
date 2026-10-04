@@ -26,8 +26,15 @@ const year = new Date().getFullYear();
         justify-content: space-between;
         gap: 0 var(--space-between-blocks);
         min-block-size: calc(var(--size-action-minimum) + 2 * var(--space-between-groups));
-        padding-inline: var(--space-padding-page-centred);
         padding-block: var(--space-between-groups);
+        padding-inline: var(--space-padding-page-centred);
+
+        /* Where the margin is too narrow to hold the back-to-top link, the end makes room for it. */
+        padding-inline-end: max(
+            var(--space-padding-page-centred),
+            var(--size-action-minimum) + var(--space-between-content) + var(--space-between-text) +
+                var(--space-between-lines)
+        );
         border-block-start: var(--border-width-standout) solid var(--color-border);
         background-color: var(--color-background-surface);
         color: var(--color-text-secondary);

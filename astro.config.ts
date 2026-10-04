@@ -8,6 +8,8 @@ export default defineConfig({
     trailingSlash: "always",
     build: { format: "directory" },
     scopedStyleStrategy: "where",
+    /* The toolbar injects hidden, focusable controls, so dev would no longer behave like the built site. */
+    devToolbar: { enabled: false },
     /* Keeps one space where markup breaks across lines; the default drops it between inline elements. */
     compressHTML: true,
     integrations: [mdx(), sitemap()],
@@ -19,6 +21,10 @@ export default defineConfig({
             transformers: [codeTitle],
         },
     },
+    /*
+     * "optional" uses a cached or preloaded font from the first frame and otherwise keeps the
+     * size-matched fallback for that page, so text never shifts when a font swaps in mid-view.
+     */
     fonts: [
         {
             provider: fontProviders.fontsource(),
@@ -27,6 +33,7 @@ export default defineConfig({
             weights: ["400 700"],
             subsets: ["latin"],
             fallbacks: ["sans-serif"],
+            display: "optional",
         },
         {
             provider: fontProviders.fontsource(),
@@ -35,6 +42,7 @@ export default defineConfig({
             weights: ["400 700"],
             subsets: ["latin"],
             fallbacks: ["sans-serif"],
+            display: "optional",
         },
         {
             provider: fontProviders.fontsource(),
@@ -43,6 +51,7 @@ export default defineConfig({
             weights: ["400 700"],
             subsets: ["latin"],
             fallbacks: ["monospace"],
+            display: "optional",
         },
         {
             provider: fontProviders.fontsource(),
@@ -51,6 +60,7 @@ export default defineConfig({
             weights: [400],
             subsets: ["latin"],
             fallbacks: ["cursive"],
+            display: "optional",
         },
     ],
 });

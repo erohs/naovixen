@@ -86,18 +86,20 @@ const { command, label, class: className } = Astro.props;
         }
     }
 
-    /* After following a link from the menu, the new page unfolds the menu button from the cross it left as. */
-    :global(html[data-menu-leaving]) [command="show-modal"] .line {
+    /* After a link in the menu is followed, the new page's button finishes unfolding from the cross. */
+    :global(html[data-menu-closing]) [command="show-modal"] .line {
+        --elapsed: var(--menu-slide-elapsed, 0ms);
+
         &:nth-child(1) {
-            animation: unfold-first 0.35s cubic-bezier(0.3, 1.4, 0.5, 1);
+            animation: unfold-first 0.35s cubic-bezier(0.3, 1.4, 0.5, 1) var(--elapsed);
         }
 
         &:nth-child(2) {
-            animation: unfold-second 0.2s ease;
+            animation: unfold-second 0.2s ease var(--elapsed);
         }
 
         &:nth-child(3) {
-            animation: unfold-third 0.35s cubic-bezier(0.3, 1.4, 0.5, 1);
+            animation: unfold-third 0.35s cubic-bezier(0.3, 1.4, 0.5, 1) var(--elapsed);
         }
     }
 
@@ -128,7 +130,7 @@ const { command, label, class: className } = Astro.props;
 
     @media (prefers-reduced-motion: reduce) {
         .line,
-        :global(html[data-menu-leaving]) [command="show-modal"] .line {
+        :global(html[data-menu-closing]) [command="show-modal"] .line {
             transition: none;
             animation: none;
         }

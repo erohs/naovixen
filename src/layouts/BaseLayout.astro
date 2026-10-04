@@ -27,23 +27,27 @@ const { isFullBleed = false, ...headProps } = Astro.props;
             <Header />
             <main id="main" tabindex="-1" class:list={["main", !isFullBleed && "main--padded"]}>
                 <slot />
-                <BackToTop />
             </main>
             <Footer />
+            <BackToTop />
         </div>
     </body>
 </html>
 
 <style>
-    /* Keeps the footer at the bottom of a short page. */
+    /*
+     * Keeps the footer at the bottom of a short page. Clipped, so nothing positioned inside it,
+     * such as the back-to-top track, can extend the page past its footer.
+     */
     .page {
+        position: relative;
+        overflow: clip;
         display: flex;
         flex-direction: column;
         min-block-size: 100dvh;
     }
 
     .main {
-        position: relative;
         flex-grow: 1;
 
         /* Focus lands here only to start the next Tab after skipping; it is not a control. */

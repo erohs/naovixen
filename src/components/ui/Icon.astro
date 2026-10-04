@@ -20,7 +20,8 @@ const Svg = icon.default;
 <Svg class:list={["icon", className]} width="24" height="24" aria-hidden="true" focusable="false" />
 
 <style>
-    .icon {
+    /* Defaults only: no specificity, so a size or display set where the icon is placed always wins. */
+    :where(.icon) {
         display: inline-block;
         flex-shrink: 0;
         inline-size: 1.1em;

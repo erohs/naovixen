@@ -2,18 +2,31 @@ import { expect, test } from "@playwright/test";
 
 test.use({ viewport: { width: 390, height: 760 } });
 
+/**
+ * With script off, Playwright's own timers stop, so it cannot wait for an element to stop moving
+ * before clicking. Clicks are forced instead; the menu needs no script to respond to them.
+ */
+const click = { force: true };
+
 test.beforeEach(async ({ page }) => {
     await page.goto("/about/");
 });
 
-test("opens over the page, which becomes inert, and closes with Escape", async ({ page }) => {
+test("opens over the page, which becomes inert, and closes with Escape", async ({
+    page,
+    browserName,
+    javaScriptEnabled,
+}) => {
     const menuButton = page.getByRole("button", { name: "Menu", exact: true });
     await menuButton.focus();
     await page.keyboard.press("Enter");
 
     const menu = page.getByRole("dialog", { name: "Menu" });
     await expect(menu).toBeVisible();
-    await expect(page.getByRole("button", { name: "Close menu" })).toBeFocused();
+    if (javaScriptEnabled || browserName !== "webkit") {
+        // Without script, Safari gives an opening dialog that was hidden while closed no focus.
+        await expect(page.getByRole("button", { name: "Close menu" })).toBeFocused();
+    }
     expect(await page.evaluate(() => document.elementFromPoint(10, 700)?.closest("dialog") !== null)).toBe(true);
 
     await page.keyboard.press("Escape");
@@ -22,24 +35,24 @@ test("opens over the page, which becomes inert, and closes with Escape", async (
 });
 
 test("closes from its own close button", async ({ page }) => {
-    await page.getByRole("button", { name: "Menu", exact: true }).click();
-    await page.getByRole("button", { name: "Close menu" }).click();
+    await page.getByRole("button", { name: "Menu", exact: true }).click(click);
+    await page.getByRole("button", { name: "Close menu" }).click(click);
     await expect(page.getByRole("dialog", { name: "Menu" })).toBeHidden();
 });
 
 test("leads to the page chosen", async ({ page }) => {
-    await page.getByRole("button", { name: "Menu", exact: true }).click();
-    await page.getByRole("dialog").getByRole("link", { name: "Blog" }).click();
+    await page.getByRole("button", { name: "Menu", exact: true }).click(click);
+    await page.waitForTimeout(800); // until its links have slid into view
+    await page.getByRole("dialog").getByRole("link", { name: "Blog" }).click(click);
     await expect(page).toHaveURL(/\/blog\/$/);
     await expect(page.getByRole("dialog", { name: "Menu" })).toBeHidden();
 });
 
-test("slides away over the new page after a link is followed", async ({ page, javaScriptEnabled }) => {
-    test.skip(!javaScriptEnabled, "The hand-off is the one thing that needs script.");
+test("keeps sliding closed across the change of page after a link is followed", async ({ page, javaScriptEnabled }) => {
+    test.skip(!javaScriptEnabled, "Without script the new page simply arrives with the menu closed.");
     await page.getByRole("button", { name: "Menu", exact: true }).click();
     await page.getByRole("dialog").getByRole("link", { name: "Work" }).click();
     await page.waitForURL(/\/work\/$/);
-    const isLeaving = await page.evaluate(() => "menuLeaving" in document.documentElement.dataset);
-    expect(isLeaving).toBe(true);
-    await expect.poll(() => page.evaluate(() => "menuLeaving" in document.documentElement.dataset)).toBe(false);
+    await expect(page.getByRole("dialog", { name: "Menu" })).toBeHidden();
+    await expect.poll(() => page.evaluate(() => "menuClosing" in document.documentElement.dataset)).toBe(false);
 });

@@ -1,0 +1,75 @@
+---
+import Icon from "../ui/Icon.astro";
+---
+
+<button type="button" class="button button--round toggle" aria-pressed="false" data-theme-toggle hidden>
+    <Icon name="moon" class="moon" />
+    <Icon name="sun" class="sun" />
+    <span class="visually-hidden">Dark mode</span>
+</button>
+
+<script>
+    import { connectThemeToggles } from "../../scripts/theme-toggle";
+
+    connectThemeToggles();
+</script>
+
+<style>
+    /*
+     * Shown only once script runs: without it the page follows the system setting and there is
+     * nothing to switch. The hidden attribute keeps it out of the page with styles off too.
+     * The sun shows on a dark page and the moon on a light one, so the icon says what is showing.
+     */
+    .toggle {
+        display: none;
+    }
+
+    :global(html[data-js]) .toggle {
+        display: inline-flex;
+    }
+
+    .sun {
+        display: none;
+    }
+
+    :global(html[data-theme="dark"]) .sun {
+        display: inline-block;
+    }
+
+    :global(html[data-theme="dark"]) .moon {
+        display: none;
+    }
+
+    @media (prefers-color-scheme: dark) {
+        :global(html:not([data-theme])) .sun {
+            display: inline-block;
+        }
+
+        :global(html:not([data-theme])) .moon {
+            display: none;
+        }
+    }
+
+    /* The new theme grows in a circle from the toggle over a still picture of the old one. */
+    @media (prefers-reduced-motion: no-preference) {
+        :global(::view-transition-old(root)),
+        :global(::view-transition-new(root)) {
+            animation: none;
+            mix-blend-mode: normal;
+        }
+
+        :global(::view-transition-new(root)) {
+            animation: reveal var(--duration-slow) var(--easing-emphasized);
+        }
+    }
+
+    @keyframes reveal {
+        from {
+            clip-path: circle(0 at var(--reveal-x) var(--reveal-y));
+        }
+
+        to {
+            clip-path: circle(var(--reveal-radius) at var(--reveal-x) var(--reveal-y));
+        }
+    }
+</style>

@@ -11,9 +11,8 @@ export interface INavigationItem {
 }
 
 /**
- * Facts about Naomi shown across the site. Only what she has cleared for publishing: an email
- * address and a CV are left out until she supplies them, and every place that uses one hides
- * itself while it is missing.
+ * Facts about Naomi shown across the site. LinkedIn is the only confirmed profile. Every value
+ * marked "Placeholder" is the prototype's and must be replaced or removed before launch.
  */
 export const site = {
     name: "Naomi Shore",
@@ -22,7 +21,9 @@ export const site = {
     jobTitle: "Software Engineer",
     origin: "https://naovixen.com",
     locale: "en-GB",
-    email: undefined as string | undefined,
+    /** Placeholder: not a confirmed address. */
+    email: "hello@naovixen.dev" as string | undefined,
+    /** No public CV exists yet, so every download link stays hidden until this is set. */
     cvPath: undefined as string | undefined,
     profiles: [
         {
@@ -30,6 +31,20 @@ export const site = {
             detail: "linkedin.com/in/naomi-shore",
             url: "https://www.linkedin.com/in/naomi-shore",
             icon: "linkedin",
+        },
+        /** Placeholder: the prototype's handle. */
+        {
+            label: "GitHub",
+            detail: "github.com/username",
+            url: "https://github.com/username",
+            icon: "github",
+        },
+        /** Placeholder: the prototype's handle. */
+        {
+            label: "Bluesky",
+            detail: "@username.bsky.social",
+            url: "https://bsky.app/profile/username.bsky.social",
+            icon: "bluesky",
         },
     ] satisfies IProfile[] as IProfile[],
     navigation: [
