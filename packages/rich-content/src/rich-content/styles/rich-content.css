@@ -13,7 +13,18 @@
     }
 
     & :is(ul, ol) {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-between-text);
         padding-inline-start: var(--space-indent-list);
+    }
+
+    & li {
+        padding-inline-start: var(--space-between-lines);
+    }
+
+    & li::marker {
+        color: var(--color-text-accent);
     }
 }
 
