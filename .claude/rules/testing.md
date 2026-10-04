@@ -1,7 +1,7 @@
 ---
 paths:
-    - '**/*.spec.ts'
-    - '**/*.spec.tsx'
+    - "**/*.spec.ts"
+    - "**/*.spec.tsx"
 ---
 
 # Testing
@@ -47,12 +47,12 @@ Always `test`, never `it`. One `describe` per scenario, its title one sentence: 
 subject, then any context, then the action. No nested `describe` blocks.
 
 ```ts
-describe('Using ThemeController, given no stored preference and a dark system theme, when the state is read', () => {
-    test('then it should resolve to the dark theme', () => {});
+describe("Using ThemeController, given no stored preference and a dark system theme, when the state is read", () => {
+    test("then it should resolve to the dark theme", () => {});
 });
 
-describe('Using ThemeController, when the preference is set to light', () => {
-    test('then it should persist light to storage', () => {});
+describe("Using ThemeController, when the preference is set to light", () => {
+    test("then it should persist light to storage", () => {});
 });
 ```
 

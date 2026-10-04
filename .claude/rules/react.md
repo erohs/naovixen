@@ -1,6 +1,6 @@
 ---
 paths:
-    - '**/*.tsx'
+    - "**/*.tsx"
 ---
 
 # React
@@ -13,12 +13,12 @@ caller's:
 export const Text: FunctionComponent<ITextProps> = ({
     variant = TextVariant.Body,
     className,
+    children,
     ...paragraphProps
 }) => (
-    <p
-        {...paragraphProps}
-        className={joinClassNames('nv-text', `nv-text--${variant}`, className)}
-    />
+    <p {...paragraphProps} className={joinClassNames("nv-text", `nv-text--${variant}`, className)}>
+        {children}
+    </p>
 );
 ```
 
@@ -27,10 +27,34 @@ straight through. React 19 removed `children` from `FunctionComponent`, so decla
 the props interface when a component that does not extend an element's props takes
 children.
 
-A component file exports its component and nothing else. Its props interface, enums,
-constants and helpers live in the sibling subfolders. A page file may also hold the
-sections only that page uses, as unexported functions beside it, each within the usual
-limits.
+Children are explicit. A component that takes them destructures `children` and renders it
+between its tags; one that takes none omits it (`Omit<…, "children">`) and self-closes.
+Nothing passes children through a spread.
+
+Props are never typed in the signature: an interface in `interfaces/` (`IBackToTopProps`) or,
+for an alias such as an `Omit`, a type in `types/` (`BackToTopProps`).
+
+One component per file, enforced by lint. A component file exports its component and
+nothing else. Its props interface, enums, constants and helpers live in the sibling
+subfolders. A page's sections are files beside the page.
+
+## No custom hooks
+
+Logic lives in services, controllers and functions that know nothing of React. A component
+binds them with React's own hooks or with a ref callback that returns its cleanup:
+
+```tsx
+<div ref={(panel) => (panel === null ? undefined : dismissOnEscape(panel, onDismiss))} />
+```
+
+A visual that follows the page, such as BackToTop appearing on scroll, writes a `data-*`
+attribute from its ref callback rather than holding React state, so nothing re-renders.
+
+## Text
+
+Every string comes from the package's `resources/<locale>.json` through its `translate`
+constant: `translate("backToTop")`. Interpolate and pluralise inside the message,
+`translate("readingTime", { count })`, never by joining strings in JSX.
 
 ## One job each, parts as compounds
 
@@ -78,7 +102,11 @@ const onClick = (): void => {
 
 ## Markup
 
-Reach for a landmark, a heading, a `<button>` or an `<a>` before a `<div>`. A thing that
+Reach for a landmark, a heading, a `<button>` or an `<a>` before a `<div>`, and for the
+element the platform already has: `<dialog>` for a modal, `<details>` for an uncontrolled
+disclosure, `<hgroup>` for a heading and its intro line, `<search>` around a search form. An
+extra element earns its place by meaning or by a job nothing else can do, such as a scroll
+container; never wrap just to hang a class. A thing that
 navigates is an `<a>`; a thing that acts is a `<button>`. A link drawn as a button is
 `LinkButton`: still an anchor, but announced as a button and answering to Space, so someone
 using voice control can say what they see.
@@ -97,6 +125,24 @@ order, a meaningless `alt`, or a focus order that makes no sense.
 - Nothing communicated by colour alone.
 - Real `alt` text, or `alt=""` when genuinely decorative.
 - Anything animated respects `prefers-reduced-motion`.
+- Reflows at 320 CSS px with no sideways scroll, and survives user text spacing: no fixed
+  heights on text.
+- A control's accessible name starts with its visible text, so voice control can say it.
+- Nothing sticky or fixed hides the focused element.
+- A modal is a `<dialog>`: the page behind is inert, Escape closes it, focus returns to its
+  opener. An overlay that keeps part of the page usable above it, such as the header menu,
+  is a disclosure: while open, `inertOutside` and `containFocus` hold the reader to what
+  shows, and Escape closes it with focus back on its button. Whatever opens over its
+  invoker closes on Escape and returns focus.
+- Status messages speak through a `LiveRegion` beside their subject (see CLAUDE.md).
+
+## Performance
+
+- Images are `Image`: lazy and async by default, with `width` and `height`. The largest image
+  above the fold is `loading="eager"` and `fetchPriority="high"`.
+- Static content renders on the server; client code waits for an interaction.
+- Scrolling, resizing and theme changes never re-render a tree to restyle it: an attribute
+  and CSS do it.
 
 ## Design system
 

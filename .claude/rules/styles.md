@@ -1,7 +1,7 @@
 ---
 paths:
-    - '**/*.css'
-    - 'packages/theming/src/tokens/**'
+    - "**/*.css"
+    - "packages/theming/src/tokens/**"
 ---
 
 # CSS
@@ -56,6 +56,23 @@ Declared once, in `packages/theming/src/index.css`:
 Layer order settles precedence, so a rule that loses a fight is in the wrong layer.
 `!important` is a lint error.
 
+## Stacking
+
+`z-index` takes only a layer token, enforced by Stylelint, so nothing is bumped to win a fight.
+Five layers, each with one meaning, shown on the design system's tokens page:
+
+| Layer                | Use                                                     |
+| -------------------- | ------------------------------------------------------- |
+| `--z-index-behind`   | Decoration behind its own block's content               |
+| `--z-index-raised`   | A part lifted above the rest of its block               |
+| `--z-index-floating` | Fixed controls over the page, such as back-to-top       |
+| `--z-index-overlay`  | What covers the page, such as the header with its menu  |
+| `--z-index-topmost`  | What must never be covered while focused: the skip link |
+
+A block that stacks its own parts with `behind` or `raised` sets `isolation: isolate`, so
+they stay inside it. Two parts on one layer stack in source order. Something that seems to
+need a sixth layer is in the wrong stacking context.
+
 ## Theming
 
 Themes redefine semantic colour tokens and nothing else. `<html>` carries `data-theme` for
@@ -67,9 +84,9 @@ on the theme, and nothing outside the token files selects on `[data-theme]`.
 Style ARIA and `data-*` attributes, not state classes:
 
 ```css
-.nv-tab[aria-selected='true'] {
+.nv-tab[aria-selected="true"] {
 }
-.nv-disclosure[data-state='open'] {
+.nv-disclosure[data-state="open"] {
 }
 ```
 
@@ -83,6 +100,13 @@ Style ARIA and `data-*` attributes, not state classes:
 - Decorative flourishes are `aria-hidden` in the markup and toned down under reduced motion
   and forced colours.
 
+## Separation
+
+No dividers. Content is separated by space and grouping, never by an `<hr>`, a rule, or a
+border between sections or list items. A border outlines a box; it never splits one. In
+forced colours, where backgrounds vanish, a box that relies on its fill keeps a
+`transparent` border so the system draws one.
+
 ## Layout
 
 No layout components. A block or page lays itself out in its own stylesheet: `display`,
@@ -91,7 +115,9 @@ content at the page width.
 
 ## Modern CSS
 
-Use where Baseline allows, checking first: nesting, `:has()`, container queries, `clamp()`,
+Every browser gets the same result. Use a feature only once Chromium, Firefox and Safari all
+ship it, checking first; never a Chromium-only one such as `overlay` or `closedby`. Within
+that: nesting, `:has()`, container queries, `clamp()`,
 `oklch()`, `light-dark()`, `@property`, `color-scheme`, View Transitions as progressive
 enhancement only.
 

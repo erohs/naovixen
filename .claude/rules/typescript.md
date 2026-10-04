@@ -1,7 +1,7 @@
 ---
 paths:
-    - '**/*.ts'
-    - '**/*.tsx'
+    - "**/*.ts"
+    - "**/*.tsx"
 ---
 
 # Naming, file names, TypeScript
@@ -17,12 +17,12 @@ no SCREAMING_SNAKE_CASE here.
 | `I` prefix                      | Every interface                             | `IThemeStorage`              |
 | `I…Props`                       | Component props interfaces                  | `IProjectCardProps`          |
 | `_` prefix                      | Private class members                       | `private _notifyListeners()` |
-| `use` prefix                    | Hooks                                       | `useTheme`                   |
 | `on` prefix                     | Handlers and callback props, simple present | `onSelect`, not `onSelected` |
 | `is` / `has` / `should` / `can` | Booleans                                    | `isFeatured`                 |
 
 Enum names end in a singular noun; members are PascalCase. `interface` for object shapes,
-`type` for unions, aliases and mapped types.
+`type` for unions, aliases and mapped types. Only interfaces take the `I`: a props alias
+in `types/` is `BackToTopProps`.
 
 Acronyms are cased as words: `SeoMetadata`, `IApiResponse`, `parseVttCue`.
 
@@ -35,12 +35,11 @@ Name things for what they mean, not their type: `publishedPosts`, not `postArray
 
 PascalCase, named after the single thing exported, plus a role suffix. The casing applies
 to the file, not the export: `resolveTheme` lives in `ResolveTheme.function.ts` and
-`useTheme` in `UseTheme.hook.ts`. Directories stay kebab-case.
+`timeoutScheduler` in `TimeoutScheduler.const.ts`. Directories stay kebab-case.
 
 | Exports              | Suffix           |
 | -------------------- | ---------------- |
 | React component      | `.component.tsx` |
-| React hook           | `.hook.ts`       |
 | React context        | `.context.ts`    |
 | Function             | `.function.ts`   |
 | Constant or instance | `.const.ts`      |
@@ -57,6 +56,12 @@ block, so `LinkTile.component.tsx` pairs with `styles/link-tile.css`.
 One exported thing per file. Named exports only, except where a framework requires
 otherwise (`export const Route`).
 
+## Functions
+
+Arrow functions everywhere, enforced by lint: `export const formatDate = (isoDate: string):
+string => …`. No `function` declarations or expressions. A class keeps its methods; one that
+is handed out as a callback, such as `subscribe`, is an arrow property so `this` holds.
+
 ## Rules
 
 `strict`, plus `noUncheckedIndexedAccess` and `exactOptionalPropertyTypes`.
@@ -69,13 +74,18 @@ otherwise (`export const Route`).
 
 ## Comments
 
-Only where the code genuinely cannot speak for itself: a non-obvious constraint, a
-workaround and its reason, a unit, an edge case. A comment restating the signature is
-noise.
+Make the code readable first: a better name, a smaller function, a named constant. Add a
+comment only when that cannot carry it:
 
-A comment that earns its place is TSDoc, `/** … */`, on the declaration it explains — so
-editors show it where the symbol is used. No `//` line comments. In CSS, `/* … */` above
-the rule it explains.
+- TSDoc on a declaration whose contract the signature cannot state: a non-obvious
+  constraint, a unit, an edge case, why a native feature was not enough.
+- `TODO:`, `FIXME:` or `HACK:` with its reason.
+- Tool directives: `eslint-disable-next-line … -- reason`, `@ts-expect-error`, IDE
+  `noinspection`.
+
+Never a comment that restates the code, narrates a step, labels a section or records
+history. Lint allows only these forms (`naovixen/allowed-comments`); whether one earns its
+place is for review. In CSS, `/* … */` above the rule, by the same test.
 
 ## Not enforced by lint
 
