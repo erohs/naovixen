@@ -78,10 +78,10 @@ export const namingConventionOptions = [
         format: null,
     },
 
-    /** Portable Text's own field names, which every block and span carries. */
+    /** Sanity's own field names: every document's id and type, each block's key, each reference. */
     {
         selector: ["objectLiteralProperty", "typeProperty"],
-        filter: { regex: "^_(type|key)$", match: true },
+        filter: { regex: "^_(type|key|id|ref)$", match: true },
         format: null,
     },
 
