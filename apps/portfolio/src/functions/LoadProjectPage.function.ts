@@ -1,14 +1,13 @@
-import { notFound } from '@tanstack/react-router';
-import type { IProjectRepository } from '@naovixen/cms';
-
-import type { IProjectPageData } from '../interfaces/IProjectPageData';
-import { findNextProject } from './FindNextProject.function';
+import { notFound } from "@tanstack/react-router";
+import type { IProjectRepository } from "@naovixen/cms";
+import type { IProjectPageData } from "../interfaces/IProjectPageData";
+import { findNextProject } from "./FindNextProject.function";
 
 /** Throws the router's not-found for an unknown slug, which renders the 404 with a 404 status. */
-export async function loadProjectPage(
+export const loadProjectPage = async (
     projectRepository: IProjectRepository,
     slug: string,
-): Promise<IProjectPageData> {
+): Promise<IProjectPageData> => {
     const [project, projects] = await Promise.all([
         projectRepository.getProjectBySlug(slug),
         projectRepository.listProjects(),
@@ -20,4 +19,4 @@ export async function loadProjectPage(
     }
 
     return { project, nextProject: findNextProject(projects, slug) };
-}
+};

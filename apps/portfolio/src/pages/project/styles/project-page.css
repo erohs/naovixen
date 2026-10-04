@@ -11,9 +11,7 @@
 }
 
 .nv-project-page__stack {
-    margin-block: var(--space-between-regions) 0;
-    padding-block: var(--space-between-blocks);
-    border-block: var(--border-width-standout) solid var(--color-border);
+    margin-block-start: var(--space-between-regions);
 
     & dt {
         margin-block-end: var(--space-between-text);
@@ -35,20 +33,7 @@
     margin-block-start: var(--space-between-sections);
 }
 
-/* Sets the case study's end apart from the links onward. */
-.nv-project-page__rule {
-    margin-block: var(--space-between-sections) var(--space-between-groups);
-}
-
+/* The links onward stand apart from the end of the case study. */
 .nv-project-page__more {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-between;
-    gap: var(--space-between-content);
-}
-
-.nv-project-page__next {
-    font-family: var(--font-family-heading);
-    font-size: var(--font-size-lead);
+    margin-block-start: calc(var(--space-between-sections) + var(--space-between-groups));
 }

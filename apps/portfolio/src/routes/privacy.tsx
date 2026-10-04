@@ -1,15 +1,15 @@
-import { createFileRoute } from '@tanstack/react-router';
-import { OpenGraphType } from '@naovixen/seo';
+import { createFileRoute } from "@tanstack/react-router";
+import { OpenGraphType } from "@naovixen/seo";
+import { PrivacyPage } from "../pages/privacy/PrivacyPage.component";
+import { buildRouteHead } from "../functions/BuildRouteHead.function";
+import { translate } from "../translate/Translate.const";
 
-import { PrivacyPage } from '../pages/privacy/PrivacyPage.component';
-import { buildRouteHead } from '../functions/BuildRouteHead.function';
-
-export const Route = createFileRoute('/privacy')({
+export const Route = createFileRoute("/privacy")({
     head: () =>
         buildRouteHead({
-            title: 'Privacy notice',
-            description: 'What this site collects about you, and why.',
-            path: '/privacy',
+            title: translate("privacy.title"),
+            description: translate("privacy.description"),
+            path: "/privacy",
             type: OpenGraphType.Website,
         }),
     component: PrivacyPage,

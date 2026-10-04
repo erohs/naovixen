@@ -1,1 +1,1 @@
-export const privateCacheControl = 'private, no-store';
+export const privateCacheControl = "private, no-store";

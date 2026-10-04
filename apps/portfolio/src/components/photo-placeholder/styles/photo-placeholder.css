@@ -1,10 +1,6 @@
 /* A tilted portrait frame, striped in a faint tint of the line colour. */
 .nv-photo-placeholder {
-    --photo-placeholder-stripe: color-mix(
-        in oklch,
-        var(--color-border) 12%,
-        var(--color-background-surface)
-    );
+    --photo-placeholder-stripe: color-mix(in oklch, var(--color-border) 12%, var(--color-background-surface));
 
     display: grid;
     place-items: center;

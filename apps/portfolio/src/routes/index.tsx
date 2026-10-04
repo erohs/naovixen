@@ -1,17 +1,17 @@
-import type { ReactNode } from 'react';
-import { createFileRoute } from '@tanstack/react-router';
-import { OpenGraphType } from '@naovixen/seo';
-import { buildPersonStructuredData, buildWebSiteStructuredData } from '@naovixen/seo';
-
-import { HomePage } from '../pages/home/HomePage.component';
-import { latestPostCount } from '../constants/LatestPostCount.const';
-import { person } from '../constants/Person.const';
-import { site } from '../constants/Site.const';
-import { buildRouteHead } from '../functions/BuildRouteHead.function';
+import type { ReactNode } from "react";
+import { createFileRoute } from "@tanstack/react-router";
+import { OpenGraphType } from "@naovixen/seo";
+import { buildPersonStructuredData, buildWebSiteStructuredData } from "@naovixen/seo";
+import { HomePage } from "../pages/home/HomePage.component";
+import { latestPostCount } from "../constants/LatestPostCount.const";
+import { person } from "../constants/Person.const";
+import { site } from "../constants/Site.const";
+import { buildRouteHead } from "../functions/BuildRouteHead.function";
+import { translate } from "../translate/Translate.const";
 
 const HomeComponent = (): ReactNode => <HomePage {...Route.useLoaderData()} />;
 
-export const Route = createFileRoute('/')({
+export const Route = createFileRoute("/")({
     loader: async ({ context }) => {
         const [projects, posts] = await Promise.all([
             context.projectRepository.listProjects(),
@@ -26,10 +26,9 @@ export const Route = createFileRoute('/')({
     head: () =>
         buildRouteHead(
             {
-                title: 'Naomi Shore — Software Engineer',
-                description:
-                    'Naomi Shore is a software engineer with seven years of experience across React, TypeScript and C#/.NET, and a focus on accessibility.',
-                path: '/',
+                title: translate("home.title", { site: site.name }),
+                description: translate("home.description"),
+                path: "/",
                 type: OpenGraphType.Website,
             },
             [buildPersonStructuredData(person, site), buildWebSiteStructuredData(site)],

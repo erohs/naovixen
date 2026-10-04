@@ -1,4 +1,4 @@
-import type { IBlogPostSummary } from '@naovixen/cms';
+import type { IBlogPostSummary } from "@naovixen/cms";
 
 export interface IBlogPageProps {
     /** Newest first. */

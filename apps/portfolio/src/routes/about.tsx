@@ -1,16 +1,15 @@
-import { createFileRoute } from '@tanstack/react-router';
-import { OpenGraphType } from '@naovixen/seo';
+import { createFileRoute } from "@tanstack/react-router";
+import { OpenGraphType } from "@naovixen/seo";
+import { AboutPage } from "../pages/about/AboutPage.component";
+import { buildRouteHead } from "../functions/BuildRouteHead.function";
+import { translate } from "../translate/Translate.const";
 
-import { AboutPage } from '../pages/about/AboutPage.component';
-import { buildRouteHead } from '../functions/BuildRouteHead.function';
-
-export const Route = createFileRoute('/about')({
+export const Route = createFileRoute("/about")({
     head: () =>
         buildRouteHead({
-            title: 'About',
-            description:
-                'About Naomi Shore: a software engineer who joined PebblePad as an apprentice in 2019 and earned a first-class degree alongside the job.',
-            path: '/about',
+            title: translate("about.title"),
+            description: translate("about.description"),
+            path: "/about",
             type: OpenGraphType.Website,
         }),
     component: AboutPage,

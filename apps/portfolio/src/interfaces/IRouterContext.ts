@@ -1,4 +1,4 @@
-import type { IBlogRepository, IProjectRepository } from '@naovixen/cms';
+import type { IBlogRepository, IProjectRepository } from "@naovixen/cms";
 
 /** Handed to every route's loader, so routes depend on interfaces rather than a CMS. */
 export interface IRouterContext {

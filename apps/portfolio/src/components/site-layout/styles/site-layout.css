@@ -23,7 +23,6 @@
     }
 }
 
-/* The greeting, then the address and the profiles beneath it, all to the start. */
 .nv-site-layout__menu-footer {
     display: flex;
     flex-direction: column;

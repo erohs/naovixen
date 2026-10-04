@@ -1,7 +1,6 @@
-import type { IProject, IProjectRepository, IProjectSummary } from '@naovixen/cms';
-
-import { getProjectBySlugOnServer } from './constants/GetProjectBySlugOnServer.const';
-import { listProjectsOnServer } from './constants/ListProjectsOnServer.const';
+import type { IProject, IProjectRepository, IProjectSummary } from "@naovixen/cms";
+import { getProjectBySlugOnServer } from "./constants/GetProjectBySlugOnServer.const";
+import { listProjectsOnServer } from "./constants/ListProjectsOnServer.const";
 
 /** Reads through server functions, like ServerFunctionBlogRepository. */
 export class ServerFunctionProjectRepository implements IProjectRepository {

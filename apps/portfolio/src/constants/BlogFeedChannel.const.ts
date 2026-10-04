@@ -1,11 +1,10 @@
-import type { IFeedChannel } from '@naovixen/seo';
-
-import { blogDescription } from './BlogDescription.const';
-import { site } from './Site.const';
+import type { IFeedChannel } from "@naovixen/seo";
+import { translate } from "../translate/Translate.const";
+import { site } from "./Site.const";
 
 export const blogFeedChannel: IFeedChannel = {
-    title: `${site.name}'s blog`,
-    description: blogDescription,
-    path: '/blog',
-    feedPath: '/blog/feed.xml',
+    title: translate("site.feedTitle", { name: site.name }),
+    description: translate("blog.description"),
+    path: "/blog",
+    feedPath: "/blog/feed.xml",
 };

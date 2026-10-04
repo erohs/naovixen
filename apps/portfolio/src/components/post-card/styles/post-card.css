@@ -1,6 +1,6 @@
 /* Covers the card, so the whole card is one link without nesting everything inside it. */
 .nv-post-card__link::before {
-    content: '';
+    content: "";
     position: absolute;
     inset: 0;
 }
@@ -17,5 +17,4 @@
     gap: var(--space-between-content);
     margin-block-start: auto;
     padding-block-start: calc(var(--space-between-content) + var(--space-between-lines));
-    border-block-start: var(--border-width-default) dashed var(--color-border);
 }

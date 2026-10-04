@@ -12,9 +12,9 @@
     },
     "dependencies": {
         "@fontsource-variable/fredoka": "catalog:",
-        "@naovixen/rich-content": "workspace:*",
         "@naovixen/cms": "workspace:*",
         "@naovixen/components": "workspace:*",
+        "@naovixen/rich-content": "workspace:*",
         "@naovixen/seo": "workspace:*",
         "@naovixen/theming": "workspace:*",
         "@naovixen/utilities": "workspace:*",
@@ -24,6 +24,7 @@
         "@sanity/preview-url-secret": "4.1.5",
         "@tanstack/react-router": "1.170.40",
         "@tanstack/react-start": "1.168.59",
+        "i18next": "catalog:",
         "react": "catalog:",
         "react-dom": "catalog:"
     },

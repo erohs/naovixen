@@ -1,4 +1,6 @@
+import type { MessageKey } from "../../../types/MessageKey";
+
 export interface IPrinciple {
-    readonly title: string;
-    readonly description: string;
+    readonly title: MessageKey;
+    readonly description: MessageKey;
 }

@@ -15,9 +15,8 @@ import {
     playwrightIcon,
     reactIcon,
     typeScriptIcon,
-} from '@naovixen/components';
-
-import type { ISkillGroup } from '../interfaces/ISkillGroup';
+} from "@naovixen/components";
+import type { ISkillGroup } from "../interfaces/ISkillGroup";
 
 /**
  * Placeholder from the prototype. Most are on Naomi's CV; Node.js, Docker, Playwright and
@@ -25,39 +24,39 @@ import type { ISkillGroup } from '../interfaces/ISkillGroup';
  */
 export const placeholderSkillGroups: readonly ISkillGroup[] = [
     {
-        label: 'languages',
+        label: "skills.languages",
         skills: [
-            { name: 'TypeScript', logo: typeScriptIcon },
-            { name: 'JavaScript', logo: javaScriptIcon },
-            { name: 'C#', logo: cSharpIcon },
-            { name: 'HTML', logo: htmlIcon },
-            { name: 'CSS', logo: cssIcon },
+            { name: "skills.typeScript", logo: typeScriptIcon },
+            { name: "skills.javaScript", logo: javaScriptIcon },
+            { name: "skills.cSharp", logo: cSharpIcon },
+            { name: "skills.html", logo: htmlIcon },
+            { name: "skills.css", logo: cssIcon },
         ],
     },
     {
-        label: 'front end',
+        label: "skills.frontEnd",
         skills: [
-            { name: 'React', logo: reactIcon },
-            { name: 'AngularJS', logo: angularIcon },
-            { name: 'Accessibility', logo: accessibilityIcon },
+            { name: "skills.react", logo: reactIcon },
+            { name: "skills.angularJs", logo: angularIcon },
+            { name: "skills.accessibility", logo: accessibilityIcon },
         ],
     },
     {
-        label: 'back end & cloud',
+        label: "skills.backEndAndCloud",
         skills: [
-            { name: '.NET', logo: dotNetIcon },
-            { name: 'Node.js', logo: nodeJsIcon },
-            { name: 'AWS', logo: awsIcon },
-            { name: 'Docker', logo: dockerIcon },
+            { name: "skills.dotNet", logo: dotNetIcon },
+            { name: "skills.nodeJs", logo: nodeJsIcon },
+            { name: "skills.aws", logo: awsIcon },
+            { name: "skills.docker", logo: dockerIcon },
         ],
     },
     {
-        label: 'tooling & AI',
+        label: "skills.toolingAndAi",
         skills: [
-            { name: 'Playwright', logo: playwrightIcon },
-            { name: 'Git', logo: gitIcon },
-            { name: 'GitHub Copilot', logo: gitHubCopilotIcon },
-            { name: 'Claude', logo: claudeIcon },
+            { name: "skills.playwright", logo: playwrightIcon },
+            { name: "skills.git", logo: gitIcon },
+            { name: "skills.gitHubCopilot", logo: gitHubCopilotIcon },
+            { name: "skills.claude", logo: claudeIcon },
         ],
     },
 ];

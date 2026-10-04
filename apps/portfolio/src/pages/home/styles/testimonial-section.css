@@ -7,11 +7,7 @@
 
 /* Stripes in a faint tint of the line colour, like the other photo placeholders. */
 .nv-testimonial-attribution__photo {
-    --testimonial-attribution-stripe: color-mix(
-        in oklch,
-        var(--color-border) 12%,
-        var(--color-background-surface)
-    );
+    --testimonial-attribution-stripe: color-mix(in oklch, var(--color-border) 12%, var(--color-background-surface));
 
     flex: none;
     inline-size: calc(var(--space-between-regions) + var(--space-between-text));
@@ -75,7 +71,7 @@
     font-size: var(--font-size-lead);
 
     &::before {
-        content: '\201C' / '';
+        content: "\201C" / "";
         position: absolute;
         inset-block-start: -0.33em;
         inset-inline-start: clamp(var(--space-between-content), 3vw, var(--space-between-groups));
@@ -87,7 +83,7 @@
     }
 
     &::after {
-        content: '';
+        content: "";
         position: absolute;
         inset-block-end: calc(-1 * (var(--space-between-text) + var(--border-width-standout)));
         inset-inline-start: calc(var(--space-between-regions) + var(--space-between-text));

@@ -1,10 +1,7 @@
-import type { ComponentPropsWithRef } from 'react';
-import type { ILink } from '@naovixen/components';
+import type { ComponentPropsWithRef } from "react";
+import type { ILink } from "@naovixen/components";
 
-export interface IMoreNavigationProps extends Omit<
-    ComponentPropsWithRef<'nav'>,
-    'children' | 'aria-label'
-> {
+export interface IMoreNavigationProps extends Omit<ComponentPropsWithRef<"nav">, "children" | "aria-label"> {
     /** Names the landmark, such as "More posts". */
     readonly label: string;
     readonly backLink: ILink;

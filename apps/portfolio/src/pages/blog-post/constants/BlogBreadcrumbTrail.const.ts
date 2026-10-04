@@ -1,8 +1,8 @@
-import type { ILink } from '@naovixen/components';
-
-import { homeBreadcrumbTrail } from '../../../constants/HomeBreadcrumbTrail.const';
+import type { ILink } from "@naovixen/components";
+import { homeBreadcrumbTrail } from "../../../constants/HomeBreadcrumbTrail.const";
+import { translate } from "../../../translate/Translate.const";
 
 export const blogBreadcrumbTrail: readonly ILink[] = [
     ...homeBreadcrumbTrail,
-    { label: 'Blog', href: '/blog' },
+    { label: translate("navigation.blog"), href: "/blog" },
 ];

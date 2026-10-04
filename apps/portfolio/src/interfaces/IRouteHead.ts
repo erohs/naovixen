@@ -1,4 +1,4 @@
-import type { MetaTag } from '@naovixen/seo';
+import type { MetaTag } from "@naovixen/seo";
 
 /** The part of a TanStack Router `head()` result this site fills in. */
 export interface IRouteHead {

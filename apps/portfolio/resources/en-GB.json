@@ -1,0 +1,179 @@
+{
+    "site": {
+        "skipToContent": "Skip to content",
+        "pageLoading": "Loading page",
+        "elsewhere": "Elsewhere",
+        "notFoundTitle": "Page not found — {{site}}",
+        "feedTitle": "{{name}}'s blog"
+    },
+    "navigation": {
+        "home": "Home",
+        "work": "Work",
+        "about": "About",
+        "blog": "Blog",
+        "contact": "Contact",
+        "privacy": "Privacy notice"
+    },
+    "footer": {
+        "blurb": "Naomi Shore, software engineer. Open to full-time roles.",
+        "siteColumn": "site",
+        "elsewhereColumn": "elsewhere",
+        "email": "Email",
+        "copyright": "© {{year}} {{name}}"
+    },
+    "cv": {
+        "download": "Download CV",
+        "downloadWithFileType": "Download CV (PDF)",
+        "fileType": "PDF",
+        "full": "Full CV",
+        "fullWithFileType": "Full CV (PDF)"
+    },
+    "photoPlaceholder": {
+        "label": "Photo",
+        "portrait": "Photo placeholder: portrait of Naomi Shore",
+        "of": "Photo placeholder: {{name}}"
+    },
+    "moreNavigation": {
+        "next": "Next: {{title}}"
+    },
+    "post": {
+        "topics": "Topics",
+        "allPosts": "All posts",
+        "morePosts": "More posts"
+    },
+    "project": {
+        "techStack": "Tech stack",
+        "techStackTerm": "tech stack",
+        "view": "View project",
+        "viewNamed": "View project: {{title}}",
+        "allProjects": "All projects",
+        "moreProjects": "More projects"
+    },
+    "interests": {
+        "heading": "Away from the keyboard",
+        "walks": "Long walks with a flask of tea",
+        "printing": "Lino printing and bad puns",
+        "mentoring": "Mentoring new developers",
+        "reading": "Reading far too much Nordic noir"
+    },
+    "home": {
+        "title": "{{site}} — Software Engineer",
+        "description": "Naomi Shore is a software engineer with seven years of experience across React, TypeScript and C#/.NET, and a focus on accessibility.",
+        "greeting": "hey, come on in!",
+        "givenName": "Naomi",
+        "familyName": "Shore",
+        "summary": "Software engineer building calm, dependable web apps and developer tools, mostly in TypeScript, React and Node.js.",
+        "seeMyWork": "See my work",
+        "featuredProjects": "Featured projects",
+        "featuredProjectsIntro": "Three recent builds, from an everyday app to a tool for other developers.",
+        "aboutHeading": "About me",
+        "aboutLead": "I'm Naomi. I like software that feels quiet and works hard.",
+        "aboutBody": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. For the last few years I've built product features end to end, from the database schema to the last pixel of a focus state. I like clear code reviews, calm on-call rotas and documentation people actually read.",
+        "moreAboutMe": "More about me",
+        "latestPosts": "From the blog",
+        "contactHeading": "Got a role in mind?",
+        "contactBody": "I'm open to full-time software engineering roles and usually reply within two working days.",
+        "getInTouch": "Get in touch"
+    },
+    "experience": {
+        "heading": "Experience",
+        "intro": "Seven years at one company, from apprentice to engineer, with a degree along the way.",
+        "employer": "PebblePad<place>, UK</place>",
+        "employerDescription": "Higher-education portfolio and assessment platform",
+        "employerDates": "July 2019 – present",
+        "engineerTwo": "Software Engineer II",
+        "engineerTwoDates": "Oct 2025 – present",
+        "engineerTwoSummary": "Delivered closed captions and transcription for uploaded audio and video across 3 products, and resolved 100+ WCAG 2.2 issues in a dedicated accessibility team.",
+        "engineerOne": "Software Engineer I",
+        "engineerOneDates": "Aug 2023 – Oct 2025",
+        "engineerOneSummary": "Engineered the front end of a self-service settings capability spanning 3 products, and introduced the first automated tests for the authorisation layer.",
+        "apprentice": "Apprentice Software Engineer",
+        "apprenticeDates": "Jul 2019 – Aug 2023",
+        "apprenticeSummary": "Built in-product messaging, and a pdf.js document viewer that replaced commercially licensed libraries to cut recurring costs.",
+        "degree": "BSc (Hons) Digital and Technology Solutions Professional (Software Engineering)",
+        "degreeDates": "2019 – 2023",
+        "education": "University of Wolverhampton · <strong>First Class Honours</strong>",
+        "degreeNote": "Degree apprenticeship, alongside full-time delivery."
+    },
+    "skills": {
+        "heading": "Skills",
+        "intro": "The tools and languages I use day to day.",
+        "languages": "languages",
+        "frontEnd": "front end",
+        "backEndAndCloud": "back end & cloud",
+        "toolingAndAi": "tooling & AI",
+        "typeScript": "TypeScript",
+        "javaScript": "JavaScript",
+        "cSharp": "C#",
+        "html": "HTML",
+        "css": "CSS",
+        "react": "React",
+        "angularJs": "AngularJS",
+        "accessibility": "Accessibility",
+        "dotNet": ".NET",
+        "nodeJs": "Node.js",
+        "aws": "AWS",
+        "docker": "Docker",
+        "playwright": "Playwright",
+        "git": "Git",
+        "gitHubCopilot": "GitHub Copilot",
+        "claude": "Claude"
+    },
+    "testimonial": {
+        "heading": "Testimonial",
+        "quote": "Placeholder: Naomi is the engineer everyone wants on their team. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+        "name": "Colleague Name",
+        "role": "Engineering Manager, Company Name"
+    },
+    "about": {
+        "title": "About",
+        "description": "About Naomi Shore: a software engineer who joined PebblePad as an apprentice in 2019 and earned a first-class degree alongside the job.",
+        "greeting": "the longer version!",
+        "heading": "About me",
+        "lead": "I'm Naomi, a software engineer who likes turning fuzzy problems into tidy, well-tested software.",
+        "apprenticeship": "I joined PebblePad as an apprentice in 2019 and earned a first-class BSc through a degree apprenticeship, studying and shipping production code in the same week. That taught me to learn fast and to explain my thinking clearly. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+        "nowadays": "These days I work mostly between the front end and the API: TypeScript, React and Node.js, plus a growing amount of work with LLM APIs. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+        "howIWork": "How I work",
+        "smallChanges": "Small, reviewable changes",
+        "smallChangesDescription": "Short pull requests, clear commit messages and tests that explain intent.",
+        "accessibleByDefault": "Accessible by default",
+        "accessibleByDefaultDescription": "Keyboard, screen reader and contrast checks are part of done, not a later ticket.",
+        "writeItDown": "Write it down",
+        "writeItDownDescription": "Decision records and READMEs so the next person, often me, has context.",
+        "getInTouch": "Get in touch"
+    },
+    "blog": {
+        "title": "Blog",
+        "description": "Writing by Naomi Shore on front-end engineering, accessibility and building software.",
+        "intro": "Notes on front-end craft, accessibility and the odd side project.",
+        "empty": "There are no posts yet."
+    },
+    "work": {
+        "title": "Work",
+        "intro": "Selected projects, covering the problem, my approach and what I learnt.",
+        "empty": "There are no projects yet."
+    },
+    "contact": {
+        "title": "Contact",
+        "description": "How to get in touch with Naomi Shore.",
+        "greeting": "say hello!",
+        "heading": "Let's talk",
+        "body": "Whether it's a role, a project or a quick question, email is the fastest way to reach me. I usually reply within two working days.",
+        "elsewhere": "or find me here"
+    },
+    "notFound": {
+        "heading": "Page not found",
+        "lead": "There is nothing at this address. The page may have moved, or the link may have a typo in it.",
+        "home": "Go to the home page"
+    },
+    "privacy": {
+        "title": "Privacy notice",
+        "description": "What this site collects about you, and why.",
+        "lastUpdated": "Last updated <date>{{date}}</date>",
+        "intro": "This site collects as little as possible. Here's exactly what, and why.",
+        "cookiesHeading": "Cookies and analytics",
+        "cookies": "No tracking cookies. Your light or dark mode choice is saved in your browser so it’s remembered next time. Lorem ipsum: placeholder for any cookie-free analytics you add.",
+        "rightsHeading": "Your rights",
+        "rights": "You can ask to see or delete anything you've sent me. Email <email>{{email}}</email> and I'll sort it within a month."
+    }
+}

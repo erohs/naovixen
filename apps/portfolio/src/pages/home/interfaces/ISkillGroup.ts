@@ -1,7 +1,8 @@
-import type { ISkill } from './ISkill';
+import type { MessageKey } from "../../../types/MessageKey";
+import type { ISkill } from "./ISkill";
 
 export interface ISkillGroup {
     /** Written in lower case, as the handwritten label shows it. */
-    readonly label: string;
+    readonly label: MessageKey;
     readonly skills: readonly ISkill[];
 }

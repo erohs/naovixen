@@ -45,14 +45,12 @@
 .nv-project-card__footer {
     margin-block-start: auto;
     margin-inline: var(--project-card-inset);
-    padding-block: calc(var(--space-between-content) + var(--space-between-lines))
-        var(--space-between-lines);
-    border-block-start: var(--border-width-default) dashed var(--color-border);
+    padding-block: calc(var(--space-between-content) + var(--space-between-lines)) var(--space-between-lines);
 }
 
 /* Covers the card, so the whole card is one link without nesting everything inside it. */
 .nv-project-card__link::before {
-    content: '';
+    content: "";
     position: absolute;
     inset: 0;
 }

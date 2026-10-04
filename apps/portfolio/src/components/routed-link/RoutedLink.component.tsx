@@ -1,16 +1,8 @@
-import type { FunctionComponent } from 'react';
-import { createLink } from '@tanstack/react-router';
-import type { AnchorProps } from '@naovixen/components';
-
-import { exactActiveOptions } from './constants/ExactActiveOptions.const';
-import { noActiveProps } from './constants/NoActiveProps.const';
-
-/** The anchor the router drives. `Link` has already given it the site's look. */
-const PlainAnchor: FunctionComponent<AnchorProps> = ({ children, ...anchorProps }) => (
-    <a {...anchorProps}>{children}</a>
-);
-
-const RouterLink = createLink(PlainAnchor);
+import type { FunctionComponent } from "react";
+import type { AnchorProps } from "@naovixen/components";
+import { exactActiveOptions } from "./constants/ExactActiveOptions.const";
+import { noActiveProps } from "./constants/NoActiveProps.const";
+import { RouterLink } from "./constants/RouterLink.const";
 
 /**
  * The site's link to a page on it, navigating on the client. Handed to `LinkProvider` once,
@@ -21,11 +13,7 @@ const RouterLink = createLink(PlainAnchor);
  *
  * `target` is passed only when set: the router's own `target` does not accept `undefined`.
  */
-export const RoutedLink: FunctionComponent<AnchorProps> = ({
-    href = '/',
-    target,
-    ...linkProps
-}) => (
+export const RoutedLink: FunctionComponent<AnchorProps> = ({ href = "/", target, ...linkProps }) => (
     <RouterLink
         {...linkProps}
         {...(target === undefined ? {} : { target })}

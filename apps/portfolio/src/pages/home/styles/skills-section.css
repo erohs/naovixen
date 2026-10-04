@@ -27,7 +27,6 @@
     flex-wrap: wrap;
     gap: var(--space-between-content) var(--space-between-groups);
     padding-block: var(--space-between-blocks);
-    border-block-start: var(--border-width-default) solid var(--color-border);
 }
 
 /* Level with the middle of the first row of tiles. */

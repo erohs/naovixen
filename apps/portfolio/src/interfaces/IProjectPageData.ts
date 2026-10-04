@@ -1,4 +1,4 @@
-import type { IProject, IProjectSummary } from '@naovixen/cms';
+import type { IProject, IProjectSummary } from "@naovixen/cms";
 
 export interface IProjectPageData {
     readonly project: IProject;

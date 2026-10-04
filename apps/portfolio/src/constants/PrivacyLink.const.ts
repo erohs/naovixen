@@ -1,3 +1,4 @@
-import type { ILink } from '@naovixen/components';
+import type { ILink } from "@naovixen/components";
+import { translate } from "../translate/Translate.const";
 
-export const privacyLink: ILink = { label: 'Privacy notice', href: '/privacy' };
+export const privacyLink: ILink = { label: translate("navigation.privacy"), href: "/privacy" };

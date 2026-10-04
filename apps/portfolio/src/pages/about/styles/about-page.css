@@ -12,10 +12,6 @@
     gap: var(--space-between-content);
 }
 
-.nv-about-page__rule {
-    max-inline-size: calc(var(--layout-width-prose) * 5 / 9);
-}
-
 /* As many equal columns as fit, dropping to one on narrow screens. */
 .nv-about-introduction {
     display: grid;
