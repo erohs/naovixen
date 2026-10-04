@@ -1,7 +1,7 @@
 import { defineArrayMember, defineField, defineType } from "sanity";
 import { CaseIcon } from "@sanity/icons/Case";
-import { bodyField } from "./BodyField.const";
-import { imageField } from "./ImageField.const";
+import { bodyField } from "../../body/constants/BodyField.const";
+import { imageField } from "../../image/constants/ImageField.const";
 
 export const projectType = defineType({
     name: "project",

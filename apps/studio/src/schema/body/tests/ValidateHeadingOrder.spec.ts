@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest";
-import { validateHeadingOrder } from "../ValidateHeadingOrder.function";
+import { validateHeadingOrder } from "../functions/ValidateHeadingOrder.function";
 
 describe("Using validateHeadingOrder, when given a subheading before any heading", () => {
     test("then it should ask for a heading before it", () => {

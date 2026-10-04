@@ -1,6 +1,6 @@
 import { defineField, defineType } from "sanity";
 import { ImageIcon } from "@sanity/icons/Image";
-import { imageField } from "./ImageField.const";
+import { imageField } from "../../image/constants/ImageField.const";
 
 /** Renders as the site's Figure: the fields are its props. */
 export const figureType = defineType({

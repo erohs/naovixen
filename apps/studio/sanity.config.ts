@@ -3,10 +3,10 @@ import { presentationTool } from "sanity/presentation";
 import { structureTool } from "sanity/structure";
 import { visionTool } from "@sanity/vision";
 import { codeInput } from "@sanity/code-input";
-import { presentationLocations } from "./src/constants/PresentationLocations.const";
-import { previewOrigin } from "./src/constants/PreviewOrigin.const";
+import { presentationLocations } from "./src/presentation/constants/PresentationLocations.const";
+import { previewOrigin } from "./src/presentation/constants/PreviewOrigin.const";
 import { sanityProject } from "./src/constants/SanityProject.const";
-import { schemaTypes } from "./src/constants/SchemaTypes.const";
+import { schemaTypes } from "./src/schema/constants/SchemaTypes.const";
 
 export default defineConfig({
     name: "default",

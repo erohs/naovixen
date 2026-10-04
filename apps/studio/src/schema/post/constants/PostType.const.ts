@@ -1,6 +1,6 @@
 import { defineArrayMember, defineField, defineType } from "sanity";
 import { DocumentTextIcon } from "@sanity/icons/DocumentText";
-import { bodyField } from "./BodyField.const";
+import { bodyField } from "../../body/constants/BodyField.const";
 
 export const postType = defineType({
     name: "post",
