@@ -1,0 +1,47 @@
+---
+title: "Self-service settings"
+summary: "A model-driven settings system that became the foundation for every user preference feature."
+order: 3
+featured: true
+stack: ["React", "TypeScript", "RxJS", "Design system"]
+---
+
+<Facts
+    items={[
+        { label: "my role", value: "Front-end lead" },
+        { label: "timeline", value: "As Software Engineer I" },
+    ]}
+/>
+
+Built at PebblePad, so there's no public demo or repo. I'm happy to walk through it in more detail in an interview.
+
+## The problem
+
+Every new preference meant bespoke UI, bespoke validation and bespoke bugs, repeated across three products.
+
+## My approach
+
+I designed a model-driven React and TypeScript architecture. Each setting is described once as data, and the UI, validation and accessibility come from shared components built with our UX designers for the design system.
+
+```typescript title="settings.ts"
+export const settings = defineSettings({
+    captions: toggle({ label: "Show captions by default" }),
+    theme: choice({ label: "Theme", options: ["light", "dark", "system"] }),
+});
+```
+
+## Challenges
+
+Making it flexible without turning it into a framework nobody understood.
+
+<Callout label="lesson learnt" title="Optimise for the next engineer">
+    Adding a setting is one declaration and a test, so people actually use the system instead of working around it.
+</Callout>
+
+## Outcome
+
+Adopted as the foundation for all subsequent user preference features, across three products.
+
+## What I'd do differently
+
+Write the contributor guide alongside the first few settings, instead of once the patterns had settled.

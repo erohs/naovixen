@@ -1,0 +1,45 @@
+---
+title: "Building a high contrast theme that respects the user"
+excerpt: "prefers-contrast, forced colours and a manual toggle: three different things that all get called 'high contrast'."
+published: "2026-08-21"
+topics: ["Accessibility", "Design tokens"]
+---
+
+"High contrast" means at least three different things, and mixing them up is how themes end up fighting the people they're meant to help.
+
+- prefers-contrast: more. The person has asked their system for more contrast, but you still control the colours.
+- forced-colors: active. The system replaces your colours with its own palette, as with Windows contrast themes.
+- A site toggle. A theme you offer for people who can't, or don't want to, change system settings.
+
+## Start with tokens
+
+If every colour is a token, a contrast theme is just another set of values. Bump muted text up to full ink, thicken borders, and drop decorative textures that add visual noise.
+
+```css title="tokens.css"
+:root {
+    --ink: #1f1b22;
+    --muted: #564e5a;
+    --border-width: 2px;
+}
+@media (prefers-contrast: more) {
+    :root {
+        --muted: var(--ink);
+        --border-width: 3px;
+    }
+}
+[data-contrast="high"] {
+    --muted: var(--ink);
+    --border-width: 3px;
+}
+```
+
+## Then get out of the way
+
+In forced colours mode, don't try to restore your brand palette. Make sure meaning survives instead: borders on anything that relied on a background, system colours for focus rings, and forced-color-adjust: none only for small details that would otherwise vanish.
+
+<Callout label="tip!" title="Masked icons disappear">
+    Icons drawn with CSS masks are painted with background-color, which forced colours overrides. Give them
+    forced-color-adjust: none and a CanvasText background so they stay visible.
+</Callout>
+
+Finally, remember the person's choice. Save the toggle in localStorage, but let their system preference decide the first time they visit.

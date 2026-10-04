@@ -1,0 +1,58 @@
+---
+import type { HTMLAttributes } from "astro/types";
+
+/** Stands in for the pre element Shiki writes, so a code block is captioned with its file and language. */
+type Props = HTMLAttributes<"pre"> & { "data-language"?: string; "data-title"?: string };
+
+const { "data-language": language = "text", "data-title": title, class: className, ...attributes } = Astro.props;
+const caption = title ?? language;
+---
+
+<figure class="code">
+    <figcaption class="caption" aria-hidden="true">
+        {title !== undefined && <span>{title}</span>}
+        <span class="language">{language}</span>
+    </figcaption>
+    <pre
+        {...attributes}
+        class:list={[className, "block"]}
+        tabindex="0"
+        role="region"
+        aria-label={`${caption} code`}><slot /></pre>
+</figure>
+
+<style>
+    .code {
+        overflow: hidden;
+        border: var(--border-width-standout) solid var(--color-border);
+        border-radius: var(--radius-small);
+        background-color: var(--color-background-surface);
+    }
+
+    .caption {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: var(--space-between-text) var(--space-between-content);
+        padding: var(--space-padding-chip);
+        background-color: var(--color-background-page);
+        font-family: var(--font-family-code);
+        font-size: var(--font-size-meta);
+    }
+
+    .language {
+        margin-inline-start: auto;
+        color: var(--color-text-secondary);
+    }
+
+    .block {
+        padding: var(--space-padding-container);
+        line-height: var(--line-height-body);
+        overflow-x: auto;
+
+        /* Drawn inside, because the block's rounded corners clip anything outside. */
+        &:focus-visible {
+            outline-offset: calc(-1 * var(--border-width-highlight));
+        }
+    }
+</style>

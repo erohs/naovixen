@@ -1,0 +1,35 @@
+---
+interface Props {
+    items: { label: string; value: string }[];
+}
+
+const { items } = Astro.props;
+---
+
+<dl class="facts">
+    {items.map((item) => (
+        <div>
+            <dt class="label">{item.label}</dt>
+            <dd class="value">{item.value}</dd>
+        </div>
+    ))}
+</dl>
+
+<style>
+    .facts {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
+        gap: var(--space-between-blocks) var(--space-between-groups);
+    }
+
+    .label {
+        color: var(--color-text-accent);
+        font-family: var(--font-family-handwriting);
+        font-size: var(--font-size-h4);
+    }
+
+    .value {
+        margin: 0;
+        font-weight: var(--font-weight-semi-bold);
+    }
+</style>

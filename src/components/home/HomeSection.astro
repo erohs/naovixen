@@ -1,0 +1,55 @@
+---
+interface Props {
+    id?: string;
+    heading: string;
+    intro: string;
+}
+
+const { id, heading, intro } = Astro.props;
+const headingId = `${id ?? heading.toLowerCase().replace(/\W+/g, "-")}-title`;
+---
+
+<section id={id} aria-labelledby={headingId} class="section">
+    <div class="header">
+        <hgroup class="titles">
+            <h2 id={headingId}>{heading}</h2>
+            <p class="intro">{intro}</p>
+        </hgroup>
+        <slot name="action" />
+    </div>
+    <slot />
+</section>
+
+<style>
+    .section {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-below-heading);
+        padding-block: var(--space-between-sections);
+        padding-inline: var(--space-padding-page-centred);
+    }
+
+    /*
+     * The link beside the heading sits on the intro's last line. Where it wraps beneath, it keeps
+     * the same distance from the intro as the cards keep from it.
+     */
+    .header {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: end;
+        justify-content: space-between;
+        gap: var(--space-below-heading) var(--space-between-groups);
+    }
+
+    .titles {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-between-content);
+        max-inline-size: var(--layout-width-prose);
+    }
+
+    .intro {
+        max-inline-size: 52ch;
+        color: var(--color-text-secondary);
+    }
+</style>

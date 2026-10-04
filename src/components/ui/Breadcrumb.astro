@@ -1,0 +1,56 @@
+---
+import Link from "./Link.astro";
+
+interface Props {
+    trail: { label: string; href: string }[];
+    current: string;
+}
+
+const { trail, current } = Astro.props;
+---
+
+<nav aria-label="Breadcrumb">
+    <ol class="breadcrumb">
+        {trail.map((step) => (
+            <li class="step">
+                <Link href={step.href} variant="standalone">
+                    {step.label}
+                </Link>
+            </li>
+        ))}
+        <li class="step" aria-current="page">
+            {current}
+        </li>
+    </ol>
+</nav>
+
+<style>
+    .breadcrumb {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: var(--space-between-text);
+        padding: 0;
+        font-size: var(--font-size-small);
+        list-style: none;
+    }
+
+    .step {
+        display: flex;
+        align-items: center;
+        gap: var(--space-between-text);
+
+        /* The empty alternative text keeps the slash out of what a screen reader announces. */
+        & + &::before {
+            content: "/" / "";
+            color: var(--color-text-accent);
+            font-family: var(--font-family-handwriting);
+            font-size: var(--font-size-lead);
+            line-height: 1;
+        }
+
+        &[aria-current="page"] {
+            font-weight: var(--font-weight-semi-bold);
+        }
+    }
+</style>

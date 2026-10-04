@@ -1,0 +1,30 @@
+---
+import ExclamationBubble from "./ExclamationBubble.astro";
+import SpeechBubble from "./SpeechBubble.astro";
+
+interface Props {
+    greeting: string;
+    /** An exclamation adds motion lines beside the bubble. */
+    isExclamation?: boolean;
+}
+
+const { greeting, isExclamation = false } = Astro.props;
+const Bubble = isExclamation ? ExclamationBubble : SpeechBubble;
+---
+
+<div class="greeting">
+    <Bubble>{greeting}</Bubble>
+    <h1>
+        <slot />
+    </h1>
+</div>
+
+<style>
+    /* The bubble comes first, so it is read before the heading it greets with. */
+    .greeting {
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+        gap: var(--space-between-blocks);
+    }
+</style>

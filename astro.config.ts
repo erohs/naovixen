@@ -1,18 +1,22 @@
 import { defineConfig, fontProviders } from "astro/config";
 import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
+import { codeTitle } from "./src/lib/code-title";
 
 export default defineConfig({
     site: "https://naovixen.com",
     trailingSlash: "always",
     build: { format: "directory" },
     scopedStyleStrategy: "where",
+    /* Keeps one space where markup breaks across lines; the default drops it between inline elements. */
+    compressHTML: true,
     integrations: [mdx(), sitemap()],
     image: { layout: "constrained" },
     markdown: {
         shikiConfig: {
             themes: { light: "github-light", dark: "github-dark" },
             defaultColor: "light-dark()",
+            transformers: [codeTitle],
         },
     },
     fonts: [

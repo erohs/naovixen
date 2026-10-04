@@ -1,0 +1,20 @@
+---
+import PostList from "../../components/blog/PostList.astro";
+import TopicList from "../../components/blog/TopicList.astro";
+import PageLayout from "../../layouts/PageLayout.astro";
+import { getPublishedPosts } from "../../lib/content";
+import { topicsOf } from "../../lib/posts";
+
+const posts = await getPublishedPosts();
+---
+
+<PageLayout
+    title="Blog"
+    description="Writing by Naomi Shore on front-end engineering, accessibility and building software.">
+    <header class="page-header">
+        <h1>Blog</h1>
+        <p class="page-intro">Notes on accessibility, front-end craft and working well with AI.</p>
+    </header>
+    {posts.length > 0 && <TopicList topics={topicsOf(posts)} />}
+    <PostList posts={posts} />
+</PageLayout>

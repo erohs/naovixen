@@ -1,0 +1,69 @@
+---
+import { site } from "../../site";
+import Icon from "../ui/Icon.astro";
+import LinkButton from "../ui/LinkButton.astro";
+---
+
+<section aria-labelledby="contact-title" class="banner">
+    <div class="panel">
+        <div class="text">
+            <h2 id="contact-title" class="heading">
+                Got a role in mind?
+            </h2>
+            <p>
+                I'm open to full-time software engineering roles, especially where accessibility matters. I usually
+                reply within two working days.
+            </p>
+        </div>
+        <div class="actions">
+            <LinkButton href="/contact/" variant="primary">
+                Get in touch <Icon name="arrow-right" />
+            </LinkButton>
+            {site.email !== undefined && (
+                <LinkButton href={`mailto:${site.email}`}>
+                    {site.email} <Icon name="mail" />
+                </LinkButton>
+            )}
+        </div>
+    </div>
+</section>
+
+<style>
+    /* The last section on the home page, so it keeps the page's end space below it. */
+    .banner {
+        padding-block: var(--space-between-sections) var(--space-padding-page-end);
+        padding-inline: var(--space-padding-page-centred);
+    }
+
+    .panel {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: var(--space-between-groups) var(--space-between-regions);
+        padding: var(--space-padding-panel);
+        border: var(--border-width-standout) solid var(--color-border);
+        border-radius: var(--radius-large-alternate);
+        background-color: var(--color-background-surface);
+    }
+
+    .text {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-between-text);
+        max-inline-size: 44ch;
+        color: var(--color-text-secondary);
+    }
+
+    .heading {
+        color: var(--color-text-primary);
+        font-size: var(--font-size-h3);
+    }
+
+    .actions {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: var(--space-between-content);
+    }
+</style>

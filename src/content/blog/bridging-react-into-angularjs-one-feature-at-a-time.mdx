@@ -1,0 +1,32 @@
+---
+title: "Bridging React into AngularJS, one feature at a time"
+excerpt: "Shipping modern components inside a legacy app, without a big-bang rewrite."
+published: "2026-07-10"
+topics: ["React", "AngularJS", "Migration"]
+---
+
+Big-bang rewrites rarely ship. When we built in-product messaging, the surrounding app was AngularJS, so we built the new feature in React and mounted it inside the old app.
+
+## A thin bridge
+
+A small directive mounts a React root, passes bindings through as props and unmounts cleanly when Angular destroys the scope. Each new feature gets a bridge, and the legacy code around it shrinks over time.
+
+```typescript title="bridge.tsx"
+angular.module('app').directive('reactMessages', () => ({
+  scope: { threadId: '<' },
+  link(scope, el) {
+    const root = createRoot(el[0]);
+    const render = () => root.render(<Messages threadId={scope.threadId} />);
+    scope.$watch('threadId', render);
+    scope.$on('$destroy', () => root.unmount());
+  },
+}));
+```
+
+## Sanitise at the boundary
+
+Messages contain rich text written by staff, which is a classic XSS risk. Everything is sanitised against a strict allow-list before it's rendered, and the allow-list lives in one place so it can't drift between the two frameworks.
+
+<Callout label="lesson learnt" title="Migrate by feature, not by file">
+    Each bridged component was a real feature people wanted, so the migration paid for itself as it went.
+</Callout>

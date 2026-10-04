@@ -1,0 +1,29 @@
+/* As many equal columns as fit, down to one on a narrow screen. A lone card keeps its column's width. */
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(20rem, 100%), 1fr));
+    gap: calc(var(--space-between-groups) + var(--space-between-text)) var(--space-between-groups);
+    padding-inline-start: 0;
+    list-style: none;
+}
+
+/* A page's title block after its breadcrumb, with its own space above and below. */
+.page-header {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-between-content);
+    margin-block: var(--space-below-heading) var(--space-padding-panel);
+}
+
+.page-intro {
+    max-inline-size: 48ch;
+    color: var(--color-text-secondary);
+}
+
+.lead {
+    font-size: var(--font-size-lead);
+}
+
+.title-size {
+    font-size: var(--font-size-title);
+}

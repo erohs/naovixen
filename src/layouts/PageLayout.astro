@@ -1,0 +1,25 @@
+---
+import type { Props as HeadProps } from "../components/site/Head.astro";
+import StructuredData from "../components/site/StructuredData.astro";
+import Breadcrumb from "../components/ui/Breadcrumb.astro";
+import { breadcrumbData } from "../lib/structured-data";
+import BaseLayout from "./BaseLayout.astro";
+
+type Props = HeadProps & {
+    /** The steps above this page, after Home. */
+    trail?: { label: string; href: string }[];
+    /** The page's name in the breadcrumb, when it differs from its title. */
+    crumb?: string;
+};
+
+const { trail = [], crumb, ...headProps } = Astro.props;
+const steps = [{ label: "Home", href: "/" }, ...trail];
+const current = crumb ?? headProps.title;
+---
+
+<BaseLayout {...headProps}>
+    <StructuredData slot="head" data={breadcrumbData([...steps, { label: current, href: Astro.url.pathname }])} />
+    <slot name="head" slot="head" />
+    <Breadcrumb trail={steps} current={current} />
+    <slot />
+</BaseLayout>

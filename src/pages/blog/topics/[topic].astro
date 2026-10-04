@@ -1,0 +1,42 @@
+---
+import type { GetStaticPaths } from "astro";
+import type { CollectionEntry } from "astro:content";
+import PostList from "../../../components/blog/PostList.astro";
+import TopicList from "../../../components/blog/TopicList.astro";
+import PageLayout from "../../../layouts/PageLayout.astro";
+import { getPublishedPosts } from "../../../lib/content";
+import { topicsOf, type Topic } from "../../../lib/posts";
+
+export const getStaticPaths = (async () => {
+    const posts = await getPublishedPosts();
+    const topics = topicsOf(posts);
+    return topics.map((topic) => ({
+        params: { topic: topic.slug },
+        props: { topic, topics, posts: posts.filter((post) => post.data.topics.includes(topic.name)) },
+    }));
+}) satisfies GetStaticPaths;
+
+interface Props {
+    topic: Topic;
+    topics: Topic[];
+    posts: CollectionEntry<"blog">[];
+}
+
+const { topic, topics, posts } = Astro.props;
+const count = `${posts.length} ${posts.length === 1 ? "post" : "posts"}`;
+---
+
+<PageLayout
+    title={`Posts about ${topic.name}`}
+    description={`Writing by Naomi Shore about ${topic.name}.`}
+    trail={[{ label: "Blog", href: "/blog/" }]}
+    crumb={topic.name}>
+    <header class="page-header">
+        <h1>{topic.name}</h1>
+        <p class="page-intro">
+            {count} on {topic.name}.
+        </p>
+    </header>
+    <TopicList topics={topics} current={topic.slug} />
+    <PostList posts={posts} />
+</PageLayout>

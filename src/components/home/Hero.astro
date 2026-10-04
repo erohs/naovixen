@@ -1,0 +1,144 @@
+---
+import { site } from "../../site";
+import ExclamationBubble from "../ui/ExclamationBubble.astro";
+import Icon from "../ui/Icon.astro";
+import LinkButton from "../ui/LinkButton.astro";
+
+interface Props {
+    hasFeaturedProjects: boolean;
+}
+
+const { hasFeaturedProjects } = Astro.props;
+---
+
+<section aria-labelledby="hero-title" class="hero">
+    <ExclamationBubble>hey, come on in!</ExclamationBubble>
+    <h1 id="hero-title" class="name">
+        {site.givenName}
+        <span class="surname">
+            <span class="highlight">{site.familyName}</span>
+            <Icon name="paw" class="paw" />
+        </span>
+    </h1>
+    <p class="summary">
+        Software engineer building accessible, dependable web apps with React, TypeScript and C#/.NET.
+    </p>
+    <div class="actions">
+        <LinkButton href={hasFeaturedProjects ? "#work" : "#experience"} variant="primary">
+            See my work <Icon name="arrow-down" />
+        </LinkButton>
+        {site.cvPath !== undefined && (
+            <LinkButton href={site.cvPath} download>
+                Download CV <span class="file-type">PDF</span> <Icon name="download" />
+            </LinkButton>
+        )}
+    </div>
+</section>
+
+<style>
+    /*
+     * A field of dots fills the hero's right side and fades out towards every edge, strongest a
+     * little above and right of centre, behind the text.
+     */
+    .hero {
+        position: relative;
+        isolation: isolate;
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+        gap: var(--space-between-groups);
+        inline-size: 100%;
+        max-inline-size: calc(var(--layout-width-page) + 2 * var(--space-padding-page));
+        margin-inline: auto;
+        padding-block: calc(var(--space-between-sections) + var(--space-between-blocks))
+            calc(var(--space-between-sections) + var(--space-between-content));
+        padding-inline: var(--space-padding-page);
+
+        &::before {
+            content: "";
+            position: absolute;
+            z-index: -1;
+            inset-block: var(--space-padding-panel) 0;
+            inset-inline-end: var(--space-padding-page);
+            inline-size: min(calc(var(--layout-width-prose) * 8 / 9), calc(100% - 2 * var(--space-padding-page)));
+            background: radial-gradient(circle, var(--color-decoration-dots) 15%, transparent 20%) 0 0 /
+                var(--space-between-content) var(--space-between-content);
+            mask-image: radial-gradient(ellipse at 70% 40%, black, rgb(0 0 0 / 55%) 30%, transparent 68%);
+            opacity: 0.6;
+        }
+    }
+
+    .name {
+        font-size: var(--font-size-display);
+    }
+
+    /* Keeps the paw on the same line as the name it sits on, level with the top of the letters. */
+    .surname {
+        display: inline-flex;
+        align-items: baseline;
+        white-space: nowrap;
+    }
+
+    /* A brush stroke under the surname, drawn behind the letters. */
+    .highlight {
+        position: relative;
+        isolation: isolate;
+        display: inline-block;
+
+        &::after {
+            content: "";
+            position: absolute;
+            z-index: -1;
+            inset-inline: -2% -3%;
+            inset-block-end: -6%;
+            block-size: 13%;
+            border-radius: 40% 12px 30% 8px / 10px 30% 12px 40%;
+            background-color: var(--color-background-accent);
+            rotate: -1.5deg;
+        }
+    }
+
+    /* Sized and set off as the design does, in proportion to the heading. */
+    .paw {
+        display: inline-block;
+        inline-size: calc(var(--font-size-display) * 0.3);
+        block-size: calc(var(--font-size-display) * 0.3);
+        margin-block-start: calc(var(--font-size-display) * 0.3 * 0.04);
+        margin-inline-start: calc(var(--font-size-display) * 0.3 * 0.14);
+        align-self: start;
+        color: var(--color-decoration-paw);
+        rotate: 18deg;
+    }
+
+    .summary {
+        max-inline-size: 34ch;
+        color: var(--color-text-secondary);
+        font-size: calc(var(--font-size-lead) * 12 / 11);
+        line-height: 1.5;
+    }
+
+    /* A little further from the summary than the hero's other gaps. */
+    .actions {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: var(--space-between-content);
+        margin-block-start: var(--space-between-text);
+    }
+
+    .file-type {
+        font-family: var(--font-family-code);
+        font-size: var(--font-size-meta);
+        font-weight: var(--font-weight-regular);
+    }
+
+    @media (forced-colors: active) {
+        .hero::before {
+            display: none;
+        }
+
+        .highlight::after {
+            background-color: CanvasText;
+        }
+    }
+</style>

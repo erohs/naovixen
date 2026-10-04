@@ -10,6 +10,8 @@ export default [
         rules: {
             "max-lines": ["error", { max: 400, skipBlankLines: true, skipComments: true }],
             "max-lines-per-function": ["error", { max: 25, skipBlankLines: true, skipComments: true }],
+            // A scrolling region, such as a code block, must be reachable by keyboard to be scrolled.
+            "astro/jsx-a11y/no-noninteractive-tabindex": ["error", { roles: ["region", "tabpanel"] }],
         },
     },
 ];

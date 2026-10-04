@@ -1,0 +1,131 @@
+---
+import type { GetStaticPaths } from "astro";
+import type { CollectionEntry } from "astro:content";
+import PostCard from "../../components/blog/PostCard.astro";
+import PostMeta from "../../components/blog/PostMeta.astro";
+import Prose from "../../components/content/Prose.astro";
+import StructuredData from "../../components/site/StructuredData.astro";
+import PagerNav from "../../components/ui/PagerNav.astro";
+import PageLayout from "../../layouts/PageLayout.astro";
+import { getPublishedPosts } from "../../lib/content";
+import { adjacentPosts, relatedPosts } from "../../lib/posts";
+import { readingTime } from "../../lib/reading-time";
+import { blogPostingData } from "../../lib/structured-data";
+
+export const getStaticPaths = (async () => {
+    const posts = await getPublishedPosts();
+    return posts.map((post) => ({
+        params: { slug: post.id },
+        props: { post, related: relatedPosts(posts, post), ...adjacentPosts(posts, post.id) },
+    }));
+}) satisfies GetStaticPaths;
+
+interface Props {
+    post: CollectionEntry<"blog">;
+    related: CollectionEntry<"blog">[];
+    newer: CollectionEntry<"blog"> | undefined;
+    older: CollectionEntry<"blog"> | undefined;
+}
+
+const { post, related, newer, older } = Astro.props;
+const { title, excerpt, published, topics } = post.data;
+const neighbour = (other: CollectionEntry<"blog"> | undefined) =>
+    other && { title: other.data.title, href: `/blog/${other.id}/` };
+---
+
+<PageLayout title={title} description={excerpt} type="article" trail={[{ label: "Blog", href: "/blog/" }]}>
+    <StructuredData
+        slot="head"
+        data={blogPostingData({ path: Astro.url.pathname, title, excerpt, published, topics })}
+    />
+    <article aria-labelledby="post-title" class="post">
+        <header class="header">
+            <h1 id="post-title" class="title-size">
+                {title}
+            </h1>
+            <p class="lead excerpt">{excerpt}</p>
+            <div class="details">
+                <PostMeta published={published} minutes={readingTime(post.body ?? "")} topics={topics} />
+            </div>
+        </header>
+        <div class="body">
+            <Prose entry={post} isNumbered />
+        </div>
+        {related.length > 0 && (
+            <section aria-labelledby="related-title" class="related">
+                <h2 id="related-title" class="related-title">
+                    Related posts
+                </h2>
+                <ul class="related-posts">
+                    {related.map((other) => (
+                        <li>
+                            <PostCard post={other} headingLevel={3} />
+                        </li>
+                    ))}
+                </ul>
+            </section>
+        )}
+        <div class="more">
+            <PagerNav
+                label="More posts"
+                back={{ label: "All posts", href: "/blog/" }}
+                previous={neighbour(newer)}
+                next={neighbour(older)}
+            />
+        </div>
+    </article>
+</PageLayout>
+
+<style>
+    .post {
+        max-inline-size: var(--layout-width-prose);
+    }
+
+    .header {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-between-content);
+        margin-block-start: var(--space-below-heading);
+    }
+
+    .excerpt {
+        color: var(--color-text-secondary);
+    }
+
+    .details {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: var(--space-between-text) var(--space-between-content);
+        margin-block-start: var(--space-between-text);
+    }
+
+    .body {
+        margin-block-start: var(--space-below-heading);
+    }
+
+    .related {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-between-blocks);
+        margin-block-start: var(--space-between-sections);
+    }
+
+    .related-title {
+        font-size: var(--font-size-h3);
+    }
+
+    /* Two cards side by side where they fit, one above the other where they do not. */
+    .related-posts {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(min(18rem, 100%), 1fr));
+        gap: var(--space-between-groups);
+        padding-inline-start: 0;
+        list-style: none;
+    }
+
+    /* The links onward stand apart from the end of the post. */
+    .more {
+        margin-block-start: var(--space-between-sections);
+    }
+</style>

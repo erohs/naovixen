@@ -1,7 +1,30 @@
 ---
+import AboutSummary from "../components/home/AboutSummary.astro";
+import ContactBanner from "../components/home/ContactBanner.astro";
+import Experience from "../components/home/Experience.astro";
+import FeaturedProjects from "../components/home/FeaturedProjects.astro";
+import Hero from "../components/home/Hero.astro";
+import LatestPosts from "../components/home/LatestPosts.astro";
+import Skills from "../components/home/Skills.astro";
+import StructuredData from "../components/site/StructuredData.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
+import { getProjects, getPublishedPosts } from "../lib/content";
+import { personData, websiteData } from "../lib/structured-data";
+
+const featuredProjects = (await getProjects()).filter((project) => project.data.featured);
+const latestPosts = (await getPublishedPosts()).slice(0, 3);
 ---
 
-<BaseLayout title="Naomi Shore — Software Engineer" description="Naomi Shore is a software engineer.">
-    <h1>Naomi Shore</h1>
+<BaseLayout
+    title="Naomi Shore — Software Engineer"
+    description="Naomi Shore is a software engineer with seven years of experience across React, TypeScript and C#/.NET, and a focus on accessibility."
+    isFullBleed>
+    <StructuredData slot="head" data={[personData(), websiteData()]} />
+    <Hero hasFeaturedProjects={featuredProjects.length > 0} />
+    {featuredProjects.length > 0 && <FeaturedProjects projects={featuredProjects} />}
+    <AboutSummary />
+    <Experience />
+    <Skills />
+    <LatestPosts posts={latestPosts} />
+    <ContactBanner />
 </BaseLayout>

@@ -1,0 +1,27 @@
+---
+import Icon from "../components/ui/Icon.astro";
+import LinkButton from "../components/ui/LinkButton.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout title="Page not found" description="There is nothing at this address." isCanonical={false}>
+    <div class="not-found">
+        <h1>Page not found</h1>
+        <p class="lead">
+            There is nothing at this address. The page may have moved, or the link may have a typo in it.
+        </p>
+        <LinkButton href="/" variant="primary">
+            Go to the home page <Icon name="arrow-right" />
+        </LinkButton>
+    </div>
+</BaseLayout>
+
+<style>
+    .not-found {
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+        gap: var(--space-between-groups);
+        max-inline-size: var(--layout-width-prose);
+    }
+</style>

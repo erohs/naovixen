@@ -7,20 +7,25 @@ import Header from "../components/site/Header.astro";
 import SkipLink from "../components/site/SkipLink.astro";
 import { site } from "../site";
 
-type Props = HeadProps;
+type Props = HeadProps & {
+    /** The home page lays out its own full-width sections; every other page sits in the padded column. */
+    isFullBleed?: boolean;
+};
+
+const { isFullBleed = false, ...headProps } = Astro.props;
 ---
 
 <!doctype html>
 <html lang={site.locale}>
     <head>
-        <Head {...Astro.props} />
+        <Head {...headProps} />
         <slot name="head" />
     </head>
     <body>
         <SkipLink />
         <div id="top" class="page">
             <Header />
-            <main id="main" tabindex="-1" class="main">
+            <main id="main" tabindex="-1" class:list={["main", !isFullBleed && "main--padded"]}>
                 <slot />
                 <BackToTop />
             </main>
@@ -40,12 +45,15 @@ type Props = HeadProps;
     .main {
         position: relative;
         flex-grow: 1;
-        padding-block: var(--space-padding-panel) var(--space-padding-page-end);
-        padding-inline: var(--space-padding-page-centred);
 
         /* Focus lands here only to start the next Tab after skipping; it is not a control. */
         &:focus-visible {
             outline: none;
         }
+    }
+
+    .main--padded {
+        padding-block: var(--space-padding-panel) var(--space-padding-page-end);
+        padding-inline: var(--space-padding-page-centred);
     }
 </style>

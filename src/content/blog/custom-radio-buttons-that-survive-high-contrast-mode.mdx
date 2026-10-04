@@ -1,0 +1,61 @@
+---
+title: "Custom radio buttons that survive high contrast mode"
+excerpt: "Styling the real input with appearance: none, and making sure it doesn't vanish when Windows forced colours kicks in."
+published: "2026-09-18"
+topics: ["Accessibility", "CSS"]
+---
+
+Most custom radio buttons hide the real input and draw a fake one with background colours. It looks great right up until someone turns on a Windows contrast theme. Forced colours mode replaces your colours with the user's palette, and the fake radio can disappear completely.
+
+## Keep the real input
+
+Don't hide the input and fake it with a span. Style the input itself with appearance: none. You keep native keyboard behaviour, arrow keys between options, form submission and the right role for assistive technology, all for free.
+
+```css title="radio.css"
+input[type="radio"] {
+    appearance: none;
+    width: 1.5rem;
+    height: 1.5rem;
+    border: 2px solid currentColor;
+    border-radius: 50%;
+    display: grid;
+    place-content: center;
+}
+input[type="radio"]::before {
+    content: "";
+    width: 0.75rem;
+    height: 0.75rem;
+    border-radius: 50%;
+    transform: scale(0);
+    box-shadow: inset 1em 1em currentColor;
+}
+input[type="radio"]:checked::before {
+    transform: scale(1);
+}
+```
+
+The border uses currentColor, so it follows the text in every theme. The checked dot uses an inset box-shadow, which looks right everywhere except forced colours, where shadows are removed. That's the next fix.
+
+## Test in forced colours
+
+```css title="forced-colors.css"
+@media (forced-colors: active) {
+    input[type="radio"]::before {
+        forced-color-adjust: none;
+        background: CanvasText;
+        box-shadow: none;
+    }
+    input[type="radio"]:focus-visible {
+        outline: 3px solid Highlight;
+    }
+}
+```
+
+CanvasText and Highlight are system colours, so the dot and focus ring pick up whatever palette the person has chosen. You can emulate forced colours in Chrome DevTools under Rendering, which is much faster than switching Windows themes every time.
+
+<Callout label="tip!" title="Size the hit area, not just the dot">
+    Wrap each radio and its label in one padded element so the whole row is clickable, and comfortably clears WCAG 2.2's
+    24 by 24 pixel target size.
+</Callout>
+
+None of this is new. It's the native control, styled carefully, which is usually the most accessible thing you can ship.

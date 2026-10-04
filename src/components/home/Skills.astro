@@ -1,0 +1,104 @@
+---
+import { skillGroups } from "../../data/skills";
+import Icon from "../ui/Icon.astro";
+import HomeSection from "./HomeSection.astro";
+
+const slug = (label: string): string => label.replace(/W+/g, "-");
+---
+
+<HomeSection heading="Skills" intro="The tools and languages I use day to day.">
+    <div class="groups">
+        {skillGroups.map((data) => (
+            <section aria-labelledby={`skills-${slug(data.label)}`} class="group">
+                <h3 id={`skills-${slug(data.label)}`} class="label">
+                    {data.label}
+                </h3>
+                <ul class="skills">
+                    {data.skills.map((skill) => (
+                        <li class="skill">
+                            <span class="logo">
+                                <Icon name={skill.icon} />
+                            </span>
+                            {skill.name}
+                        </li>
+                    ))}
+                </ul>
+            </section>
+        ))}
+    </div>
+    <p class="also">
+        <strong>Also:</strong> system design, REST APIs, CQRS, event-driven architecture, NUnit, code review and
+        mentoring apprentices.
+    </p>
+</HomeSection>
+
+<style>
+    .groups {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-below-heading);
+    }
+
+    /* The label takes a fixed column on a wide screen and sits above the tiles on a narrow one. */
+    .group {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--space-between-content) var(--space-between-groups);
+    }
+
+    /* Level with the middle of the first row of tiles. */
+    .label {
+        flex: 0 0 calc(4 * var(--space-between-regions));
+        padding-block-start: calc(var(--space-between-content) + var(--space-between-lines));
+        color: var(--color-text-accent);
+        font-family: var(--font-family-handwriting);
+        font-size: var(--font-size-h4);
+        font-weight: var(--font-weight-regular);
+    }
+
+    .skills {
+        display: grid;
+        flex: 1 1 calc(9 * var(--space-between-regions));
+        grid-template-columns: repeat(
+            auto-fill,
+            minmax(calc(2 * var(--space-between-regions) + var(--space-between-text)), 1fr)
+        );
+        gap: var(--space-between-blocks) var(--space-between-content);
+        padding: 0;
+        list-style: none;
+    }
+
+    /* The logo repeats the name written beneath it, so the icon stays hidden from screen readers. */
+    .skill {
+        --tile-size: calc(1.5 * var(--space-between-regions));
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: var(--space-between-text);
+        font-size: var(--font-size-small);
+        line-height: var(--line-height-subheading);
+        text-align: center;
+    }
+
+    .logo {
+        display: grid;
+        place-items: center;
+        inline-size: var(--tile-size);
+        block-size: var(--tile-size);
+        border: var(--border-width-standout) solid var(--color-border);
+        border-radius: var(--radius-medium);
+        background-color: var(--color-background-surface);
+        font-size: calc(1.3 * var(--font-size-h4));
+    }
+
+    .also {
+        max-inline-size: 62ch;
+        margin-block-start: var(--space-between-text);
+        color: var(--color-text-secondary);
+
+        & strong {
+            color: var(--color-text-primary);
+        }
+    }
+</style>

@@ -1,0 +1,50 @@
+---
+title: "Radios that reveal more, without the confusion"
+excerpt: "What the GOV.UK Design System taught me about radios that show an extra question, and how to build them so nobody misses what appeared."
+published: "2026-09-04"
+topics: ["Accessibility", "Forms", "GOV.UK"]
+---
+
+Choosing "Other" and getting a text box underneath is one of the most common patterns on the web. It's also easy to get wrong, especially for screen reader and screen magnifier users, who may not notice that anything changed.
+
+## What GOV.UK recommends
+
+The GOV.UK Design System supports conditionally revealing content for radios and checkboxes, and its guidance, shaped by research with real users, is refreshingly cautious. Keep it simple, and if the extra question is complicated, ask it on the next page instead.
+
+- Only reveal questions that relate directly to the option chosen.
+- Keep it to one simple question. Anything bigger belongs on its own page.
+- Don't nest a reveal inside another reveal.
+- Don't hide information people need before they can choose.
+
+## Put the content where it's read next
+
+The most robust trick is DOM order. Place the revealed content straight after the radio that controls it, not at the end of the group. Then the next thing a screen reader reads, or a magnified view shows, is the new question.
+
+```html title="reveal.html"
+<div class="radio">
+    <input type="radio" id="contact-other" name="contact" value="other" aria-controls="contact-other-reveal" />
+    <label for="contact-other">Other</label>
+</div>
+<div class="reveal" id="contact-other-reveal" hidden>
+    <label for="contact-other-detail">How should we contact you?</label>
+    <input type="text" id="contact-other-detail" name="contactOther" />
+</div>
+```
+
+```typescript title="reveal.ts"
+radios.forEach((radio) => {
+    radio.addEventListener("change", () => {
+        radios.forEach((r) => {
+            const id = r.getAttribute("aria-controls");
+            if (id) document.getElementById(id)!.hidden = !r.checked;
+        });
+    });
+});
+```
+
+<Callout label="watch out" title="Don't move focus">
+    Jumping focus into the revealed field feels helpful, but it skips the remaining options. Leave focus on the radio
+    and let people tab forward.
+</Callout>
+
+Use the hidden attribute so collapsed content is gone for everyone, and ignore values in hidden fields on submit, so nobody gets an error about a question they can't see.

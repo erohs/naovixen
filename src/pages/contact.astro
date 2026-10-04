@@ -1,0 +1,91 @@
+---
+import GreetingHeading from "../components/ui/GreetingHeading.astro";
+import Icon from "../components/ui/Icon.astro";
+import Link from "../components/ui/Link.astro";
+import LinkButton from "../components/ui/LinkButton.astro";
+import LinkTile from "../components/ui/LinkTile.astro";
+import PageLayout from "../layouts/PageLayout.astro";
+import { site } from "../site";
+---
+
+<PageLayout title="Contact" description="How to get in touch with Naomi Shore.">
+    <div class="contact">
+        <GreetingHeading greeting="say hello!" isExclamation>
+            Let's talk
+        </GreetingHeading>
+        <p class="body">
+            Whether it's a role, a project or a quick question, email is the fastest way to reach me. I usually reply
+            within two working days.
+        </p>
+        {site.email !== undefined && (
+            <>
+                <LinkButton href={`mailto:${site.email}`} variant="primary">
+                    {site.email} <Icon name="mail" />
+                </LinkButton>
+                <p class="body">
+                    How I use your email is explained in my <Link href="/privacy/">privacy notice</Link>.
+                </p>
+            </>
+        )}
+        <h2 class="elsewhere">or find me here</h2>
+        <ul class="links">
+            {site.profiles.map((profile) => (
+                <li>
+                    <LinkTile
+                        href={profile.url}
+                        label={profile.label}
+                        detail={profile.detail}
+                        icon={profile.icon}
+                        trailingIcon="external-link"
+                    />
+                </li>
+            ))}
+            {site.cvPath !== undefined && (
+                <li>
+                    <LinkTile
+                        href={site.cvPath}
+                        download
+                        label="Download CV"
+                        detail="PDF"
+                        icon="download"
+                        trailingIcon="download"
+                    />
+                </li>
+            )}
+        </ul>
+    </div>
+</PageLayout>
+
+<style>
+    .contact {
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+        gap: var(--space-between-blocks);
+        max-inline-size: calc(var(--layout-width-prose) * 7 / 9);
+        margin-block-start: var(--space-below-heading);
+    }
+
+    .body {
+        max-inline-size: 40ch;
+        color: var(--color-text-secondary);
+    }
+
+    /* A handwritten aside, set apart from the email button above. */
+    .elsewhere {
+        margin-block-start: var(--space-between-blocks);
+        color: var(--color-text-accent);
+        font-family: var(--font-family-handwriting);
+        font-size: var(--font-size-h4);
+        font-weight: var(--font-weight-regular);
+    }
+
+    .links {
+        display: flex;
+        flex-direction: column;
+        gap: calc(var(--space-between-blocks) + var(--space-between-lines));
+        inline-size: 100%;
+        padding-inline-start: 0;
+        list-style: none;
+    }
+</style>

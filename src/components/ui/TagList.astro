@@ -1,0 +1,64 @@
+---
+import { slugify } from "../../lib/slugify";
+
+interface Props {
+    label: string;
+    tags: string[];
+    /** Topics link to their page; a tech stack is only a list of names. */
+    isLinked?: boolean;
+}
+
+const { label, tags, isLinked = false } = Astro.props;
+---
+
+<ul aria-label={label} class="tags">
+    {tags.map((tag) => (
+        <li>
+            {isLinked ? (
+                <a href={`/blog/topics/${slugify(tag)}/`} class="tag tag--link">
+                    {tag}
+                </a>
+            ) : (
+                <span class="tag">{tag}</span>
+            )}
+        </li>
+    ))}
+</ul>
+
+<style>
+    .tags {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: var(--space-between-text);
+        padding-inline-start: 0;
+        list-style: none;
+    }
+
+    /* Written out to the design's measurements, like the cards it mostly sits in. */
+    .tag {
+        display: inline-block;
+        padding: 7px 10px;
+        border: var(--border-width-default) solid var(--color-border);
+        border-radius: var(--radius-small);
+        background-color: var(--color-background-page);
+        color: var(--color-text-primary);
+        font-family: var(--font-family-code);
+        font-size: var(--font-size-meta);
+        line-height: 1;
+        white-space: nowrap;
+    }
+
+    /* Above a card's stretched link, so a topic can be followed on its own. */
+    .tag--link {
+        position: relative;
+        z-index: var(--z-index-raised);
+        text-decoration: none;
+        transition: background-color var(--duration-fast) var(--easing-standard);
+
+        &:hover {
+            background-color: var(--color-background-surface);
+            text-decoration: underline;
+        }
+    }
+</style>

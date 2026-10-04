@@ -1,0 +1,97 @@
+---
+import type { GetStaticPaths } from "astro";
+import type { CollectionEntry } from "astro:content";
+import Prose from "../../components/content/Prose.astro";
+import Figure from "../../components/ui/Figure.astro";
+import PagerNav from "../../components/ui/PagerNav.astro";
+import TagList from "../../components/ui/TagList.astro";
+import PageLayout from "../../layouts/PageLayout.astro";
+import { getProjects } from "../../lib/content";
+import { adjacentProjects } from "../../lib/projects";
+
+export const getStaticPaths = (async () => {
+    const projects = await getProjects();
+    return projects.map((project) => ({
+        params: { slug: project.id },
+        props: { project, ...adjacentProjects(projects, project.id) },
+    }));
+}) satisfies GetStaticPaths;
+
+interface Props {
+    project: CollectionEntry<"work">;
+    previous: CollectionEntry<"work"> | undefined;
+    next: CollectionEntry<"work"> | undefined;
+}
+
+const { project, previous, next } = Astro.props;
+const { title, summary, stack, screenshot } = project.data;
+const neighbour = (other: CollectionEntry<"work"> | undefined) =>
+    other && { title: other.data.title, href: `/work/${other.id}/` };
+---
+
+<PageLayout title={title} description={summary} type="article" trail={[{ label: "Work", href: "/work/" }]}>
+    <article aria-labelledby="project-title">
+        <header class="header">
+            <h1 id="project-title" class="title-size">
+                {title}
+            </h1>
+            <p class="lead summary">{summary}</p>
+        </header>
+        <dl class="stack">
+            <dt>tech stack</dt>
+            <dd>
+                <TagList label="Tech stack" tags={stack} />
+            </dd>
+        </dl>
+        {screenshot && <Figure src={screenshot.src} alt={screenshot.alt} isPriority />}
+        <div class="body">
+            <Prose entry={project} isNumbered />
+        </div>
+        <div class="more">
+            <PagerNav
+                label="More projects"
+                back={{ label: "All projects", href: "/work/" }}
+                previous={neighbour(previous)}
+                next={neighbour(next)}
+            />
+        </div>
+    </article>
+</PageLayout>
+
+<style>
+    .header {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-between-blocks);
+        max-inline-size: 820px;
+        margin-block-start: var(--space-below-heading);
+    }
+
+    .summary {
+        max-inline-size: 40ch;
+    }
+
+    .stack {
+        margin-block: var(--space-between-regions);
+
+        & dt {
+            margin-block-end: var(--space-between-text);
+            color: var(--color-text-accent);
+            font-family: var(--font-family-handwriting);
+            font-size: var(--font-size-h4);
+        }
+
+        & dd {
+            margin: 0;
+        }
+    }
+
+    .body {
+        margin-block-start: var(--space-between-sections);
+    }
+
+    /* The links onward stand apart from the end of the case study. */
+    .more {
+        margin-block-start: calc(var(--space-between-sections) + var(--space-between-groups));
+    }
+</style>

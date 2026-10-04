@@ -1,0 +1,35 @@
+---
+title: "Agentic coding without losing the plot"
+excerpt: "How I use AI agents day to day without shipping code I can't explain."
+published: "2026-07-24"
+topics: ["AI", "Process"]
+---
+
+I've used AI-assisted and agentic workflows since they first arrived in our team. They've made us noticeably faster, but only because we were deliberate about where they help and where they don't.
+
+- Agents are great at the boring middle: scaffolding, migrations, test cases and renames across a codebase.
+- They struggle where the context is invisible: product decisions, accessibility trade-offs and security boundaries.
+- Every change still goes through normal review. If I can't explain a diff, it doesn't ship.
+
+## Give it the context a new starter would get
+
+Most bad agent output is a context problem. A short project guide in the repo, covering conventions, commands and gotchas, improved results more than any clever prompting.
+
+```markdown title="CLAUDE.md"
+# Conventions
+
+- React: function components, TypeScript strict mode
+- Tests: Jest, one behaviour per test, no snapshots
+- Accessibility: every control keyboard reachable,
+  run axe before opening a pull request
+
+# Commands
+
+- npm test -- --watch
+```
+
+<Callout label="tip!" title="Make it prove it">
+    Ask the agent to write the failing test first. It keeps the change small and gives you something concrete to review.
+</Callout>
+
+The productivity gain is real, but it comes from engineers who understand the system steering the tools, not from the tools alone.

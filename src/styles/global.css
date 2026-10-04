@@ -5,6 +5,7 @@
 @import url("./base.css") layer(base);
 @import url("./button.css") layer(shared);
 @import url("./icons.css") layer(shared);
+@import url("./layout.css") layer(shared);
 
 /* Unlayered, like component styles, so no component rule can pull it back into the flow. */
 .visually-hidden {

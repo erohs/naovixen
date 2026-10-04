@@ -1,0 +1,85 @@
+---
+import type { Topic } from "../../lib/posts";
+
+interface Props {
+    topics: Topic[];
+    /** The topic whose page this is, marked as the current one. */
+    current?: string;
+}
+
+const { topics, current } = Astro.props;
+---
+
+<nav aria-labelledby="topics-title" class="topics">
+    <h2 id="topics-title" class="title">
+        Topics
+    </h2>
+    <ul class="list">
+        <li>
+            <a href="/blog/" class="topic" aria-current={current === undefined ? "page" : undefined}>
+                All posts
+            </a>
+        </li>
+        {topics.map((topic) => (
+            <li>
+                <a
+                    href={`/blog/topics/${topic.slug}/`}
+                    class="topic"
+                    aria-current={topic.slug === current ? "page" : undefined}>
+                    {topic.name} <span class="count">({topic.count})</span>
+                </a>
+            </li>
+        ))}
+    </ul>
+</nav>
+
+<style>
+    .topics {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-between-text);
+        margin-block-end: var(--space-padding-panel);
+    }
+
+    .title {
+        color: var(--color-text-accent);
+        font-family: var(--font-family-handwriting);
+        font-size: var(--font-size-h4);
+        font-weight: var(--font-weight-regular);
+    }
+
+    .list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--space-between-text);
+        padding: 0;
+        list-style: none;
+    }
+
+    /* A chip: flat on the page, its fill answering the pointer. */
+    .topic {
+        display: inline-block;
+        padding: var(--space-padding-chip);
+        border: var(--border-width-standout) solid var(--color-border);
+        border-radius: var(--radius-small);
+        color: var(--color-text-primary);
+        font-family: var(--font-family-code);
+        font-size: var(--font-size-meta);
+        text-decoration: none;
+        transition: background-color var(--duration-fast) var(--easing-standard);
+
+        &:hover {
+            background-color: var(--color-background-surface);
+        }
+
+        &[aria-current="page"] {
+            background-color: var(--color-background-accent);
+            color: var(--color-text-on-accent);
+        }
+    }
+
+    .count {
+        color: inherit;
+        opacity: 0.8;
+    }
+</style>
