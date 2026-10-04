@@ -10,7 +10,6 @@
     color: var(--color-text-secondary);
 }
 
-/* Examples sit side by side and wrap; a wide one, such as a header, takes the whole row. */
 .nv-example__stage {
     display: flex;
     flex-wrap: wrap;

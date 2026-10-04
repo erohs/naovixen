@@ -1,8 +1,7 @@
-import type { FunctionComponent } from 'react';
-import { useId } from 'react';
-import { Heading } from '@naovixen/components';
-
-import type { IExampleProps } from './interfaces/IExampleProps';
+import type { FunctionComponent } from "react";
+import { useId } from "react";
+import { Heading } from "@naovixen/components";
+import type { IExampleProps } from "./interfaces/IExampleProps";
 
 export const Example: FunctionComponent<IExampleProps> = ({ name, children }) => {
     const headingId = useId();

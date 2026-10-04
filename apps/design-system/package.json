@@ -9,10 +9,12 @@
         "test": "vitest run"
     },
     "dependencies": {
-        "@naovixen/rich-content": "workspace:*",
         "@naovixen/cms": "workspace:*",
         "@naovixen/components": "workspace:*",
+        "@naovixen/rich-content": "workspace:*",
         "@naovixen/theming": "workspace:*",
+        "@naovixen/utilities": "workspace:*",
+        "i18next": "catalog:",
         "react": "catalog:",
         "react-dom": "catalog:"
     },

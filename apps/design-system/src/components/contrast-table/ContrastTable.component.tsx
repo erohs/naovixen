@@ -1,19 +1,18 @@
-import type { FunctionComponent } from 'react';
-import { contrastRequirements, darkTheme, lightTheme } from '@naovixen/theming';
+import type { FunctionComponent } from "react";
+import { contrastRequirements, darkTheme, lightTheme } from "@naovixen/theming";
+import { translate } from "../../translate/Translate.const";
+import { formatContrast } from "./functions/FormatContrast.function";
 
-import { formatContrast } from './functions/FormatContrast.function';
-
-/** Every colour pair the design uses, measured in both themes against WCAG 2.2 AA. */
 export const ContrastTable: FunctionComponent = () => (
     <table className="nv-contrast-table">
-        <caption>Contrast of each colour pair</caption>
+        <caption>{translate("contrastTable.caption")}</caption>
         <thead>
             <tr>
-                <th scope="col">Foreground</th>
-                <th scope="col">Background</th>
-                <th scope="col">Needs</th>
-                <th scope="col">Light</th>
-                <th scope="col">Dark</th>
+                <th scope="col">{translate("contrastTable.foreground")}</th>
+                <th scope="col">{translate("contrastTable.background")}</th>
+                <th scope="col">{translate("contrastTable.needs")}</th>
+                <th scope="col">{translate("contrastTable.light")}</th>
+                <th scope="col">{translate("contrastTable.dark")}</th>
             </tr>
         </thead>
         <tbody>

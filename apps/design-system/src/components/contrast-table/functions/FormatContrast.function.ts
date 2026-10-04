@@ -1,13 +1,11 @@
-import type { IColorTheme, IContrastRequirement } from '@naovixen/theming';
-import { calculateContrastRatio } from '@naovixen/theming';
+import type { IColorTheme, IContrastRequirement } from "@naovixen/theming";
+import { calculateContrastRatio } from "@naovixen/theming";
+import { translate } from "../../../translate/Translate.const";
 
 /** Such as "7.21 pass", so a failing pair reads as one without relying on colour. */
-export function formatContrast(requirement: IContrastRequirement, theme: IColorTheme): string {
-    const ratio = calculateContrastRatio(
-        theme[requirement.foreground],
-        theme[requirement.background],
-    );
-    const verdict = ratio >= requirement.minimumRatio ? 'pass' : 'FAIL';
+export const formatContrast = (requirement: IContrastRequirement, theme: IColorTheme): string => {
+    const ratio = calculateContrastRatio(theme[requirement.foreground], theme[requirement.background]);
+    const verdict = ratio >= requirement.minimumRatio ? "contrastTable.pass" : "contrastTable.fail";
 
-    return `${ratio.toFixed(2)} ${verdict}`;
-}
+    return translate(verdict, { ratio: ratio.toFixed(2) });
+};

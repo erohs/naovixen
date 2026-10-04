@@ -1,7 +1,6 @@
-import type { FunctionComponent } from 'react';
-import { Heading } from '@naovixen/components';
-
-import type { IPageSectionProps } from './interfaces/IPageSectionProps';
+import type { FunctionComponent } from "react";
+import { Heading } from "@naovixen/components";
+import type { IPageSectionProps } from "./interfaces/IPageSectionProps";
 
 export const PageSection: FunctionComponent<IPageSectionProps> = ({ id, title, children }) => (
     <section id={id} aria-labelledby={`${id}-title`} className="nv-page-section">

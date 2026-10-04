@@ -39,3 +39,30 @@
     font-family: var(--font-family-code);
     font-size: var(--font-size-meta);
 }
+
+.nv-tokens-page__layers {
+    border-collapse: collapse;
+    font-size: var(--font-size-small);
+
+    & caption {
+        padding-block-end: var(--space-between-text);
+        text-align: start;
+    }
+
+    & th,
+    & td {
+        padding: var(--space-between-lines) var(--space-between-content);
+        text-align: start;
+        vertical-align: top;
+    }
+
+    & th[scope="row"],
+    & td:nth-child(2) {
+        font-family: var(--font-family-code);
+        font-size: var(--font-size-meta);
+    }
+
+    & tbody tr:nth-child(odd) {
+        background-color: var(--color-background-surface);
+    }
+}

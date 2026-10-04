@@ -1,11 +1,11 @@
-import type { FunctionComponent } from 'react';
-import { RichContent } from '@naovixen/rich-content';
-
-import { Example } from '../../components/example/Example.component';
-import { exampleRichContentBody } from '../../constants/ExampleRichContentBody.const';
+import type { FunctionComponent } from "react";
+import { RichContent } from "@naovixen/rich-content";
+import { Example } from "../../components/example/Example.component";
+import { exampleRichContentBody } from "../../constants/ExampleRichContentBody.const";
+import { translate } from "../../translate/Translate.const";
 
 export const RichContentPage: FunctionComponent = () => (
-    <Example name="RichContent">
+    <Example name={translate("richContent.richContent")}>
         <RichContent body={exampleRichContentBody} />
     </Example>
 );

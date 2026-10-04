@@ -3,5 +3,4 @@
     flex-direction: column;
     gap: var(--space-between-regions);
     padding-block: var(--space-between-sections);
-    border-block-start: var(--border-width-standout) solid var(--color-border);
 }
