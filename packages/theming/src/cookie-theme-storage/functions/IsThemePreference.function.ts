@@ -1,5 +1,4 @@
-import { ThemePreference } from '../../enums/ThemePreference';
+import { ThemePreference } from "../../enums/ThemePreference";
 
-export function isThemePreference(value: string | undefined): value is ThemePreference {
-    return Object.values<string | undefined>(ThemePreference).includes(value);
-}
+export const isThemePreference = (value: string | undefined): value is ThemePreference =>
+    Object.values<string | undefined>(ThemePreference).includes(value);

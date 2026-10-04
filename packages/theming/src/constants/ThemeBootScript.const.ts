@@ -1,8 +1,8 @@
-import { ResolvedTheme } from '../enums/ResolvedTheme';
-import { ThemePreference } from '../enums/ThemePreference';
-import { darkColorSchemeQuery } from './DarkColorSchemeQuery.const';
-import { defaultThemePreference } from './DefaultThemePreference.const';
-import { themeCookieName } from './ThemeCookieName.const';
+import { ResolvedTheme } from "../enums/ResolvedTheme";
+import { ThemePreference } from "../enums/ThemePreference";
+import { darkColorSchemeQuery } from "./DarkColorSchemeQuery.const";
+import { defaultThemePreference } from "./DefaultThemePreference.const";
+import { themeCookieName } from "./ThemeCookieName.const";
 
 /**
  * Runs inline in `<head>` before first paint, so the page never flashes the wrong theme. It

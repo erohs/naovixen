@@ -1,5 +1,5 @@
-import type { ThemePreference } from '../enums/ThemePreference';
-import type { IThemeStorage } from '../interfaces/IThemeStorage';
+import type { ThemePreference } from "../enums/ThemePreference";
+import type { IThemeStorage } from "../interfaces/IThemeStorage";
 
 /** Remembers nothing, for a server render where there is nowhere to keep a choice. */
 export class NoOpThemeStorage implements IThemeStorage {
@@ -7,7 +7,6 @@ export class NoOpThemeStorage implements IThemeStorage {
         return undefined;
     }
 
-    public writePreference(): void {
-        /* Nothing to write to. */
-    }
+    // eslint-disable-next-line @typescript-eslint/no-empty-function -- a no-op storage writes nowhere by design
+    public writePreference(): void {}
 }

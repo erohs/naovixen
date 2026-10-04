@@ -4,8 +4,8 @@
  * average character widths, and the overrides are the web font's metrics at that size.
  */
 @font-face {
-    font-family: 'Schibsted Grotesk Fallback';
-    src: local('Arial');
+    font-family: "Schibsted Grotesk Fallback";
+    src: local("Arial");
     size-adjust: 104.49%;
     ascent-override: 93.46%;
     descent-override: 24.67%;
@@ -13,8 +13,8 @@
 }
 
 @font-face {
-    font-family: 'Fredoka Fallback';
-    src: local('Arial');
+    font-family: "Fredoka Fallback";
+    src: local("Arial");
     size-adjust: 101.84%;
     ascent-override: 95.64%;
     descent-override: 23.17%;
@@ -22,8 +22,8 @@
 }
 
 @font-face {
-    font-family: 'JetBrains Mono Fallback';
-    src: local('Courier New');
+    font-family: "JetBrains Mono Fallback";
+    src: local("Courier New");
     size-adjust: 99.98%;
     ascent-override: 102.02%;
     descent-override: 30%;

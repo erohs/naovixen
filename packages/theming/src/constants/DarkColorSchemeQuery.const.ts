@@ -1,1 +1,1 @@
-export const darkColorSchemeQuery = '(prefers-color-scheme: dark)';
+export const darkColorSchemeQuery = "(prefers-color-scheme: dark)";

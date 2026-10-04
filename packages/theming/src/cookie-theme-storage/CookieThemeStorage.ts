@@ -1,8 +1,8 @@
-import type { ThemePreference } from '../enums/ThemePreference';
-import type { IThemeStorage } from '../interfaces/IThemeStorage';
-import { themeCookieName } from '../constants/ThemeCookieName.const';
-import { isThemePreference } from './functions/IsThemePreference.function';
-import type { ICookieStore } from './interfaces/ICookieStore';
+import type { ThemePreference } from "../enums/ThemePreference";
+import type { IThemeStorage } from "../interfaces/IThemeStorage";
+import { themeCookieName } from "../constants/ThemeCookieName.const";
+import { isThemePreference } from "./functions/IsThemePreference.function";
+import type { ICookieStore } from "./interfaces/ICookieStore";
 
 /** A cookie rather than local storage, so the server can render the right theme first time. */
 export class CookieThemeStorage implements IThemeStorage {

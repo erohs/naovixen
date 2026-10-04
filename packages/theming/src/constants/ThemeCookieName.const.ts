@@ -1,1 +1,1 @@
-export const themeCookieName = 'theme-preference';
+export const themeCookieName = "theme-preference";

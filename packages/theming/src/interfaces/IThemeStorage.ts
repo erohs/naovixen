@@ -1,4 +1,4 @@
-import type { ThemePreference } from '../enums/ThemePreference';
+import type { ThemePreference } from "../enums/ThemePreference";
 
 export interface IThemeStorage {
     readPreference(): ThemePreference | undefined;

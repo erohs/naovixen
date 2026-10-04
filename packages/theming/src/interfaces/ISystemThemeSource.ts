@@ -1,4 +1,4 @@
-import type { ResolvedTheme } from '../enums/ResolvedTheme';
+import type { ResolvedTheme } from "../enums/ResolvedTheme";
 
 export interface ISystemThemeSource {
     getTheme(): ResolvedTheme;

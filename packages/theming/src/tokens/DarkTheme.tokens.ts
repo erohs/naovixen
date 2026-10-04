@@ -1,20 +1,20 @@
-import type { IColorTheme } from '../interfaces/IColorTheme';
-import { palette } from './Palette.tokens';
+import type { IColorTheme } from "../interfaces/IColorTheme";
+import { palette } from "./Palette.tokens";
 
 export const darkTheme: IColorTheme = {
-    '--color-background-page': palette.espresso,
-    '--color-background-surface': palette.cocoa,
-    '--color-background-accent': palette.orange,
-    '--color-text-primary': palette.parchment,
-    '--color-text-secondary': palette.wheat,
-    '--color-text-accent': palette.orange,
-    '--color-text-error': palette.salmon,
-    '--color-text-on-accent': palette.ink,
-    '--color-border': palette.linen,
-    '--color-shadow': palette.parchment,
-    '--color-focus': palette.lilac,
-    '--color-decoration-dots': palette.lavender,
-    '--color-decoration-paw': palette.coral,
+    "--color-background-page": palette.espresso,
+    "--color-background-surface": palette.cocoa,
+    "--color-background-accent": palette.orange,
+    "--color-text-primary": palette.parchment,
+    "--color-text-secondary": palette.wheat,
+    "--color-text-accent": palette.orange,
+    "--color-text-error": palette.salmon,
+    "--color-text-on-accent": palette.ink,
+    "--color-border": palette.linen,
+    "--color-shadow": palette.parchment,
+    "--color-focus": palette.lilac,
+    "--color-decoration-dots": palette.lavender,
+    "--color-decoration-paw": palette.coral,
     /** Pale fur and highlights on doodles, which stay light whatever the theme. */
-    '--color-decoration-highlight': palette.cream,
+    "--color-decoration-highlight": palette.cream,
 };

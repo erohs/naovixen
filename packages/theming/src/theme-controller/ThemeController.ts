@@ -1,10 +1,10 @@
-import type { ThemePreference } from '../enums/ThemePreference';
-import type { ISystemThemeSource } from '../interfaces/ISystemThemeSource';
-import type { IThemeController } from '../interfaces/IThemeController';
-import type { IThemeStorage } from '../interfaces/IThemeStorage';
-import { defaultThemePreference } from '../constants/DefaultThemePreference.const';
-import { resolveTheme } from './functions/ResolveTheme.function';
-import type { IThemeState } from './interfaces/IThemeState';
+import type { ThemePreference } from "../enums/ThemePreference";
+import type { ISystemThemeSource } from "../interfaces/ISystemThemeSource";
+import type { IThemeController } from "../interfaces/IThemeController";
+import type { IThemeStorage } from "../interfaces/IThemeStorage";
+import { defaultThemePreference } from "../constants/DefaultThemePreference.const";
+import { resolveTheme } from "./functions/ResolveTheme.function";
+import type { IThemeState } from "./interfaces/IThemeState";
 
 /** Listens to the system only while it has subscribers. */
 export class ThemeController implements IThemeController {
@@ -24,9 +24,7 @@ export class ThemeController implements IThemeController {
 
     public readonly subscribe = (listener: () => void): (() => void) => {
         this._listeners.add(listener);
-        this._stopListeningToSystem ??= this._systemThemeSource.subscribe(
-            this._onSystemThemeChange,
-        );
+        this._stopListeningToSystem ??= this._systemThemeSource.subscribe(this._onSystemThemeChange);
 
         return () => {
             this._removeListener(listener);
@@ -60,8 +58,7 @@ export class ThemeController implements IThemeController {
     /** A new state object only on a real change, or React would re-render for nothing. */
     private _updateState(nextState: IThemeState): void {
         const isUnchanged =
-            nextState.preference === this._state.preference &&
-            nextState.resolvedTheme === this._state.resolvedTheme;
+            nextState.preference === this._state.preference && nextState.resolvedTheme === this._state.resolvedTheme;
 
         if (isUnchanged) {
             return;

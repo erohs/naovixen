@@ -1,3 +1,3 @@
-import type { IMediaQueryList } from '../interfaces/IMediaQueryList';
+import type { IMediaQueryList } from "../interfaces/IMediaQueryList";
 
 export type MatchMedia = (query: string) => IMediaQueryList;

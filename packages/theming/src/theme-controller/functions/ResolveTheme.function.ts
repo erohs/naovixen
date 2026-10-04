@@ -1,10 +1,7 @@
-import { ResolvedTheme } from '../../enums/ResolvedTheme';
-import { ThemePreference } from '../../enums/ThemePreference';
+import { ResolvedTheme } from "../../enums/ResolvedTheme";
+import { ThemePreference } from "../../enums/ThemePreference";
 
-export function resolveTheme(
-    preference: ThemePreference,
-    systemTheme: ResolvedTheme,
-): ResolvedTheme {
+export const resolveTheme = (preference: ThemePreference, systemTheme: ResolvedTheme): ResolvedTheme => {
     switch (preference) {
         case ThemePreference.Light:
             return ResolvedTheme.Light;
@@ -13,4 +10,4 @@ export function resolveTheme(
         case ThemePreference.System:
             return systemTheme;
     }
-}
+};

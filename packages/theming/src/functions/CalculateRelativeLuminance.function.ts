@@ -1,5 +1,5 @@
 /** WCAG 2.2 relative luminance of a `#rrggbb` colour. */
-export function calculateRelativeLuminance(hexColor: string): number {
+export const calculateRelativeLuminance = (hexColor: string): number => {
     const match = /^#([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})$/i.exec(hexColor);
 
     if (match === null) {
@@ -13,4 +13,4 @@ export function calculateRelativeLuminance(hexColor: string): number {
     }) as [number, number, number];
 
     return 0.2126 * red + 0.7152 * green + 0.0722 * blue;
-}
+};

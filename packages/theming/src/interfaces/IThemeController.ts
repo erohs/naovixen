@@ -1,5 +1,5 @@
-import type { ThemePreference } from '../enums/ThemePreference';
-import type { IThemeState } from '../theme-controller/interfaces/IThemeState';
+import type { ThemePreference } from "../enums/ThemePreference";
+import type { IThemeState } from "../theme-controller/interfaces/IThemeState";
 
 /** Properties rather than methods: they must stay bound when handed to useSyncExternalStore. */
 export interface IThemeController {

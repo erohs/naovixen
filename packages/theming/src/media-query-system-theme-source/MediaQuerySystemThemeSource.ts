@@ -1,8 +1,8 @@
-import { ResolvedTheme } from '../enums/ResolvedTheme';
-import type { ISystemThemeSource } from '../interfaces/ISystemThemeSource';
-import { darkColorSchemeQuery } from '../constants/DarkColorSchemeQuery.const';
-import type { IMediaQueryList } from './interfaces/IMediaQueryList';
-import type { MatchMedia } from './types/MatchMedia';
+import { ResolvedTheme } from "../enums/ResolvedTheme";
+import type { ISystemThemeSource } from "../interfaces/ISystemThemeSource";
+import { darkColorSchemeQuery } from "../constants/DarkColorSchemeQuery.const";
+import type { IMediaQueryList } from "./interfaces/IMediaQueryList";
+import type { MatchMedia } from "./types/MatchMedia";
 
 /** Browser only. Pass `(query) => window.matchMedia(query)`. */
 export class MediaQuerySystemThemeSource implements ISystemThemeSource {
@@ -17,10 +17,10 @@ export class MediaQuerySystemThemeSource implements ISystemThemeSource {
     }
 
     public subscribe(listener: () => void): () => void {
-        this._darkColorScheme.addEventListener('change', listener);
+        this._darkColorScheme.addEventListener("change", listener);
 
         return () => {
-            this._darkColorScheme.removeEventListener('change', listener);
+            this._darkColorScheme.removeEventListener("change", listener);
         };
     }
 }

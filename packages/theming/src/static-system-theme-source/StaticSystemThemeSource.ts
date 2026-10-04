@@ -1,5 +1,5 @@
-import type { ResolvedTheme } from '../enums/ResolvedTheme';
-import type { ISystemThemeSource } from '../interfaces/ISystemThemeSource';
+import type { ResolvedTheme } from "../enums/ResolvedTheme";
+import type { ISystemThemeSource } from "../interfaces/ISystemThemeSource";
 
 /** A system that never changes its mind, for a server render where there is no system to ask. */
 export class StaticSystemThemeSource implements ISystemThemeSource {

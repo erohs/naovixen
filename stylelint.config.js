@@ -1,37 +1,36 @@
 /** `nv-block__element--modifier`, with every part kebab-case and both parts optional. */
-const bemClassPattern =
-    '^nv-[a-z0-9]+(-[a-z0-9]+)*(__[a-z0-9]+(-[a-z0-9]+)*)?(--[a-z0-9]+(-[a-z0-9]+)*)?$';
+const bemClassPattern = "^nv-[a-z0-9]+(-[a-z0-9]+)*(__[a-z0-9]+(-[a-z0-9]+)*)?(--[a-z0-9]+(-[a-z0-9]+)*)?$";
 
 /** The token categories from `.claude/rules/styles.md`. */
 const tokenCategories = [
-    'color',
-    'font-family',
-    'font-size',
-    'font-weight',
-    'line-height',
-    'letter-spacing',
-    'space',
-    'size',
-    'radius',
-    'border-width',
-    'shadow',
-    'duration',
-    'easing',
-    'layout',
-    'breakpoint',
-    'z-index',
+    "color",
+    "font-family",
+    "font-size",
+    "font-weight",
+    "line-height",
+    "letter-spacing",
+    "space",
+    "size",
+    "radius",
+    "border-width",
+    "shadow",
+    "duration",
+    "easing",
+    "layout",
+    "breakpoint",
+    "z-index",
 ];
 
-const tokenPattern = `^(${tokenCategories.join('|')})-[a-z0-9]+(-[a-z0-9]+)*$`;
+const tokenPattern = `^(${tokenCategories.join("|")})-[a-z0-9]+(-[a-z0-9]+)*$`;
 
 /** Component-scoped properties are kebab-case and lead with their block name. */
-const componentPropertyPattern = '^[a-z0-9]+(-[a-z0-9]+)*$';
+const componentPropertyPattern = "^[a-z0-9]+(-[a-z0-9]+)*$";
 
 export default {
-    extends: ['stylelint-config-standard'],
-    ignoreFiles: ['**/node_modules/**', '**/dist/**', '**/.output/**', 'design-reference/**'],
+    extends: ["stylelint-config-standard"],
+    ignoreFiles: ["**/node_modules/**", "**/dist/**", "**/.output/**", "design-reference/**"],
     rules: {
-        'selector-class-pattern': [
+        "selector-class-pattern": [
             bemClassPattern,
             {
                 message: (selector) =>
@@ -39,7 +38,7 @@ export default {
             },
         ],
 
-        'custom-property-pattern': [
+        "custom-property-pattern": [
             componentPropertyPattern,
             {
                 message: (property) => `Expected "--${property}" to be kebab-case`,
@@ -47,28 +46,33 @@ export default {
         ],
 
         /** Logical properties throughout, so the layout follows the writing direction. */
-        'property-disallowed-list': [
-            ['margin-left', 'margin-right', 'padding-left', 'padding-right'],
+        "property-disallowed-list": [
+            ["margin-left", "margin-right", "padding-left", "padding-right"],
             {
-                message:
-                    'Use logical properties: margin-inline-start / padding-inline-end and friends.',
+                message: "Use logical properties: margin-inline-start / padding-inline-end and friends.",
             },
         ],
 
         /** Layer order settles precedence, so nothing should need to shout. */
-        'declaration-no-important': true,
+        "declaration-no-important": true,
+
+        /** Stacking comes only from the named layers, so a number can never be bumped to win. */
+        "declaration-property-value-allowed-list": [
+            { "z-index": [/^var\(--z-index-[a-z]+\)$/] },
+            { message: "Use a --z-index-* layer token, chosen for what it means." },
+        ],
     },
 
     overrides: [
         {
-            files: ['packages/theming/src/generated/*.css'],
+            files: ["packages/theming/src/generated/*.css"],
             /** Global design tokens lead with their category, so they sort and read as a scale. */
             rules: {
-                'custom-property-pattern': [
+                "custom-property-pattern": [
                     tokenPattern,
                     {
                         message: (property) =>
-                            `Expected "--${property}" to start with a token category: ${tokenCategories.join(', ')}`,
+                            `Expected "--${property}" to start with a token category: ${tokenCategories.join(", ")}`,
                     },
                 ],
             },

@@ -1,4 +1,4 @@
-import type { IColorTheme } from './IColorTheme';
+import type { IColorTheme } from "./IColorTheme";
 
 export interface IContrastRequirement {
     readonly foreground: keyof IColorTheme;
