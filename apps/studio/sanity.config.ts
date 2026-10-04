@@ -7,13 +7,16 @@ import { presentationLocations } from "./src/presentation/constants/Presentation
 import { previewOrigin } from "./src/presentation/constants/PreviewOrigin.const";
 import { sanityProject } from "./src/constants/SanityProject.const";
 import { schemaTypes } from "./src/schema/constants/SchemaTypes.const";
+import { singletonActions } from "./src/structure/constants/SingletonActions.const";
+import { singletonTypes } from "./src/structure/constants/SingletonTypes.const";
+import { buildStructure } from "./src/structure/functions/BuildStructure.function";
 
 export default defineConfig({
     name: "default",
     title: "naovixen",
     ...sanityProject,
     plugins: [
-        structureTool(),
+        structureTool({ structure: buildStructure }),
         presentationTool({
             previewUrl: {
                 initial: previewOrigin,
@@ -25,5 +28,14 @@ export default defineConfig({
         visionTool(),
         codeInput(),
     ],
-    schema: { types: schemaTypes },
+    schema: {
+        types: schemaTypes,
+        templates: (templates) => templates.filter(({ schemaType }) => !singletonTypes.has(schemaType)),
+    },
+    document: {
+        actions: (actions, { schemaType }) =>
+            singletonTypes.has(schemaType)
+                ? actions.filter(({ action }) => action !== undefined && singletonActions.has(action))
+                : actions,
+    },
 });

@@ -5,4 +5,5 @@ import { locateUnder } from "../functions/LocateUnder.function";
 export const presentationLocations: DocumentLocationResolvers = {
     post: locateUnder("Blog", "/blog"),
     project: locateUnder("Work", "/work"),
+    privacyNotice: { locations: [{ title: "Privacy notice", href: "/privacy" }] },
 };
