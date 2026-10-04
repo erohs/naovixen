@@ -1,10 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { validatePreviewUrl } from "@sanity/preview-url-secret";
-import { createPreviewSessionConfig } from "../../../functions/CreatePreviewSessionConfig.function";
-import { createRedirectResponse } from "../../../functions/CreateRedirectResponse.function";
-import { createSanityClient } from "../../../functions/CreateSanityClient.function";
-import { startPreviewSession } from "../../../functions/StartPreviewSession.function";
-import { toLocalPath } from "../../../functions/ToLocalPath.function";
+import { createPreviewSessionConfig } from "../../../features/preview/functions/CreatePreviewSessionConfig.function";
+import { createRedirectResponse } from "../../../features/preview/functions/CreateRedirectResponse.function";
+import { createSanityClient } from "../../../features/sanity/functions/CreateSanityClient.function";
+import { startPreviewSession } from "../../../features/preview/functions/StartPreviewSession.function";
+import { toLocalPath } from "../../../features/preview/functions/ToLocalPath.function";
 
 /**
  * The Studio's preview frame opens this with a one-time secret it has just written to the

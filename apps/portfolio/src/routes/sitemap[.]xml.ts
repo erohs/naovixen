@@ -1,10 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { buildSitemapXml } from "@naovixen/seo";
-import { createSanityBlogRepository } from "../functions/CreateSanityBlogRepository.function";
-import { createSanityProjectRepository } from "../functions/CreateSanityProjectRepository.function";
-import { publicCacheControl } from "../constants/PublicCacheControl.const";
-import { site } from "../constants/Site.const";
-import { buildSitemapEntries } from "../functions/BuildSitemapEntries.function";
+import { createSanityBlogRepository } from "../features/blog/functions/CreateSanityBlogRepository.function";
+import { createSanityProjectRepository } from "../features/projects/functions/CreateSanityProjectRepository.function";
+import { publicCacheControl } from "../features/cache-control/constants/PublicCacheControl.const";
+import { site } from "../features/site/constants/Site.const";
+import { buildSitemapEntries } from "../features/seo/functions/BuildSitemapEntries.function";
 
 /** Built per request, so a new post is listed without a deploy. */
 export const Route = createFileRoute("/sitemap.xml")({

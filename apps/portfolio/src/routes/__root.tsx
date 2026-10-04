@@ -3,12 +3,12 @@ import { createRootRouteWithContext, HeadContent, Scripts, ScriptOnce } from "@t
 import { themeBootScript } from "@naovixen/theming";
 import { NotFoundPage } from "../pages/not-found/NotFoundPage.component";
 import { SiteLayout } from "../components/site-layout/SiteLayout.component";
-import { headingFontPreload } from "../constants/HeadingFontPreload.const";
-import { sanityImagePreconnect } from "../constants/SanityImagePreconnect.const";
-import { site } from "../constants/Site.const";
-import { blogFeedChannel } from "../constants/BlogFeedChannel.const";
-import { publicCacheControl } from "../constants/PublicCacheControl.const";
-import { isNotFoundPage } from "../functions/IsNotFoundPage.function";
+import { headingFontPreload } from "../features/seo/constants/HeadingFontPreload.const";
+import { sanityImagePreconnect } from "../features/sanity/constants/SanityImagePreconnect.const";
+import { site } from "../features/site/constants/Site.const";
+import { blogFeedChannel } from "../features/blog/constants/BlogFeedChannel.const";
+import { publicCacheControl } from "../features/cache-control/constants/PublicCacheControl.const";
+import { isNotFoundPage } from "../features/seo/functions/IsNotFoundPage.function";
 import type { IRootDocumentProps } from "../interfaces/IRootDocumentProps";
 import type { IRouterContext } from "../interfaces/IRouterContext";
 import { translate } from "../translate/Translate.const";

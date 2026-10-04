@@ -1,6 +1,6 @@
 import { createRouter } from "@tanstack/react-router";
-import { blogRepository } from "./constants/BlogRepository.const";
-import { projectRepository } from "./constants/ProjectRepository.const";
+import { blogRepository } from "./features/blog/constants/BlogRepository.const";
+import { projectRepository } from "./features/projects/constants/ProjectRepository.const";
 import { routeTree } from "./routeTree.gen";
 
 /**

@@ -2,10 +2,10 @@ import type { FunctionComponent } from "react";
 import { Breadcrumb, ButtonVariant, Heading, LinkButton, mailIcon, Text } from "@naovixen/components";
 import { GreetingHeading } from "../../components/greeting-heading/GreetingHeading.component";
 import { ExclamationBubble } from "../../components/speech-bubble/ExclamationBubble.component";
-import { homeBreadcrumbTrail } from "../../constants/HomeBreadcrumbTrail.const";
-import { placeholderEmailAddress } from "../../constants/PlaceholderEmailAddress.const";
+import { homeBreadcrumbTrail } from "../../features/site/constants/HomeBreadcrumbTrail.const";
+import { placeholderEmailAddress } from "../../features/site/constants/PlaceholderEmailAddress.const";
 import { translate } from "../../translate/Translate.const";
-import { ContactLinks } from "./ContactLinks.component";
+import { ContactLinks } from "./sections/contact-links/ContactLinks.component";
 
 export const ContactPage: FunctionComponent = () => (
     <div className="nv-page">

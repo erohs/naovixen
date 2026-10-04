@@ -1,7 +1,7 @@
 import type { FunctionComponent } from "react";
 import { Breadcrumb, Heading, Text } from "@naovixen/components";
 import { ProjectCard } from "../../components/project-card/ProjectCard.component";
-import { homeBreadcrumbTrail } from "../../constants/HomeBreadcrumbTrail.const";
+import { homeBreadcrumbTrail } from "../../features/site/constants/HomeBreadcrumbTrail.const";
 import { translate } from "../../translate/Translate.const";
 import type { IWorkPageProps } from "./interfaces/IWorkPageProps";
 

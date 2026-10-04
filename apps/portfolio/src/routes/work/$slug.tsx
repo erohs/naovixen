@@ -1,9 +1,9 @@
 import type { ReactNode } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { OpenGraphType } from "@naovixen/seo";
-import { ProjectPage } from "../../pages/project/ProjectPage.component";
-import { buildRouteHead } from "../../functions/BuildRouteHead.function";
-import { loadProjectPage } from "../../functions/LoadProjectPage.function";
+import { ProjectPage } from "../../pages/work/project/ProjectPage.component";
+import { buildRouteHead } from "../../features/seo/functions/BuildRouteHead.function";
+import { loadProjectPage } from "../../pages/work/project/functions/LoadProjectPage.function";
 
 const ProjectComponent = (): ReactNode => <ProjectPage {...Route.useLoaderData()} />;
 

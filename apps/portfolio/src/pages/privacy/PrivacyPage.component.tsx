@@ -1,8 +1,8 @@
 import type { FunctionComponent } from "react";
 import { Breadcrumb, Heading, HeadingSize } from "@naovixen/components";
-import { homeBreadcrumbTrail } from "../../constants/HomeBreadcrumbTrail.const";
+import { homeBreadcrumbTrail } from "../../features/site/constants/HomeBreadcrumbTrail.const";
 import { translate } from "../../translate/Translate.const";
-import { PrivacyNotice } from "./PrivacyNotice.component";
+import { PrivacyNotice } from "./sections/notice/PrivacyNotice.component";
 
 export const PrivacyPage: FunctionComponent = () => (
     <article aria-labelledby="privacy-title" className="nv-page">

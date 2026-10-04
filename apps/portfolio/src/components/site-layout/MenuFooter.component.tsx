@@ -1,6 +1,6 @@
 import type { FunctionComponent } from "react";
 import { Link, LinkVariant } from "@naovixen/components";
-import { placeholderEmailAddress } from "../../constants/PlaceholderEmailAddress.const";
+import { placeholderEmailAddress } from "../../features/site/constants/PlaceholderEmailAddress.const";
 import { translate } from "../../translate/Translate.const";
 import { ExclamationBubble } from "../speech-bubble/ExclamationBubble.component";
 import { ElsewhereList } from "./ElsewhereList.component";

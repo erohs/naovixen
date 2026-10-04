@@ -1,5 +1,5 @@
 import type { ILink } from "@naovixen/components";
-import { placeholderEmailAddress } from "../../../constants/PlaceholderEmailAddress.const";
+import { placeholderEmailAddress } from "../../../features/site/constants/PlaceholderEmailAddress.const";
 import { translate } from "../../../translate/Translate.const";
 
 /** Placeholder: only LinkedIn is confirmed. The GitHub and Bluesky handles are the prototype's. */

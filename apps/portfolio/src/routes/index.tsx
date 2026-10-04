@@ -3,10 +3,10 @@ import { createFileRoute } from "@tanstack/react-router";
 import { OpenGraphType } from "@naovixen/seo";
 import { buildPersonStructuredData, buildWebSiteStructuredData } from "@naovixen/seo";
 import { HomePage } from "../pages/home/HomePage.component";
-import { latestPostCount } from "../constants/LatestPostCount.const";
-import { person } from "../constants/Person.const";
-import { site } from "../constants/Site.const";
-import { buildRouteHead } from "../functions/BuildRouteHead.function";
+import { latestPostCount } from "../pages/home/constants/LatestPostCount.const";
+import { person } from "../features/site/constants/Person.const";
+import { site } from "../features/site/constants/Site.const";
+import { buildRouteHead } from "../features/seo/functions/BuildRouteHead.function";
 import { translate } from "../translate/Translate.const";
 
 const HomeComponent = (): ReactNode => <HomePage {...Route.useLoaderData()} />;

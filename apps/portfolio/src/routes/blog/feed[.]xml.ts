@@ -1,9 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { buildRssFeedXml } from "@naovixen/seo";
-import { blogFeedChannel } from "../../constants/BlogFeedChannel.const";
-import { publicCacheControl } from "../../constants/PublicCacheControl.const";
-import { site } from "../../constants/Site.const";
-import { createSanityBlogRepository } from "../../functions/CreateSanityBlogRepository.function";
+import { blogFeedChannel } from "../../features/blog/constants/BlogFeedChannel.const";
+import { publicCacheControl } from "../../features/cache-control/constants/PublicCacheControl.const";
+import { site } from "../../features/site/constants/Site.const";
+import { createSanityBlogRepository } from "../../features/blog/functions/CreateSanityBlogRepository.function";
 
 /** Built per request from published posts only, so a new post reaches readers without a deploy. */
 export const Route = createFileRoute("/blog/feed.xml")({

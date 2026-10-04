@@ -1,7 +1,7 @@
 import type { FunctionComponent } from "react";
 import { downloadIcon, LinkButton } from "@naovixen/components";
-import { placeholderContactLinks } from "../../constants/PlaceholderContactLinks.const";
-import { placeholderCvPath } from "../../constants/PlaceholderCvPath.const";
+import { placeholderContactLinks } from "../../features/site/constants/PlaceholderContactLinks.const";
+import { placeholderCvPath } from "../../features/site/constants/PlaceholderCvPath.const";
 import { translate } from "../../translate/Translate.const";
 
 /** Profiles on other sites and the CV, each a round button named by its icon's label. */

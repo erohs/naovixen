@@ -1,11 +1,11 @@
 import type { AnyRouter } from "@tanstack/react-router";
 import { timeoutScheduler } from "@naovixen/components";
-import { globalAnnouncer } from "../../../constants/GlobalAnnouncer.const";
-import { DocumentPage } from "../../../services/document-page/DocumentPage";
-import { NavigationFocuser } from "../../../services/navigation-focuser/NavigationFocuser";
-import { PageLoadingAnnouncer } from "../../../services/page-loading-announcer/PageLoadingAnnouncer";
-import { RouterNavigationProgress } from "../../../services/router-navigation-progress/RouterNavigationProgress";
-import { RouterPageChangeSource } from "../../../services/router-page-change-source/RouterPageChangeSource";
+import { globalAnnouncer } from "../../../features/navigation/constants/GlobalAnnouncer.const";
+import { DocumentPage } from "../../../features/navigation/document-page/DocumentPage";
+import { NavigationFocuser } from "../../../features/navigation/navigation-focuser/NavigationFocuser";
+import { PageLoadingAnnouncer } from "../../../features/navigation/page-loading-announcer/PageLoadingAnnouncer";
+import { RouterNavigationProgress } from "../../../features/navigation/router-navigation-progress/RouterNavigationProgress";
+import { RouterPageChangeSource } from "../../../features/navigation/router-page-change-source/RouterPageChangeSource";
 import { translate } from "../../../translate/Translate.const";
 
 /**

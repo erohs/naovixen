@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { clearSession } from "@tanstack/react-start/server";
-import { createPreviewSessionConfig } from "../../../functions/CreatePreviewSessionConfig.function";
-import { createRedirectResponse } from "../../../functions/CreateRedirectResponse.function";
+import { createPreviewSessionConfig } from "../../../features/preview/functions/CreatePreviewSessionConfig.function";
+import { createRedirectResponse } from "../../../features/preview/functions/CreateRedirectResponse.function";
 
 export const Route = createFileRoute("/api/preview/disable")({
     server: {

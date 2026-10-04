@@ -1,7 +1,7 @@
 import type { FunctionComponent } from "react";
 import { Link, LinkVariant } from "@naovixen/components";
-import { privacyLink } from "../../constants/PrivacyLink.const";
-import { site } from "../../constants/Site.const";
+import { privacyLink } from "../../features/site/constants/PrivacyLink.const";
+import { site } from "../../features/site/constants/Site.const";
 import { translate } from "../../translate/Translate.const";
 import type { ISmallPrintProps } from "./interfaces/ISmallPrintProps";
 

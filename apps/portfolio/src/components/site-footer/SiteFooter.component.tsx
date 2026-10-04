@@ -1,6 +1,6 @@
 import type { FunctionComponent } from "react";
 import { Footer, Text, TextVariant } from "@naovixen/components";
-import { navigationItems } from "../../constants/NavigationItems.const";
+import { navigationItems } from "../../features/site/constants/NavigationItems.const";
 import { translate } from "../../translate/Translate.const";
 import { Logo } from "../logo/Logo.component";
 import { placeholderSocialLinks } from "./constants/PlaceholderSocialLinks.const";
