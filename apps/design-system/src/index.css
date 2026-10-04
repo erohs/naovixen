@@ -1,8 +1,8 @@
 /* Imported after the packages' stylesheets, so the app's rules win over what it shows. */
 @import url("./app/styles/app.css") layer(components);
-@import url("./components/page-section/styles/page-section.css") layer(components);
+@import url("./app/page-section/styles/page-section.css") layer(components);
 @import url("./components/example/styles/example.css") layer(components);
-@import url("./components/contrast-table/styles/contrast-table.css") layer(components);
+@import url("./pages/tokens/sections/contrast-table/styles/contrast-table.css") layer(components);
 @import url("./pages/tokens/styles/tokens-page.css") layer(components);
 @import url("./pages/text-and-media/styles/text-and-media-page.css") layer(components);
 @import url("./pages/site-frame/styles/site-frame-page.css") layer(components);

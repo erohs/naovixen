@@ -1,9 +1,9 @@
 import type { FunctionComponent } from "react";
-import { HeadingsSection } from "./HeadingsSection.component";
-import { IconsSection } from "./IconsSection.component";
-import { ListsSection } from "./ListsSection.component";
-import { PicturesSection } from "./PicturesSection.component";
-import { TextsSection } from "./TextsSection.component";
+import { HeadingsSection } from "./sections/headings/HeadingsSection.component";
+import { IconsSection } from "./sections/icons/IconsSection.component";
+import { ListsSection } from "./sections/lists/ListsSection.component";
+import { PicturesSection } from "./sections/pictures/PicturesSection.component";
+import { TextsSection } from "./sections/texts/TextsSection.component";
 
 export const TextAndMediaPage: FunctionComponent = () => (
     <>

@@ -1,8 +1,8 @@
 import type { FunctionComponent } from "react";
 import { Heading, ThemeToggle } from "@naovixen/components";
-import { PageSection } from "../components/page-section/PageSection.component";
-import { designSystemPages } from "../constants/DesignSystemPages.const";
 import { translate } from "../translate/Translate.const";
+import { PageSection } from "./page-section/PageSection.component";
+import { designSystemPages } from "./constants/DesignSystemPages.const";
 import type { IAppProps } from "./interfaces/IAppProps";
 
 export const App: FunctionComponent<IAppProps> = ({ themeController }) => (
