@@ -1,11 +1,11 @@
-export interface Profile {
+export interface IProfile {
     label: string;
     detail: string;
     url: string;
     icon: "linkedin" | "github" | "bluesky";
 }
 
-export interface NavigationItem {
+export interface INavigationItem {
     label: string;
     href: string;
 }
@@ -31,12 +31,12 @@ export const site = {
             url: "https://www.linkedin.com/in/naomi-shore",
             icon: "linkedin",
         },
-    ] satisfies Profile[] as Profile[],
+    ] satisfies IProfile[] as IProfile[],
     navigation: [
         { label: "Home", href: "/" },
         { label: "Work", href: "/work/" },
         { label: "About", href: "/about/" },
         { label: "Blog", href: "/blog/" },
         { label: "Contact", href: "/contact/" },
-    ] satisfies NavigationItem[] as NavigationItem[],
+    ] satisfies INavigationItem[] as INavigationItem[],
 };

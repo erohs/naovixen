@@ -2,7 +2,7 @@
 import Icon from "./Icon.astro";
 import Link from "./Link.astro";
 
-interface Neighbour {
+interface INeighbour {
     title: string;
     href: string;
 }
@@ -10,8 +10,8 @@ interface Neighbour {
 interface Props {
     label: string;
     back: { label: string; href: string };
-    previous?: Neighbour | undefined;
-    next?: Neighbour | undefined;
+    previous?: INeighbour | undefined;
+    next?: INeighbour | undefined;
 }
 
 const { label, back, previous, next } = Astro.props;

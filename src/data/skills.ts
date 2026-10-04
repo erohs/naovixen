@@ -1,11 +1,11 @@
-export interface SkillGroup {
+export interface ISkillGroup {
     label: string;
     /** Each skill names its icon in src/icons; one with no logo of its own takes a generic icon. */
     skills: { name: string; icon: string }[];
 }
 
 /** From Naomi's CV. */
-export const skillGroups: SkillGroup[] = [
+export const skillGroups: ISkillGroup[] = [
     {
         label: "languages & frameworks",
         skills: [

@@ -5,7 +5,7 @@ import PostList from "../../../components/blog/PostList.astro";
 import TopicList from "../../../components/blog/TopicList.astro";
 import PageLayout from "../../../layouts/PageLayout.astro";
 import { getPublishedPosts } from "../../../lib/content";
-import { topicsOf, type Topic } from "../../../lib/posts";
+import { topicsOf, type ITopic } from "../../../lib/posts";
 
 export const getStaticPaths = (async () => {
     const posts = await getPublishedPosts();
@@ -17,8 +17,8 @@ export const getStaticPaths = (async () => {
 }) satisfies GetStaticPaths;
 
 interface Props {
-    topic: Topic;
-    topics: Topic[];
+    topic: ITopic;
+    topics: ITopic[];
     posts: CollectionEntry<"blog">[];
 }
 

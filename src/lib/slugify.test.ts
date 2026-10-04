@@ -1,15 +1,15 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, test } from "vitest";
 import { slugify } from "./slugify";
 
-describe("slugify", () => {
-    it.each([
+describe("Using slugify, when given a topic name", () => {
+    test.each([
         ["Accessibility", "accessibility"],
         ["Design tokens", "design-tokens"],
         ["C#", "csharp"],
         [".NET", "dotnet"],
         ["C++", "cplusplus"],
         ["GOV.UK", "gov-uk"],
-    ])("turns %s into %s", (text, slug) => {
+    ])("then it should turn %s into %s", (text, slug) => {
         expect(slugify(text)).toBe(slug);
     });
 });

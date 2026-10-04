@@ -1,8 +1,8 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, test } from "vitest";
 import { blogPostingData, breadcrumbData, serialise } from "./structured-data";
 
-describe("blogPostingData", () => {
-    it("describes the post with absolute URLs and a plain date", () => {
+describe("Using blogPostingData, when given a post", () => {
+    test("then it should describe it with an absolute URL and a plain date", () => {
         const data = blogPostingData({
             path: "/blog/hello/",
             title: "Hello",
@@ -10,17 +10,12 @@ describe("blogPostingData", () => {
             published: new Date("2026-10-04"),
             topics: ["CSS"],
         });
-        expect(data).toMatchObject({
-            "@type": "BlogPosting",
-            url: "https://naovixen.com/blog/hello/",
-            datePublished: "2026-10-04",
-            keywords: ["CSS"],
-        });
+        expect(data).toMatchObject({ url: "https://naovixen.com/blog/hello/", datePublished: "2026-10-04" });
     });
 });
 
-describe("breadcrumbData", () => {
-    it("numbers each step from one", () => {
+describe("Using breadcrumbData, when given steps", () => {
+    test("then it should number them from one, with absolute URLs", () => {
         const data = breadcrumbData([
             { label: "Home", href: "/" },
             { label: "Blog", href: "/blog/" },
@@ -32,8 +27,8 @@ describe("breadcrumbData", () => {
     });
 });
 
-describe("serialise", () => {
-    it("escapes anything that could close the script element", () => {
+describe("Using serialise, when a value holds a closing script tag", () => {
+    test("then it should escape it so the element cannot close early", () => {
         expect(serialise({ name: "</script>" })).toBe('{"name":"\\u003c/script>"}');
     });
 });

@@ -1,21 +1,21 @@
 import { slugify } from "./slugify";
 
-export interface PostSummary {
+export interface IPostSummary {
     id: string;
     data: { title: string; published: Date; topics: string[] };
 }
 
-export interface Topic {
+export interface ITopic {
     name: string;
     slug: string;
     count: number;
 }
 
-export const newestFirst = <T extends PostSummary>(posts: readonly T[]): T[] =>
+export const newestFirst = <T extends IPostSummary>(posts: readonly T[]): T[] =>
     posts.toSorted((first, second) => second.data.published.getTime() - first.data.published.getTime());
 
 /** The posts either side of one, from a list sorted newest first. Neither end wraps. */
-export const adjacentPosts = <T extends PostSummary>(
+export const adjacentPosts = <T extends IPostSummary>(
     posts: readonly T[],
     id: string,
 ): { newer: T | undefined; older: T | undefined } => {
@@ -24,7 +24,7 @@ export const adjacentPosts = <T extends PostSummary>(
 };
 
 /** Other posts sharing a topic with this one: most topics shared first, then newest. */
-export const relatedPosts = <T extends PostSummary>(posts: readonly T[], post: T, limit = 2): T[] => {
+export const relatedPosts = <T extends IPostSummary>(posts: readonly T[], post: T, limit = 2): T[] => {
     const shared = (other: T): number => other.data.topics.filter((topic) => post.data.topics.includes(topic)).length;
     return newestFirst(posts.filter((other) => other.id !== post.id && shared(other) > 0))
         .toSorted((first, second) => shared(second) - shared(first))
@@ -32,7 +32,7 @@ export const relatedPosts = <T extends PostSummary>(posts: readonly T[], post: T
 };
 
 /** Every topic used by at least one post, most used first, then alphabetically. */
-export const topicsOf = (posts: readonly PostSummary[]): Topic[] => {
+export const topicsOf = (posts: readonly IPostSummary[]): ITopic[] => {
     const counts = new Map<string, number>();
     for (const topic of posts.flatMap((post) => post.data.topics)) {
         counts.set(topic, (counts.get(topic) ?? 0) + 1);

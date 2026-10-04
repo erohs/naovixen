@@ -1,4 +1,4 @@
-export interface ExperienceEntry {
+export interface IExperienceEntry {
     title: string;
     organisation: string;
     dates: string;
@@ -8,7 +8,7 @@ export interface ExperienceEntry {
 }
 
 /** Newest first. From Naomi's CV. */
-export const experience: ExperienceEntry[] = [
+export const experience: IExperienceEntry[] = [
     {
         title: "Software Engineer II",
         organisation: "PebblePad",

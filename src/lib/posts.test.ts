@@ -1,7 +1,7 @@
-import { describe, expect, it } from "vitest";
-import { adjacentPosts, newestFirst, relatedPosts, topicsOf, type PostSummary } from "./posts";
+import { describe, expect, test } from "vitest";
+import { adjacentPosts, newestFirst, relatedPosts, topicsOf, type IPostSummary } from "./posts";
 
-const post = (id: string, published: string, topics: string[]): PostSummary => ({
+const post = (id: string, published: string, topics: string[]): IPostSummary => ({
     id,
     data: { title: id, published: new Date(published), topics },
 });
@@ -13,37 +13,47 @@ const posts = newestFirst([
     post("unrelated", "2025-12-01", ["AI"]),
 ]);
 
-describe("newestFirst", () => {
-    it("orders by publication date, latest first", () => {
+describe("Using newestFirst, when given posts in any order", () => {
+    test("then it should order them by publication date, latest first", () => {
         expect(posts.map((each) => each.id)).toEqual(["newest", "middle", "oldest", "unrelated"]);
     });
 });
 
-describe("adjacentPosts", () => {
-    it("finds the newer and older neighbours", () => {
-        const { newer, older } = adjacentPosts(posts, "middle");
-        expect([newer?.id, older?.id]).toEqual(["newest", "oldest"]);
+describe("Using adjacentPosts, when asked about a post in the middle", () => {
+    test("then it should find the newer neighbour", () => {
+        expect(adjacentPosts(posts, "middle").newer?.id).toBe("newest");
     });
 
-    it("does not wrap at either end", () => {
+    test("then it should find the older neighbour", () => {
+        expect(adjacentPosts(posts, "middle").older?.id).toBe("oldest");
+    });
+});
+
+describe("Using adjacentPosts, when asked about the posts at either end", () => {
+    test("then it should find nothing newer than the newest", () => {
         expect(adjacentPosts(posts, "newest").newer).toBeUndefined();
+    });
+
+    test("then it should find nothing older than the oldest", () => {
         expect(adjacentPosts(posts, "unrelated").older).toBeUndefined();
     });
 });
 
-describe("relatedPosts", () => {
-    it("ranks by shared topics, then by date, and leaves out the post itself", () => {
+describe("Using relatedPosts, when other posts share topics", () => {
+    test("then it should rank by topics shared, then by date, leaving out the post itself", () => {
         const subject = post("subject", "2026-04-01", ["CSS", "Forms"]);
         expect(relatedPosts([...posts, subject], subject).map((each) => each.id)).toEqual(["newest", "middle"]);
     });
+});
 
-    it("finds nothing when no topic is shared", () => {
+describe("Using relatedPosts, when no topic is shared", () => {
+    test("then it should find nothing", () => {
         expect(relatedPosts(posts, post("lonely", "2026-04-01", ["Rust"]))).toEqual([]);
     });
 });
 
-describe("topicsOf", () => {
-    it("counts each topic, most used first, then alphabetically", () => {
+describe("Using topicsOf, when given posts", () => {
+    test("then it should count each topic, most used first, then alphabetically", () => {
         expect(topicsOf(posts)).toEqual([
             { name: "CSS", slug: "css", count: 2 },
             { name: "Forms", slug: "forms", count: 2 },
