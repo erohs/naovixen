@@ -403,6 +403,9 @@ importers:
       '@naovixen/nvpack':
         specifier: workspace:*
         version: link:../../packages/nvpack
+      '@types/node':
+        specifier: 'catalog:'
+        version: 24.19.0
       '@types/react':
         specifier: 'catalog:'
         version: 19.3.0

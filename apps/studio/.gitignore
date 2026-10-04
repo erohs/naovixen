@@ -1,3 +1,5 @@
 /dist
 /.sanity
 schema.json
+# Seed copy: drafts and placeholders, not for the repo
+/seed/content.json

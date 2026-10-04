@@ -1,0 +1,49 @@
+{
+    "posts": [
+        {
+            "slug": "example-post",
+            "title": "Example post",
+            "excerpt": "One or two sentences for the blog page and search engines.",
+            "publishedAt": "2026-01-15",
+            "tags": ["Example topic"],
+            "body": [
+                { "type": "paragraph", "text": "A paragraph, which may hold [a link](https://example.com)." },
+                { "type": "sectionHeading", "text": "A numbered section heading" },
+                { "type": "sectionHeading", "text": "An unnumbered one", "isNumbered": false },
+                { "type": "list", "items": ["A bulleted item", "Another"] },
+                { "type": "code", "language": "typescript", "filename": "example.ts", "code": "const answer = 42;" },
+                { "type": "callout", "label": "tip!", "title": "A callout", "text": "Its text." }
+            ]
+        }
+    ],
+    "projects": [
+        {
+            "slug": "example-project",
+            "title": "Example project",
+            "position": 1,
+            "isFeatured": true,
+            "summary": "One sentence for the project card and search engines.",
+            "stack": ["TypeScript"],
+            "body": [
+                {
+                    "type": "facts",
+                    "facts": [
+                        { "label": "my role", "value": "A role" },
+                        { "label": "timeline", "value": "2026" }
+                    ]
+                },
+                { "type": "sectionHeading", "text": "The problem" },
+                { "type": "paragraph", "text": "What needed solving." }
+            ]
+        }
+    ],
+    "privacyNotice": {
+        "title": "Privacy notice",
+        "intro": "One or two sentences under the heading, also shown to search engines.",
+        "lastUpdated": "2026-01-15",
+        "body": [
+            { "type": "heading", "text": "A plain heading" },
+            { "type": "paragraph", "text": "A paragraph." }
+        ]
+    }
+}

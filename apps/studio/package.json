@@ -7,6 +7,7 @@
         "build": "sanity build",
         "deploy": "sanity deploy",
         "typegen": "sanity schema extract --force --enforce-required-fields && sanity typegen generate",
+        "seed": "sanity exec src/seed/Seed.effect.ts --with-user-token --",
         "lint": "eslint .",
         "typecheck": "tsc --noEmit",
         "test": "vitest run"
@@ -22,6 +23,7 @@
     },
     "devDependencies": {
         "@naovixen/nvpack": "workspace:*",
+        "@types/node": "catalog:",
         "@types/react": "catalog:",
         "@types/react-dom": "catalog:",
         "vitest": "catalog:"
