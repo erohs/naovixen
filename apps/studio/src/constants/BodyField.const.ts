@@ -1,44 +1,43 @@
-import { defineArrayMember, defineField } from 'sanity';
-
-import { validateHeadingOrder } from '../functions/ValidateHeadingOrder.function';
-import type { IBodyNode } from '../interfaces/IBodyNode';
-import { bodyBlockTypes } from './BodyBlockTypes.const';
+import { defineArrayMember, defineField } from "sanity";
+import { validateHeadingOrder } from "../functions/ValidateHeadingOrder.function";
+import type { IBodyNode } from "../interfaces/IBodyNode";
+import { bodyBlockTypes } from "./BodyBlockTypes.const";
 
 /**
  * Text, then every block the site renders, on every document type. The page owns the h1, so
  * a body starts at h2. Code blocks come from the code input plugin.
  */
 export const bodyField = defineField({
-    name: 'body',
-    type: 'array',
+    name: "body",
+    type: "array",
     of: [
         defineArrayMember({
-            type: 'block',
+            type: "block",
             styles: [
-                { title: 'Normal', value: 'normal' },
-                { title: 'Heading', value: 'h2' },
-                { title: 'Subheading', value: 'h3' },
-                { title: 'Quote', value: 'blockquote' },
+                { title: "Normal", value: "normal" },
+                { title: "Heading", value: "h2" },
+                { title: "Subheading", value: "h3" },
+                { title: "Quote", value: "blockquote" },
             ],
             marks: {
                 decorators: [
-                    { title: 'Strong', value: 'strong' },
-                    { title: 'Emphasis', value: 'em' },
-                    { title: 'Code', value: 'code' },
+                    { title: "Strong", value: "strong" },
+                    { title: "Emphasis", value: "em" },
+                    { title: "Code", value: "code" },
                 ],
                 annotations: [
                     defineArrayMember({
-                        name: 'link',
-                        type: 'object',
+                        name: "link",
+                        type: "object",
                         fields: [
                             defineField({
-                                name: 'href',
-                                title: 'URL',
-                                type: 'url',
+                                name: "href",
+                                title: "URL",
+                                type: "url",
                                 validation: (rule) =>
                                     rule.required().uri({
                                         allowRelative: true,
-                                        scheme: ['http', 'https', 'mailto'],
+                                        scheme: ["http", "https", "mailto"],
                                     }),
                             }),
                         ],
@@ -47,12 +46,12 @@ export const bodyField = defineField({
             },
         }),
         defineArrayMember({
-            type: 'code',
-            title: 'Code block',
+            type: "code",
+            title: "Code block",
             options: { withFilename: true },
             validation: (rule) =>
                 rule.custom((value: { code?: string } | undefined) =>
-                    value?.code === undefined || value.code.trim() === '' ? 'Add the code.' : true,
+                    value?.code === undefined || value.code.trim() === "" ? "Add the code." : true,
                 ),
         }),
         ...bodyBlockTypes.map((blockType) => defineArrayMember({ type: blockType.name })),
