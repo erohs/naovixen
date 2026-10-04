@@ -10,6 +10,7 @@ export type { AnchorProps } from "./link-provider/types/AnchorProps";
 export type { HeadingLevel } from "./heading/types/HeadingLevel";
 export type { IBreadcrumbProps } from "./breadcrumb/interfaces/IBreadcrumbProps";
 export type { IButtonProps } from "./button/interfaces/IButtonProps";
+export type { CheckboxProps } from "./checkbox/types/CheckboxProps";
 export type { ICalloutProps } from "./callout/interfaces/ICalloutProps";
 export type { CardProps } from "./card/types/CardProps";
 export type { ICodeBlockProps } from "./code/interfaces/ICodeBlockProps";
@@ -35,6 +36,7 @@ export type { ISectionHeadingProps } from "./heading/interfaces/ISectionHeadingP
 export type { ITagListProps } from "./tag/interfaces/ITagListProps";
 export type { SpeechBubbleProps } from "./speech-bubble/types/SpeechBubbleProps";
 export type { ITextProps } from "./text/interfaces/ITextProps";
+export type { ITextFieldProps } from "./text-field/interfaces/ITextFieldProps";
 export type { IThemeToggleProps } from "./theme-toggle/interfaces/IThemeToggleProps";
 
 export { containFocus } from "./contain-focus/ContainFocus.function";
@@ -50,6 +52,7 @@ export { Breadcrumb } from "./breadcrumb/Breadcrumb.component";
 export { Button } from "./button/Button.component";
 export { Callout } from "./callout/Callout.component";
 export { Card } from "./card/Card.component";
+export { Checkbox } from "./checkbox/Checkbox.component";
 export { Code } from "./code/Code.component";
 export { CodeBlock } from "./code/CodeBlock.component";
 export { Disclosure } from "./disclosure/Disclosure.component";
@@ -73,6 +76,7 @@ export { SpeechBubble } from "./speech-bubble/SpeechBubble.component";
 export { Tag } from "./tag/Tag.component";
 export { TagList } from "./tag/TagList.component";
 export { Text } from "./text/Text.component";
+export { TextField } from "./text-field/TextField.component";
 export { ThemeToggle } from "./theme-toggle/ThemeToggle.component";
 export { VisuallyHidden } from "./visually-hidden/VisuallyHidden.component";
 

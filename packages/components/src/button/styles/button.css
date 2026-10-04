@@ -89,3 +89,22 @@
         }
     }
 }
+
+/* Flat on the page: it neither rests on a shadow nor moves, and only its fill answers the pointer. */
+.nv-button--chip {
+    --button-shadow: none;
+    --button-shadow-lifted: none;
+    --button-offset: 0;
+    --button-offset-lifted: 0;
+
+    min-block-size: auto;
+    padding: var(--space-padding-chip);
+    border-radius: var(--radius-small);
+    font-family: var(--font-family-code);
+    font-size: var(--font-size-meta);
+    font-weight: var(--font-weight-regular);
+
+    &:hover {
+        background-color: var(--color-background-surface);
+    }
+}

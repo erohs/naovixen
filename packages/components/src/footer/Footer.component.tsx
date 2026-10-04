@@ -5,7 +5,7 @@ import type { IFooterProps } from "./interfaces/IFooterProps";
 
 const FooterRoot: FunctionComponent<IFooterProps> = ({ smallPrint, className, children, ...footerProps }) => (
     <footer {...footerProps} className={joinClassNames("nv-footer", className)}>
-        <div className="nv-footer__columns">{children}</div>
+        {children !== undefined && <div className="nv-footer__columns">{children}</div>}
         <div className="nv-footer__small-print">{smallPrint}</div>
     </footer>
 );
@@ -13,6 +13,6 @@ const FooterRoot: FunctionComponent<IFooterProps> = ({ smallPrint, className, ch
 /**
  * Its children are laid out as columns: a `Footer.Column` for each list of links, and anything
  * else, such as a logo and a line about the site, as a column of its own. The small print sits
- * in a row beneath them.
+ * in a row beneath them. Without children, the small print is the whole footer.
  */
 export const Footer = Object.assign(FooterRoot, { Column: FooterColumn });

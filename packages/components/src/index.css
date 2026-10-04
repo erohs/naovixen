@@ -6,6 +6,8 @@
 @import url("./text/styles/text.css") layer(components);
 @import url("./code/styles/code.css") layer(components);
 @import url("./tag/styles/tag.css") layer(components);
+@import url("./text-field/styles/text-field.css") layer(components);
+@import url("./checkbox/styles/checkbox.css") layer(components);
 @import url("./button/styles/skip-link.css") layer(components);
 @import url("./theme-toggle/styles/theme-toggle.css") layer(components);
 
