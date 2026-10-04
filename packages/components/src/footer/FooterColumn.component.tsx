@@ -1,17 +1,12 @@
-import { useId } from 'react';
-import type { FunctionComponent } from 'react';
-
-import { HeadingSize } from '../heading/enums/HeadingSize';
-import { Heading } from '../heading/Heading.component';
-import { NavigationList } from '../navigation-list/NavigationList.component';
-import type { IFooterColumnProps } from './interfaces/IFooterColumnProps';
+import { useId } from "react";
+import type { FunctionComponent } from "react";
+import { HeadingSize } from "../heading/enums/HeadingSize";
+import { Heading } from "../heading/Heading.component";
+import { NavigationList } from "../navigation-list/NavigationList.component";
+import type { IFooterColumnProps } from "./interfaces/IFooterColumnProps";
 
 /** `Footer.Column`: a headed list of links, and a navigation landmark named by its heading. */
-export const FooterColumn: FunctionComponent<IFooterColumnProps> = ({
-    heading,
-    links,
-    currentHref,
-}) => {
+export const FooterColumn: FunctionComponent<IFooterColumnProps> = ({ heading, links, currentHref }) => {
     const headingId = useId();
 
     return (

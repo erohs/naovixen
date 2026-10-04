@@ -1,4 +1,4 @@
-import type { IIconProps } from '../../icon/interfaces/IIconProps';
+import type { IIconProps } from "../../icon/interfaces/IIconProps";
 
 export interface IButtonIconProps extends IIconProps {
     /**

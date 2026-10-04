@@ -1,22 +1,21 @@
-import { use } from 'react';
-import type { FunctionComponent } from 'react';
-import { joinClassNames } from '@naovixen/utilities';
-
-import { PageLinkContext } from '../link-provider/constants/PageLinkContext.context';
-import { renderAnchor } from '../link-provider/functions/RenderAnchor.function';
-import { VisuallyHidden } from '../visually-hidden/VisuallyHidden.component';
-import { defaultNewTabHint } from './constants/DefaultNewTabHint.const';
-import { linkClassNameByVariant } from './constants/LinkClassNameByVariant.const';
-import { LinkVariant } from './enums/LinkVariant';
-import { isOtherSite } from './functions/IsOtherSite.function';
-import { isPageLink } from './functions/IsPageLink.function';
-import type { ILinkProps } from './interfaces/ILinkProps';
-import { LinkIcon } from './LinkIcon.component';
+import { use } from "react";
+import type { FunctionComponent } from "react";
+import { joinClassNames } from "@naovixen/utilities";
+import { PageLinkContext } from "../link-provider/constants/PageLinkContext.context";
+import { renderAnchor } from "../link-provider/functions/RenderAnchor.function";
+import { translate } from "../translate/Translate.const";
+import { VisuallyHidden } from "../visually-hidden/VisuallyHidden.component";
+import { linkClassNameByVariant } from "./constants/LinkClassNameByVariant.const";
+import { LinkVariant } from "./enums/LinkVariant";
+import { isOtherSite } from "./functions/IsOtherSite.function";
+import { isPageLink } from "./functions/IsPageLink.function";
+import type { ILinkProps } from "./interfaces/ILinkProps";
+import { LinkIcon } from "./LinkIcon.component";
 
 const LinkRoot: FunctionComponent<ILinkProps> = ({
     variant = LinkVariant.Content,
     opensInNewTab,
-    newTabHint = defaultNewTabHint,
+    newTabHint = translate("opensInNewTab"),
     className,
     children,
     ...anchorProps

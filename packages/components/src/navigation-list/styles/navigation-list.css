@@ -54,7 +54,7 @@
         text-decoration-line: none;
 
         &::before {
-            content: '';
+            content: "";
             position: absolute;
             inset-block: 22%;
             inset-inline-start: var(--space-between-content);
@@ -68,7 +68,7 @@
                 background-color var(--duration-fast) var(--easing-standard);
         }
 
-        &[aria-current='page']::before {
+        &[aria-current="page"]::before {
             transform: scaleY(1) rotate(-3deg);
         }
 
@@ -87,7 +87,7 @@
 
 /* The bar is a background, which forced colours drop, so the underline comes back instead. */
 @media (forced-colors: active) {
-    .nv-navigation-list--menu .nv-link[aria-current='page'] {
+    .nv-navigation-list--menu .nv-link[aria-current="page"] {
         text-decoration-line: underline;
     }
 }

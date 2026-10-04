@@ -68,7 +68,7 @@
 }
 
 .nv-button:disabled,
-.nv-button[aria-disabled='true'] {
+.nv-button[aria-disabled="true"] {
     cursor: not-allowed;
     translate: none;
     box-shadow: var(--button-shadow);

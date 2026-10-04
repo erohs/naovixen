@@ -13,7 +13,8 @@
     },
     "dependencies": {
         "@naovixen/theming": "workspace:*",
-        "@naovixen/utilities": "workspace:*"
+        "@naovixen/utilities": "workspace:*",
+        "i18next": "catalog:"
     },
     "peerDependencies": {
         "react": "^19.0.0",

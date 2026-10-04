@@ -1,0 +1,37 @@
+/*
+ * A round button that sits in the margin just beyond the page's right edge, as in the
+ * design; where that margin is too narrow, it keeps a small gap from the window's edge instead.
+ */
+.nv-back-to-top {
+    --back-to-top-page-margin: calc((100vw - var(--layout-width-page)) / 2 - var(--space-padding-page));
+
+    position: fixed;
+    z-index: var(--z-index-floating);
+    inset-block-end: var(--space-between-groups);
+    inset-inline-end: max(
+        var(--space-between-text) + var(--space-between-lines),
+        var(--back-to-top-page-margin) - var(--size-action-minimum) - var(--space-between-content)
+    );
+
+    /*
+     * Hidden until the reader has scrolled a full screen down. Visibility, not just opacity,
+     * keeps a hidden link out of the tab order and the accessibility tree; it waits for the fade
+     * to finish before hiding.
+     */
+    visibility: hidden;
+    opacity: 0;
+    transition:
+        translate var(--duration-fast) var(--easing-standard),
+        box-shadow var(--duration-fast) var(--easing-standard),
+        opacity var(--duration-medium) var(--easing-standard),
+        visibility 0s linear var(--duration-medium);
+
+    &[data-visible="true"] {
+        visibility: visible;
+        opacity: 1;
+        transition:
+            translate var(--duration-fast) var(--easing-standard),
+            box-shadow var(--duration-fast) var(--easing-standard),
+            opacity var(--duration-medium) var(--easing-standard);
+    }
+}

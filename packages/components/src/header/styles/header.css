@@ -15,15 +15,12 @@
     padding-inline: var(--space-padding-page-centred);
 }
 
+/* The logo is a size up in the header, where it stands alone. */
 .nv-header__home {
     margin-inline-end: auto;
+    font-size: var(--font-size-lead);
     font-weight: var(--font-weight-regular);
     text-decoration: none;
-}
-
-/* The logo is a size up in the header, where it stands alone. */
-.nv-header__home .nv-logo__wordmark {
-    font-size: var(--font-size-lead);
 }
 
 /* Together with the row's gap, the actions sit as far from the last link as the links sit from each other. */
@@ -80,7 +77,7 @@
     }
 }
 
-.nv-header__menu-button[aria-expanded='true'] .nv-header__menu-line {
+.nv-header__menu-button[aria-expanded="true"] .nv-header__menu-line {
     &:nth-child(1) {
         inset-block-start: 20.5px;
         inset-inline-start: 11px;
@@ -112,17 +109,13 @@
     --header-menu-wave-overhang: 22px;
 
     position: fixed;
-    z-index: -1;
+    z-index: var(--z-index-behind);
     inset: 0;
     visibility: hidden;
     translate: calc(100% + var(--space-between-groups)) 0;
     background:
         radial-gradient(ellipse 90% 60% at 100% 100%, transparent, var(--color-background-page)),
-        radial-gradient(
-                circle,
-                color-mix(in srgb, var(--color-decoration-dots) 60%, transparent) 15%,
-                transparent 20%
-            )
+        radial-gradient(circle, color-mix(in srgb, var(--color-decoration-dots) 60%, transparent) 15%, transparent 20%)
             0 0 / var(--space-between-content) var(--space-between-content),
         var(--color-background-page);
     transition:
@@ -131,7 +124,7 @@
 
     &::before,
     &::after {
-        content: '';
+        content: "";
         position: absolute;
         inset-block: 0;
         inline-size: calc(var(--header-menu-wave-overhang) + 2px);
@@ -139,9 +132,7 @@
     }
 
     &::before {
-        inset-inline-start: calc(
-            -1 * (var(--header-menu-wave-overhang) + var(--border-width-highlight))
-        );
+        inset-inline-start: calc(-1 * (var(--header-menu-wave-overhang) + var(--border-width-highlight)));
         background-color: var(--color-border);
     }
 
@@ -158,8 +149,8 @@
     display: flex;
     flex-direction: column;
     gap: var(--space-between-regions);
-    padding: calc(var(--size-action-minimum) + 2 * var(--space-between-groups))
-        var(--space-padding-page) var(--space-between-regions);
+    padding: calc(var(--size-action-minimum) + 2 * var(--space-between-groups)) var(--space-padding-page)
+        var(--space-between-regions);
 
     /* The links slide in from the side, which must not make it scroll sideways. */
     overflow: hidden auto;
@@ -185,7 +176,7 @@
         translate 0.4s ease;
 }
 
-.nv-header__menu-button[aria-expanded='true'] + .nv-header__menu-panel {
+.nv-header__menu-button[aria-expanded="true"] + .nv-header__menu-panel {
     visibility: visible;
     translate: none;
     transition-delay: 0s;
@@ -233,7 +224,7 @@
     }
 
     /* The page behind an open menu stays put. */
-    :root:has(.nv-header__menu-button[aria-expanded='true']) {
+    :root:has(.nv-header__menu-button[aria-expanded="true"]) {
         overflow: hidden;
     }
 }
@@ -263,7 +254,7 @@
             visibility 0s linear var(--duration-medium);
     }
 
-    .nv-header__menu-button[aria-expanded='true'] + .nv-header__menu-panel {
+    .nv-header__menu-button[aria-expanded="true"] + .nv-header__menu-panel {
         opacity: 1;
     }
 }

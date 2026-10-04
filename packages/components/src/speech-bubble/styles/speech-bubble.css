@@ -16,26 +16,15 @@
     rotate: -2deg;
 }
 
-.nv-speech-bubble--tail-bottom::after,
-.nv-speech-bubble--tail-top::after {
-    content: '';
+.nv-speech-bubble::after {
+    content: "";
     position: absolute;
+    inset-block-end: -10px;
     inset-inline-start: 30px;
     inline-size: 16px;
     block-size: 16px;
-    border: 0 solid var(--color-border);
+    border-block-end: 2px solid var(--color-border);
+    border-inline-end: 2px solid var(--color-border);
     background-color: inherit;
     transform: rotate(38deg) skew(6deg);
-}
-
-.nv-speech-bubble--tail-bottom::after {
-    inset-block-end: -10px;
-    border-block-end-width: 2px;
-    border-inline-end-width: 2px;
-}
-
-.nv-speech-bubble--tail-top::after {
-    inset-block-start: -10px;
-    border-block-start-width: 2px;
-    border-inline-start-width: 2px;
 }

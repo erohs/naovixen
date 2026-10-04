@@ -1,29 +1,35 @@
-import type { FunctionComponent } from 'react';
-import { Button } from '../button/Button.component';
+import { useId } from "react";
+import type { FunctionComponent } from "react";
+import { Button } from "../button/Button.component";
+import { DisclosurePanel } from "./DisclosurePanel.component";
+import type { IDisclosureProps } from "./interfaces/IDisclosureProps";
 
-import { useDisclosure } from './functions/UseDisclosure.hook';
-import type { IDisclosureProps } from './interfaces/IDisclosureProps';
-
-/** Controlled: it asks for changes through `onOpenChange`. Opens in the flow, traps nothing. */
+/** Controlled: it asks for changes through `onOpenChange`. Opens in the flow and traps nothing. */
 export const Disclosure: FunctionComponent<IDisclosureProps> = ({
     label,
     isOpen,
     onOpenChange,
-    children,
     className,
-    buttonClassName,
-    panelClassName,
+    children,
 }) => {
-    const { rootRef, buttonProps, panelProps } = useDisclosure(isOpen, onOpenChange);
+    const panelId = useId();
+
+    const onClick = (): void => {
+        onOpenChange(!isOpen);
+    };
+
+    const onDismiss = (): void => {
+        onOpenChange(false);
+    };
 
     return (
-        <div ref={rootRef} className={className}>
-            <Button {...buttonProps} className={buttonClassName}>
+        <div className={className}>
+            <Button aria-expanded={isOpen} aria-controls={panelId} onClick={onClick}>
                 {label}
             </Button>
-            <div {...panelProps} className={panelClassName}>
+            <DisclosurePanel id={panelId} isOpen={isOpen} onDismiss={onDismiss}>
                 {children}
-            </div>
+            </DisclosurePanel>
         </div>
     );
 };

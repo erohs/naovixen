@@ -1,17 +1,10 @@
-import type { FunctionComponent } from 'react';
-import { joinClassNames } from '@naovixen/utilities';
-
-import { SpeechBubbleTail } from './enums/SpeechBubbleTail';
-import type { ISpeechBubbleProps } from './interfaces/ISpeechBubbleProps';
+import type { FunctionComponent } from "react";
+import { joinClassNames } from "@naovixen/utilities";
+import type { SpeechBubbleProps } from "./types/SpeechBubbleProps";
 
 /** The tail is drawn by the stylesheet, so it never reaches the accessibility tree. */
-export const SpeechBubble: FunctionComponent<ISpeechBubbleProps> = ({
-    tail = SpeechBubbleTail.Bottom,
-    className,
-    ...paragraphProps
-}) => (
-    <p
-        {...paragraphProps}
-        className={joinClassNames('nv-speech-bubble', `nv-speech-bubble--tail-${tail}`, className)}
-    />
+export const SpeechBubble: FunctionComponent<SpeechBubbleProps> = ({ className, children, ...paragraphProps }) => (
+    <p {...paragraphProps} className={joinClassNames("nv-speech-bubble", className)}>
+        {children}
+    </p>
 );

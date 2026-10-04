@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react';
+import type { ReactNode } from "react";
 
 export interface IDisclosureProps {
     /** The button's content: text, or a `Button.Icon` beside text. */
@@ -8,6 +8,4 @@ export interface IDisclosureProps {
     readonly onOpenChange: (isOpen: boolean) => void;
     readonly children: ReactNode;
     readonly className?: string | undefined;
-    readonly buttonClassName?: string | undefined;
-    readonly panelClassName?: string | undefined;
 }

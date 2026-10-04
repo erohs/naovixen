@@ -1,22 +1,17 @@
-import type { FunctionComponent } from 'react';
-import { joinClassNames } from '@naovixen/utilities';
-
-import { ButtonIcon } from './ButtonIcon.component';
-import { ButtonVariant } from './enums/ButtonVariant';
-import type { IButtonProps } from './interfaces/IButtonProps';
+import type { FunctionComponent } from "react";
+import { joinClassNames } from "@naovixen/utilities";
+import { ButtonIcon } from "./ButtonIcon.component";
+import { ButtonVariant } from "./enums/ButtonVariant";
+import type { IButtonProps } from "./interfaces/IButtonProps";
 
 const ButtonRoot: FunctionComponent<IButtonProps> = ({
     variant = ButtonVariant.Secondary,
-    type = 'button',
+    type = "button",
     className,
     children,
     ...buttonProps
 }) => (
-    <button
-        {...buttonProps}
-        type={type}
-        className={joinClassNames('nv-button', `nv-button--${variant}`, className)}
-    >
+    <button {...buttonProps} type={type} className={joinClassNames("nv-button", `nv-button--${variant}`, className)}>
         {children}
     </button>
 );

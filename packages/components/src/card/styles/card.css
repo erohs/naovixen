@@ -9,12 +9,12 @@
  */
 .nv-card {
     position: relative;
+    isolation: isolate;
     display: flex;
     flex-direction: column;
     gap: var(--space-between-content);
     block-size: 100%;
-    padding: var(--space-between-groups) var(--space-padding-container)
-        var(--space-padding-container);
+    padding: var(--space-between-groups) var(--space-padding-container) var(--space-padding-container);
     border: 2px solid var(--color-border);
     border-radius: 20px 12px 22px 14px / 12px 22px 14px 20px;
     background-color: var(--color-background-surface);
@@ -23,7 +23,7 @@
 
     &::before,
     &::after {
-        content: '';
+        content: "";
         position: absolute;
         pointer-events: none;
         opacity: 0;
@@ -35,20 +35,20 @@
     }
 
     &::before {
-        z-index: 2;
+        z-index: var(--z-index-raised);
         inset-block-end: -8px;
         inset-inline-end: -8px;
         inline-size: 36px;
         block-size: 36px;
         background:
-            linear-gradient(to top left, var(--color-background-page) 50%, transparent 50%) right 0
-                bottom 0 / 30px 30px no-repeat,
-            linear-gradient(to top left, var(--color-shadow) 50%, transparent 50%) right 6px bottom
-                6px / 30px 30px no-repeat;
+            linear-gradient(to top left, var(--color-background-page) 50%, transparent 50%) right 0 bottom 0 / 30px 30px
+                no-repeat,
+            linear-gradient(to top left, var(--color-shadow) 50%, transparent 50%) right 6px bottom 6px / 30px 30px
+                no-repeat;
     }
 
     &::after {
-        z-index: 3;
+        z-index: var(--z-index-raised);
         inset-block-end: -2px;
         inset-inline-end: -2px;
         inline-size: 30px;
@@ -56,11 +56,7 @@
         border-block-start: 2px solid var(--color-border);
         border-inline-start: 2px solid var(--color-border);
         border-start-start-radius: 6px;
-        background: linear-gradient(
-            to bottom right,
-            var(--color-background-accent) 50%,
-            transparent 50%
-        );
+        background: linear-gradient(to bottom right, var(--color-background-accent) 50%, transparent 50%);
         filter: drop-shadow(6px 6px 0 var(--color-shadow));
     }
 

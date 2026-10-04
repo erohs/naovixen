@@ -1,120 +1,151 @@
-import { render, screen } from '@testing-library/react';
-import { userEvent } from '@testing-library/user-event';
-import type { UserEvent } from '@testing-library/user-event';
-import { describe, expect, test } from 'vitest';
-
-import { Header } from '../Header.component';
+import { render, screen } from "@testing-library/react";
+import { userEvent } from "@testing-library/user-event";
+import type { UserEvent } from "@testing-library/user-event";
+import type { FunctionComponent } from "react";
+import { describe, expect, test } from "vitest";
+import { Header } from "../Header.component";
 
 const items = [
-    { label: 'Home', href: '/' },
-    { label: 'Work', href: '/work' },
+    { label: "Home", href: "/" },
+    { label: "Work", href: "/work" },
 ];
+
+const PageWithHeader: FunctionComponent<{ readonly path: string }> = ({ path }) => (
+    <>
+        <Header logo="naovixen" items={items} currentHref={path} />
+        <main>
+            <a href="/blog">Behind the menu</a>
+        </main>
+    </>
+);
 
 interface IOpenMenu {
     readonly user: UserEvent;
     readonly showPath: (path: string) => void;
 }
 
-async function openMenuOnHomePage(): Promise<IOpenMenu> {
+const openMenuOnHomePage = async (): Promise<IOpenMenu> => {
     const user = userEvent.setup();
-    const { rerender } = render(<Header items={items} currentHref="/" />);
-    await user.click(screen.getByRole('button', { name: 'Menu' }));
+    const { rerender } = render(<PageWithHeader path="/" />);
+    await user.click(screen.getByRole("button", { name: "Menu" }));
 
     const showPath = (path: string): void => {
-        rerender(<Header items={items} currentHref={path} />);
+        rerender(<PageWithHeader path={path} />);
     };
 
     return { user, showPath };
-}
+};
 
-function lastMenuLink(): HTMLElement {
-    const link = screen.getAllByRole('link', { name: 'Work' }).at(-1);
+describe("Using Header, given its menu is closed, when it renders", () => {
+    test("then it should offer a collapsed menu button", () => {
+        render(<PageWithHeader path="/" />);
 
-    if (link === undefined) {
-        throw new Error('The menu has no Work link.');
-    }
-
-    return link;
-}
-
-describe('Using Header, given its menu is closed, when it renders', () => {
-    test('then it should offer a collapsed menu button', () => {
-        render(<Header items={items} currentHref="/" />);
-
-        expect(screen.getByRole('button', { name: 'Menu', expanded: false })).toBeDefined();
+        expect(screen.getByRole("button", { name: "Menu", expanded: false })).toBeDefined();
     });
 });
 
-describe('Using Header, given its menu is closed, when the button is pressed', () => {
-    test('then it should show as expanded', async () => {
+describe("Using Header, given its menu is closed, when the button is pressed", () => {
+    test("then it should show as expanded", async () => {
         await openMenuOnHomePage();
 
-        expect(screen.getByRole('button', { name: 'Menu', expanded: true })).toBeDefined();
+        expect(screen.getByRole("button", { name: "Menu", expanded: true })).toBeDefined();
+    });
+
+    test("then it should make the page behind the menu inert", async () => {
+        await openMenuOnHomePage();
+
+        expect(screen.getByRole("main", { hidden: true }).inert).toBe(true);
     });
 });
 
-describe('Using Header, given its menu is open, when the path changes', () => {
-    test('then it should close', async () => {
+describe("Using Header, given its menu is open, when the button is pressed again", () => {
+    test("then it should give the page back", async () => {
+        const { user } = await openMenuOnHomePage();
+
+        await user.click(screen.getByRole("button", { name: "Menu" }));
+
+        expect(screen.getByRole("main").inert).toBe(false);
+    });
+});
+
+describe("Using Header, given its menu is open, when the path changes", () => {
+    test("then it should close", async () => {
         const { showPath } = await openMenuOnHomePage();
 
-        showPath('/work');
+        showPath("/work");
 
-        expect(screen.getByRole('button', { name: 'Menu', expanded: false })).toBeDefined();
+        expect(screen.getByRole("button", { name: "Menu", expanded: false })).toBeDefined();
     });
 });
 
-describe('Using Header, given its menu was opened on a page and the path has moved on, when that page is shown again', () => {
-    test('then it should stay closed', async () => {
+describe("Using Header, given its menu was opened on a page and the path has moved on, when that page is shown again", () => {
+    test("then it should stay closed", async () => {
         const { showPath } = await openMenuOnHomePage();
-        showPath('/work');
+        showPath("/work");
 
-        showPath('/');
+        showPath("/");
 
-        expect(screen.getByRole('button', { name: 'Menu', expanded: false })).toBeDefined();
+        expect(screen.getByRole("button", { name: "Menu", expanded: false })).toBeDefined();
     });
 });
 
-describe('Using Header, given its menu is open and focus is on one of its links, when Escape is pressed', () => {
-    test('then it should close', async () => {
+describe("Using Header, given its menu is open and focus is on one of its links, when Escape is pressed", () => {
+    test("then it should close", async () => {
         const { user } = await openMenuOnHomePage();
         await user.tab();
 
-        await user.keyboard('{Escape}');
+        await user.keyboard("{Escape}");
 
-        expect(screen.getByRole('button', { name: 'Menu', expanded: false })).toBeDefined();
+        expect(screen.getByRole("button", { name: "Menu", expanded: false })).toBeDefined();
     });
 
-    test('then it should put focus back on the button, so Enter reopens it', async () => {
+    test("then it should put focus back on the button, so Enter reopens it", async () => {
         const { user } = await openMenuOnHomePage();
         await user.tab();
-        await user.keyboard('{Escape}');
+        await user.keyboard("{Escape}");
 
-        await user.keyboard('{Enter}');
+        await user.keyboard("{Enter}");
 
-        expect(screen.getByRole('button', { name: 'Menu', expanded: true })).toBeDefined();
-    });
-});
-
-describe('Using Header, given its menu is open and focus is on its last link, when Tab is pressed', () => {
-    test('then it should move focus back to the button, so Enter closes the menu', async () => {
-        const { user } = await openMenuOnHomePage();
-        lastMenuLink().focus();
-        await user.tab();
-
-        await user.keyboard('{Enter}');
-
-        expect(screen.getByRole('button', { name: 'Menu', expanded: false })).toBeDefined();
+        expect(screen.getByRole("button", { name: "Menu", expanded: true })).toBeDefined();
     });
 });
 
-describe('Using Header, given its menu is open and focus is on the button, when Shift+Tab and then Tab are pressed', () => {
-    test('then it should bring focus round to the last link and back, so Enter closes the menu', async () => {
+describe("Using Header, given its menu is open and focus is on the logo, when Shift+Tab is pressed", () => {
+    test("then it should wrap focus round to the menu's last link", async () => {
         const { user } = await openMenuOnHomePage();
+        screen.getByRole("link", { name: "naovixen" }).focus();
+
         await user.tab({ shift: true });
+
+        expect(screen.getAllByRole("link", { name: "Work" }).at(-1)?.matches(":focus")).toBe(true);
+    });
+});
+
+describe("Using Header, given its menu is open and focus is on the menu's last link, when Tab is pressed", () => {
+    test("then it should wrap focus round to the logo", async () => {
+        const { user } = await openMenuOnHomePage();
+        screen.getAllByRole("link", { name: "Work" }).at(-1)?.focus();
+
         await user.tab();
 
-        await user.keyboard('{Enter}');
+        expect(screen.getByRole("link", { name: "naovixen" }).matches(":focus")).toBe(true);
+    });
+});
 
-        expect(screen.getByRole('button', { name: 'Menu', expanded: false })).toBeDefined();
+describe("Using Header, given its menu is open, when the link to the page already shown is followed", () => {
+    test("then it should close", async () => {
+        const { user } = await openMenuOnHomePage();
+
+        await user.click(screen.getAllByRole("link", { name: "Home" }).at(-1) ?? document.body);
+
+        expect(screen.getByRole("button", { name: "Menu", expanded: false })).toBeDefined();
+    });
+
+    test("then it should put focus back on the menu button", async () => {
+        const { user } = await openMenuOnHomePage();
+
+        await user.click(screen.getAllByRole("link", { name: "Home" }).at(-1) ?? document.body);
+
+        expect(screen.getByRole("button", { name: "Menu" }).matches(":focus")).toBe(true);
     });
 });

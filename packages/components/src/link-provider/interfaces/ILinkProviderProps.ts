@@ -1,6 +1,5 @@
-import type { ComponentType, ReactNode } from 'react';
-
-import type { AnchorProps } from '../types/AnchorProps';
+import type { ComponentType, ReactNode } from "react";
+import type { AnchorProps } from "../types/AnchorProps";
 
 export interface ILinkProviderProps {
     /**

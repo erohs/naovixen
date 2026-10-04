@@ -1,34 +1,28 @@
-import type { FunctionComponent } from 'react';
-import { joinClassNames } from '@naovixen/utilities';
-
-import { Link } from '../link/Link.component';
-import { Logo } from '../logo/Logo.component';
-import { NavigationLayout } from '../navigation-list/enums/NavigationLayout';
-import { isCurrentHref } from '../navigation-list/functions/IsCurrentHref.function';
-import { NavigationList } from '../navigation-list/NavigationList.component';
-import { HeaderMenu } from './HeaderMenu.component';
-import type { IHeaderProps } from './interfaces/IHeaderProps';
+import type { FunctionComponent } from "react";
+import { joinClassNames } from "@naovixen/utilities";
+import { NavigationLayout } from "../navigation-list/enums/NavigationLayout";
+import { NavigationList } from "../navigation-list/NavigationList.component";
+import { translate } from "../translate/Translate.const";
+import { HeaderHome } from "./HeaderHome.component";
+import { HeaderMenu } from "./HeaderMenu.component";
+import type { IHeaderProps } from "./interfaces/IHeaderProps";
 
 /**
- * The logo linking home, then the navigation: a row on wide screens, a menu on narrow ones.
- * The home link's name is the visible "naovixen", so voice control finds it.
+ * The logo linking home, then the navigation: a row on wide screens, a menu on narrow ones. Following a
+ * link or going back closes the menu.
  */
 export const Header: FunctionComponent<IHeaderProps> = ({
+    logo,
     items,
     currentHref,
     actions,
     menuFooter,
     className,
+    ...headerProps
 }) => (
-    <header className={joinClassNames('nv-header', className)}>
-        <Link
-            href="/"
-            aria-current={isCurrentHref(currentHref, '/') ? 'page' : undefined}
-            className="nv-header__home"
-        >
-            <Logo />
-        </Link>
-        <nav aria-label="Main" className="nv-header__navigation">
+    <header {...headerProps} className={joinClassNames("nv-header", className)}>
+        <HeaderHome logo={logo} currentHref={currentHref} />
+        <nav aria-label={translate("mainNavigation")} className="nv-header__navigation">
             <NavigationList items={items} currentHref={currentHref} layout={NavigationLayout.Row} />
         </nav>
         {actions}

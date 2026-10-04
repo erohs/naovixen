@@ -52,7 +52,7 @@
 .nv-link--navigation {
     text-decoration-line: none;
 
-    &[aria-current='page'] {
+    &[aria-current="page"] {
         color: var(--color-text-accent);
         text-decoration-line: underline;
     }

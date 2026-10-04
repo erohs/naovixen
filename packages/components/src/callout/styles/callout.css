@@ -8,8 +8,8 @@
     border-radius: var(--radius-small);
     background:
         linear-gradient(to bottom right, var(--color-background-accent) 55%, transparent),
-        radial-gradient(circle, var(--callout-dot-color) 25%, transparent 30%) 0 0 /
-            var(--space-between-content) var(--space-between-content),
+        radial-gradient(circle, var(--callout-dot-color) 25%, transparent 30%) 0 0 / var(--space-between-content)
+            var(--space-between-content),
         var(--color-background-accent);
     box-shadow: var(--shadow-resting);
     color: var(--color-text-on-accent);

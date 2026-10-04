@@ -15,14 +15,14 @@
 
     /* The empty alternative text keeps the slash out of what a screen reader announces. */
     & + &::before {
-        content: '/' / '';
+        content: "/" / "";
         color: var(--color-text-accent);
         font-family: var(--font-family-handwriting);
         font-size: var(--font-size-lead);
         line-height: 1;
     }
 
-    &[aria-current='page'] {
+    &[aria-current="page"] {
         font-weight: var(--font-weight-semi-bold);
     }
 }

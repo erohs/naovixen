@@ -21,8 +21,7 @@
 
     to {
         clip-path: circle(
-            var(--theme-toggle-reveal-radius) at var(--theme-toggle-reveal-x)
-                var(--theme-toggle-reveal-y)
+            var(--theme-toggle-reveal-radius) at var(--theme-toggle-reveal-x) var(--theme-toggle-reveal-y)
         );
     }
 }

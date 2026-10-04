@@ -1,51 +1,39 @@
-import type { ComponentPropsWithRef, FunctionComponent } from 'react';
-
-import { Button } from '../button/Button.component';
-import { NavigationLayout } from '../navigation-list/enums/NavigationLayout';
-import { NavigationList } from '../navigation-list/NavigationList.component';
-import { VisuallyHidden } from '../visually-hidden/VisuallyHidden.component';
-import { useHeaderMenu } from './functions/UseHeaderMenu.hook';
-import type { IHeaderProps } from './interfaces/IHeaderProps';
-
-/**
- * Named by a Button's hidden name, which makes it round like a Button of one icon. Its lines are
- * drawn here rather than as an icon, so they can fold into a cross.
- */
-const MenuButton: FunctionComponent<ComponentPropsWithRef<'button'>> = (buttonProps) => (
-    <Button {...buttonProps} className="nv-header__menu-button">
-        <span className="nv-header__menu-lines" aria-hidden="true">
-            <span className="nv-header__menu-line" />
-            <span className="nv-header__menu-line" />
-            <span className="nv-header__menu-line" />
-        </span>
-        <VisuallyHidden className="nv-button__name">Menu</VisuallyHidden>
-    </Button>
-);
+import { useId, useState } from "react";
+import type { FunctionComponent } from "react";
+import { translate } from "../translate/Translate.const";
+import { holdMenuOpen } from "./functions/HoldMenuOpen.function";
+import { HeaderMenuButton } from "./HeaderMenuButton.component";
+import { HeaderMenuPanel } from "./HeaderMenuPanel.component";
+import type { HeaderMenuProps } from "./types/HeaderMenuProps";
 
 /**
- * The header's navigation on narrow screens: a button that opens a panel over the page. The
- * panel follows the button, so Tab moves from one straight into the other.
+ * The header's navigation on narrow screens: a disclosure whose panel slides over the page, under the
+ * header's row, which stays in reach above it. It belongs to the path it was opened on, so following a
+ * link or going back closes it, and coming back to that path later does not open it again.
  */
-export const HeaderMenu: FunctionComponent<
-    Pick<IHeaderProps, 'items' | 'currentHref' | 'menuFooter'>
-> = ({ items, currentHref, menuFooter }) => {
-    const { menuRef, buttonProps, panelId } = useHeaderMenu(currentHref);
+export const HeaderMenu: FunctionComponent<HeaderMenuProps> = ({ items, currentHref, menuFooter }) => {
+    const panelId = useId();
+    const [openedOnPath, setOpenedOnPath] = useState<string | undefined>(undefined);
+    const isOpen = openedOnPath === currentHref;
+
+    if (openedOnPath !== undefined && !isOpen) {
+        setOpenedOnPath(undefined);
+    }
 
     return (
-        <div ref={menuRef} className="nv-header__menu">
-            <MenuButton {...buttonProps} />
-            <div id={panelId} className="nv-header__menu-panel">
-                <div className="nv-header__menu-content">
-                    <nav aria-label="Main">
-                        <NavigationList
-                            items={items}
-                            currentHref={currentHref}
-                            layout={NavigationLayout.Menu}
-                        />
-                    </nav>
-                    {menuFooter && <div className="nv-header__menu-footer">{menuFooter}</div>}
-                </div>
-            </div>
+        <div
+            ref={(menu) => (isOpen && menu !== null ? holdMenuOpen(menu, panelId, setOpenedOnPath) : undefined)}
+            className="nv-header__menu">
+            <HeaderMenuButton
+                label={translate("menu")}
+                aria-expanded={isOpen}
+                aria-controls={panelId}
+                className="nv-header__menu-button"
+                onClick={() => {
+                    setOpenedOnPath(isOpen ? undefined : currentHref);
+                }}
+            />
+            <HeaderMenuPanel id={panelId} items={items} currentHref={currentHref} menuFooter={menuFooter} />
         </div>
     );
 };

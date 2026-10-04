@@ -1,32 +1,29 @@
 /* Button first: its spin-offs further down override it. */
-@import url('./button/styles/button.css') layer(components);
-@import url('./link/styles/link.css') layer(components);
-@import url('./icon/styles/icon.css') layer(components);
-@import url('./heading/styles/heading.css') layer(components);
-@import url('./text/styles/text.css') layer(components);
-@import url('./code/styles/code.css') layer(components);
-@import url('./tag/styles/tag.css') layer(components);
-@import url('./skip-link/styles/skip-link.css') layer(components);
-@import url('./theme-toggle/styles/theme-toggle.css') layer(components);
+@import url("./button/styles/button.css") layer(components);
+@import url("./link/styles/link.css") layer(components);
+@import url("./icon/styles/icon.css") layer(components);
+@import url("./heading/styles/heading.css") layer(components);
+@import url("./text/styles/text.css") layer(components);
+@import url("./code/styles/code.css") layer(components);
+@import url("./tag/styles/tag.css") layer(components);
+@import url("./button/styles/skip-link.css") layer(components);
+@import url("./theme-toggle/styles/theme-toggle.css") layer(components);
 
 /*
  * A component that composes another comes after it, so its rules win: the navigation list and
- * the logo before the header and the footer.
+ * before the header and the footer.
  */
-@import url('./breadcrumb/styles/breadcrumb.css') layer(components);
-@import url('./callout/styles/callout.css') layer(components);
-@import url('./card/styles/card.css') layer(components);
-@import url('./code-block/styles/code-block.css') layer(components);
-@import url('./fact-list/styles/fact-list.css') layer(components);
-@import url('./figure/styles/figure.css') layer(components);
-@import url('./hand-drawn-rule/styles/hand-drawn-rule.css') layer(components);
-@import url('./link-tile/styles/link-tile.css') layer(components);
-@import url('./section-heading/styles/section-heading.css') layer(components);
-@import url('./speech-bubble/styles/speech-bubble.css') layer(components);
-@import url('./exclamation-bubble/styles/exclamation-bubble.css') layer(components);
-@import url('./tag-list/styles/tag-list.css') layer(components);
-@import url('./back-to-top/styles/back-to-top.css') layer(components);
-@import url('./navigation-list/styles/navigation-list.css') layer(components);
-@import url('./logo/styles/logo.css') layer(components);
-@import url('./header/styles/header.css') layer(components);
-@import url('./footer/styles/footer.css') layer(components);
+@import url("./breadcrumb/styles/breadcrumb.css") layer(components);
+@import url("./callout/styles/callout.css") layer(components);
+@import url("./card/styles/card.css") layer(components);
+@import url("./code/styles/code-block.css") layer(components);
+@import url("./fact-list/styles/fact-list.css") layer(components);
+@import url("./image/styles/figure.css") layer(components);
+@import url("./link/styles/link-tile.css") layer(components);
+@import url("./heading/styles/section-heading.css") layer(components);
+@import url("./speech-bubble/styles/speech-bubble.css") layer(components);
+@import url("./tag/styles/tag-list.css") layer(components);
+@import url("./button/styles/back-to-top.css") layer(components);
+@import url("./navigation-list/styles/navigation-list.css") layer(components);
+@import url("./header/styles/header.css") layer(components);
+@import url("./footer/styles/footer.css") layer(components);

@@ -4,7 +4,6 @@
     gap: var(--space-between-groups);
     padding-block-start: var(--space-padding-panel);
     padding-inline: var(--space-padding-page-centred);
-    border-block-start: var(--border-width-standout) solid var(--color-border);
     background-color: var(--color-background-surface);
 }
 
@@ -52,10 +51,7 @@
         var(--size-action-minimum) + var(--space-between-content) + var(--space-between-text) +
             var(--space-between-lines)
     );
-    --footer-page-margin: max(
-        0rem,
-        (100vw - var(--layout-width-page)) / 2 - var(--space-padding-page)
-    );
+    --footer-page-margin: max(0rem, (100vw - var(--layout-width-page)) / 2 - var(--space-padding-page));
 
     display: flex;
     flex-wrap: wrap;
@@ -63,11 +59,7 @@
     justify-content: space-between;
     gap: 0 var(--space-between-blocks);
     min-block-size: calc(var(--size-action-minimum) + 2 * var(--space-between-groups));
-    padding-inline-end: max(
-        0rem,
-        var(--footer-link-room) - var(--footer-page-margin) - var(--space-padding-page)
-    );
-    border-block-start: var(--border-width-default) dashed var(--color-border);
+    padding-inline-end: max(0rem, var(--footer-link-room) - var(--footer-page-margin) - var(--space-padding-page));
     color: var(--color-text-secondary);
     font-size: var(--font-size-small);
 }
