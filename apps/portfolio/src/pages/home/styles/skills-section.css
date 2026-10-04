@@ -26,7 +26,6 @@
     display: flex;
     flex-wrap: wrap;
     gap: var(--space-between-content) var(--space-between-groups);
-    padding-block: var(--space-between-blocks);
 }
 
 /* Level with the middle of the first row of tiles. */
@@ -54,4 +53,15 @@
 .nv-skills-section__groups {
     display: flex;
     flex-direction: column;
+    gap: var(--space-below-heading);
+}
+
+.nv-skills-section__also {
+    max-inline-size: 62ch;
+    margin-block-start: var(--space-between-text);
+    color: var(--color-text-secondary);
+
+    & strong {
+        color: var(--color-text-primary);
+    }
 }

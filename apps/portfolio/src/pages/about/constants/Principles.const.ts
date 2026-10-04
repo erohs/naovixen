@@ -1,8 +1,8 @@
 import type { IPrinciple } from "../interfaces/IPrinciple";
 
-/** Placeholder copy from the prototype. Replace before Phase 9. */
-export const placeholderPrinciples: readonly IPrinciple[] = [
-    { title: "about.smallChanges", description: "about.smallChangesDescription" },
+export const principles: readonly IPrinciple[] = [
     { title: "about.accessibleByDefault", description: "about.accessibleByDefaultDescription" },
+    { title: "about.smallChanges", description: "about.smallChangesDescription" },
+    { title: "about.testWithTheRealThing", description: "about.testWithTheRealThingDescription" },
     { title: "about.writeItDown", description: "about.writeItDownDescription" },
 ];

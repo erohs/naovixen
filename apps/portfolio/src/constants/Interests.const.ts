@@ -1,9 +1,9 @@
 import type { MessageKey } from "../types/MessageKey";
 
-/** Placeholder from the prototype. Naomi has not shared her interests. */
-export const placeholderInterests: readonly MessageKey[] = [
-    "interests.walks",
-    "interests.printing",
+export const interests: readonly MessageKey[] = [
+    "interests.doodles",
+    "interests.comics",
+    "interests.scandinavianDesign",
     "interests.mentoring",
-    "interests.reading",
+    "interests.foxes",
 ];

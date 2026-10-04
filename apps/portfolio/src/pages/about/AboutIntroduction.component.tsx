@@ -13,6 +13,7 @@ export const AboutIntroduction: FunctionComponent = () => (
             <Text variant={TextVariant.Lead}>{translate("about.lead")}</Text>
             <Text>{translate("about.apprenticeship")}</Text>
             <Text>{translate("about.nowadays")}</Text>
+            <Text>{translate("about.aiAdoption")}</Text>
         </div>
         <PhotoPlaceholder className="nv-about-introduction__photo" />
     </div>

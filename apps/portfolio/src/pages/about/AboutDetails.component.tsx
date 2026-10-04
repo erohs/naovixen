@@ -1,7 +1,7 @@
 import type { FunctionComponent } from "react";
 import { SectionHeading } from "@naovixen/components";
 import { InterestList } from "../../components/interest-list/InterestList.component";
-import { placeholderInterests } from "../../constants/PlaceholderInterests.const";
+import { interests } from "../../constants/Interests.const";
 import { translate } from "../../translate/Translate.const";
 import { PrincipleList } from "./PrincipleList.component";
 
@@ -13,7 +13,7 @@ export const AboutDetails: FunctionComponent = () => (
         </section>
         <section aria-labelledby="interests-title" className="nv-about-details__section">
             <SectionHeading headingId="interests-title">{translate("interests.heading")}</SectionHeading>
-            <InterestList interests={placeholderInterests} />
+            <InterestList interests={interests} />
         </section>
     </div>
 );

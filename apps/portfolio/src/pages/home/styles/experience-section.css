@@ -1,138 +1,77 @@
 /*
- * The dot sits beside the title on ::after; ::before is the faint line running from it down
- * to the next role's dot.
+ * Every marker is centred on one vertical axis, level with the dates. A plain entry draws its
+ * dot on ::after; ::before is the faint line running down to the next entry's marker.
  */
-.nv-employer-role {
-    --employer-role-dot-size: calc(var(--space-between-content) + var(--border-width-standout));
+.nv-experience-entry {
+    --experience-entry-dot-size: calc(var(--space-between-content) + 2 * var(--border-width-standout));
+    --experience-entry-icon-size: var(--space-between-groups);
+    --experience-entry-axis: calc(var(--experience-entry-icon-size) / 2);
+    --experience-entry-marker-middle: calc(var(--space-between-lines) + var(--experience-entry-dot-size) / 2);
 
     position: relative;
     display: flex;
     flex-direction: column;
     gap: var(--space-between-lines);
-    padding-block-end: calc(var(--space-between-blocks) + var(--space-between-lines));
-    padding-inline-start: calc(var(--space-between-groups) + var(--space-between-text));
+    padding-block-end: var(--space-between-regions);
+    padding-inline-start: calc(var(--space-between-regions) + var(--space-between-lines));
 
-    &::before,
-    &::after {
+    &:not(:last-child)::before {
         content: "";
         position: absolute;
-    }
-
-    &::before {
-        inset-block: var(--employer-role-dot-size) calc(-1 * (var(--space-between-text) + var(--space-between-lines)));
-        inset-inline-start: var(--space-between-text);
+        inset-block: var(--experience-entry-icon-size) var(--space-between-lines);
+        inset-inline-start: calc(var(--experience-entry-axis) - var(--border-width-standout) / 2);
         inline-size: var(--border-width-standout);
         background-color: var(--color-border);
         opacity: 0.3;
     }
 
-    &::after {
-        inset-block-start: calc(var(--space-between-text) - var(--border-width-standout));
-        inset-inline-start: 0;
-        inline-size: var(--employer-role-dot-size);
-        block-size: var(--employer-role-dot-size);
+    &:not(:has(> .nv-experience-entry__icon))::after {
+        content: "";
+        position: absolute;
+        inset-block-start: var(--space-between-lines);
+        inset-inline-start: calc(var(--experience-entry-axis) - var(--experience-entry-dot-size) / 2);
+        inline-size: var(--experience-entry-dot-size);
+        block-size: var(--experience-entry-dot-size);
         border: var(--border-width-standout) solid var(--color-border);
         border-radius: var(--radius-round);
         background-color: var(--color-background-accent);
     }
 }
 
-.nv-employer-role__header {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: 0 var(--space-between-content);
+.nv-experience-entry__icon {
+    position: absolute;
+    inset-block-start: calc(var(--experience-entry-marker-middle) - var(--experience-entry-icon-size) / 2);
+    inset-inline-start: 0;
+    inline-size: var(--experience-entry-icon-size);
+    block-size: var(--experience-entry-icon-size);
+    padding: calc(var(--space-between-text) - var(--border-width-standout));
+    border: var(--border-width-standout) solid var(--color-border);
+    border-radius: var(--radius-round);
+    background-color: var(--color-background-accent);
+    color: var(--color-text-on-accent);
 }
 
-.nv-employer-role__title {
-    font-family: var(--font-family-body);
-    font-size: var(--font-size-body);
+.nv-experience-entry__organisation {
+    font-weight: var(--font-weight-semi-bold);
 }
 
-.nv-employer-role__summary {
-    max-inline-size: 60ch;
+.nv-experience-entry__note {
+    max-inline-size: 62ch;
+    margin-block-start: var(--space-between-lines);
     color: var(--color-text-secondary);
 }
 
 @media (forced-colors: active) {
-    .nv-employer-role::before,
-    .nv-employer-role::after {
+    .nv-experience-entry::before,
+    .nv-experience-entry::after {
         background-color: CanvasText;
     }
-}
-
-.nv-employer-history {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-between-blocks);
-}
-
-.nv-employer-history__header {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: var(--space-between-lines) var(--space-between-blocks);
-}
-
-.nv-employer-history__name {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-between-lines);
-}
-
-.nv-employer-history__roles {
-    display: flex;
-    flex-direction: column;
-    padding: 0;
-    list-style: none;
-}
-
-/* Indented to line up with the roles above, with the cap where their dots are. */
-.nv-education-summary {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-between-lines);
-    padding-inline-start: calc(var(--space-between-groups) + var(--space-between-text));
-}
-
-.nv-education-summary__icon {
-    position: absolute;
-    inset-block-start: var(--border-width-standout);
-    inset-inline-start: 0;
-    color: var(--color-background-accent);
-}
-
-.nv-education-summary__header {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: 0 var(--space-between-content);
-}
-
-.nv-education-summary__degree {
-    font-family: var(--font-family-body);
-    font-size: var(--font-size-body);
-}
-
-.nv-employer-history__place {
-    color: var(--color-text-secondary);
-    font-family: var(--font-family-body);
-    font-size: var(--font-size-body);
-    font-weight: var(--font-weight-regular);
-}
-
-.nv-education-summary__note {
-    max-inline-size: 60ch;
-    color: var(--color-text-secondary);
 }
 
 .nv-experience-section {
     display: flex;
     flex-direction: column;
-    gap: var(--space-between-regions);
     max-inline-size: var(--layout-width-prose);
+    padding: 0;
+    list-style: none;
 }

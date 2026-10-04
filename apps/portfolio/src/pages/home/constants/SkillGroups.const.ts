@@ -2,61 +2,72 @@ import {
     accessibilityIcon,
     angularIcon,
     awsIcon,
+    azureDevOpsIcon,
     claudeIcon,
+    codeXmlIcon,
+    contrastIcon,
     cSharpIcon,
     cssIcon,
-    dockerIcon,
+    databaseIcon,
     dotNetIcon,
-    gitHubCopilotIcon,
     gitIcon,
     htmlIcon,
     javaScriptIcon,
-    nodeJsIcon,
-    playwrightIcon,
+    jestIcon,
+    keyboardIcon,
+    mongoDbIcon,
+    networkIcon,
+    postgreSqlIcon,
     reactIcon,
+    rxJsIcon,
     typeScriptIcon,
+    workflowIcon,
 } from "@naovixen/components";
 import type { ISkillGroup } from "../interfaces/ISkillGroup";
 
-/**
- * Placeholder from the prototype. Most are on Naomi's CV; Node.js, Docker, Playwright and
- * GitHub Copilot are not, so she should confirm the list.
- */
-export const placeholderSkillGroups: readonly ISkillGroup[] = [
+/** From Naomi's CV. Skills with no logo of their own take a generic icon for the idea. */
+export const skillGroups: readonly ISkillGroup[] = [
     {
-        label: "skills.languages",
+        label: "skills.languagesAndFrameworks",
         skills: [
             { name: "skills.typeScript", logo: typeScriptIcon },
             { name: "skills.javaScript", logo: javaScriptIcon },
+            { name: "skills.react", logo: reactIcon },
             { name: "skills.cSharp", logo: cSharpIcon },
+            { name: "skills.dotNet", logo: dotNetIcon },
+            { name: "skills.angularJs", logo: angularIcon },
+            { name: "skills.rxJs", logo: rxJsIcon },
             { name: "skills.html", logo: htmlIcon },
             { name: "skills.css", logo: cssIcon },
         ],
     },
     {
-        label: "skills.frontEnd",
+        label: "skills.dataAndCloud",
         skills: [
-            { name: "skills.react", logo: reactIcon },
-            { name: "skills.angularJs", logo: angularIcon },
-            { name: "skills.accessibility", logo: accessibilityIcon },
-        ],
-    },
-    {
-        label: "skills.backEndAndCloud",
-        skills: [
-            { name: "skills.dotNet", logo: dotNetIcon },
-            { name: "skills.nodeJs", logo: nodeJsIcon },
             { name: "skills.aws", logo: awsIcon },
-            { name: "skills.docker", logo: dockerIcon },
+            { name: "skills.postgreSql", logo: postgreSqlIcon },
+            { name: "skills.mongoDb", logo: mongoDbIcon },
+            { name: "skills.sql", logo: databaseIcon },
         ],
     },
     {
-        label: "skills.toolingAndAi",
+        label: "skills.accessibility",
         skills: [
-            { name: "skills.playwright", logo: playwrightIcon },
+            { name: "skills.wcag", logo: accessibilityIcon },
+            { name: "skills.aria", logo: codeXmlIcon },
+            { name: "skills.assistiveTechTesting", logo: keyboardIcon },
+            { name: "skills.inclusiveDesign", logo: contrastIcon },
+        ],
+    },
+    {
+        label: "skills.aiAndDelivery",
+        skills: [
+            { name: "skills.claudeCode", logo: claudeIcon },
+            { name: "skills.agenticWorkflows", logo: networkIcon },
+            { name: "skills.jest", logo: jestIcon },
             { name: "skills.git", logo: gitIcon },
-            { name: "skills.gitHubCopilot", logo: gitHubCopilotIcon },
-            { name: "skills.claude", logo: claudeIcon },
+            { name: "skills.azureDevOps", logo: azureDevOpsIcon },
+            { name: "skills.ciCd", logo: workflowIcon },
         ],
     },
 ];
