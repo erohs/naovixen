@@ -105,3 +105,20 @@ describe("Using SanityBlogRepository, given a figure whose image never finished 
         expect(post?.body).toEqual([]);
     });
 });
+
+describe("Using SanityBlogRepository, given typed words, when the posts are searched", () => {
+    test("then it should ask for each word as a prefix and pass the topics on", async () => {
+        const sentParams: unknown[] = [];
+        const client: IGroqClient = {
+            fetch: <Result>(_query: string, params: unknown) => {
+                sentParams.push(params);
+
+                return Promise.resolve({ posts: [], totalCount: 0 } as Result);
+            },
+        };
+
+        await new SanityBlogRepository(client, imageUrls).searchPosts({ query: ' focus  "states" ', topics: ["CSS"] });
+
+        expect(sentParams).toEqual([{ textQuery: "focus* states*", topics: ["CSS"] }]);
+    });
+});

@@ -70,6 +70,55 @@ export type SectionHeading = {
     isNumbered?: boolean;
 };
 
+export type PrivacyNotice = {
+    _id: string;
+    _type: "privacyNotice";
+    _createdAt: string;
+    _updatedAt: string;
+    _rev: string;
+    title: string;
+    intro: string;
+    lastUpdated: string;
+    body: Array<
+        | {
+              children?: Array<{
+                  marks?: Array<string>;
+                  text?: string;
+                  _type: "span";
+                  _key: string;
+              }>;
+              style?: "normal" | "h2" | "h3" | "blockquote";
+              listItem?: "bullet" | "number";
+              markDefs?: Array<{
+                  href: string;
+                  _type: "link";
+                  _key: string;
+              }>;
+              level?: number;
+              _type: "block";
+              _key: string;
+          }
+        | ({
+              _key: string;
+          } & Code)
+        | ({
+              _key: string;
+          } & SectionHeading)
+        | ({
+              _key: string;
+          } & Callout)
+        | ({
+              _key: string;
+          } & Figure)
+        | ({
+              _key: string;
+          } & FactList)
+        | ({
+              _key: string;
+          } & LinkButtons)
+    >;
+};
+
 export type Tag = {
     _id: string;
     _type: "tag";
@@ -335,6 +384,7 @@ export type AllSanitySchemaTypes =
     | Figure
     | Callout
     | SectionHeading
+    | PrivacyNotice
     | Tag
     | Project
     | SanityImageCrop
@@ -444,6 +494,21 @@ export type PostBySlugQueryResult = {
     >;
 } | null;
 
+// Source: ../../packages/cms/src/sanity-blog-repository/constants/PostSearchQuery.const.ts
+// Variable: postSearchQuery
+// Query: {    "posts": *[        _type == "post" && defined(slug.current)        && (count($topics) == 0 || count((tags[]->title)[@ in $topics]) > 0)        && [title, excerpt, pt::text(body), tags[]->title] match text::query($textQuery)    ] | score(        boost(title match text::query($textQuery), 3),        boost(excerpt match text::query($textQuery), 2),        pt::text(body) match text::query($textQuery)    ) | order(_score desc, publishedAt desc) {        "slug": slug.current,        title,        excerpt,        publishedAt,        "tags": coalesce(tags[]->title, []),        "plainText": pt::text(body)    },    "totalCount": count(*[_type == "post" && defined(slug.current)])}
+export type PostSearchQueryResult = {
+    posts: Array<{
+        slug: string;
+        title: string;
+        excerpt: string;
+        publishedAt: string;
+        tags: Array<string> | Array<never>;
+        plainText: string;
+    }>;
+    totalCount: number;
+};
+
 // Source: ../../packages/cms/src/sanity-blog-repository/constants/PostSummariesQuery.const.ts
 // Variable: postSummariesQuery
 // Query: *[_type == "post" && defined(slug.current)] | order(publishedAt desc) {        "slug": slug.current,        title,        excerpt,        publishedAt,        "tags": coalesce(tags[]->title, []),        "plainText": pt::text(body)    }
@@ -455,6 +520,103 @@ export type PostSummariesQueryResult = Array<{
     tags: Array<string> | Array<never>;
     plainText: string;
 }>;
+
+// Source: ../../packages/cms/src/sanity-blog-repository/constants/TopicsQuery.const.ts
+// Variable: topicsQuery
+// Query: *[_type == "tag"] {        title,        "postCount": count(*[_type == "post" && defined(slug.current) && references(^._id)])    }[postCount > 0] | order(postCount desc, title asc)
+export type TopicsQueryResult = Array<{
+    title: string;
+    postCount: number;
+}>;
+
+// Source: ../../packages/cms/src/sanity-privacy-notice-repository/constants/PrivacyNoticeQuery.const.ts
+// Variable: privacyNoticeQuery
+// Query: *[_type == "privacyNotice"][0] {        title,        intro,        lastUpdated,        "body": coalesce(body[] {    ...,    _type == "figure" => {        image { alt, asset-> { url, metadata { dimensions { width, height } } } }    }}, [])    }
+export type PrivacyNoticeQueryResult = {
+    title: string;
+    intro: string;
+    lastUpdated: string;
+    body: Array<
+        | {
+              children?: Array<{
+                  marks?: Array<string>;
+                  text?: string;
+                  _type: "span";
+                  _key: string;
+              }>;
+              style?: "blockquote" | "h2" | "h3" | "normal";
+              listItem?: "bullet" | "number";
+              markDefs?: Array<{
+                  href: string;
+                  _type: "link";
+                  _key: string;
+              }>;
+              level?: number;
+              _type: "block";
+              _key: string;
+          }
+        | {
+              _key: string;
+              _type: "callout";
+              label: string;
+              title: string;
+              text: string;
+          }
+        | {
+              _key: string;
+              _type: "code";
+              language?: string;
+              filename?: string;
+              code?: string;
+              highlightedLines?: Array<number>;
+          }
+        | {
+              _key: string;
+              _type: "factList";
+              facts: Array<{
+                  label: string;
+                  value: string;
+                  _type: "fact";
+                  _key: string;
+              }>;
+          }
+        | {
+              _key: string;
+              _type: "figure";
+              image: {
+                  alt: string;
+                  asset: {
+                      url: string;
+                      metadata: {
+                          dimensions: {
+                              width: number;
+                              height: number;
+                          } | null;
+                      } | null;
+                  } | null;
+              };
+              caption?: string;
+              shape: "portrait" | "wide";
+          }
+        | {
+              _key: string;
+              _type: "linkButtons";
+              buttons: Array<{
+                  label: string;
+                  href: string;
+                  variant: "primary" | "secondary";
+                  _type: "linkButton";
+                  _key: string;
+              }>;
+          }
+        | {
+              _key: string;
+              _type: "sectionHeading";
+              text: string;
+              isNumbered?: boolean;
+          }
+    >;
+} | null;
 
 // Source: ../../packages/cms/src/sanity-project-repository/constants/ProjectBySlugQuery.const.ts
 // Variable: projectBySlugQuery
