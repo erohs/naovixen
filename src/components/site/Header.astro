@@ -1,0 +1,46 @@
+---
+import { site } from "../../site";
+import HeaderBar from "./HeaderBar.astro";
+import MenuButton from "./MenuButton.astro";
+import MobileMenu from "./MobileMenu.astro";
+import NavList from "./NavList.astro";
+---
+
+<header>
+    <HeaderBar>
+        <nav aria-label="Main" class="navigation">
+            <NavList items={site.navigation} layout="row" />
+        </nav>
+        <MenuButton command="show-modal" label="Menu" class="open" />
+    </HeaderBar>
+    <MobileMenu />
+</header>
+
+<style>
+    /*
+     * The header stacks above the page. A closed menu still sliding away stays inside it, beneath
+     * the row; an open one is in the top layer, above everything.
+     */
+    header {
+        position: relative;
+        z-index: var(--z-index-overlay);
+
+        & :global(.bar) {
+            position: relative;
+            z-index: var(--z-index-raised);
+        }
+    }
+
+    /* Media queries cannot read custom properties: 47.5rem is 760px at the default size. */
+    @media (width < 47.5rem) {
+        .navigation {
+            display: none;
+        }
+    }
+
+    @media (width >= 47.5rem) {
+        .open {
+            display: none;
+        }
+    }
+</style>

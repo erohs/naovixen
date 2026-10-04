@@ -6,15 +6,11 @@ node_modules/
 dist/
 build/
 out/
-.output/
-.vinxi/
-.tanstack/
-.nitro/
+.astro/
 .wrangler/
 *.tsbuildinfo
 
 # Caches
-.turbo/
 .cache/
 .vite/
 .eslintcache

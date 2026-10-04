@@ -1,0 +1,71 @@
+---
+interface Props {
+    class?: string;
+}
+
+const { class: className } = Astro.props;
+---
+
+<span class:list={["logo", className]}>
+    <span class="wordmark">
+        <span class="bracket" aria-hidden="true">
+            &lt;
+        </span>
+        <span>naovixen</span>
+        <span class="bracket" aria-hidden="true">
+            /&gt;
+        </span>
+    </span>
+    <span class="cursor" aria-hidden="true"></span>
+</span>
+
+<style>
+    .logo {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--border-width-standout);
+        font-family: var(--font-family-code);
+        white-space: nowrap;
+    }
+
+    .wordmark {
+        display: inline-flex;
+        align-items: baseline;
+        gap: var(--space-between-text);
+    }
+
+    .bracket {
+        color: var(--color-text-accent);
+        font-weight: var(--font-weight-semi-bold);
+    }
+
+    .cursor {
+        inline-size: var(--border-width-standout);
+        block-size: 1em;
+        background-color: currentcolor;
+        opacity: 0;
+    }
+
+    :global(a:is(:hover, :focus-visible)) .cursor {
+        opacity: 1;
+        animation: blink calc(2 * var(--duration-slow)) steps(1) infinite;
+    }
+
+    @keyframes blink {
+        50% {
+            opacity: 0;
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        :global(a:is(:hover, :focus-visible)) .cursor {
+            animation: none;
+        }
+    }
+
+    @media (forced-colors: active) {
+        .cursor {
+            border-inline-start: var(--border-width-standout) solid;
+        }
+    }
+</style>

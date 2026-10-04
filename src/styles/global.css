@@ -1,0 +1,17 @@
+@layer reset, base, shared;
+
+@import url("./tokens.css");
+@import url("./reset.css") layer(reset);
+@import url("./base.css") layer(base);
+@import url("./button.css") layer(shared);
+@import url("./icons.css") layer(shared);
+
+/* Unlayered, like component styles, so no component rule can pull it back into the flow. */
+.visually-hidden {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+}

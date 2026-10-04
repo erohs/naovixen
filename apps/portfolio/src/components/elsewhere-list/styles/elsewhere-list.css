@@ -1,7 +1,0 @@
-.nv-elsewhere-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-between-content);
-    padding: 0;
-    list-style: none;
-}

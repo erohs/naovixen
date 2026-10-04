@@ -1,0 +1,39 @@
+---
+import { Font } from "astro:assets";
+import menuHandoff from "../../scripts/menu-handoff.js?raw";
+import { site } from "../../site";
+
+export interface Props {
+    /** The page's own title; the site name is added unless the title already holds it. */
+    title: string;
+    description: string;
+    type?: "website" | "article";
+    /** Pages that are not real addresses, such as the 404 page, have no canonical URL. */
+    isCanonical?: boolean;
+}
+
+const { title, description, type = "website", isCanonical = true } = Astro.props;
+const documentTitle = title.includes(site.name) ? title : `${title} — ${site.name}`;
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+---
+
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>{documentTitle}</title>
+<meta name="description" content={description} />
+{isCanonical && <link rel="canonical" href={canonical} />}
+<script is:inline set:html={menuHandoff} />
+<Font cssVariable="--font-fredoka" preload />
+<Font cssVariable="--font-schibsted-grotesk" />
+<Font cssVariable="--font-jetbrains-mono" />
+<Font cssVariable="--font-gochi-hand" />
+<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+<link rel="alternate" type="application/rss+xml" title={`${site.name}'s blog`} href="/blog/feed.xml" />
+<link rel="sitemap" href="/sitemap-index.xml" />
+<meta property="og:type" content={type} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+{isCanonical && <meta property="og:url" content={canonical} />}
+<meta property="og:site_name" content={site.name} />
+<meta property="og:locale" content="en_GB" />
+<meta name="twitter:card" content="summary" />

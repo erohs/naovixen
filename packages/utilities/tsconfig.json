@@ -1,4 +1,0 @@
-{
-    "extends": "@naovixen/nvpack/tsconfig/base.json",
-    "include": ["src"]
-}

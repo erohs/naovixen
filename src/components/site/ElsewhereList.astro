@@ -1,0 +1,27 @@
+---
+import { site } from "../../site";
+import LinkButton from "../ui/LinkButton.astro";
+---
+
+<ul aria-label="Elsewhere" class="elsewhere">
+    {site.profiles.map((profile) => (
+        <li>
+            <LinkButton href={profile.url} icon={profile.icon} iconLabel={profile.label} />
+        </li>
+    ))}
+    {site.cvPath !== undefined && (
+        <li>
+            <LinkButton href={site.cvPath} download icon="download" iconLabel="Download CV (PDF)" />
+        </li>
+    )}
+</ul>
+
+<style>
+    .elsewhere {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--space-between-content);
+        padding: 0;
+        list-style: none;
+    }
+</style>

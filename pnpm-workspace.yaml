@@ -1,30 +1,7 @@
-packages:
-  - apps/*
-  - packages/*
+# Not a workspace: pnpm reads its settings from this file.
 
 # pnpm refuses to run a dependency's install scripts unless it is listed here.
-# unrs-resolver is the native module behind eslint-import-resolver-typescript, which
-# eslint-plugin-import-x needs to follow imports across workspace packages.
-# esbuild (under tsx) is refused: its script only verifies the platform binary, which
-# arrives as an optional dependency and works without it.
 allowBuilds:
   esbuild: false
-  unrs-resolver: true
-
-# Versions shared by more than one package, declared once. Reference with "catalog:".
-catalog:
-  "@fontsource-variable/fredoka": 5.3.0
-  "@portabletext/types": 4.0.2
-  "@testing-library/dom": 10.4.2
-  "@testing-library/react": 16.3.3
-  "@testing-library/user-event": 14.6.7
-  "@types/node": 24.19.0
-  "@types/react": 19.3.0
-  "@types/react-dom": 19.3.0
-  "@vitejs/plugin-react": 6.1.1
-  i18next: 26.4.2
-  jsdom: 30.1.1
-  react: 19.3.0
-  react-dom: 19.3.0
-  vite: 8.3.1
-  vitest: 5.0.2
+  sharp: false
+  workerd: true

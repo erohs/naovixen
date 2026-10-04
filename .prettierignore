@@ -1,9 +1,6 @@
 pnpm-lock.yaml
 design-reference/
-**/routeTree.gen.ts
-**/generated/
-.turbo/
+source-material/
+notes/
 dist/
-.output/
-apps/studio/.sanity/
-apps/studio/schema.json
+.astro/

@@ -1,7 +1,0 @@
-{
-    "extends": "@naovixen/nvpack/tsconfig/base.json",
-    "compilerOptions": {
-        "types": []
-    },
-    "include": ["src"]
-}

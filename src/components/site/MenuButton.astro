@@ -1,0 +1,142 @@
+---
+interface Props {
+    command: "show-modal" | "close";
+    label: string;
+    class?: string;
+}
+
+const { command, label, class: className } = Astro.props;
+---
+
+<button
+    type="button"
+    class:list={["button", "button--round", "menu-button", className]}
+    commandfor="menu"
+    command={command}
+    autofocus={command === "close"}>
+    <span class="lines" aria-hidden="true">
+        <span class="line"></span>
+        <span class="line"></span>
+        <span class="line"></span>
+    </span>
+    <span class="visually-hidden">{label}</span>
+</button>
+
+<style>
+    /* Three uneven lines, placed to the design's exact measurements inside the button. */
+    .lines {
+        position: relative;
+        inline-size: 100%;
+        block-size: 100%;
+    }
+
+    .line {
+        position: absolute;
+        block-size: 2.5px;
+        border-radius: 2px;
+        background-color: currentcolor;
+        transition:
+            inset-block-start 0.3s cubic-bezier(0.3, 1.4, 0.5, 1),
+            inset-inline-start 0.3s ease,
+            inline-size 0.3s ease,
+            transform 0.35s cubic-bezier(0.3, 1.4, 0.5, 1),
+            opacity 0.2s ease;
+
+        &:nth-child(1) {
+            inset-block-start: 13px;
+            inset-inline-start: 12px;
+            inline-size: 20px;
+            transform: rotate(-3deg);
+        }
+
+        &:nth-child(2) {
+            inset-block-start: 20.5px;
+            inset-inline-start: 12px;
+            inline-size: 14px;
+            transform: rotate(2deg);
+        }
+
+        &:nth-child(3) {
+            inset-block-start: 28px;
+            inset-inline-start: 14px;
+            inline-size: 18px;
+            transform: rotate(-1deg);
+        }
+    }
+
+    /* The close button inside the open menu folds its lines into a cross as the menu opens. */
+    :global(dialog[open]) .line {
+        &:nth-child(1) {
+            inset-block-start: 20.5px;
+            inset-inline-start: 11px;
+            inline-size: 22px;
+            transform: rotate(43deg);
+        }
+
+        &:nth-child(2) {
+            opacity: 0;
+            transform: scaleX(0);
+        }
+
+        &:nth-child(3) {
+            inset-block-start: 20.5px;
+            inset-inline-start: 11px;
+            inline-size: 21px;
+            transform: rotate(-47deg);
+        }
+    }
+
+    /* After following a link from the menu, the new page unfolds the menu button from the cross it left as. */
+    :global(html[data-menu-leaving]) [command="show-modal"] .line {
+        &:nth-child(1) {
+            animation: unfold-first 0.35s cubic-bezier(0.3, 1.4, 0.5, 1);
+        }
+
+        &:nth-child(2) {
+            animation: unfold-second 0.2s ease;
+        }
+
+        &:nth-child(3) {
+            animation: unfold-third 0.35s cubic-bezier(0.3, 1.4, 0.5, 1);
+        }
+    }
+
+    @keyframes unfold-first {
+        from {
+            inset-block-start: 20.5px;
+            inset-inline-start: 11px;
+            inline-size: 22px;
+            transform: rotate(43deg);
+        }
+    }
+
+    @keyframes unfold-second {
+        from {
+            opacity: 0;
+            transform: scaleX(0);
+        }
+    }
+
+    @keyframes unfold-third {
+        from {
+            inset-block-start: 20.5px;
+            inset-inline-start: 11px;
+            inline-size: 21px;
+            transform: rotate(-47deg);
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .line,
+        :global(html[data-menu-leaving]) [command="show-modal"] .line {
+            transition: none;
+            animation: none;
+        }
+    }
+
+    @media (forced-colors: active) {
+        .line {
+            background-color: CanvasText;
+        }
+    }
+</style>

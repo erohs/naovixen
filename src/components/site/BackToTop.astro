@@ -1,0 +1,38 @@
+---
+import Icon from "../ui/Icon.astro";
+---
+
+<div class="track">
+    <a href="#top" class="button button--primary button--round link">
+        <Icon name="arrow-up" />
+        <span class="visually-hidden">Back to top</span>
+    </a>
+</div>
+
+<style>
+    /*
+     * No script: the link rides a track down the side of the main content that starts two screens
+     * down, held to the bottom of the window by sticky positioning, so it scrolls into view once the
+     * reader is a screen in and rests at the end of the content. A page too short for that never
+     * shows it. It sits beyond the page's right edge where the margin is wide enough.
+     */
+    .track {
+        --page-margin: calc((100% - var(--layout-width-page)) / 2 - var(--space-padding-page));
+        --resting-gap: var(--space-between-groups);
+
+        position: absolute;
+        z-index: var(--z-index-floating);
+        inset-block: calc(200svh - var(--size-action-minimum) - var(--resting-gap)) 0;
+        inset-inline-end: max(
+            var(--space-between-text) + var(--space-between-lines),
+            var(--page-margin) - var(--size-action-minimum) - var(--space-between-content)
+        );
+        pointer-events: none;
+    }
+
+    .link {
+        position: sticky;
+        inset-block-start: calc(100svh - var(--size-action-minimum) - var(--resting-gap));
+        pointer-events: auto;
+    }
+</style>
