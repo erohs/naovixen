@@ -1,5 +1,5 @@
-import type { OpenGraphType } from '../enums/OpenGraphType';
-import type { IOpenGraphImage } from './IOpenGraphImage';
+import type { OpenGraphType } from "../enums/OpenGraphType";
+import type { IOpenGraphImage } from "./IOpenGraphImage";
 
 export interface ISeoMetadata {
     readonly title: string;

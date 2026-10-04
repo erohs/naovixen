@@ -1,11 +1,10 @@
 const xmlEntities: Readonly<Record<string, string>> = {
-    '&': '&amp;',
-    '<': '&lt;',
-    '>': '&gt;',
-    '"': '&quot;',
-    "'": '&apos;',
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&apos;",
 };
 
-export function escapeXml(text: string): string {
-    return text.replace(/[&<>"']/g, (character) => xmlEntities[character] ?? character);
-}
+export const escapeXml = (text: string): string =>
+    text.replace(/[&<>"']/g, (character) => xmlEntities[character] ?? character);

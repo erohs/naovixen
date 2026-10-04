@@ -1,6 +1,6 @@
 export interface IBlogPostingStructuredData {
-    readonly '@context': string;
-    readonly '@type': 'BlogPosting';
+    readonly "@context": string;
+    readonly "@type": "BlogPosting";
     readonly headline: string;
     readonly description: string;
     readonly datePublished: string;
@@ -8,7 +8,7 @@ export interface IBlogPostingStructuredData {
     readonly inLanguage: string;
     readonly keywords: readonly string[];
     readonly author: {
-        readonly '@type': 'Person';
+        readonly "@type": "Person";
         readonly name: string;
         readonly url: string;
     };

@@ -1,1 +1,1 @@
-export const schemaOrgContext = 'https://schema.org';
+export const schemaOrgContext = "https://schema.org";

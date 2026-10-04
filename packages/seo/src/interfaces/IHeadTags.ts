@@ -1,4 +1,4 @@
-import type { MetaTag } from '../types/MetaTag';
+import type { MetaTag } from "../types/MetaTag";
 
 export interface IHeadTags {
     readonly title: string;
