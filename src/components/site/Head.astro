@@ -1,7 +1,7 @@
 ---
 import { Font } from "astro:assets";
+import { ClientRouter } from "astro:transitions";
 import applyTheme from "../../scripts/apply-theme.js?raw";
-import menu from "../../scripts/menu.js?raw";
 import { site } from "../../site";
 
 export interface Props {
@@ -24,7 +24,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site).href;
 <meta name="description" content={description} />
 {isCanonical && <link rel="canonical" href={canonical} />}
 <script is:inline set:html={applyTheme} />
-<script is:inline set:html={menu} />
+<ClientRouter fallback="swap" />
 <Font cssVariable="--font-fredoka" preload />
 <Font cssVariable="--font-schibsted-grotesk" preload />
 <Font cssVariable="--font-jetbrains-mono" preload />

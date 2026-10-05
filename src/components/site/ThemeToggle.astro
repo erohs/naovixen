@@ -50,15 +50,18 @@ import Icon from "../ui/Icon.astro";
         }
     }
 
-    /* The new theme grows in a circle from the toggle over a still picture of the old one. */
+    /*
+     * The new theme grows in a circle from the toggle over a still picture of the old one. Only for
+     * the toggle's own transition: page changes run in view transitions too.
+     */
     @media (prefers-reduced-motion: no-preference) {
-        :global(::view-transition-old(root)),
-        :global(::view-transition-new(root)) {
+        :global(html[data-theme-reveal]::view-transition-old(root)),
+        :global(html[data-theme-reveal]::view-transition-new(root)) {
             animation: none;
             mix-blend-mode: normal;
         }
 
-        :global(::view-transition-new(root)) {
+        :global(html[data-theme-reveal]::view-transition-new(root)) {
             animation: reveal var(--duration-slow) var(--easing-emphasized);
         }
     }

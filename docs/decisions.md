@@ -14,31 +14,53 @@ is at the `pre-astro` tag.
 Blog search runs in the browser over `/blog/search.json`, with the old matching rules. Without
 script, the topic pages stand in for it.
 
-## Two small inline scripts, and two bundled ones
+## Client-side page changes that keep the header
 
 Pages work fully without script. The narrow-screen menu is a modal `<dialog>` opened by an
 invoker command (`commandfor`/`command`), so opening, focus, Escape and the inert page behind
-it need none. What script adds:
+it need none. Without script a link is an ordinary page load and the menu is simply closed on
+the next page.
 
-- `apply-theme.js`, inline before first paint, applies a chosen theme and marks that script
-  runs, so the theme switch can show.
-- `menu.js`, inline, gives Safari's opening menu focus, which Safari withholds from a dialog
-  that was hidden while closed. It also carries the menu's closing slide across a page change:
-  the click starts the slide and records when, and the next page resumes it from that point
-  with a negative `animation-delay`. Native cross-document view transitions would do this, but
-  Firefox has not shipped them and they cannot be polyfilled. Revisit when it does.
-- `theme-toggle.ts` and `post-search.ts` are bundled modules, loaded only where they are used.
+With script, Astro's `<ClientRouter />` changes pages in place, and `navigation.ts` swaps
+everything except `<header>`. The open menu and both menu buttons are the same elements on the
+next page, so following a link from the menu changes the address at once and the menu slides
+away over the new page with its own CSS transitions. Native cross-document view transitions
+could do this without script, but Firefox has not shipped them and they cannot be polyfilled.
+Revisit when it does. The site once carried the slide across a full page load by replaying it
+on the next page; that flashed, stuttered and doubled the header row, so do not go back to it.
 
-The content security policy in `public/_headers` allows the inline scripts by their hashes. An
-end-to-end test hashes each inline script as built and fails if the policy does not allow it.
+The menu starts closing as soon as a page change starts, so a slow or interrupted change can
+never leave it open. The router's view transition still runs, made instant by CSS that applies
+only during a page change: WebKit crashes when a modal dialog closes during a view transition,
+and skipping the transition instead leaves it crashing the next time the menu closes. Do not
+put `transition:animate` on `<html>`: it renames the root snapshot, and the theme switch's
+circular reveal stops matching. Astro adds a route announcer to the body on every change,
+expecting the body to be replaced, so the swap removes the last one. A bundled script that sets
+up a page connects on `astro:page-load`.
+
+One script is inlined in the head: `apply-theme.js`, before first paint, applies a chosen
+theme and marks that script runs, so the theme switch can show. Everything else is bundled
+into files (`assetsInlineLimit: 0`), as the content security policy in `public/_headers`
+allows inline scripts only by their hashes. An end-to-end test hashes each inline script as built and fails if the
+policy does not allow it.
+
+## One stylesheet for every page
+
+`cssCodeSplit` is off, so every page links the same stylesheet, about 9 KB compressed. With
+a stylesheet per page, a page change in place had to add the next page's stylesheets, which
+the browser applies a moment after the new page first paints, so its layout briefly fell
+apart, and the router waited for them before changing pages at all. A computed-style
+comparison of every element on every page found no difference between the two builds.
 
 ## The closed menu stays rendered
 
 Firefox and Safari take a closed dialog off the screen at once, before an exit transition can
 run, and the `overlay` property that prevents that is Chromium's alone. So the menu sets
-`display: block` when closed and hides with `visibility` once its slide has finished, exactly
-as the old panel did. A hidden dialog is out of the tab order and the accessibility tree, and
-with page styles off the browser's own stylesheet still hides it.
+`display: block` when closed and hides with `visibility` once its slide has finished. A hidden
+dialog is out of the tab order and the accessibility tree, and with page styles off the
+browser's own stylesheet still hides it. The menu draws its own copy of the header's row, and
+only one of the two is visible at a time. `menu.ts` gives Safari's opening menu focus, which
+Safari withholds from a dialog that was hidden while closed, and wraps Tab inside the menu.
 
 ## The theme follows the system setting until the reader chooses
 

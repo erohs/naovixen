@@ -18,6 +18,12 @@ import ThemeToggle from "./ThemeToggle.astro";
     <MobileMenu />
 </header>
 
+<script>
+    import { connectNavigation } from "../../scripts/navigation";
+
+    connectNavigation();
+</script>
+
 <style>
     /*
      * The header stacks above the page. A closed menu still sliding away stays inside it, beneath
@@ -27,10 +33,22 @@ import ThemeToggle from "./ThemeToggle.astro";
         position: relative;
         z-index: var(--z-index-overlay);
 
-        & :global(.bar) {
+        & > :global(.bar) {
             position: relative;
             z-index: var(--z-index-raised);
         }
+    }
+
+    /* A page change is instant: the menu's slide is the only motion it needs. */
+    :global(html[data-astro-transition]::view-transition-group(root)),
+    :global(html[data-astro-transition]::view-transition-old(root)),
+    :global(html[data-astro-transition]::view-transition-new(root)) {
+        animation: none;
+    }
+
+    /* The open menu shows its own copy of the row in its place. */
+    :global(:root:has(#menu[open])) header > :global(.bar) {
+        visibility: hidden;
     }
 
     /* Together with the row's gap, the switch sits as far from the last link as the links sit from each other. */

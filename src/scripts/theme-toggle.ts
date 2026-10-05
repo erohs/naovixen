@@ -36,8 +36,11 @@ const revealFrom = (origin: Element, change: () => void): void => {
     root.style.setProperty("--reveal-x", `${x}px`);
     root.style.setProperty("--reveal-y", `${y}px`);
     root.style.setProperty("--reveal-radius", `${radius}px`);
-    const clear = (): void =>
+    root.dataset["themeReveal"] = "";
+    const clear = (): void => {
         ["--reveal-x", "--reveal-y", "--reveal-radius"].forEach((name) => root.style.removeProperty(name));
+        delete root.dataset["themeReveal"];
+    };
     document.startViewTransition(change).finished.then(clear, clear);
 };
 

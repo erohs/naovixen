@@ -38,6 +38,22 @@ export default defineConfig({
     /* Keeps one space where markup breaks across lines; the default drops it between inline elements. */
     compressHTML: true,
     integrations: [mdx(), sitemap()],
+    /* Every link fetches its page on hover or focus, so a page change rarely waits on the network. */
+    prefetch: { prefetchAll: true, defaultStrategy: "hover" },
+    vite: {
+        build: {
+            /*
+             * Astro inlines small scripts, and the content security policy allows inline scripts
+             * only by their hashes. Bundled scripts stay files, so only the head script needs one.
+             */
+            assetsInlineLimit: 0,
+            /*
+             * One stylesheet for every page. A page change in place then never adds a stylesheet,
+             * which would apply a moment after the new page first paints, and never waits for one.
+             */
+            cssCodeSplit: false,
+        },
+    },
     image: { layout: "constrained" },
     markdown: {
         shikiConfig: {

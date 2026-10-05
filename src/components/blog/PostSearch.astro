@@ -75,7 +75,8 @@ const nothingChosen = { query: "", topics: [] };
 <script>
     import { connectPostSearch } from "../../scripts/post-search";
 
-    connectPostSearch();
+    // A bundled script runs once, so it connects on every page load, including page changes.
+    document.addEventListener("astro:page-load", connectPostSearch);
 </script>
 
 <style>

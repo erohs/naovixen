@@ -48,7 +48,7 @@ src/
   components/        site/ (header, footer, menu), ui/ (shared pieces), content/ (MDX
                      blocks), and a folder per area that owns its own: home/, blog/, work/
   lib/               pure functions with tests beside them
-  scripts/           the browser scripts: two inlined in the head, two bundled
+  scripts/           the browser scripts: one inlined in the head, the rest bundled
   styles/            tokens, reset, base, and the few styles several components share
   icons/             SVG icons, with their licences
 tests/e2e/           Playwright, every engine, with and without script

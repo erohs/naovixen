@@ -55,13 +55,76 @@ test("leads to the page chosen", async ({ page, javaScriptEnabled }) => {
     await expect(page.getByRole("dialog", { name: "Menu" })).toBeHidden();
 });
 
-test("keeps sliding closed across the change of page after a link is followed", async ({ page, javaScriptEnabled }) => {
+test("changes the address while it is still closing, after a link is followed", async ({ page, javaScriptEnabled }) => {
     test.skip(!javaScriptEnabled, "Without script the new page simply arrives with the menu closed.");
     await page.getByRole("button", { name: "Menu", exact: true }).click();
     await page.getByRole("dialog").getByRole("link", { name: "Work" }).click();
     await page.waitForURL(/\/work\/$/);
+    await expect(page.locator("#menu .sheet")).toBeInViewport();
     await expect(page.getByRole("dialog", { name: "Menu" })).toBeHidden();
-    await expect.poll(() => page.evaluate(() => "menuWasOpen" in document.documentElement.dataset)).toBe(false);
+});
+
+test("shows the header's row once, never drawn twice, while it is open", async ({ page, javaScriptEnabled }) => {
+    const click = clickOptions(javaScriptEnabled);
+    await page.getByRole("button", { name: "Menu", exact: true }).click(click);
+    // The page behind the open menu is inert, so a role query would miss its copy of the row.
+    await expect(page.locator("a.home").filter({ visible: true })).toHaveCount(1);
+});
+
+test("leaves focus on the new page's content, not its own button, after a link is followed", async ({
+    page,
+    javaScriptEnabled,
+}) => {
+    test.skip(!javaScriptEnabled, "Without script the new page loads with focus at its start.");
+    await page.getByRole("button", { name: "Menu", exact: true }).focus();
+    await page.keyboard.press("Enter");
+    await page.getByRole("dialog").getByRole("link", { name: "Blog" }).focus();
+    await page.keyboard.press("Enter");
+    await page.waitForURL(/\/blog\/$/);
+    await expect(page.getByRole("main")).toBeFocused();
+});
+
+test("keeps the chosen theme and the blog search working after a link is followed", async ({
+    page,
+    javaScriptEnabled,
+}) => {
+    test.skip(!javaScriptEnabled, "Switching and searching need script.");
+    await page.locator("header > .bar").getByRole("button", { name: "Dark mode" }).click();
+    await page.getByRole("button", { name: "Menu", exact: true }).click();
+    await page.getByRole("dialog").getByRole("link", { name: "Blog" }).click();
+    await page.waitForURL(/\/blog\/$/);
+    await expect(page.getByRole("dialog", { name: "Menu" })).toBeHidden();
+    await page.getByLabel("Search posts").fill("radio");
+    await expect(page.locator("[data-summary]")).toHaveText("Showing 2 of 6 posts matching “radio”");
+    await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
+});
+
+test("closes after every link followed, announcing only the latest page", async ({ page, javaScriptEnabled }) => {
+    test.skip(!javaScriptEnabled, "Without script each page is a fresh load.");
+    const menu = page.getByRole("dialog", { name: "Menu" });
+    for (const [name, title] of [
+        ["Work", /^Work/],
+        ["Blog", /^Blog/],
+        ["Contact", /^Contact/],
+    ] as const) {
+        await page.getByRole("button", { name: "Menu", exact: true }).click();
+        await menu.getByRole("link", { name, exact: true }).click();
+        await expect(page).toHaveTitle(title);
+        await expect(menu).toBeHidden();
+    }
+    await expect(page.locator(".astro-route-announcer")).toHaveCount(1);
+});
+
+test("closes when the reader goes back a page", async ({ page, javaScriptEnabled }) => {
+    test.skip(!javaScriptEnabled, "Without script going back loads the page afresh, with the menu closed.");
+    const menuButton = page.getByRole("button", { name: "Menu", exact: true });
+    await menuButton.click();
+    await page.getByRole("dialog").getByRole("link", { name: "Work" }).click();
+    await page.waitForURL(/\/work\/$/);
+    await menuButton.click();
+    await page.goBack();
+    await expect(page).toHaveTitle(/^About/);
+    await expect(page.getByRole("dialog", { name: "Menu" })).toBeHidden();
 });
 
 test("keeps focus inside, wrapping from its last control to its first", async ({

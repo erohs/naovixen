@@ -34,10 +34,16 @@ import ThemeToggle from "./ThemeToggle.astro";
     </div>
 </dialog>
 
+<script>
+    import { connectMenu } from "../../scripts/menu";
+
+    connectMenu();
+</script>
+
 <style>
     /*
      * A modal dialog over the whole window, transparent itself: the sheet slides in from the side,
-     * and a copy of the header's row sits over the real one, so the row stays put and usable.
+     * and a copy of the header's row stands in for the real one, so the row stays put and usable.
      *
      * Firefox and Safari take a closed dialog off the screen at once, before any exit transition
      * can run. So it stays rendered when closed, hidden only once the sheet has slid away, and a
@@ -66,10 +72,15 @@ import ThemeToggle from "./ThemeToggle.astro";
         }
     }
 
-    /* First in the markup, so focus meets the logo and close button before the links, as it did in the header. */
+    /*
+     * First in the markup, so focus meets the logo and close button before the links, as it did in
+     * the header. Shown only while open: the header's own row is hidden then, and shows again the
+     * moment the menu closes, so the two are never drawn over each other.
+     */
     .row {
         position: relative;
         z-index: var(--z-index-raised);
+        visibility: hidden;
     }
 
     /*
@@ -84,6 +95,7 @@ import ThemeToggle from "./ThemeToggle.astro";
         position: absolute;
         inset: 0;
         translate: var(--off-screen);
+        will-change: translate;
         background:
             radial-gradient(ellipse 90% 60% at 100% 100%, transparent, var(--color-background-page)),
             radial-gradient(
@@ -156,14 +168,13 @@ import ThemeToggle from "./ThemeToggle.astro";
         font-size: var(--font-size-lead);
     }
 
-    /*
-     * Open, or as the last page left it after a link in the menu was followed: the menu script
-     * shows that for a moment, then lets it close with the same transitions as the close button.
-     */
-    .menu[open],
-    :global(html[data-menu-was-open]) .menu {
+    .menu[open] {
         visibility: visible;
         transition-delay: 0s;
+
+        & .row {
+            visibility: visible;
+        }
 
         & .sheet {
             translate: none;
@@ -193,7 +204,7 @@ import ThemeToggle from "./ThemeToggle.astro";
         overflow: hidden;
     }
 
-    /* The menu fades in and out where it would otherwise slide. */
+    /* The sheet fades in and out where it would otherwise slide; the row above it never moves. */
     @media (prefers-reduced-motion: reduce) {
         .sheet,
         .content :global(.item),
@@ -202,14 +213,15 @@ import ThemeToggle from "./ThemeToggle.astro";
         }
 
         .menu {
-            opacity: 0;
-            transition:
-                opacity var(--duration-medium) var(--easing-standard),
-                visibility 0s linear var(--duration-medium);
+            transition: visibility 0s linear var(--duration-medium);
         }
 
-        .menu[open],
-        :global(html[data-menu-was-open]) .menu {
+        .sheet {
+            opacity: 0;
+            transition: opacity var(--duration-medium) var(--easing-standard);
+        }
+
+        .menu[open] .sheet {
             opacity: 1;
         }
     }
