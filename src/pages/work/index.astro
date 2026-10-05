@@ -18,7 +18,7 @@ const intro = "Selected work from PebblePad, covering the problem, my approach a
         <ul class="card-grid">
             {projects.map((project, index) => (
                 <li>
-                    <ProjectCard project={project} headingLevel={2} isAboveTheFold={index === 0} />
+                    <ProjectCard project={project} headingLevel={2} isPriority={index === 0} />
                 </li>
             ))}
         </ul>

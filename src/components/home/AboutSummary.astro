@@ -5,7 +5,7 @@ import Link from "../ui/Link.astro";
 import PhotoPlaceholder from "../ui/PhotoPlaceholder.astro";
 ---
 
-<section aria-labelledby="about-title" class="about">
+<section aria-labelledby="about-title" class="columns about">
     <div class="summary">
         <h2 id="about-title" class="heading">
             About me
@@ -31,12 +31,8 @@ import PhotoPlaceholder from "../ui/PhotoPlaceholder.astro";
 </section>
 
 <style>
-    /* As many equal columns as fit, dropping to one on narrow screens. */
     .about {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(min(18rem, 100%), 1fr));
         align-items: center;
-        gap: var(--space-between-regions) calc(2 * var(--space-between-groups));
         padding-block: var(--space-between-sections);
         padding-inline: var(--space-padding-page-centred);
     }

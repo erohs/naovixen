@@ -7,7 +7,6 @@
     --color-text-primary: light-dark(#2b1d14, #fbf1e4);
     --color-text-secondary: light-dark(#3b2a1e, #e3cfba);
     --color-text-accent: light-dark(#a84c16, #e8894a);
-    --color-text-error: light-dark(#a3261e, #f59a8f);
     --color-text-on-accent: #1f1b22;
     --color-border: light-dark(#2b1d14, #f3e2cc);
     --color-shadow: light-dark(#2b1d14, #fbf1e4);
@@ -75,7 +74,6 @@
     --duration-medium: 300ms;
     --duration-slow: 450ms;
     --easing-standard: ease;
-    --easing-bounce: cubic-bezier(0.34, 1.9, 0.5, 1);
     --easing-emphasized: cubic-bezier(0.76, 0, 0.24, 1);
     --z-index-raised: 1;
     --z-index-floating: 2;

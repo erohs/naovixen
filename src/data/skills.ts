@@ -1,4 +1,4 @@
-export interface ISkillGroup {
+interface ISkillGroup {
     label: string;
     /** Each skill names its icon in src/icons; one with no logo of its own takes a generic icon. */
     skills: { name: string; icon: string }[];

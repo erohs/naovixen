@@ -1,5 +1,6 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test, type Page } from "@playwright/test";
+import { site } from "../../src/site";
 import { routes } from "./routes";
 
 const wcag = ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"];
@@ -37,7 +38,7 @@ const checkBasics = (route: string): void => {
         const response = await page.goto(route);
         expect(response?.status()).toBe(200);
         await expect(page).toHaveTitle(/Naomi Shore/);
-        await expect(page.locator('link[rel="canonical"]')).toHaveAttribute("href", `https://naovixen.com${route}`);
+        await expect(page.locator('link[rel="canonical"]')).toHaveAttribute("href", new URL(route, site.origin).href);
         await expect(page.locator("h1")).toHaveCount(1);
     });
 

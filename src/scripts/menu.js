@@ -12,6 +12,7 @@
 (() => {
     const root = document.documentElement;
     const noteKey = "menu-closed-at";
+    /** The sheet's slide in MobileMenu.astro; after this long, the menu has already closed. */
     const slideLength = 500;
     const findMenu = () => document.getElementById("menu");
 

@@ -1,4 +1,5 @@
 ---
+import { topicPath } from "../../lib/paths";
 import type { ITopic } from "../../lib/posts";
 
 interface Props {
@@ -11,20 +12,20 @@ const { topics, current } = Astro.props;
 ---
 
 <nav aria-labelledby="topics-title" class="topics">
-    <h2 id="topics-title" class="title">
+    <h2 id="topics-title" class="label-handwritten">
         Topics
     </h2>
     <ul class="list">
         <li>
-            <a href="/blog/" class="topic" aria-current={current === undefined ? "page" : undefined}>
+            <a href="/blog/" class="chip topic" aria-current={current === undefined ? "page" : undefined}>
                 All posts
             </a>
         </li>
         {topics.map((topic) => (
             <li>
                 <a
-                    href={`/blog/topics/${topic.slug}/`}
-                    class="topic"
+                    href={topicPath(topic.name)}
+                    class="chip topic"
                     aria-current={topic.slug === current ? "page" : undefined}>
                     {topic.name} <span class="count">({topic.count})</span>
                 </a>
@@ -41,13 +42,6 @@ const { topics, current } = Astro.props;
         margin-block-end: var(--space-padding-panel);
     }
 
-    .title {
-        color: var(--color-text-accent);
-        font-family: var(--font-family-handwriting);
-        font-size: var(--font-size-h4);
-        font-weight: var(--font-weight-regular);
-    }
-
     .list {
         display: flex;
         flex-wrap: wrap;
@@ -57,20 +51,10 @@ const { topics, current } = Astro.props;
     }
 
     /* A chip: flat on the page, its fill answering the pointer. */
+
+    /* Its count follows the name as text, so it stays a run of text rather than a flex row. */
     .topic {
         display: inline-block;
-        padding: var(--space-padding-chip);
-        border: var(--border-width-standout) solid var(--color-border);
-        border-radius: var(--radius-small);
-        color: var(--color-text-primary);
-        font-family: var(--font-family-code);
-        font-size: var(--font-size-meta);
-        text-decoration: none;
-        transition: background-color var(--duration-fast) var(--easing-standard);
-
-        &:hover {
-            background-color: var(--color-background-surface);
-        }
 
         &[aria-current="page"] {
             background-color: var(--color-background-accent);

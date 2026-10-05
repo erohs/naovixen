@@ -1,15 +1,9 @@
 ---
 import Icon from "./Icon.astro";
 import SpeechBubble from "./SpeechBubble.astro";
-
-interface Props {
-    class?: string;
-}
-
-const { class: className } = Astro.props;
 ---
 
-<div class:list={["exclamation", className]}>
+<div class="exclamation">
     <SpeechBubble>
         <slot />
     </SpeechBubble>

@@ -79,3 +79,23 @@
         }
     }
 }
+
+/* A small flat control or link, such as a topic or a filter to remove: only its fill answers the pointer. */
+.chip {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-between-text);
+    padding: var(--space-padding-chip);
+    border: var(--border-width-standout) solid var(--color-border);
+    border-radius: var(--radius-small);
+    background-color: var(--color-background-page);
+    color: var(--color-text-primary);
+    font-family: var(--font-family-code);
+    font-size: var(--font-size-meta);
+    text-decoration: none;
+    cursor: pointer;
+
+    &:hover {
+        background-color: var(--color-background-surface);
+    }
+}

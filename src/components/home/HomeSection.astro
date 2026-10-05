@@ -1,4 +1,6 @@
 ---
+import { slugify } from "../../lib/slugify";
+
 interface Props {
     id?: string;
     heading: string;
@@ -6,7 +8,7 @@ interface Props {
 }
 
 const { id, heading, intro } = Astro.props;
-const headingId = `${id ?? heading.toLowerCase().replace(/\W+/g, "-")}-title`;
+const headingId = `${id ?? slugify(heading)}-title`;
 ---
 
 <section id={id} aria-labelledby={headingId} class="section">

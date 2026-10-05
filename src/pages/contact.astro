@@ -27,7 +27,7 @@ import { site } from "../site";
                 </p>
             </>
         )}
-        <h2 class="elsewhere">or find me here</h2>
+        <h2 class="label-handwritten elsewhere">or find me here</h2>
         <ul class="links">
             {site.profiles.map((profile) => (
                 <li>
@@ -74,10 +74,6 @@ import { site } from "../site";
     /* A handwritten aside, set apart from the email button above. */
     .elsewhere {
         margin-block-start: var(--space-between-blocks);
-        color: var(--color-text-accent);
-        font-family: var(--font-family-handwriting);
-        font-size: var(--font-size-h4);
-        font-weight: var(--font-weight-regular);
     }
 
     .links {

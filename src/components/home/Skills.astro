@@ -1,16 +1,15 @@
 ---
 import { skillGroups } from "../../data/skills";
+import { slugify } from "../../lib/slugify";
 import Icon from "../ui/Icon.astro";
 import HomeSection from "./HomeSection.astro";
-
-const slug = (label: string): string => label.replace(/W+/g, "-");
 ---
 
 <HomeSection heading="Skills" intro="The tools and languages I use day to day.">
     <div class="groups">
         {skillGroups.map((data) => (
-            <section aria-labelledby={`skills-${slug(data.label)}`} class="group">
-                <h3 id={`skills-${slug(data.label)}`} class="label">
+            <section aria-labelledby={`skills-${slugify(data.label)}`} class="group">
+                <h3 id={`skills-${slugify(data.label)}`} class="label-handwritten label">
                     {data.label}
                 </h3>
                 <ul class="skills">
@@ -50,10 +49,6 @@ const slug = (label: string): string => label.replace(/W+/g, "-");
     .label {
         flex: 0 0 calc(4 * var(--space-between-regions));
         padding-block-start: calc(var(--space-between-content) + var(--space-between-lines));
-        color: var(--color-text-accent);
-        font-family: var(--font-family-handwriting);
-        font-size: var(--font-size-h4);
-        font-weight: var(--font-weight-regular);
     }
 
     .skills {

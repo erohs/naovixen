@@ -29,8 +29,8 @@ it need none. What script adds:
   Firefox has not shipped them and they cannot be polyfilled. Revisit when it does.
 - `theme-toggle.ts` and `post-search.ts` are bundled modules, loaded only where they are used.
 
-The content security policy in `public/_headers` allows the inline scripts by their hashes. A
-unit test fails if either changes and its hash does not.
+The content security policy in `public/_headers` allows the inline scripts by their hashes. An
+end-to-end test hashes each inline script as built and fails if the policy does not allow it.
 
 ## The closed menu stays rendered
 

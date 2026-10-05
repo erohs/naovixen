@@ -25,7 +25,7 @@ const { label, back, previous, next } = Astro.props;
         <div class="neighbours">
             {previous && (
                 <a href={previous.href} class="neighbour">
-                    <span class="direction">Previous</span>
+                    <span class="meta direction">Previous</span>
                     <span class="title">
                         <Icon name="arrow-left" /> {previous.title}
                     </span>
@@ -33,7 +33,7 @@ const { label, back, previous, next } = Astro.props;
             )}
             {next && (
                 <a href={next.href} class="neighbour neighbour--next">
-                    <span class="direction">Next</span>
+                    <span class="meta direction">Next</span>
                     <span class="title">
                         {next.title} <Icon name="arrow-right" />
                     </span>
@@ -104,9 +104,6 @@ const { label, back, previous, next } = Astro.props;
     }
 
     .direction {
-        color: var(--color-text-secondary);
-        font-family: var(--font-family-code);
-        font-size: var(--font-size-meta);
         font-weight: var(--font-weight-regular);
     }
 

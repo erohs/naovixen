@@ -31,7 +31,7 @@ const principles = [
     title="About"
     description="About Naomi Shore: a software engineer who joined PebblePad as an apprentice in 2019 and earned a first-class degree alongside the job.">
     <div class="content">
-        <div class="introduction">
+        <div class="columns introduction">
             <div class="text">
                 <GreetingHeading greeting="the longer version!">About me</GreetingHeading>
                 <p class="lead">
@@ -56,7 +56,7 @@ const principles = [
             </div>
             <PhotoPlaceholder label="Photo placeholder: portrait of Naomi Shore" class="photo" />
         </div>
-        <div class="details">
+        <div class="columns">
             <section aria-labelledby="how-i-work-title" class="detail">
                 <h2 id="how-i-work-title">How I work</h2>
                 <dl class="principles">
@@ -94,12 +94,8 @@ const principles = [
         margin-block-start: var(--space-below-heading);
     }
 
-    /* As many equal columns as fit, dropping to one on narrow screens. */
     .introduction {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(min(18rem, 100%), 1fr));
         align-items: start;
-        gap: var(--space-between-regions) calc(2 * var(--space-between-groups));
     }
 
     .text {
@@ -112,13 +108,6 @@ const principles = [
     .photo {
         justify-self: center;
         inline-size: min(100%, calc(var(--layout-width-prose) / 2));
-    }
-
-    /* As many equal columns as fit, dropping to one on narrow screens. */
-    .details {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(min(18rem, 100%), 1fr));
-        gap: var(--space-between-regions) calc(2 * var(--space-between-groups));
     }
 
     .detail {

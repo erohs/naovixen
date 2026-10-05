@@ -1,3 +1,4 @@
+import { site } from "../site";
 import { slugify } from "./slugify";
 
 export interface IPostSummary {
@@ -39,5 +40,5 @@ export const topicsOf = (posts: readonly IPostSummary[]): ITopic[] => {
     }
     return [...counts]
         .map(([name, count]) => ({ name, slug: slugify(name), count }))
-        .toSorted((first, second) => second.count - first.count || first.name.localeCompare(second.name, "en-GB"));
+        .toSorted((first, second) => second.count - first.count || first.name.localeCompare(second.name, site.locale));
 };

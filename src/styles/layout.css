@@ -27,3 +27,25 @@
 .title-size {
     font-size: var(--font-size-title);
 }
+
+/* Dates, counts and other small facts beside the main text. */
+.meta {
+    color: var(--color-text-secondary);
+    font-family: var(--font-family-code);
+    font-size: var(--font-size-meta);
+}
+
+/* A short handwritten label in the accent colour, such as the title of a list. */
+.label-handwritten {
+    color: var(--color-text-accent);
+    font-family: var(--font-family-handwriting);
+    font-size: var(--font-size-h4);
+    font-weight: var(--font-weight-regular);
+}
+
+/* As many equal columns as fit, dropping to one on narrow screens, with room between. */
+.columns {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(18rem, 100%), 1fr));
+    gap: var(--space-between-regions) calc(2 * var(--space-between-groups));
+}

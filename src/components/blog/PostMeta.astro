@@ -17,11 +17,3 @@ const { published, minutes, topics } = Astro.props;
     <span>{minutes} min read</span>
 </p>
 {topics.length > 0 && <TagList label="Topics" tags={topics} isLinked />}
-
-<style>
-    .meta {
-        color: var(--color-text-secondary);
-        font-family: var(--font-family-code);
-        font-size: var(--font-size-meta);
-    }
-</style>

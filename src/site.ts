@@ -1,4 +1,4 @@
-export interface IProfile {
+interface IProfile {
     label: string;
     detail: string;
     url: string;

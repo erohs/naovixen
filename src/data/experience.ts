@@ -1,4 +1,4 @@
-export interface IExperienceEntry {
+interface IExperienceEntry {
     title: string;
     organisation: string;
     dates: string;

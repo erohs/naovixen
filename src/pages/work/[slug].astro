@@ -2,11 +2,12 @@
 import type { GetStaticPaths } from "astro";
 import type { CollectionEntry } from "astro:content";
 import Prose from "../../components/content/Prose.astro";
-import Figure from "../../components/ui/Figure.astro";
+import Screenshot from "../../components/work/Screenshot.astro";
 import PagerNav from "../../components/ui/PagerNav.astro";
 import TagList from "../../components/ui/TagList.astro";
 import PageLayout from "../../layouts/PageLayout.astro";
 import { getProjects } from "../../lib/content";
+import { projectPath } from "../../lib/paths";
 import { adjacentProjects } from "../../lib/projects";
 
 export const getStaticPaths = (async () => {
@@ -26,7 +27,7 @@ interface Props {
 const { project, previous, next } = Astro.props;
 const { title, summary, stack, screenshot } = project.data;
 const neighbour = (other: CollectionEntry<"work"> | undefined) =>
-    other && { title: other.data.title, href: `/work/${other.id}/` };
+    other && { title: other.data.title, href: projectPath(other.id) };
 ---
 
 <PageLayout title={title} description={summary} type="article" trail={[{ label: "Work", href: "/work/" }]}>
@@ -38,12 +39,12 @@ const neighbour = (other: CollectionEntry<"work"> | undefined) =>
             <p class="lead summary">{summary}</p>
         </header>
         <dl class="stack">
-            <dt>tech stack</dt>
+            <dt class="label-handwritten">tech stack</dt>
             <dd>
                 <TagList label="Tech stack" tags={stack} />
             </dd>
         </dl>
-        {screenshot && <Figure src={screenshot.src} alt={screenshot.alt} isPriority />}
+        {screenshot && <Screenshot src={screenshot.src} alt={screenshot.alt} />}
         <div class="body">
             <Prose entry={project} isNumbered />
         </div>
@@ -76,9 +77,6 @@ const neighbour = (other: CollectionEntry<"work"> | undefined) =>
 
         & dt {
             margin-block-end: var(--space-between-text);
-            color: var(--color-text-accent);
-            font-family: var(--font-family-handwriting);
-            font-size: var(--font-size-h4);
         }
 
         & dd {

@@ -1,5 +1,5 @@
 ---
-import { slugify } from "../../lib/slugify";
+import { topicPath } from "../../lib/paths";
 
 interface Props {
     label: string;
@@ -15,7 +15,7 @@ const { label, tags, isLinked = false } = Astro.props;
     {tags.map((tag) => (
         <li>
             {isLinked ? (
-                <a href={`/blog/topics/${slugify(tag)}/`} class="tag tag--link">
+                <a href={topicPath(tag)} class="tag tag--link">
                     {tag}
                 </a>
             ) : (

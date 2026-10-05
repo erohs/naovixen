@@ -16,7 +16,7 @@ export default defineConfig({
     testDir: "tests/e2e",
     fullyParallel: true,
     forbidOnly: Boolean(process.env["CI"]),
-    use: { baseURL: `http://localhost:${port}` },
+    use: { baseURL: `http://localhost:${port}`, screenshot: "only-on-failure" },
     webServer: {
         command: `pnpm build && pnpm preview --port ${port}`,
         url: `http://localhost:${port}/`,

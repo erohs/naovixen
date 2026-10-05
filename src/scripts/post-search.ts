@@ -20,8 +20,15 @@ const announcementDelay = 200;
 const announcementLifetime = 5 * 60 * 1000;
 
 let index: Promise<ISearchablePost[]> | undefined;
+
+/** Fetched once, when a reader first searches. A failed fetch is forgotten, so the next search tries again. */
 const loadIndex = (): Promise<ISearchablePost[]> =>
-    (index ??= fetch("/blog/search.json").then((response) => response.json() as Promise<ISearchablePost[]>));
+    (index ??= fetch("/blog/search.json")
+        .then((response) => response.json() as Promise<ISearchablePost[]>)
+        .catch((error: unknown) => {
+            index = undefined;
+            throw error;
+        }));
 
 const one = <T extends Element>(scope: ParentNode, selector: string): T => {
     const element = scope.querySelector<T>(selector);

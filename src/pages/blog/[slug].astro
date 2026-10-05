@@ -8,6 +8,7 @@ import StructuredData from "../../components/site/StructuredData.astro";
 import PagerNav from "../../components/ui/PagerNav.astro";
 import PageLayout from "../../layouts/PageLayout.astro";
 import { getPublishedPosts } from "../../lib/content";
+import { postPath } from "../../lib/paths";
 import { adjacentPosts, relatedPosts } from "../../lib/posts";
 import { readingTime } from "../../lib/reading-time";
 import { blogPostingData } from "../../lib/structured-data";
@@ -30,7 +31,7 @@ interface Props {
 const { post, related, newer, older } = Astro.props;
 const { title, excerpt, published, topics } = post.data;
 const neighbour = (other: CollectionEntry<"blog"> | undefined) =>
-    other && { title: other.data.title, href: `/blog/${other.id}/` };
+    other && { title: other.data.title, href: postPath(other.id) };
 ---
 
 <PageLayout title={title} description={excerpt} type="article" trail={[{ label: "Blog", href: "/blog/" }]}>

@@ -1,12 +1,9 @@
 ---
-import Icon from "../ui/Icon.astro";
+import LinkButton from "../ui/LinkButton.astro";
 ---
 
 <div class="track">
-    <a href="#top" class="button button--primary button--round link">
-        <Icon name="arrow-up" />
-        <span class="visually-hidden">Back to top</span>
-    </a>
+    <LinkButton href="#top" variant="primary" icon="arrow-up" iconLabel="Back to top" class="link" />
 </div>
 
 <style>
@@ -19,16 +16,17 @@ import Icon from "../ui/Icon.astro";
      * wide enough.
      */
     .track {
-        --page-margin: calc((100% - var(--layout-width-page)) / 2 - var(--space-padding-page));
         --resting-gap: var(--space-between-groups);
+        --resting-inline-end: max(
+            var(--space-between-text) + var(--space-between-lines),
+            (100% - var(--layout-width-page)) / 2 - var(--space-padding-page) - var(--size-action-minimum) -
+                var(--space-between-content)
+        );
 
         position: absolute;
         z-index: var(--z-index-floating);
         inset-block: min(200svh - var(--size-action-minimum) - var(--resting-gap), 100%) 0;
-        inset-inline-end: max(
-            var(--space-between-text) + var(--space-between-lines),
-            var(--page-margin) - var(--size-action-minimum) - var(--space-between-content)
-        );
+        inset-inline-end: var(--resting-inline-end);
         pointer-events: none;
     }
 
@@ -44,10 +42,7 @@ import Icon from "../ui/Icon.astro";
         &:focus-visible {
             position: fixed;
             inset-block: auto var(--resting-gap);
-            inset-inline-end: max(
-                var(--space-between-text) + var(--space-between-lines),
-                var(--page-margin) - var(--size-action-minimum) - var(--space-between-content)
-            );
+            inset-inline-end: var(--resting-inline-end);
         }
     }
 </style>

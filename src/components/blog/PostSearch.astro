@@ -1,4 +1,5 @@
 ---
+import { describeResults, describeSelectedTopics } from "../../lib/describe-search";
 import type { ITopic } from "../../lib/posts";
 import Icon from "../ui/Icon.astro";
 
@@ -8,6 +9,7 @@ interface Props {
 }
 
 const { topics, total } = Astro.props;
+const nothingChosen = { query: "", topics: [] };
 ---
 
 <search class="search" hidden>
@@ -26,7 +28,7 @@ const { topics, total } = Astro.props;
                     </span>
                     <details class="filter">
                         <summary class="button button--secondary choice">
-                            <span data-topics-chosen>All topics</span>
+                            <span data-topics-chosen>{describeSelectedTopics(nothingChosen.topics)}</span>
                             <Icon name="arrow-down" class="arrow" />
                         </summary>
                         <fieldset class="panel">
@@ -51,7 +53,7 @@ const { topics, total } = Astro.props;
         <ul aria-label="Selected topics" class="chips">
             {topics.map((topic) => (
                 <li hidden data-chip={topic.name}>
-                    <button type="button" class="chip" value={topic.name} aria-label={`${topic.name}, remove filter`}>
+                    <button type="button" class="chip" aria-label={`${topic.name}, remove filter`}>
                         {topic.name}
                         <Icon name="close" />
                     </button>
@@ -60,7 +62,7 @@ const { topics, total } = Astro.props;
         </ul>
         <div class="summary">
             <p class="meta" data-summary>
-                {total} {total === 1 ? "post" : "posts"}
+                {describeResults(total, total, nothingChosen)}
             </p>
             <button type="button" class="chip" data-clear hidden>
                 Clear filters <Icon name="close" />
@@ -78,10 +80,6 @@ const { topics, total } = Astro.props;
 
 <style>
     /* Searching needs script, so without it the topic pages stand in and this stays hidden. */
-    .search {
-        display: none;
-    }
-
     :global(html[data-js]) .search {
         display: block;
     }
@@ -202,27 +200,9 @@ const { topics, total } = Astro.props;
         }
     }
 
-    /* Flat on the page: only its fill answers the pointer. */
-    .chip {
-        display: inline-flex;
-        align-items: center;
-        gap: var(--space-between-text);
-        padding: var(--space-padding-chip);
-        border: var(--border-width-standout) solid var(--color-border);
-        border-radius: var(--radius-small);
-        background-color: var(--color-background-page);
-        color: var(--color-text-primary);
-        font-family: var(--font-family-code);
-        font-size: var(--font-size-meta);
-        cursor: pointer;
-
-        &:hover {
-            background-color: var(--color-background-surface);
-        }
-
-        &[hidden] {
-            display: none;
-        }
+    /* The shared chip sets a display, which would otherwise outrank the hidden attribute. */
+    .chip[hidden] {
+        display: none;
     }
 
     .summary {
@@ -230,11 +210,5 @@ const { topics, total } = Astro.props;
         flex-wrap: wrap;
         align-items: center;
         gap: var(--space-between-text) var(--space-between-content);
-    }
-
-    .meta {
-        color: var(--color-text-secondary);
-        font-family: var(--font-family-code);
-        font-size: var(--font-size-meta);
     }
 </style>

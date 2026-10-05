@@ -1,6 +1,7 @@
+import { site } from "../site";
 import type { ISearchCriteria } from "./search-posts";
 
-const topicList = new Intl.ListFormat("en-GB", { type: "disjunction" });
+const topicList = new Intl.ListFormat(site.locale, { type: "disjunction" });
 
 /** How many posts show, and, once anything narrows them, out of how many and why. */
 export const describeResults = (count: number, total: number, criteria: ISearchCriteria): string => {

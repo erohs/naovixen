@@ -11,6 +11,6 @@
         const theme = localStorage.getItem("theme");
         if (theme === "light" || theme === "dark") root.dataset.theme = theme;
     } catch {
-        return;
+        // Storage can be blocked; the page then follows the system setting.
     }
 })();

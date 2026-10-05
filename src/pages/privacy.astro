@@ -19,7 +19,7 @@ const { title, intro, updated } = notice.data;
             <h1 id="privacy-title" class="title-size">
                 {title}
             </h1>
-            <p class="updated">
+            <p class="meta">
                 Last updated <time datetime={isoDate(updated)}>{formatDate(updated)}</time>
             </p>
             <p class="lead">{intro}</p>
@@ -41,11 +41,5 @@ const { title, intro, updated } = notice.data;
         display: flex;
         flex-direction: column;
         gap: var(--space-between-content);
-    }
-
-    .updated {
-        color: var(--color-text-secondary);
-        font-family: var(--font-family-code);
-        font-size: var(--font-size-meta);
     }
 </style>

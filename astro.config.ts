@@ -1,10 +1,35 @@
 import { defineConfig, fontProviders } from "astro/config";
+import type { AstroUserConfig } from "astro";
 import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
 import { codeTitle } from "./src/lib/code-title";
+import { site } from "./src/site";
+
+type FontFamily = NonNullable<AstroUserConfig["fonts"]>[number];
+
+/**
+ * A Fontsource font served from this site, latin only and upright only, since nothing is set in
+ * italic. "optional" uses a cached or preloaded font from the first frame and otherwise keeps the
+ * size-matched fallback for that page, so text never shifts when a font swaps in mid-view.
+ */
+const selfHosted = (
+    name: string,
+    cssVariable: string,
+    fallback: string,
+    weights: [string | number] = ["400 700"],
+): FontFamily => ({
+    provider: fontProviders.fontsource(),
+    name,
+    cssVariable,
+    weights,
+    styles: ["normal"],
+    subsets: ["latin"],
+    fallbacks: [fallback],
+    display: "optional",
+});
 
 export default defineConfig({
-    site: "https://naovixen.com",
+    site: site.origin,
     trailingSlash: "always",
     build: { format: "directory" },
     scopedStyleStrategy: "where",
@@ -21,46 +46,10 @@ export default defineConfig({
             transformers: [codeTitle],
         },
     },
-    /*
-     * "optional" uses a cached or preloaded font from the first frame and otherwise keeps the
-     * size-matched fallback for that page, so text never shifts when a font swaps in mid-view.
-     */
     fonts: [
-        {
-            provider: fontProviders.fontsource(),
-            name: "Schibsted Grotesk",
-            cssVariable: "--font-schibsted-grotesk",
-            weights: ["400 700"],
-            subsets: ["latin"],
-            fallbacks: ["sans-serif"],
-            display: "optional",
-        },
-        {
-            provider: fontProviders.fontsource(),
-            name: "Fredoka",
-            cssVariable: "--font-fredoka",
-            weights: ["400 700"],
-            subsets: ["latin"],
-            fallbacks: ["sans-serif"],
-            display: "optional",
-        },
-        {
-            provider: fontProviders.fontsource(),
-            name: "JetBrains Mono",
-            cssVariable: "--font-jetbrains-mono",
-            weights: ["400 700"],
-            subsets: ["latin"],
-            fallbacks: ["monospace"],
-            display: "optional",
-        },
-        {
-            provider: fontProviders.fontsource(),
-            name: "Gochi Hand",
-            cssVariable: "--font-gochi-hand",
-            weights: [400],
-            subsets: ["latin"],
-            fallbacks: ["cursive"],
-            display: "optional",
-        },
+        selfHosted("Schibsted Grotesk", "--font-schibsted-grotesk", "sans-serif"),
+        selfHosted("Fredoka", "--font-fredoka", "sans-serif"),
+        selfHosted("JetBrains Mono", "--font-jetbrains-mono", "monospace"),
+        selfHosted("Gochi Hand", "--font-gochi-hand", "cursive", [400]),
     ],
 });
