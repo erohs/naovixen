@@ -1,7 +1,7 @@
 ---
 import type { HTMLAttributes } from "astro/types";
-import { isExternal } from "../../lib/is-external";
 import Icon from "./Icon.astro";
+import Link from "./Link.astro";
 
 /** An icon-only button shows its icon and reads out its label; any other shows what it holds. */
 type Props = HTMLAttributes<"a"> & {
@@ -9,15 +9,12 @@ type Props = HTMLAttributes<"a"> & {
     variant?: "primary" | "secondary";
 } & ({ icon: string; iconLabel: string } | { icon?: never; iconLabel?: never });
 
-const { href, variant = "secondary", iconLabel, icon, class: className, ...attributes } = Astro.props;
-const opensElsewhere = isExternal(href);
+const { variant = "secondary", iconLabel, icon, class: className, ...attributes } = Astro.props;
 ---
 
-<a
-    href={href}
+<Link
+    variant="plain"
     class:list={["button", `button--${variant}`, iconLabel !== undefined && "button--round", className]}
-    target={opensElsewhere ? "_blank" : undefined}
-    rel={opensElsewhere ? "noopener noreferrer" : undefined}
     {...attributes}>
     {iconLabel === undefined ? (
         <slot />
@@ -27,5 +24,4 @@ const opensElsewhere = isExternal(href);
             <span class="visually-hidden">{iconLabel}</span>
         </>
     )}
-    {opensElsewhere && <span class="visually-hidden">(opens in new tab)</span>}
-</a>
+</Link>

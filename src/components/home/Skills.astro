@@ -5,7 +5,7 @@ import Icon from "../ui/Icon.astro";
 import HomeSection from "./HomeSection.astro";
 ---
 
-<HomeSection heading="Skills" intro="The tools and languages I use day to day.">
+<HomeSection id="skills" heading="Skills" intro="The tools and languages I use day to day.">
     <div class="groups">
         {skillGroups.map((data) => (
             <section aria-labelledby={`skills-${slugify(data.label)}`} class="group">

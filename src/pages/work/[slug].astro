@@ -1,8 +1,8 @@
 ---
 import type { GetStaticPaths } from "astro";
+import { Image } from "astro:assets";
 import type { CollectionEntry } from "astro:content";
 import Prose from "../../components/content/Prose.astro";
-import Screenshot from "../../components/work/Screenshot.astro";
 import PagerNav from "../../components/ui/PagerNav.astro";
 import TagList from "../../components/ui/TagList.astro";
 import PageLayout from "../../layouts/PageLayout.astro";
@@ -44,7 +44,16 @@ const neighbour = (other: CollectionEntry<"work"> | undefined) =>
                 <TagList label="Tech stack" tags={stack} />
             </dd>
         </dl>
-        {screenshot && <Screenshot src={screenshot.src} alt={screenshot.alt} />}
+        {screenshot && (
+            <Image
+                src={screenshot.src}
+                alt={screenshot.alt}
+                widths={[640, 1280, 1600]}
+                sizes="(width < 45rem) 100vw, 45rem"
+                priority
+                class="screenshot"
+            />
+        )}
         <div class="body">
             <Prose entry={project} isNumbered />
         </div>
@@ -82,6 +91,16 @@ const neighbour = (other: CollectionEntry<"work"> | undefined) =>
         & dd {
             margin: 0;
         }
+    }
+
+    .screenshot {
+        inline-size: 100%;
+        block-size: auto;
+        aspect-ratio: 16 / 9;
+        object-fit: cover;
+        border: var(--border-width-standout) solid var(--color-border);
+        border-radius: var(--radius-medium-alternate);
+        background-color: var(--color-background-surface);
     }
 
     .body {

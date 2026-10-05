@@ -1,19 +1,20 @@
 ---
+import type { CollectionEntry } from "astro:content";
 import { formatDate, isoDate } from "../../lib/format-date";
+import { readingTime } from "../../lib/reading-time";
 import TagList from "../ui/TagList.astro";
 
 interface Props {
-    published: Date;
-    minutes: number;
-    topics: string[];
+    post: CollectionEntry<"blog">;
 }
 
-const { published, minutes, topics } = Astro.props;
+const { post } = Astro.props;
+const { published, topics } = post.data;
 ---
 
 <p class="meta">
     <time datetime={isoDate(published)}>{formatDate(published)}</time>
     <span aria-hidden="true"> · </span>
-    <span>{minutes} min read</span>
+    <span>{readingTime(post.body ?? "")} min read</span>
 </p>
 {topics.length > 0 && <TagList label="Topics" tags={topics} isLinked />}

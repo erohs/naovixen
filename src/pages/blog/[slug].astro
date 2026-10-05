@@ -10,7 +10,6 @@ import PageLayout from "../../layouts/PageLayout.astro";
 import { getPublishedPosts } from "../../lib/content";
 import { postPath } from "../../lib/paths";
 import { adjacentPosts, relatedPosts } from "../../lib/posts";
-import { readingTime } from "../../lib/reading-time";
 import { blogPostingData } from "../../lib/structured-data";
 
 export const getStaticPaths = (async () => {
@@ -46,7 +45,7 @@ const neighbour = (other: CollectionEntry<"blog"> | undefined) =>
             </h1>
             <p class="lead excerpt">{excerpt}</p>
             <div class="details">
-                <PostMeta published={published} minutes={readingTime(post.body ?? "")} topics={topics} />
+                <PostMeta post={post} />
             </div>
         </header>
         <div class="body">

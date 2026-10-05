@@ -1,6 +1,6 @@
 ---
-import { isExternal } from "../../lib/is-external";
 import Icon from "./Icon.astro";
+import Link from "./Link.astro";
 
 interface Props {
     href: string;
@@ -12,15 +12,9 @@ interface Props {
 }
 
 const { href, label, detail, icon, trailingIcon = "arrow-right", download = false } = Astro.props;
-const opensElsewhere = isExternal(href);
 ---
 
-<a
-    href={href}
-    class="tile"
-    download={download || undefined}
-    target={opensElsewhere ? "_blank" : undefined}
-    rel={opensElsewhere ? "noopener noreferrer" : undefined}>
+<Link href={href} variant="plain" class="tile" download={download || undefined}>
     <span class="disc">
         <Icon name={icon} />
     </span>
@@ -28,9 +22,8 @@ const opensElsewhere = isExternal(href);
         <span class="label">{label}</span>
         <span class="meta detail">{detail}</span>
     </span>
-    {opensElsewhere && <span class="visually-hidden">(opens in new tab)</span>}
     <Icon name={trailingIcon} class="trailing" />
-</a>
+</Link>
 
 <style>
     .tile {

@@ -1,7 +1,6 @@
 ---
 import type { CollectionEntry } from "astro:content";
 import { postPath } from "../../lib/paths";
-import { readingTime } from "../../lib/reading-time";
 import Card from "../ui/Card.astro";
 import Link from "../ui/Link.astro";
 import PostMeta from "./PostMeta.astro";
@@ -23,7 +22,7 @@ const Heading = `h${headingLevel}` as const;
     </Heading>
     <p class="excerpt">{post.data.excerpt}</p>
     <div class="details">
-        <PostMeta published={post.data.published} minutes={readingTime(post.body ?? "")} topics={post.data.topics} />
+        <PostMeta post={post} />
     </div>
 </Card>
 

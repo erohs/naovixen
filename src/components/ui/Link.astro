@@ -4,6 +4,7 @@ import { isExternal } from "../../lib/is-external";
 
 type Props = HTMLAttributes<"a"> & {
     href: string;
+    /** "plain" leaves the look to the caller, as a button or tile does. */
     variant?: "content" | "standalone" | "navigation" | "plain";
 };
 
@@ -13,7 +14,7 @@ const opensElsewhere = isExternal(href);
 
 <a
     href={href}
-    class:list={["link", variant !== "plain" && `link--${variant}`, className]}
+    class:list={[variant !== "plain" && ["link", `link--${variant}`], className]}
     target={opensElsewhere ? "_blank" : undefined}
     rel={opensElsewhere ? "noopener noreferrer" : undefined}
     {...attributes}>
@@ -82,10 +83,6 @@ const opensElsewhere = isExternal(href);
         &:focus-visible {
             outline: var(--border-width-highlight) solid var(--color-focus);
         }
-    }
-
-    .link--plain {
-        text-decoration: none;
     }
 
     @media (forced-colors: active) {
