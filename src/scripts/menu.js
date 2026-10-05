@@ -4,8 +4,8 @@
  * - Safari decides what can take focus before it shows an opening dialog that was hidden while
  *   closed, so it gives none; focus goes to the close button, as other browsers do on their own.
  * - Following a link from the menu starts its closing slide at once, and the next page carries
- *   it on: it reads when the slide began before its first paint, and keeps the resumed slide in
- *   time with that moment, so the sheet keeps moving across the change of page.
+ *   it on: it reads when the slide began before its first paint and starts the resumed slide at
+ *   that moment, so the sheet keeps moving across the change of page.
  * - Tab wraps from the menu's last control to its first, and Shift+Tab back. A dialog on its
  *   own lets focus leave for the browser's toolbar instead.
  */
@@ -49,27 +49,26 @@
 
     let closedAt = 0;
 
+    /**
+     * Pins every resumed animation's start to the moment of the click, so each shows the point
+     * the slide has really reached. An animation given a start time never waits a frame or two to
+     * begin, as a new one otherwise does, so the slide neither stalls nor jumps.
+     */
+    const startAtClick = () => {
+        const startTime = closedAt - performance.timeOrigin;
+        for (const animation of document.getAnimations()) {
+            const target = animation.effect?.target;
+            if (target?.closest?.('#menu, [command="show-modal"]')) animation.startTime = startTime;
+        }
+    };
+
     const readNote = () => {
         closedAt = Number(sessionStorage.getItem(noteKey));
         sessionStorage.removeItem(noteKey);
-        const elapsed = Date.now() - closedAt;
-        if (closedAt === 0 || elapsed >= slideLength) return;
+        if (closedAt === 0 || Date.now() - closedAt >= slideLength) return;
         root.dataset.menuClosing = "";
-        root.style.setProperty("--menu-slide-elapsed", `${-elapsed}ms`);
-    };
-
-    /**
-     * The resumed animations start from the time spent when this script ran, which is already past
-     * the old page's last frame. Styles can apply later than that, so as each starts it is moved
-     * on to the time really spent since the click. Either way the slide only ever moves forward.
-     */
-    const keepTimeWithClick = (event) => {
-        if (!("menuClosing" in root.dataset) || !(event.target instanceof Element)) return;
-        for (const animation of event.target.getAnimations()) {
-            const { delay = 0 } = animation.effect?.getTiming() ?? {};
-            const target = Date.now() - closedAt + delay;
-            animation.currentTime = Math.max(Number(animation.currentTime ?? 0), target);
-        }
+        requestAnimationFrame(startAtClick);
+        addEventListener("animationstart", startAtClick);
     };
 
     try {
@@ -90,11 +89,9 @@
     });
 
     addEventListener("keydown", wrapFocus);
-    addEventListener("animationstart", keepTimeWithClick);
 
     addEventListener("animationend", (event) => {
         if (!(event.target instanceof Element) || !event.target.matches("#menu:not([open])")) return;
         delete root.dataset.menuClosing;
-        root.style.removeProperty("--menu-slide-elapsed");
     });
 })();
