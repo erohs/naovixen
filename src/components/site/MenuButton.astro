@@ -92,18 +92,16 @@ const { command, label, class: className } = Astro.props;
 
     /* After a link in the menu is followed, the new page's button finishes unfolding from the cross. */
     :global(html[data-menu-closing]) [command="show-modal"] .line {
-        --elapsed: var(--menu-slide-elapsed, 0ms);
-
         &:nth-child(1) {
-            animation: unfold-first 0.35s cubic-bezier(0.3, 1.4, 0.5, 1) var(--elapsed);
+            animation: unfold-first 0.35s cubic-bezier(0.3, 1.4, 0.5, 1) var(--menu-slide-elapsed, 0ms);
         }
 
         &:nth-child(2) {
-            animation: unfold-second 0.2s ease var(--elapsed);
+            animation: unfold-second 0.2s ease var(--menu-slide-elapsed, 0ms);
         }
 
         &:nth-child(3) {
-            animation: unfold-third 0.35s cubic-bezier(0.3, 1.4, 0.5, 1) var(--elapsed);
+            animation: unfold-third 0.35s cubic-bezier(0.3, 1.4, 0.5, 1) var(--menu-slide-elapsed, 0ms);
         }
     }
 
