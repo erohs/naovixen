@@ -65,11 +65,11 @@ const { command, label, class: className } = Astro.props;
     }
 
     /*
-     * Both buttons fold into a cross while the menu is open. The close button shows it; the
-     * header's button, hidden under the open menu, is the one seen unfolding as the menu closes
-     * and slides away beneath the header's row.
+     * Both buttons fold into a cross while the menu is open, or as the last page left it. The
+     * close button shows it; the header's button, hidden under the open menu, is the one seen
+     * unfolding as the menu closes and slides away beneath the header's row.
      */
-    :global(:root:has(#menu[open])) .line {
+    :global(:root:is(:has(#menu[open]), [data-menu-was-open])) .line {
         &:nth-child(1) {
             inset-block-start: 20.5px;
             inset-inline-start: 11px;
@@ -83,46 +83,6 @@ const { command, label, class: className } = Astro.props;
         }
 
         &:nth-child(3) {
-            inset-block-start: 20.5px;
-            inset-inline-start: 11px;
-            inline-size: 21px;
-            transform: rotate(-47deg);
-        }
-    }
-
-    /* After a link in the menu is followed, the new page's button finishes unfolding from the cross. */
-    :global(html[data-menu-closing]) [command="show-modal"] .line {
-        &:nth-child(1) {
-            animation: unfold-first 0.35s cubic-bezier(0.3, 1.4, 0.5, 1);
-        }
-
-        &:nth-child(2) {
-            animation: unfold-second 0.2s ease;
-        }
-
-        &:nth-child(3) {
-            animation: unfold-third 0.35s cubic-bezier(0.3, 1.4, 0.5, 1);
-        }
-    }
-
-    @keyframes unfold-first {
-        from {
-            inset-block-start: 20.5px;
-            inset-inline-start: 11px;
-            inline-size: 22px;
-            transform: rotate(43deg);
-        }
-    }
-
-    @keyframes unfold-second {
-        from {
-            opacity: 0;
-            transform: scaleX(0);
-        }
-    }
-
-    @keyframes unfold-third {
-        from {
             inset-block-start: 20.5px;
             inset-inline-start: 11px;
             inline-size: 21px;
@@ -131,10 +91,8 @@ const { command, label, class: className } = Astro.props;
     }
 
     @media (prefers-reduced-motion: reduce) {
-        .line,
-        :global(html[data-menu-closing]) [command="show-modal"] .line {
+        .line {
             transition: none;
-            animation: none;
         }
     }
 

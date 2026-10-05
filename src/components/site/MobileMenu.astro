@@ -156,7 +156,12 @@ import ThemeToggle from "./ThemeToggle.astro";
         font-size: var(--font-size-lead);
     }
 
-    .menu[open] {
+    /*
+     * Open, or as the last page left it after a link in the menu was followed: the menu script
+     * shows that for a moment, then lets it close with the same transitions as the close button.
+     */
+    .menu[open],
+    :global(html[data-menu-was-open]) .menu {
         visibility: visible;
         transition-delay: 0s;
 
@@ -184,36 +189,6 @@ import ThemeToggle from "./ThemeToggle.astro";
         }
     }
 
-    /*
-     * After a link in the menu is followed, the new page arrives with the sheet part-way through
-     * its slide and carries on from there; the menu script keeps it in time with the click.
-     */
-    :global(html[data-menu-closing]) .menu:not([open]) {
-        pointer-events: none;
-        animation: leave 0.5s;
-
-        & .sheet {
-            animation: slide-away 0.5s cubic-bezier(0.7, 0, 0.25, 1);
-        }
-
-        /* The real header's button unfolds in its place. */
-        & .row {
-            visibility: hidden;
-        }
-    }
-
-    @keyframes leave {
-        from {
-            visibility: visible;
-        }
-    }
-
-    @keyframes slide-away {
-        from {
-            translate: none;
-        }
-    }
-
     :global(:root:has(.menu[open])) {
         overflow: hidden;
     }
@@ -233,22 +208,8 @@ import ThemeToggle from "./ThemeToggle.astro";
                 visibility 0s linear var(--duration-medium);
         }
 
-        .menu[open] {
-            opacity: 1;
-        }
-
-        :global(html[data-menu-closing]) .menu:not([open]) {
-            animation: fade-away var(--duration-medium) var(--easing-standard);
-
-            & .sheet {
-                animation: none;
-            }
-        }
-    }
-
-    @keyframes fade-away {
-        from {
-            visibility: visible;
+        .menu[open],
+        :global(html[data-menu-was-open]) .menu {
             opacity: 1;
         }
     }
