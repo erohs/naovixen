@@ -45,13 +45,17 @@ const revealFrom = (origin: Element, change: () => void): void => {
 };
 
 /** Pressing a toggle chooses the opposite of the theme showing now, whether chosen or the system's. */
+const onClick = (event: MouseEvent): void => {
+    const toggle = event.target instanceof Element ? event.target.closest("[data-theme-toggle]") : null;
+    if (toggle === null) return;
+    const next: Theme = currentTheme() === "dark" ? "light" : "dark";
+    revealFrom(toggle, () => applyTheme(next));
+};
+
+/** Listens on the document, so a toggle in a header the router replaces still works. */
 export const connectThemeToggles = (): void => {
     showState();
     systemDark.addEventListener("change", showState);
-    for (const toggle of document.querySelectorAll("[data-theme-toggle]")) {
-        toggle.addEventListener("click", () => {
-            const next: Theme = currentTheme() === "dark" ? "light" : "dark";
-            revealFrom(toggle, () => applyTheme(next));
-        });
-    }
+    document.addEventListener("click", onClick);
+    document.addEventListener("astro:after-swap", showState);
 };

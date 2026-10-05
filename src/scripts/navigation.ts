@@ -46,7 +46,7 @@ const swapAllButHeader = (newDocument: Document): void => {
 /** Focus the reader has already moved into the page stays where it is. */
 const focusPage = (): void => {
     const focused = document.activeElement;
-    if (focused === null || focused === document.body || focused.closest("header") !== null) {
+    if (focused === null || focused === document.body || focused.closest("#top > header") !== null) {
         document.getElementById("main")?.focus({ preventScroll: true });
     }
 };

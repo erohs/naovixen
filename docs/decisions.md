@@ -28,6 +28,12 @@ away over the new page with its own CSS transitions. Native cross-document view 
 could do this without script, but Firefox has not shipped them and they cannot be polyfilled.
 Revisit when it does. The site once carried the slide across a full page load by replaying it
 on the next page; that flashed, stuttered and doubled the header row, so do not go back to it.
+Astro's `transition:persist` is not enough either: it takes the element out of the document
+and puts it back, which closes an open dialog in browsers without `moveBefore()`.
+
+The router's prefetching is off. Pages are small and served from Cloudflare's edge, and HTML
+carries `max-age=300`, so a page seen in the last five minutes comes from the browser's cache.
+A deploy can therefore take up to five minutes to reach someone already reading.
 
 The menu starts closing as soon as a page change starts, so a slow or interrupted change can
 never leave it open. The router's view transition still runs, made instant by CSS that applies
@@ -80,11 +86,12 @@ inline elements. Prettier breaks long lines, so copy lost its spaces ("NaomiShor
 classic setting collapses whitespace to one space instead. Where even one space is wrong, as
 between a surname and its paw, the parent is a flex container, which ignores it.
 
-## Fonts use `font-display: optional`
+## Fonts swap in, and only the body and heading fonts preload
 
-Every page is a new document, so a font swapping in after the first paint moved the
-right-aligned navigation on each page change. `optional` uses a cached or preloaded font from
-the first frame and otherwise keeps the size-matched fallback for that page.
+The site once used `font-display: optional`. With the router a visit is one document, so a font
+that missed its first 100 ms stayed missing until a full reload. Fonts now swap in, over
+size-matched fallbacks, at most once a visit. The code and handwriting fonts appear on few
+pages, so they are not preloaded on every one.
 
 ## Icon defaults have no specificity
 

@@ -7,11 +7,7 @@ import { site } from "./src/site";
 
 type FontFamily = NonNullable<AstroUserConfig["fonts"]>[number];
 
-/**
- * A Fontsource font served from this site, latin only and upright only, since nothing is set in
- * italic. "optional" uses a cached or preloaded font from the first frame and otherwise keeps the
- * size-matched fallback for that page, so text never shifts when a font swaps in mid-view.
- */
+/** A Fontsource font served from this site, latin only and upright only, since nothing is set in italic. */
 const selfHosted = (
     name: string,
     cssVariable: string,
@@ -25,7 +21,6 @@ const selfHosted = (
     styles: ["normal"],
     subsets: ["latin"],
     fallbacks: [fallback],
-    display: "optional",
 });
 
 export default defineConfig({
@@ -38,8 +33,8 @@ export default defineConfig({
     /* Keeps one space where markup breaks across lines; the default drops it between inline elements. */
     compressHTML: true,
     integrations: [mdx(), sitemap()],
-    /* Every link fetches its page on hover or focus, so a page change rarely waits on the network. */
-    prefetch: { prefetchAll: true, defaultStrategy: "hover" },
+    /* The router would otherwise prefetch every link; pages come from Cloudflare's cache instead. */
+    prefetch: false,
     vite: {
         build: {
             /*

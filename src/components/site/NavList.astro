@@ -12,15 +12,10 @@ const path = Astro.url.pathname;
 const isCurrent = (href: string): boolean => (href === "/" ? path === "/" : path.startsWith(href));
 ---
 
-{/* Touch has no hover, so the menu's links fetch their pages as the menu opens. */}
 <ul class:list={["list", `list--${layout}`]}>
     {items.map((item, index) => (
         <li class="item" style={`--i: ${index}`}>
-            <Link
-                href={item.href}
-                variant="navigation"
-                aria-current={isCurrent(item.href) ? "page" : undefined}
-                data-astro-prefetch={layout === "menu" ? "viewport" : undefined}>
+            <Link href={item.href} variant="navigation" aria-current={isCurrent(item.href) ? "page" : undefined}>
                 {item.label}
             </Link>
         </li>

@@ -103,6 +103,8 @@ const announce = (region: HTMLElement, message: string): void => {
 const search = async (parts: IPostSearchParts, isAnnounced = true): Promise<void> => {
     const criteria = readCriteria(parts);
     const posts = await loadIndex();
+    // A search still pending when the router changes page must not write to the next page's address.
+    if (!parts.form.isConnected) return;
     const ids = searchPosts(posts, criteria);
     showCards(parts, ids);
     showControls(parts, criteria);
