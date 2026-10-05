@@ -43,10 +43,6 @@ h4 {
     line-height: var(--line-height-subheading);
 }
 
-p {
-    text-wrap: pretty;
-}
-
 a {
     color: inherit;
     text-underline-offset: var(--size-underline-offset);

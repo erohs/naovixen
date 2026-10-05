@@ -33,7 +33,12 @@ const neighbour = (other: CollectionEntry<"blog"> | undefined) =>
     other && { title: other.data.title, href: postPath(other.id) };
 ---
 
-<PageLayout title={title} description={excerpt} type="article" trail={[{ label: "Blog", href: "/blog/" }]}>
+<PageLayout
+    title={title}
+    description={excerpt}
+    type="article"
+    published={published}
+    trail={[{ label: "Blog", href: "/blog/" }]}>
     <StructuredData
         slot="head"
         data={blogPostingData({ path: Astro.url.pathname, title, excerpt, published, topics })}

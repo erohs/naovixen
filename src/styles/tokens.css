@@ -14,10 +14,11 @@
     --color-decoration-dots: #8e7aae;
     --color-decoration-paw: #f07c74;
     --color-decoration-highlight: #fbf6ee;
-    --font-family-body: var(--font-schibsted-grotesk);
-    --font-family-heading: var(--font-fredoka);
-    --font-family-code: var(--font-jetbrains-mono);
-    --font-family-handwriting: var(--font-gochi-hand);
+    --font-family-body: var(--font-schibsted-grotesk, sans-serif);
+    --font-family-heading: var(--font-fredoka, sans-serif);
+    --font-family-code:
+        ui-monospace, "Cascadia Code", "Source Code Pro", "Menlo", "Consolas", "DejaVu Sans Mono", monospace;
+    --font-family-handwriting: var(--font-gochi-hand, cursive);
     --font-size-display: clamp(3.25rem, 1.3913rem + 8.2609vw, 8rem);
     --font-size-h1: clamp(2.875rem, 1.6522rem + 5.4348vw, 6rem);
     --font-size-title: clamp(2.375rem, 1.7391rem + 2.8261vw, 4rem);

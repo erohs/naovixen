@@ -59,8 +59,7 @@ export default defineConfig({
     },
     fonts: [
         selfHosted("Schibsted Grotesk", "--font-schibsted-grotesk", "sans-serif"),
-        selfHosted("Fredoka", "--font-fredoka", "sans-serif"),
-        selfHosted("JetBrains Mono", "--font-jetbrains-mono", "monospace"),
+        selfHosted("Fredoka", "--font-fredoka", "sans-serif", [600]),
         selfHosted("Gochi Hand", "--font-gochi-hand", "cursive", [400]),
     ],
 });

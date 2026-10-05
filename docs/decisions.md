@@ -90,8 +90,24 @@ between a surname and its paw, the parent is a flex container, which ignores it.
 
 The site once used `font-display: optional`. With the router a visit is one document, so a font
 that missed its first 100 ms stayed missing until a full reload. Fonts now swap in, over
-size-matched fallbacks, at most once a visit. The code and handwriting fonts appear on few
-pages, so they are not preloaded on every one.
+size-matched fallbacks, at most once a visit. The handwriting font is not preloaded: preloading
+every font was measured as no faster for Lighthouse's mobile run.
+
+Fredoka loads only the 600 that headings use, as a static file a quarter of the variable font's
+size. Schibsted Grotesk stays variable, as its weights cost more as separate files.
+
+## Code is set in the system's monospace font
+
+Every page loads its fonts before Lighthouse's simulated first paint, so each kilobyte counted.
+JetBrains Mono cost 40 KB on every page for dates, chips and code blocks, which read as well in
+the reader's own monospace font. The logo keeps JetBrains Mono, drawn as SVG from the font's
+outlines, so it looks the same everywhere without the download.
+
+## Skill logos come from a sprite
+
+`/skill-logos.svg` holds the home page's skill logos as symbols, shown with `<use>`, which keeps
+them in the text colour. Inlined, they were two thirds of the home page's compressed HTML, which
+then needed an extra round trip to arrive.
 
 ## Icon defaults have no specificity
 
