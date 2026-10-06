@@ -52,7 +52,7 @@ export default defineConfig({
     image: { layout: "constrained" },
     markdown: {
         shikiConfig: {
-            themes: { light: "github-light", dark: "github-dark" },
+            themes: { light: "github-light-default", dark: "github-dark-default" },
             defaultColor: "light-dark()",
             transformers: [codeTitle],
         },

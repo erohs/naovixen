@@ -3,14 +3,14 @@ import Icon from "../components/ui/Icon.astro";
 import GreetingHeading from "../components/ui/GreetingHeading.astro";
 import InterestList from "../components/ui/InterestList.astro";
 import LinkButton from "../components/ui/LinkButton.astro";
-import PhotoPlaceholder from "../components/ui/PhotoPlaceholder.astro";
 import PageLayout from "../layouts/PageLayout.astro";
 import { site } from "../site";
 
 const principles = [
     {
         title: "Accessible by default",
-        description: "Keyboard, screen reader, zoom and contrast checks are part of done, not a later ticket.",
+        description:
+            "A component isn't done until it works with a keyboard, a screen reader and zoom, and passes contrast checks.",
     },
     {
         title: "Small, reviewable changes",
@@ -18,7 +18,7 @@ const principles = [
     },
     {
         title: "Test with the real thing",
-        description: "Real assistive technology and real users beat any automated checker on its own.",
+        description: "Automated checkers miss things, so fixes get checked with real assistive technology too.",
     },
     {
         title: "Write it down",
@@ -29,32 +29,35 @@ const principles = [
 
 <PageLayout
     title="About"
-    description="About Naomi Shore: a software engineer who joined PebblePad as an apprentice in 2019 and earned a first-class degree alongside the job.">
+    description="Naomi Shore builds accessible React and TypeScript interfaces. She started as an apprentice software engineer in 2019.">
     <div class="content">
         <div class="columns introduction">
             <div class="text">
                 <GreetingHeading greeting="the longer version!">About me</GreetingHeading>
                 <p class="lead">
-                    I'm Naomi, a software engineer from Telford with seven years at PebblePad and a real soft spot for
-                    accessibility.
+                    I'm Naomi, a software engineer who builds web interfaces, with a real soft spot for accessibility.
                 </p>
                 <p>
-                    I joined PebblePad as an apprentice in 2019 and earned a first-class BSc through a degree
+                    I started as an apprentice software engineer in 2019 and earned a first-class BSc through a degree
                     apprenticeship, studying and shipping production code in the same week. It taught me to pick up new
-                    domains quickly and to explain my thinking clearly.
+                    domains quickly.
                 </p>
                 <p>
-                    Today I'm a Software Engineer II working across the full stack, from C#/.NET distributed back ends
-                    to React and TypeScript front ends. Most of my recent work has been in a dedicated accessibility
-                    team: fixing WCAG 2.2 issues, building captions and transcription, and testing with real assistive
-                    technology.
+                    Today I'm a Software Engineer II. I work across the full stack, from C#/.NET back ends to React and
+                    TypeScript front ends, and the interface is where I do my best work. I've built the front end of a
+                    settings system, reusable design system components with our UX designers, and a document viewer on
+                    Mozilla's pdf.js that lets people read files without downloading them.
                 </p>
                 <p>
-                    I was also an early adopter of AI-assisted and agentic development in my team. Used thoughtfully,
-                    it's helped make us one of the most productive teams in the company.
+                    Most of my recent work has been in a dedicated accessibility team, where I've resolved more than 100
+                    WCAG 2.2 issues across front-end and back-end code and built captions and transcription for uploaded
+                    audio and video. We validate fixes against real assistive technology.
+                </p>
+                <p>
+                    I've used AI-assisted and agentic workflows in daily delivery since they were first introduced, and
+                    they've helped make us one of the most productive teams in the company.
                 </p>
             </div>
-            <PhotoPlaceholder label="Photo placeholder: portrait of Naomi Shore" class="photo" />
         </div>
         <div class="columns">
             <section aria-labelledby="how-i-work-title" class="detail">
@@ -103,11 +106,6 @@ const principles = [
         flex-direction: column;
         gap: var(--space-between-blocks);
         max-inline-size: 62ch;
-    }
-
-    .photo {
-        justify-self: center;
-        inline-size: min(100%, calc(var(--layout-width-prose) / 2));
     }
 
     .detail {

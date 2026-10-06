@@ -1,9 +1,9 @@
 ---
 title: "Captions and transcription"
-summary: "Closed captions and transcripts for user-uploaded audio and video, across three products."
+summary: "Closed captions and a speaker-attributed transcript for uploaded audio and video, built on the browser's own caption support."
 order: 1
 featured: true
-stack: ["C#", ".NET", "React", "TypeScript", "WebVTT"]
+stack: ["React", "TypeScript", "WebVTT", "C#", ".NET"]
 ---
 
 <Facts
@@ -13,36 +13,82 @@ stack: ["C#", ".NET", "React", "TypeScript", "WebVTT"]
     ]}
 />
 
-Built at PebblePad, so there's no public demo or repo. I'm happy to walk through it in more detail in an interview.
+I built this for my employer, so there's no public demo or repo. I'm happy to walk through it in more detail in an interview.
 
 ## The problem
 
-People upload a lot of audio and video into their portfolios, but none of it could carry captions or transcripts. That was a WCAG 2.2 conformance gap, and it came up again and again in customer accessibility audits and tender questionnaires.
+A learning platform let people upload audio and video, but none of it could carry captions or a transcript. Anyone who couldn't hear the sound missed what was said. Meeting WCAG 2.2 was a product requirement, and this gap had come up again and again in accessibility audits and tender questionnaires.
 
 ## My approach
 
-I built a streaming WebVTT parser in C#/.NET so large caption files never sit in memory, then a set of reusable React and TypeScript components: a caption track for the player, a transcript that follows playback, and an upload flow for caption files.
+I designed the feature in a prototype, which the product manager and our UX designer signed off, then built it end to end. Most of what people touch is in the React and TypeScript components, and they're reusable, so the same pieces work everywhere media appears.
 
-```csharp title="CaptionService.cs"
-await foreach (var cue in WebVttReader.ReadCuesAsync(stream, ct))
-{
-    yield return cue with { Text = Sanitise(cue.Text) };
+The author uploads a WebVTT caption file alongside their video. From that one file come two things: captions in the player, and a transcript beside it.
+
+For captions I used the native `<track>` element and didn't build a custom caption renderer. The browser already draws captions, offers its own caption menu and respects the viewer's caption preferences, and anything I built would have done less. The track's language follows the language the person is using in the interface.
+
+The transcript is a plain ordered list. Each cue carries its speaker and a real `<time>` element, so a screen reader user can move through it line by line and hear when each line was said. Here's the idea in miniature:
+
+```tsx title="MediaWithTranscript.tsx"
+interface ICue {
+    start: number;
+    text: string;
+    speaker?: string;
 }
+
+interface Props {
+    src: string;
+    captionsSrc: string;
+    language: string;
+    cues: ICue[];
+}
+
+const formatTime = (seconds: number): string => {
+    const minutes = Math.floor(seconds / 60);
+    const rest = Math.floor(seconds % 60)
+        .toString()
+        .padStart(2, "0");
+    return `${minutes}:${rest}`;
+};
+
+export const MediaWithTranscript = ({ src, captionsSrc, language, cues }: Props) => (
+    <>
+        <video controls src={src}>
+            <track kind="captions" src={captionsSrc} srcLang={language} default />
+        </video>
+        <ol aria-label="Transcript">
+            {cues.map((cue) => (
+                <li key={cue.start}>
+                    <time dateTime={`PT${Math.floor(cue.start)}S`}>{formatTime(cue.start)}</time>
+                    {cue.speaker && <strong>{cue.speaker}</strong>} {cue.text}
+                </li>
+            ))}
+        </ol>
+    </>
+);
 ```
+
+The shipped version groups consecutive lines from the same speaker, so a long monologue reads as prose and the speaker's name doesn't repeat on every line. It also collapses, and its scrolling region can take keyboard focus.
+
+Uploading a caption file goes through a small dialog, and I paid particular attention to focus there. Focus goes back to the button that opened the dialog. If an upload fails, focus moves to Retry. Each change of state is announced to screen readers. The upload component holds no state of its own: the page it sits in owns the caption, so warnings about unsaved changes stay accurate. The dialog's steps load only when someone opens it, which keeps them out of everyone else's page weight.
+
+We tested with screen readers and voice control ourselves, and external accessibility audits check the work later.
 
 ## Challenges
 
-Caption files in the wild are messy: missing headers, overlapping cues and odd encodings. Being strict broke real files, but being loose let bad data through to the player.
+Real caption files are messy, with missing headers, overlapping cues and odd encodings, and a parser that rejected them would have broken files people had already made. A loose parser had the opposite problem, letting bad data through to the screen, where someone relying on captions would trip over it.
+
+The parser, in C#/.NET, reads the file a line at a time, so a large file never has to sit in memory whole. It strips presentational markup out of the cue text. If a file is beyond saving, the transcript comes out empty and the captions still play through the browser's own `<track>` handling. I wrote a test suite that checks it against bad data, and the feature as a whole has about 200 tests.
 
 <Callout label="lesson learnt" title="Be forgiving on input, strict on output">
-    The parser recovers from common mistakes and logs them, but everything it hands to the UI is validated and
-    sanitised.
+    The parser recovers from common mistakes so people's existing files still work, and everything it hands to the
+    interface is checked and clean.
 </Callout>
 
 ## Outcome
 
-Shipped across three products. Captions and transcripts closed a recurring audit finding and gave the sales team a clear answer in tenders.
+Captions and transcripts shipped and closed the gap that kept coming up in audits. The company could then market the product as passing WCAG 2.2 as a whole.
 
-## What I'd do differently
+## What the data allows next
 
-Run sessions with deaf and hard-of-hearing users before designing the transcript panel, rather than validating it afterwards.
+Two things were planned and cut for time: clicking a transcript line to jump the video to that point, and highlighting the line being spoken. Every cue keeps its own start and end time, so both can be added without changing the data.

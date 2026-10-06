@@ -148,12 +148,10 @@ test("keeps focus inside, wrapping from its last control to its first", async ({
     );
     await page.getByRole("button", { name: "Menu", exact: true }).focus();
     await page.keyboard.press("Enter");
-    await page
-        .getByRole("dialog")
-        .getByRole("link", { name: /Bluesky/ })
-        .focus();
+    const lastLink = page.getByRole("dialog").getByRole("link").last();
+    await lastLink.focus();
     await page.keyboard.press("Tab");
     await expect(page.getByRole("dialog").getByRole("link", { name: "naovixen", exact: true })).toBeFocused();
     await page.keyboard.press("Shift+Tab");
-    await expect(page.getByRole("dialog").getByRole("link", { name: /Bluesky/ })).toBeFocused();
+    await expect(lastLink).toBeFocused();
 });

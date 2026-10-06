@@ -22,11 +22,10 @@ Cloudflare. TypeScript, pnpm. `docs/decisions.md` records the choices code canno
 ## Content
 
 Anything factual about Naomi comes from `source-material/cv.pdf` (git-ignored) or from
-Naomi. Never invent a project, a handle, a testimonial or a bio. The prototype's placeholders
-(an email, two handles, a testimonial, photo frames, the privacy notice's providers) stay in
-place, each marked "Placeholder" in the code, until Naomi replaces them; none may reach
-launch. A fact with no placeholder, such as the CV, is left out and whatever shows it hides
-itself.
+Naomi. Never invent a project, a handle, a testimonial or a bio. A fact Naomi has not
+supplied, such as the testimonial or a portrait, is left undefined in `src/site.ts`, and
+whatever shows it hides itself. Posts, case studies and copy are written with the `writer`
+agent.
 
 Never publish her phone number, home address or personal email unless she asks.
 

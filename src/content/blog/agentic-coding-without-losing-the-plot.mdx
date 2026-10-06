@@ -1,19 +1,31 @@
 ---
 title: "Agentic coding without losing the plot"
-excerpt: "How I use AI agents day to day without shipping code I can't explain."
+excerpt: "How I use AI agents in day-to-day front-end work without shipping code I can't explain."
 published: "2026-07-24"
 topics: ["AI", "Process"]
 ---
 
-I've used AI-assisted and agentic workflows since they first arrived in our team. They've made us noticeably faster, but only because we were deliberate about where they help and where they don't.
+An AI agent can produce a plausible change faster than I can read it, and plausible is exactly the problem: the code looks finished long before anyone has checked that it's right. I've used AI-assisted and agentic workflows in daily delivery since they were first introduced to our team, and they've helped make us one of the most productive teams in the company. That speed holds up because we were deliberate about where an agent helps and where it needs a person.
 
-- Agents are great at the boring middle: scaffolding, migrations, test cases and renames across a codebase.
-- They struggle where the context is invisible: product decisions, accessibility trade-offs and security boundaries.
-- Every change still goes through normal review. If I can't explain a diff, it doesn't ship.
+## Where agents earn their keep
+
+Agents are at their best in the boring middle of a change. Scaffolding a new component alongside its test file, a migration that touches many files in the same way, a batch of test cases for behaviour I've already described, a rename that has to land everywhere at once: this work has a clear shape and an obvious way to check it. If a rename misses a file, the type checker says so.
+
+Handing that work over leaves me more time for the parts of front-end work that need judgement, which is where I'd rather be anyway.
+
+## Where they struggle
+
+They struggle where the context is invisible. An agent can't see why a product decision went the way it did, which trade-off we settled on for an accessibility issue, or where a security boundary sits and why it matters, because none of that is written down in the code it reads.
+
+Accessibility is the one I watch most closely. I'm on a dedicated accessibility team, but for me it's part of the everyday process, never something bolted on at the end, and everything I build should be accessible whichever team I'm on. It's also very easy to get plausibly wrong.
+
+Two changes that review caught show what I mean. In one, an agent gave a link `role="button"` and stopped there. A screen reader then announces a button, so people expect it to behave like one, including activating with Space, which a link doesn't do. The agent changed the announcement and left out the behaviour and attributes that go with it. In the other, an agent built a menu without the full menu pattern: no roving tabindex, so the whole menu wasn't one stop in the tab order, and no arrow keys to move between items.
+
+An automated check is unlikely to flag either, and both read fine in a diff if you don't know the pattern. Whether a control works for the person using it is a judgement, and that judgement stays with me.
 
 ## Give it the context a new starter would get
 
-Most bad agent output is a context problem. A short project guide in the repo, covering conventions, commands and gotchas, improved results more than any clever prompting.
+Most of the poor agent output I've seen comes down to missing context. A short project guide in the repo, covering conventions, commands and gotchas, improved results more than any clever prompting did. I write it the way I'd brief a new starter on their first morning.
 
 ```markdown title="CLAUDE.md"
 # Conventions
@@ -28,8 +40,15 @@ Most bad agent output is a context problem. A short project guide in the repo, c
 - npm test -- --watch
 ```
 
+Short is better here. The agent reads the guide on every task, so it should hold what can't be worked out from the code itself: house rules, the commands that run the checks, and the accessibility expectations a reviewer will hold it to. Anything the code already makes obvious can stay out.
+
+## Review it like anyone else's pull request
+
+Every change an agent writes goes through the same review as any other. My rule is that if I can't explain a diff, it doesn't ship. For an interface change, explaining it includes knowing how it behaves for someone using a keyboard or a screen reader, which the diff alone won't tell you.
+
+Owning the review is also what keeps the speed honest. The time an agent saves on writing code is only a saving if the change is right, and the engineers who understand the system are the ones who can tell.
+
 <Callout label="tip!" title="Make it prove it">
     Ask the agent to write the failing test first. It keeps the change small and gives you something concrete to review.
+    It also shows you whether the agent has understood the behaviour before it touches the implementation.
 </Callout>
-
-The productivity gain is real, but it comes from engineers who understand the system steering the tools, not from the tools alone.

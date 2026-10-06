@@ -13,13 +13,13 @@ export const experience: IExperienceEntry[] = [
         title: "Software Engineer II",
         organisation: "PebblePad",
         dates: "Oct 2025 – present",
-        note: "Delivered closed captions and transcription for uploaded audio and video across 3 products, and resolved 100+ WCAG 2.2 issues in a dedicated accessibility team.",
+        note: "Delivered closed captions and transcription for uploaded audio and video, and resolved 100+ WCAG 2.2 issues in a dedicated accessibility team.",
     },
     {
         title: "Software Engineer I",
         organisation: "PebblePad",
         dates: "Aug 2023 – Oct 2025",
-        note: "Engineered the front end of a self-service settings capability spanning 3 products, and introduced the first automated tests for the authorisation layer.",
+        note: "Built the front end of self-service settings, and reusable design system components with UX designers.",
     },
     {
         title: "BSc (Hons) Digital and Technology Solutions Professional (Software Engineering)",
@@ -32,6 +32,6 @@ export const experience: IExperienceEntry[] = [
         title: "Apprentice Software Engineer",
         organisation: "PebblePad",
         dates: "Jul 2019 – Aug 2023",
-        note: "Built in-product messaging, and a pdf.js document viewer that replaced commercially licensed libraries to cut recurring costs.",
+        note: "Built in-product messaging as React components inside an older framework, and an in-browser document viewer on pdf.js.",
     },
 ];
