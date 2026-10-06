@@ -37,5 +37,5 @@ describe("Using relatedPosts, when no topic is shared", () => {
 
 Two outcomes are two `then it should` tests, not one test with two assertions.
 
-Automated checks find only some problems. Before a release, test by hand in real Safari and
-with a screen reader.
+Automated checks find only some problems. Before a release, test by hand with a screen reader
+(NVDA). Real Safari is not available, so WebKit stands in for it.

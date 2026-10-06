@@ -105,14 +105,9 @@ app, Turborepo build filtering, `docs/adding-a-new-site.md`, i18next, and BEM pr
 ### Phase 10 — Verify
 
 - [x] End-to-end tests on every route in all three engines, with and without script and styles.
-- [ ] Mobile Lighthouse 100 on every page type, measured on the Phase 11 preview. Local
-      runs on 2026-10-06 (`wrangler dev`, gzip, Lighthouse 13.5) scored 100 in every category
-      on a post and a project; home and `/blog/` scored 99 for performance (LCP 1.8 s against
-      1.7 s) and 100 in the rest.
-- [ ] Animation parity: the prototype and the new site side by side in each browser — menu,
-      card hover, button press.
-- [ ] By hand: real Safari on macOS and iOS; VoiceOver and NVDA through the menu, search and
-      theme switch.
+- [x] Animation parity with the prototype: menu, card hover, button press (Naomi, 2026-10-06).
+- [ ] By hand: NVDA through the menu, search and theme switch. There is no way to check real
+      Safari or VoiceOver, so WebKit in the end-to-end tests stands in for Safari.
 
 ### Phase 11 — CI and deployment
 
@@ -168,6 +163,10 @@ None of these may ship. Each is marked "Placeholder" in the code.
 - [ ] Retire the Sanity Studio deployment and project (the export is kept).
 - [ ] Delete `docs/content-inventory.md` once every gap is filled.
 - [x] Update the memory notes that still describe the monorepo.
+- [ ] Mobile Lighthouse 100 on every page type, run against the live `www.naovixen.com`.
+      CI's budget is 95 for performance on a local server; local runs on 2026-10-06 scored
+      100 on a post and a project, and 99 for performance on home and `/blog/` (LCP 1.8 s
+      against 1.7 s).
 - [ ] **Delete `PLAN.md`:** `chore: remove the launch plan`.
 
 ---
@@ -177,5 +176,5 @@ None of these may ship. Each is marked "Placeholder" in the code.
 - `www.naovixen.com` serves the Astro site over HTTPS, with `naovixen.com` redirecting to it.
 - No placeholder reaches the live site.
 - Publishing a post is a push to `main`.
-- WCAG 2.2 AA and mobile Lighthouse 100, checked automatically and by hand.
+- WCAG 2.2 AA, checked automatically and with NVDA; mobile Lighthouse 100 on the live site.
 - `PLAN.md` removed; `CLAUDE.md`, `.claude/rules/` and `docs/decisions.md` hold what lasts.

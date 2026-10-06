@@ -26,7 +26,10 @@ test("back to top settles level with the footer's buttons", async ({ page }) => 
 });
 
 test("back to top shows itself when it takes focus before it has scrolled into view", async ({ page, browserName }) => {
-    test.skip(browserName === "webkit", "Playwright's WebKit does not tab to links; check by hand in Safari.");
+    test.skip(
+        browserName === "webkit",
+        "Playwright's WebKit does not tab to links, so Chromium and Firefox cover this.",
+    );
     await page.goto("/");
     await page.locator("footer").getByRole("link").last().focus();
     await page.keyboard.press("Tab");

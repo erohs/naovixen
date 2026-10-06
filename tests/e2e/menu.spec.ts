@@ -142,7 +142,10 @@ test("keeps focus inside, wrapping from its last control to its first", async ({
     javaScriptEnabled,
 }) => {
     test.skip(!javaScriptEnabled, "Wrapping needs script; without it the browser's toolbar follows.");
-    test.skip(browserName === "webkit", "Playwright's WebKit does not tab to links; check by hand in Safari.");
+    test.skip(
+        browserName === "webkit",
+        "Playwright's WebKit does not tab to links, so Chromium and Firefox cover this.",
+    );
     await page.getByRole("button", { name: "Menu", exact: true }).focus();
     await page.keyboard.press("Enter");
     await page
