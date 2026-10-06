@@ -4,29 +4,15 @@ node_modules/
 
 # Build output
 dist/
-build/
-out/
-.output/
-.vinxi/
-.tanstack/
-.nitro/
+.astro/
 .wrangler/
 *.tsbuildinfo
 
-# Caches
-.turbo/
-.cache/
-.vite/
-.eslintcache
-.stylelintcache
-
 # Test and coverage output
-coverage/
 playwright-report/
 test-results/
 blob-report/
 .playwright/
-.lighthouseci/
 
 # Environment files (`.env.example` is committed)
 .env

@@ -19,6 +19,13 @@
             "options": {
                 "tabWidth": 2
             }
+        },
+        {
+            "files": "*.astro",
+            "options": {
+                "parser": "astro"
+            }
         }
-    ]
+    ],
+    "plugins": ["prettier-plugin-astro"]
 }

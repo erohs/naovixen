@@ -1,0 +1,80 @@
+---
+import Icon from "../ui/Icon.astro";
+import InterestList from "../ui/InterestList.astro";
+import Link from "../ui/Link.astro";
+import PhotoPlaceholder from "../ui/PhotoPlaceholder.astro";
+---
+
+<section aria-labelledby="about-title" class="columns about">
+    <div class="summary">
+        <h2 id="about-title" class="heading">
+            About me
+        </h2>
+        <p class="lead">I'm Naomi. I like software that feels calm and works hard.</p>
+        <p class="body">
+            Seven years at PebblePad, from apprentice to Software Engineer II. I work across the stack, but I'm happiest
+            building React and TypeScript interfaces that everyone can use, whatever their device, settings or assistive
+            technology.
+        </p>
+        <h3 class="subheading">Away from the keyboard</h3>
+        <InterestList />
+        <p class="more">
+            <Link href="/about/" variant="standalone">
+                More about me <Icon name="arrow-right" />
+            </Link>
+        </p>
+    </div>
+    <div class="photo">
+        <PhotoPlaceholder label="Photo placeholder: portrait of Naomi Shore" />
+        <Icon name="heart" class="heart" />
+    </div>
+</section>
+
+<style>
+    .about {
+        align-items: center;
+        padding-block: var(--space-between-sections);
+        padding-inline: var(--space-padding-page-centred);
+    }
+
+    .photo {
+        position: relative;
+        justify-self: center;
+        inline-size: min(100%, calc(var(--layout-width-prose) / 2));
+    }
+
+    .heart {
+        position: absolute;
+        inset-block-start: calc(-1 * var(--space-between-blocks));
+        inset-inline-end: calc(-1 * var(--space-between-content));
+        inline-size: var(--font-size-h2);
+        block-size: var(--font-size-h2);
+        color: var(--color-background-accent);
+        rotate: 14deg;
+    }
+
+    .summary {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-between-content);
+        max-inline-size: 60ch;
+    }
+
+    .heading {
+        margin-block-end: var(--space-between-text);
+    }
+
+    .body {
+        color: var(--color-text-secondary);
+    }
+
+    /* A small heading, the size of body text, a little apart from the paragraph above. */
+    .subheading {
+        margin-block-start: var(--space-between-content);
+        font-size: var(--font-size-body);
+    }
+
+    .more {
+        margin-block-start: var(--space-between-text);
+    }
+</style>

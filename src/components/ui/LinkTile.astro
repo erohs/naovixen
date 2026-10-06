@@ -1,0 +1,102 @@
+---
+import Icon from "./Icon.astro";
+import Link from "./Link.astro";
+
+interface Props {
+    href: string;
+    label: string;
+    detail: string;
+    icon: string;
+    trailingIcon?: string;
+    download?: boolean;
+}
+
+const { href, label, detail, icon, trailingIcon = "arrow-right", download = false } = Astro.props;
+---
+
+<Link href={href} variant="plain" class="tile" download={download || undefined}>
+    <span class="disc">
+        <Icon name={icon} />
+    </span>
+    <span class="text">
+        <span class="label">{label}</span>
+        <span class="meta detail">{detail}</span>
+    </span>
+    <Icon name={trailingIcon} class="trailing" />
+</Link>
+
+<style>
+    .tile {
+        display: flex;
+        align-items: center;
+        gap: var(--space-between-content);
+        min-block-size: var(--size-action-minimum);
+        padding: var(--space-padding-action);
+        border: var(--border-width-standout) solid var(--color-border);
+        border-radius: var(--radius-medium-alternate);
+        background-color: var(--color-background-page);
+        box-shadow: var(--shadow-small);
+        color: var(--color-text-primary);
+        text-decoration: none;
+        transition:
+            translate var(--duration-fast) var(--easing-standard),
+            box-shadow var(--duration-fast) var(--easing-standard);
+
+        &:hover {
+            --lift: calc(var(--size-shadow-offset-small) - var(--size-shadow-offset-resting));
+
+            translate: var(--lift) var(--lift);
+            box-shadow: var(--shadow-resting);
+        }
+
+        &:active {
+            translate: var(--size-shadow-offset-small) var(--size-shadow-offset-small);
+            box-shadow: none;
+        }
+
+        /* Clear of the shadow, so the ring is not drawn on top of it. */
+        &:focus-visible {
+            outline-offset: calc(var(--border-width-highlight) + var(--size-shadow-offset-raised));
+        }
+    }
+
+    .disc {
+        display: grid;
+        place-items: center;
+        padding: var(--space-between-text);
+        border: var(--border-width-standout) solid var(--color-border);
+        border-radius: var(--radius-round);
+        background-color: var(--color-background-surface);
+    }
+
+    .text {
+        display: grid;
+        flex-grow: 1;
+        gap: var(--space-between-lines);
+        min-inline-size: 0;
+        line-height: var(--line-height-subheading);
+    }
+
+    .label {
+        font-weight: var(--font-weight-semi-bold);
+    }
+
+    .detail {
+        overflow-wrap: anywhere;
+    }
+
+    .trailing {
+        color: var(--color-text-accent);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .tile {
+            transition: none;
+
+            &:hover,
+            &:active {
+                translate: none;
+            }
+        }
+    }
+</style>

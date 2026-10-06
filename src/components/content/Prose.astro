@@ -1,0 +1,101 @@
+---
+import { render, type CollectionEntry } from "astro:content";
+import Link from "../ui/Link.astro";
+import Callout from "./Callout.astro";
+import CodeFigure from "./CodeFigure.astro";
+import Facts from "./Facts.astro";
+
+interface Props {
+    entry: CollectionEntry<"blog" | "work" | "legal">;
+    /** Numbers each section heading in a chip, as posts and case studies do. */
+    isNumbered?: boolean;
+}
+
+const { entry, isNumbered = false } = Astro.props;
+const { Content } = await render(entry);
+---
+
+<div class:list={["prose", isNumbered && "prose--numbered"]}>
+    <Content components={{ a: Link, pre: CodeFigure, Callout, Facts }} />
+</div>
+
+<style>
+    .prose {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-between-blocks);
+        max-inline-size: var(--layout-width-prose);
+        counter-reset: section;
+
+        & :global(h2) {
+            margin-block-start: var(--space-between-blocks);
+            font-size: var(--font-size-h3);
+            line-height: var(--line-height-subheading);
+        }
+
+        & :global(h3) {
+            margin-block-start: var(--space-between-blocks);
+            font-size: var(--font-size-h4);
+        }
+
+        & :global(:is(ul, ol)) {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-between-text);
+            padding-inline-start: var(--space-indent-list);
+        }
+
+        & :global(li) {
+            padding-inline-start: var(--space-between-lines);
+        }
+
+        & :global(li::marker) {
+            color: var(--color-text-accent);
+        }
+
+        & :global(:not(pre) > code) {
+            padding-inline: calc(var(--space-between-text) / 2);
+            border-radius: var(--radius-small);
+            background-color: var(--color-background-surface);
+        }
+
+        & :global(blockquote) {
+            margin-block: var(--space-between-content);
+            padding: 12px 22px 14px;
+            border: 2px solid var(--color-border);
+            border-radius: var(--radius-large);
+            font-family: var(--font-family-handwriting);
+            font-size: 1.5rem;
+            line-height: 1.3;
+            rotate: -2deg;
+        }
+    }
+
+    /* A numbered section heading starts a new part: full size, further off, its number in a chip. */
+    .prose--numbered :global(h2) {
+        display: flex;
+        align-items: center;
+        gap: var(--space-between-content);
+        font-size: var(--font-size-h2);
+        line-height: var(--line-height-heading);
+        counter-increment: section;
+
+        &:not(:first-child) {
+            margin-block-start: var(--space-between-regions);
+        }
+
+        &::before {
+            content: counter(section, decimal-leading-zero) / "";
+            flex-shrink: 0;
+            padding: var(--space-padding-chip);
+            border: var(--border-width-standout) solid var(--color-border);
+            background-color: var(--color-background-accent);
+            color: var(--color-text-on-accent);
+            font-family: var(--font-family-handwriting);
+            font-size: var(--font-size-lead);
+            font-weight: var(--font-weight-regular);
+            line-height: 1;
+            rotate: -4deg;
+        }
+    }
+</style>

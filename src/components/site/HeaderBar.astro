@@ -1,0 +1,31 @@
+---
+import Logo from "./Logo.astro";
+---
+
+<div class="bar">
+    <a href="/" class="home" aria-current={Astro.url.pathname === "/" ? "page" : undefined}>
+        <Logo />
+    </a>
+    <slot />
+</div>
+
+<style>
+    /*
+     * The header's row. The open menu draws an exact copy of it above its sheet, so the row looks
+     * still while the sheet slides beneath.
+     */
+    .bar {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: var(--space-between-content);
+        padding-block-start: var(--space-between-content);
+        padding-inline: var(--space-padding-page-centred);
+    }
+
+    .home {
+        margin-inline-end: auto;
+        font-size: var(--font-size-lead);
+        text-decoration: none;
+    }
+</style>

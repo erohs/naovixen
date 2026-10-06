@@ -1,0 +1,108 @@
+---
+interface Props {
+    command: "show-modal" | "close";
+    label: string;
+    class?: string;
+}
+
+const { command, label, class: className } = Astro.props;
+---
+
+<button
+    type="button"
+    class:list={["button", "button--round", "menu-button", className]}
+    commandfor="menu"
+    command={command}
+    autofocus={command === "close"}>
+    <span class="lines" aria-hidden="true">
+        <span class="line"></span>
+        <span class="line"></span>
+        <span class="line"></span>
+    </span>
+    <span class="visually-hidden">{label}</span>
+</button>
+
+<style>
+    /*
+     * Three uneven lines, placed to the design's exact measurements inside the button. They move
+     * only by transforms, which the browser animates off the main thread, so a page loading in
+     * the background cannot make them stutter.
+     */
+    .lines {
+        position: relative;
+        inline-size: 100%;
+        block-size: 100%;
+    }
+
+    .line {
+        position: absolute;
+        block-size: 2.5px;
+        border-radius: 2px;
+        background-color: currentcolor;
+        transition:
+            translate 0.3s cubic-bezier(0.3, 1.4, 0.5, 1),
+            scale 0.3s ease,
+            rotate 0.35s cubic-bezier(0.3, 1.4, 0.5, 1),
+            opacity 0.2s ease;
+
+        &:nth-child(1) {
+            inset-block-start: 13px;
+            inset-inline-start: 12px;
+            inline-size: 20px;
+            rotate: -3deg;
+        }
+
+        &:nth-child(2) {
+            inset-block-start: 20.5px;
+            inset-inline-start: 12px;
+            inline-size: 14px;
+            rotate: 2deg;
+            transition:
+                scale 0.35s cubic-bezier(0.3, 1.4, 0.5, 1),
+                opacity 0.2s ease;
+        }
+
+        &:nth-child(3) {
+            inset-block-start: 28px;
+            inset-inline-start: 14px;
+            inline-size: 18px;
+            rotate: -1deg;
+        }
+    }
+
+    /*
+     * Both buttons fold into a cross while the menu is open: the outer lines move to the middle,
+     * 22px and 21px long from 11px in. The header's button, hidden under the open menu, is the
+     * one seen unfolding as the menu closes.
+     */
+    :global(:root:has(#menu[open])) .line {
+        &:nth-child(1) {
+            translate: 0 7.5px;
+            rotate: 43deg;
+            scale: 1.1 1;
+        }
+
+        &:nth-child(2) {
+            opacity: 0;
+            scale: 0 1;
+        }
+
+        &:nth-child(3) {
+            translate: -1.5px -7.5px;
+            rotate: -47deg;
+            scale: calc(21 / 18) 1;
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .line {
+            transition: none;
+        }
+    }
+
+    @media (forced-colors: active) {
+        .line {
+            background-color: CanvasText;
+        }
+    }
+</style>

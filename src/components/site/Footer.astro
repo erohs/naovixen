@@ -1,0 +1,55 @@
+---
+import { site } from "../../site";
+import Link from "../ui/Link.astro";
+import ElsewhereList from "./ElsewhereList.astro";
+import Logo from "./Logo.astro";
+
+const year = new Date().getFullYear();
+---
+
+<footer class="footer">
+    <div class="details">
+        <Logo />
+        <p>
+            © {year} {site.name}
+        </p>
+        <Link href="/privacy/">Privacy notice</Link>
+    </div>
+    <ElsewhereList />
+</footer>
+
+<style>
+    .footer {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0 var(--space-between-blocks);
+        min-block-size: calc(var(--size-action-minimum) + 2 * var(--space-between-groups));
+        padding-block: var(--space-between-groups);
+        padding-inline: var(--space-padding-page-centred);
+
+        /* Where the margin is too narrow to hold the back-to-top link, the end makes room for it. */
+        padding-inline-end: max(
+            var(--space-padding-page-centred),
+            var(--size-action-minimum) + var(--space-between-content) + var(--space-between-text) +
+                var(--space-between-lines)
+        );
+        border-block-start: var(--border-width-standout) solid var(--color-border);
+        background-color: var(--color-background-surface);
+        color: var(--color-text-secondary);
+        font-size: var(--font-size-small);
+    }
+
+    /* The logo, the copyright and the privacy link share a line while there is room. */
+    .details {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: baseline;
+        gap: var(--space-between-lines) var(--space-between-blocks);
+
+        & :global(.logo) {
+            color: var(--color-text-primary);
+        }
+    }
+</style>

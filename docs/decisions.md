@@ -1,238 +1,167 @@
 # Decisions
 
 Only decisions whose reasoning cannot be recovered from the code, and that someone might
-otherwise undo by mistake. Versions live in `pnpm-lock.yaml`; setup steps live in the
-README.
+otherwise undo by mistake. Versions live in `pnpm-lock.yaml`.
+
+## A static Astro site, not a framework app with a CMS
+
+The site was a TanStack Start and React monorepo reading from Sanity. For one author and
+seven mostly static pages, the CMS, the package boundaries and about 160 KB of client script
+cost more than they gave. It is now one Astro package that builds to plain HTML, with content
+as MDX in the repo. Publishing is a push; a branch gets a preview on Cloudflare. The old code
+is at the `pre-astro` tag.
+
+Blog search runs in the browser over `/blog/search.json`, with the old matching rules. Without
+script, the topic pages stand in for it.
+
+## The canonical host is `www.naovixen.com`
+
+The domain already serves `www`, with the bare `naovixen.com` redirecting to it, so
+`site.origin` carries the `www` and every canonical URL, sitemap entry, feed link and piece
+of structured data follows it. Pointing them at the bare domain would make each one a redirect.
+
+## Cloudflare deploys; GitHub Actions only checks
+
+Cloudflare Workers Builds builds and deploys every push from the connected repository, with a
+preview link on each pull request, so deploying needs no wrangler login and no API token in
+GitHub. Actions runs the checks and Lighthouse. It cannot stop a deploy, so `main` only takes
+pull requests whose checks have passed.
+
+## Client-side page changes that keep the header
+
+Pages work fully without script. The narrow-screen menu is a modal `<dialog>` opened by an
+invoker command (`commandfor`/`command`), so opening, focus, Escape and the inert page behind
+it need none. Without script a link is an ordinary page load and the menu is simply closed on
+the next page.
+
+With script, Astro's `<ClientRouter />` changes pages in place, and `navigation.ts` swaps
+everything except `<header>`. The open menu and both menu buttons are the same elements on the
+next page, so following a link from the menu changes the address at once and the menu slides
+away over the new page with its own CSS transitions. Native cross-document view transitions
+could do this without script, but Firefox has not shipped them and they cannot be polyfilled.
+Revisit when it does. The site once carried the slide across a full page load by replaying it
+on the next page; that flashed, stuttered and doubled the header row, so do not go back to it.
+Astro's `transition:persist` is not enough either: it takes the element out of the document
+and puts it back, which closes an open dialog in browsers without `moveBefore()`.
+
+The router's prefetching is off. Pages are small and served from Cloudflare's edge, and HTML
+carries `max-age=300`, so a page seen in the last five minutes comes from the browser's cache.
+A deploy can therefore take up to five minutes to reach someone already reading.
+
+The menu starts closing as soon as a page change starts, so a slow or interrupted change can
+never leave it open. The router's view transition still runs, made instant by CSS that applies
+only during a page change: WebKit crashes when a modal dialog closes during a view transition,
+and skipping the transition instead leaves it crashing the next time the menu closes. Do not
+put `transition:animate` on `<html>`: it renames the root snapshot, and the theme switch's
+circular reveal stops matching. Astro adds a route announcer to the body on every change,
+expecting the body to be replaced, so the swap removes the last one. A bundled script that sets
+up a page connects on `astro:page-load`.
+
+One script is inlined in the head: `apply-theme.js`, before first paint, applies a chosen
+theme and marks that script runs, so the theme switch can show. Everything else is bundled
+into files (`assetsInlineLimit: 0`), as the content security policy in `public/_headers`
+allows inline scripts only by their hashes. An end-to-end test hashes each inline script as built and fails if the
+policy does not allow it.
+
+## One stylesheet for every page
+
+`cssCodeSplit` is off, so every page links the same stylesheet, about 9 KB compressed. With
+a stylesheet per page, a page change in place had to add the next page's stylesheets, which
+the browser applies a moment after the new page first paints, so its layout briefly fell
+apart, and the router waited for them before changing pages at all. A computed-style
+comparison of every element on every page found no difference between the two builds.
+
+## The closed menu stays rendered
+
+Firefox and Safari take a closed dialog off the screen at once, before an exit transition can
+run, and the `overlay` property that prevents that is Chromium's alone. So the menu sets
+`display: block` when closed and hides with `visibility` once its slide has finished. A hidden
+dialog is out of the tab order and the accessibility tree, and with page styles off the
+browser's own stylesheet still hides it. The menu draws its own copy of the header's row, and
+only one of the two is visible at a time. `menu.ts` gives Safari's opening menu focus, which
+Safari withholds from a dialog that was hidden while closed, and wraps Tab inside the menu.
+
+## The theme follows the system setting until the reader chooses
+
+Colours are `light-dark()` pairs, so the system setting applies with no script, code blocks
+included. The switch sets `data-theme`, which sets `color-scheme`, and remembers the choice in
+`localStorage`. It is hidden without script, when there would be nothing to switch.
+
+## Experience and skills are TypeScript lists, not collections
+
+A `file()` collection returns its entries sorted by id, not in file order, and the timeline
+and skill groups are ordered by meaning. A typed list keeps its order and is as easy to edit.
+
+## `compressHTML` is `true`
+
+Astro 7 defaults to `'jsx'`, which drops the space where markup breaks across lines between
+inline elements. Prettier breaks long lines, so copy lost its spaces ("NaomiShore"). The
+classic setting collapses whitespace to one space instead. Where even one space is wrong, as
+between a surname and its paw, the parent is a flex container, which ignores it.
+
+## Fonts swap in, and only the body and heading fonts preload
+
+The site once used `font-display: optional`. With the router a visit is one document, so a font
+that missed its first 100 ms stayed missing until a full reload. Fonts now swap in, over
+size-matched fallbacks, at most once a visit. The handwriting font is not preloaded: preloading
+every font was measured as no faster for Lighthouse's mobile run.
+
+Fredoka loads only the 600 that headings use, as a static file a quarter of the variable font's
+size. Schibsted Grotesk stays variable, as its weights cost more as separate files.
+
+## Code is set in the system's monospace font
+
+Every page loads its fonts before Lighthouse's simulated first paint, so each kilobyte counted.
+JetBrains Mono cost 40 KB on every page for dates, chips and code blocks, which read as well in
+the reader's own monospace font. The logo keeps JetBrains Mono, drawn as SVG from the font's
+outlines, so it looks the same everywhere without the download.
+
+## Skill logos come from a sprite
+
+`/skill-logos.svg` holds the home page's skill logos as symbols, shown with `<use>`, which keeps
+them in the text colour. Inlined, they were two thirds of the home page's compressed HTML, which
+then needed an extra round trip to arrive.
+
+## Icon defaults have no specificity
+
+An icon's own size and the size its parent gives it tied on specificity, so stylesheet order
+decided, and that order differs between dev and a build. The icon's defaults sit in `:where()`.
+
+## No-script checks strip scripts rather than switch them off
+
+With script disabled, Playwright's own timers stop, so axe hangs and clicks cannot wait for an
+element to settle. Accessibility is scanned with script on, and again on each page served with
+its scripts removed, which renders exactly as it does with script off.
 
 ## TypeScript 6, not 7
 
-TypeScript 7 shipped without a stable compiler API, so typescript-eslint cannot run on it
-(`typescript >=4.8.4 <6.1.0`). Upgrading loses every type-aware rule and
-`@typescript-eslint/naming-convention`, which is what enforces the naming conventions.
-
-**Revisit when** typescript-eslint admits TypeScript 7.
-
-## ESLint plugins are the maintained forks
-
-`eslint-plugin-jsx-a11y` (last published October 2024) and `eslint-plugin-react` both cap
-at ESLint 9. Replaced by `eslint-plugin-jsx-a11y-x` — same maintainers as
-`eslint-plugin-import-x`, which we already use — and `@eslint-react/eslint-plugin`. Do not
-reinstate the originals to "fix" a rule name.
-
-## Enums are plain TypeScript enums
-
-House style. Consequences: `erasableSyntaxOnly` must stay off, and `const enum` is banned
-because Vite and esbuild transpile one file at a time and cannot resolve it.
+`@astrojs/check` and `typescript-eslint` do not support TypeScript 7 yet. Revisit when both do.
 
 ## Dependencies must be old enough to have been noticed
 
 pnpm refuses packages published in the last few days. When it offers to add something to
-`minimumReleaseAgeExclude`, pin the previous release instead — a fresh publish is the
-shape of a compromised release, and the gate only works if it is not routinely waived.
-Exempt a package only for a specific needed fix, and say which and why.
-
-## `routeTree.gen.ts` is committed
-
-It is generated, but `typecheck` and `build` are separate Turborepo tasks. On a fresh
-clone `typecheck` can run first, and without the file every `createFileRoute` call fails
-to compile. `pnpm build` rewrites it if it drifts.
-
-## Sanity for the blog and projects
-
-The requirement is publishing without a redeploy, which a git-based blog cannot meet.
-Coupling is confined to the two repositories in `cms`, behind `IBlogRepository` and
-`IProjectRepository`. The Studio (`apps/studio`) is a standalone app; it never imports a
-package, it only writes `cms/src/generated/SanityTypes.ts` with `pnpm --filter studio
-typegen`, which is committed.
-
-TypeGen's `overloadClientMethods` is off: its `declare module '@sanity/client'` fails to
-compile in `cms`, which never imports the client. Repositories pass the result type to
-`IGroqClient.fetch` themselves.
-
-Sanity packages are pinned, and the Studio's `autoUpdates` is off, so the Studio runs the
-version in the lockfile rather than whatever Sanity ships that day.
-
-## Content is blocks, not fixed fields
-
-A post or project fixes only what its header, cards, search and feed need. Everything below
-the header is one Portable Text `body`, and every block is available on every document type,
-so a page's shape is chosen in the Studio rather than in code. The Studio rejects a body
-whose headings skip a level.
-
-A block is named after the component that renders it, and its fields after that
-component's props, so the Studio, `cms` and `rich-content` speak of the same thing: a
-`callout` with a `label` and a `title` is a `Callout` with a `label` and a `title`. The
-compiler holds the chain together. `cms` declares one interface per block and the
-`ContentBlock` union; `BodyNodeNormalisers` needs an entry for every type the generated
-Sanity types contain, returning the block's interface; `RichContentTypes` needs a renderer
-for every member of the union.
-
-Adding a block: its schema in `apps/studio`, added to `bodyBlockTypes`, then
-`pnpm --filter studio typegen`, then its interface in `cms` joined to `ContentBlock`, and the
-normaliser and renderer the compiler now asks for. The GROQ `bodyProjection` passes new
-fields through; it needs an edit only for an image or a reference.
-
-## `AGENTS.md` belongs to Turborepo
-
-`turbo` writes and re-adds it when it detects an agent. Committed so it does not dirty the
-working tree. Claude Code reads `CLAUDE.md` in preference, so it costs no context. Opt out
-with `"agentGuidance": false` in `turbo.json`.
+`minimumReleaseAgeExclude`, pin the previous release instead: a fresh publish is the shape of
+a compromised release, and the gate only works if it is not routinely waived.
 
 ## Tokens normalise the prototype rather than copy it
 
 The Claude Design prototype used around 35 spacing values, 30 type sizes and a dozen
-hand-drawn radii. The token source collapses them onto short scales, so a spacing or size
-that differs from the prototype by a pixel or two is intentional. Notably, its 10px paddings
-became 12px.
+hand-drawn radii. The tokens collapse them onto short scales, so a spacing or size that differs
+from the prototype by a pixel or two is intentional.
 
-Space sits on an 8px grid with a 4px half step, plus fluid steps for the space below a
-heading, between sections and at a page's end. Corners come in mirrored pairs
-(`--radius-medium` and `--radius-medium-alternate`), so neighbouring boxes, such as a
-primary and a secondary button, do not look stamped from one mould. Restored after the
-September 2026 design review; the first pass dropped them.
+Space sits on an 8px grid with a 4px half step, plus fluid steps for the space below a heading,
+between sections and at a page's end. Corners come in mirrored pairs (`--radius-medium` and
+`--radius-medium-alternate`), so neighbouring boxes do not look stamped from one mould.
 
 **One accent orange for fills, two for text.** `#E8894A` fills buttons in both themes, with
-dark text on it. Orange _text_ cannot be one colour: a value dark enough for 4.5:1 on the
-light surface is too dark for 4.5:1 on the dark one. So `--color-text-accent` is `#A84C16`
-in light and `#E8894A` in dark.
+dark text on it. Orange text cannot be one colour: a value dark enough for 4.5:1 on the light
+surface is too dark for 4.5:1 on the dark one. So `--color-text-accent` is `#A84C16` in light
+and `#E8894A` in dark.
 
-**Lines and shadows are hard and near the text colour** — offset shadows, not soft greys.
-That is the comic-book look. In light they are the text colour. In dark they follow the
-design's warmer creams instead of the light page's: text and shadows `#FBF1E4`, lines a
-step dimmer at `#F3E2CC`. Brighter cream there glared, so do not merge them back.
+**Lines and shadows are hard and near the text colour**: offset shadows, not soft greys. In
+dark they follow the design's warmer creams: text and shadows `#FBF1E4`, lines a step dimmer
+at `#F3E2CC`. Brighter cream there glared, so do not merge them back.
 
 ## Reduced motion is CSS only
 
-Every animation is CSS, and each stylesheet answers `prefers-reduced-motion` itself, so no
-JavaScript reads the preference. Add a service behind an injected media query only when a
-script-driven animation arrives.
-
-## The theme is set by an inline script, not by the server
-
-The plan had the server read the theme cookie. A prerendered page never sees a cookie, and
-reading one per request would stop the HTML being cached. Instead a small script inlined in
-`<head>` (`themeBootScript` in `theming`, rendered with TanStack's `ScriptOnce`, as its docs
-recommend) reads the cookie or the system setting and sets `data-theme` before first paint.
-
-The server always renders the same assumed state, and `useTheme` hydrates against it before
-moving to the real one, so React sees no mismatch. Without JavaScript, a
-`prefers-color-scheme` block in the generated tokens follows the system setting. The cookie
-stays, so a server could still read it one day.
-
-## Routes load through an injected repository
-
-Loaders read `context.blogRepository` and `context.projectRepository`, handed to the router.
-Their implementations call server functions, which build a Sanity repository per request.
-So Sanity is only ever reached from the server, in the same process while rendering and over
-RPC when the browser navigates, and a request can be switched to drafts without the token
-reaching the browser.
-
-## Draft preview uses a sealed session, not Sanity's cookie
-
-Sanity's framework-agnostic recipe checks the Studio's secret once, then trusts an unsigned
-`sanity-preview-perspective` cookie. Anyone could set that cookie by hand and the server
-would read drafts for them with its token. Instead `/api/preview/enable` starts TanStack
-Start's session, whose cookie is encrypted and signed with `PREVIEW_SESSION_SECRET`, and
-lasts an hour. It is `SameSite=None` and partitioned so it works inside the Studio's frame.
-
-A preview response sets `Cache-Control: private, no-store`, overriding the public default.
-For Phase 9: the CDN must also bypass its cache for requests carrying the `nv-preview`
-cookie, and the CSP's `frame-ancestors` must allow the hosted Studio.
-
-## Pages cache for five minutes at the edge
-
-Every page, the sitemap and the feed send `public, max-age=0, s-maxage=300,
-stale-while-revalidate=86400`: browsers always revalidate, the CDN refreshes within five
-minutes of a publish, and no visitor waits on Sanity. Sanity's own API CDN, which the site
-reads through, adds up to about 75 seconds more, so a publish can take six minutes to show. A webhook that purges on publish
-could make it instant; it needs the Cloudflare setup, so it waits for Phase 9.
-
-## Some pieces are drawn to the design's exact numbers
-
-The card's folded corner, the speech bubble, the tag, the heart, the paw and the motion lines
-are graphics, so their sizes are the design's own rather than the spacing scale's, as Naomi
-asked. Colours still come from the theme, so they follow light and dark. Small controls (the
-theme button, back-to-top, link tiles) rest on a 3px shadow, `--shadow-small`, where the
-design's buttons use 4px.
-
-## Two looks for a link
-
-A link in content has a solid accent underline that turns wavy under the pointer. A link in
-a list of places to go (header, footer) has no underline until the pointer is on it or it is
-the current page. Both are the same `Link`, picked by its `variant`. A third variant,
-unstyled, is for a caller that draws the link itself, such as a button or a tile.
-
-## One job per component, parts as compounds
-
-The package had grown near-copies: `LinkIcon` and `ExternalLink` beside `Link`,
-`ExternalLinkButton` beside `LinkButton`, `SocialLinkList` beside `NavigationList`. On
-2026-10-01 they were folded into the component each one varied: `Link` opens another site
-in a new tab by itself and takes its look from a variant.
-
-A first attempt also folded `LinkButton` into `Button`, switching on `href`, and marked a
-button of one icon with an `isIconOnly` prop. Both made `Button` do two jobs, so they were
-undone. `Button` and `LinkButton` are separate, and the parts of a component hang off it
-as a compound: `Button.Icon`, `LinkButton.Icon`, `Link.Icon`, `Footer.Column`. Parts live
-beside their owner and out of the barrel, as do the header's menu and the code block's
-caption. An icon given a `label` in place of text makes its button round, read from the
-markup by the stylesheet.
-
-`ButtonGroup` and `CardGrid` went the same day. Each was an element with a class that only
-arranged its children, so the page or block that places the buttons or cards now lays them
-out in its own stylesheet. The CMS block that was `buttonGroup` is now `linkButtons`,
-after the component it renders.
-
-`LinkButton` is an anchor with `role="button"`, and answers to Space. It looks like a
-button, so someone using voice control says "click … button"; as an anchor it can still be
-opened in a new tab or copied. `SkipLink` and `BackToTop` are that `LinkButton` with one
-job each, so the skip link took the primary button's look in place of its own chip.
-
-## The router's link is provided once
-
-`Link` in `components` renders a page on this site through whatever `LinkProvider` above it
-supplies, and a plain anchor for everything else: another site, a fragment, `mailto:`, a new
-tab, a download. The portfolio provides `RoutedLink`, TanStack Router's link wrapped with
-`createLink`, at the root. So `LinkButton`, `NavigationList`, `Breadcrumb` and the
-cards navigate on the client without a `linkComponent` prop each, and without a router
-wrapper per link component. The first cut had both, three times over.
-
-TanStack Router marks a link active by path prefix and then always sets
-`aria-current="page"`, which would call "All posts" the current page on every post.
-`RoutedLink` matches exactly and never adds the router's `active` class. A section link on
-a page beneath it is marked by NavigationList instead.
-
-## Lighthouse is measured behind compression
-
-`vite preview` serves without compression, which alone costs 5–10 performance points on a
-throttled mobile run. Local Lighthouse runs go through a compressing proxy, as the CDN will
-compress in production.
-
-## Fewer packages, split by reuse
-
-The first cut had 16 workspaces, one per layer of an imagined component library, with a
-file per interface and a showcase per component. For one site it was mostly ceremony, so
-on 2026-09-30 it was cut to ten: a package exists only when more than one app could use
-it, and anything only the portfolio uses lives in the portfolio. `models` dissolved into
-the packages that own each type; `layout` became CSS in each owner; `brand` and
-`site-shell` folded into `components` and `blocks`. Do not split a package back out for
-tidiness alone.
-
-Later the same day `blocks` folded into `components` as well. The split by kind (HTML-level
-versus composition) was not decidable at the point of use: `LinkIcon` composed and sat in
-`components`, `Card` was a leaf and sat in `blocks`. Both apps always imported both. One
-React package, with the design system grouping its pages by purpose, answers "which
-component do I use" better than a second package did.
-
-## Tests check logic only
-
-A test that a prop or class name reaches the DOM fails only when the code is rewritten,
-never when it breaks. Components without branches have no tests; axe runs once over the
-design system instead of in every component's spec.
-
-## Open
-
-- **Lighthouse CI** (`@lhci/cli`) has not been published since June 2025. Confirm it still
-  works before wiring it into CI, or measure with Playwright instead.
-- **TanStack Start** is formally a Release Candidate despite its version number. The
-  architecture keeps framework code inside `apps/`, so switching would not touch the
-  packages.
+Every animation is CSS, and each stylesheet answers `prefers-reduced-motion` itself.

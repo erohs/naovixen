@@ -1,0 +1,108 @@
+---
+interface Props {
+    class?: string;
+}
+
+const { class: className } = Astro.props;
+---
+
+<article class:list={["card", className]}>
+    <slot />
+</article>
+
+<style>
+    /*
+     * The folded corner is drawn to the design's exact measurements. ::before covers the corner in
+     * the page colour, with the triangle of shadow the lifted card casts along the fold. ::after is
+     * the turned-up flap. Both spring out from the corner on hover or when focus is inside.
+     *
+     * A card that needs a different shape sets --card-gap, --card-padding or --card-radius.
+     */
+    .card {
+        position: relative;
+        isolation: isolate;
+        display: flex;
+        flex-direction: column;
+        gap: var(--card-gap, var(--space-between-content));
+        block-size: 100%;
+        padding: var(
+            --card-padding,
+            var(--space-between-groups) var(--space-padding-container) var(--space-padding-container)
+        );
+        border: 2px solid var(--color-border);
+        border-radius: var(--card-radius, var(--radius-card));
+        background-color: var(--color-background-surface);
+        box-shadow: 0 0 0 var(--color-shadow);
+        transition: box-shadow 0.2s ease;
+
+        &::before,
+        &::after {
+            content: "";
+            position: absolute;
+            z-index: var(--z-index-raised);
+            pointer-events: none;
+            opacity: 0;
+            scale: 0.2;
+            transform-origin: 100% 100%;
+            transition:
+                scale 0.3s cubic-bezier(0.3, 1.5, 0.5, 1),
+                opacity 0.15s ease;
+        }
+
+        &::before {
+            inset-block-end: -8px;
+            inset-inline-end: -8px;
+            inline-size: 36px;
+            block-size: 36px;
+            background:
+                linear-gradient(to top left, var(--color-background-page) 50%, transparent 50%) right 0 bottom 0 / 30px
+                    30px no-repeat,
+                linear-gradient(to top left, var(--color-shadow) 50%, transparent 50%) right 6px bottom 6px / 30px 30px
+                    no-repeat;
+        }
+
+        &::after {
+            inset-block-end: -2px;
+            inset-inline-end: -2px;
+            inline-size: 30px;
+            block-size: 30px;
+            border-block-start: 2px solid var(--color-border);
+            border-inline-start: 2px solid var(--color-border);
+            border-start-start-radius: 6px;
+            background: linear-gradient(to bottom right, var(--color-background-accent) 50%, transparent 50%);
+            filter: drop-shadow(6px 6px 0 var(--color-shadow));
+        }
+
+        &:hover,
+        &:focus-within {
+            box-shadow: 6px 6px 0 var(--color-shadow);
+
+            &::before,
+            &::after {
+                opacity: 1;
+                scale: 1;
+            }
+        }
+    }
+
+    /* A link marked "stretched" covers the card, so the whole card is one link without nesting it all inside. */
+    .card :global(.stretched)::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .card::before,
+        .card::after {
+            transition: none;
+        }
+    }
+
+    @media (forced-colors: active) {
+        .card::before,
+        .card::after {
+            display: none;
+        }
+    }
+</style>

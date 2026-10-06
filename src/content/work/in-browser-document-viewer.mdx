@@ -1,0 +1,46 @@
+---
+title: "In-browser document viewer"
+summary: "View Word, spreadsheet and presentation files in the browser, with no download needed."
+order: 2
+featured: true
+stack: ["pdf.js", "React", "TypeScript", "AWS", "Serverless"]
+---
+
+<Facts
+    items={[
+        { label: "my role", value: "Front-end engineer (apprentice)" },
+        { label: "timeline", value: "During my apprenticeship" },
+    ]}
+/>
+
+Built at PebblePad, so there's no public demo or repo. I'm happy to walk through it in more detail in an interview.
+
+## The problem
+
+Viewing an uploaded document meant downloading it first, and converting files relied on commercially licensed libraries with a recurring cost.
+
+## My approach
+
+I built a viewer from scratch on Mozilla's open-source pdf.js, with zoom, paging and fullscreen, fed by a serverless AWS pipeline that converts Word, spreadsheet and presentation files to PDF.
+
+```typescript title="viewer.ts"
+const pdf = await pdfjs.getDocument({ url }).promise;
+const page = await pdf.getPage(pageNumber);
+await page.render({ canvasContext, viewport }).promise;
+```
+
+## Challenges
+
+Conversions take seconds, not milliseconds. Leaving people staring at an empty box felt broken, even when everything was working.
+
+<Callout label="lesson learnt" title="Show progress, honestly">
+    Live conversion status (queued, converting, ready) made the wait feel deliberate instead of broken.
+</Callout>
+
+## Outcome
+
+Replaced the licensed libraries, removing a recurring cost, and nobody has to download a file just to read it.
+
+## What I'd do differently
+
+Plan keyboard and screen reader support for the viewer controls into the first release, not as a follow-up.

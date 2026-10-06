@@ -1,0 +1,48 @@
+---
+import LinkButton from "../ui/LinkButton.astro";
+---
+
+<div class="track">
+    <LinkButton href="#top" variant="primary" icon="arrow-up" iconLabel="Back to top" class="link" />
+</div>
+
+<style>
+    /*
+     * No script: the link rides a track down the side of the page, held to the bottom of the
+     * window by sticky positioning. The track starts two screens down, so the link scrolls into
+     * view once the reader is a screen in, and ends at the foot of the page, where the link
+     * settles level with the footer's buttons. On a page too short for that, the track has no
+     * height and the link never shows. It sits beyond the page's right edge where the margin is
+     * wide enough.
+     */
+    .track {
+        --resting-gap: var(--space-between-groups);
+        --resting-inline-end: max(
+            var(--space-between-text) + var(--space-between-lines),
+            (100% - var(--layout-width-page)) / 2 - var(--space-padding-page) - var(--size-action-minimum) -
+                var(--space-between-content)
+        );
+
+        position: absolute;
+        z-index: var(--z-index-floating);
+        inset-block: min(200svh - var(--size-action-minimum) - var(--resting-gap), 100%) 0;
+        inset-inline-end: var(--resting-inline-end);
+        pointer-events: none;
+    }
+
+    .link {
+        position: sticky;
+        inset-block-start: calc(100svh - var(--size-action-minimum) - var(--resting-gap));
+        pointer-events: auto;
+
+        /*
+         * The link can take focus before it has scrolled into view, so focus pins it where it
+         * rests, in the window, as a skip link shows itself on focus.
+         */
+        &:focus-visible {
+            position: fixed;
+            inset-block: auto var(--resting-gap);
+            inset-inline-end: var(--resting-inline-end);
+        }
+    }
+</style>

@@ -1,0 +1,69 @@
+---
+import type { Props as HeadProps } from "../components/site/Head.astro";
+import StructuredData from "../components/site/StructuredData.astro";
+import Link from "../components/ui/Link.astro";
+import { breadcrumbData } from "../lib/structured-data";
+import BaseLayout from "./BaseLayout.astro";
+
+type Props = HeadProps & {
+    /** The steps above this page, after Home. */
+    trail?: { label: string; href: string }[];
+    /** The page's name in the breadcrumb, when it differs from its title. */
+    crumb?: string;
+};
+
+const { trail = [], crumb, ...headProps } = Astro.props;
+const steps = [{ label: "Home", href: "/" }, ...trail];
+const current = crumb ?? headProps.title;
+---
+
+<BaseLayout {...headProps}>
+    <StructuredData slot="head" data={breadcrumbData([...steps, { label: current, href: Astro.url.pathname }])} />
+    <slot name="head" slot="head" />
+    <nav aria-label="Breadcrumb">
+        <ol class="breadcrumb">
+            {steps.map((step) => (
+                <li class="step">
+                    <Link href={step.href} variant="standalone">
+                        {step.label}
+                    </Link>
+                </li>
+            ))}
+            <li class="step" aria-current="page">
+                {current}
+            </li>
+        </ol>
+    </nav>
+    <slot />
+</BaseLayout>
+
+<style>
+    .breadcrumb {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: var(--space-between-text);
+        padding: 0;
+        font-size: var(--font-size-small);
+        list-style: none;
+    }
+
+    .step {
+        display: flex;
+        align-items: center;
+        gap: var(--space-between-text);
+
+        /* The empty alternative text keeps the slash out of what a screen reader announces. */
+        & + &::before {
+            content: "/" / "";
+            color: var(--color-text-accent);
+            font-family: var(--font-family-handwriting);
+            font-size: var(--font-size-lead);
+            line-height: 1;
+        }
+
+        &[aria-current="page"] {
+            font-weight: var(--font-weight-semi-bold);
+        }
+    }
+</style>

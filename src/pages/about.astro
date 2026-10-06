@@ -1,0 +1,146 @@
+---
+import Icon from "../components/ui/Icon.astro";
+import GreetingHeading from "../components/ui/GreetingHeading.astro";
+import InterestList from "../components/ui/InterestList.astro";
+import LinkButton from "../components/ui/LinkButton.astro";
+import PhotoPlaceholder from "../components/ui/PhotoPlaceholder.astro";
+import PageLayout from "../layouts/PageLayout.astro";
+import { site } from "../site";
+
+const principles = [
+    {
+        title: "Accessible by default",
+        description: "Keyboard, screen reader, zoom and contrast checks are part of done, not a later ticket.",
+    },
+    {
+        title: "Small, reviewable changes",
+        description: "Short pull requests, clear commit messages and tests that explain intent.",
+    },
+    {
+        title: "Test with the real thing",
+        description: "Real assistive technology and real users beat any automated checker on its own.",
+    },
+    {
+        title: "Write it down",
+        description: "Decision records and READMEs, so the next person (often me) has the context.",
+    },
+];
+---
+
+<PageLayout
+    title="About"
+    description="About Naomi Shore: a software engineer who joined PebblePad as an apprentice in 2019 and earned a first-class degree alongside the job.">
+    <div class="content">
+        <div class="columns introduction">
+            <div class="text">
+                <GreetingHeading greeting="the longer version!">About me</GreetingHeading>
+                <p class="lead">
+                    I'm Naomi, a software engineer from Telford with seven years at PebblePad and a real soft spot for
+                    accessibility.
+                </p>
+                <p>
+                    I joined PebblePad as an apprentice in 2019 and earned a first-class BSc through a degree
+                    apprenticeship, studying and shipping production code in the same week. It taught me to pick up new
+                    domains quickly and to explain my thinking clearly.
+                </p>
+                <p>
+                    Today I'm a Software Engineer II working across the full stack, from C#/.NET distributed back ends
+                    to React and TypeScript front ends. Most of my recent work has been in a dedicated accessibility
+                    team: fixing WCAG 2.2 issues, building captions and transcription, and testing with real assistive
+                    technology.
+                </p>
+                <p>
+                    I was also an early adopter of AI-assisted and agentic development in my team. Used thoughtfully,
+                    it's helped make us one of the most productive teams in the company.
+                </p>
+            </div>
+            <PhotoPlaceholder label="Photo placeholder: portrait of Naomi Shore" class="photo" />
+        </div>
+        <div class="columns">
+            <section aria-labelledby="how-i-work-title" class="detail">
+                <h2 id="how-i-work-title">How I work</h2>
+                <dl class="principles">
+                    {principles.map((principle) => (
+                        <div class="principle">
+                            <dt class="principle-title">{principle.title}</dt>
+                            <dd class="principle-description">{principle.description}</dd>
+                        </div>
+                    ))}
+                </dl>
+            </section>
+            <section aria-labelledby="interests-title" class="detail">
+                <h2 id="interests-title">Away from the keyboard</h2>
+                <InterestList />
+            </section>
+        </div>
+        <div class="actions">
+            {site.cvPath !== undefined && (
+                <LinkButton href={site.cvPath} download variant="primary">
+                    Download CV <Icon name="download" />
+                </LinkButton>
+            )}
+            <LinkButton href="/contact/">
+                Get in touch <Icon name="arrow-right" />
+            </LinkButton>
+        </div>
+    </div>
+</PageLayout>
+
+<style>
+    .content {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-between-sections);
+        margin-block-start: var(--space-below-heading);
+    }
+
+    .introduction {
+        align-items: start;
+    }
+
+    .text {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-between-blocks);
+        max-inline-size: 62ch;
+    }
+
+    .photo {
+        justify-self: center;
+        inline-size: min(100%, calc(var(--layout-width-prose) / 2));
+    }
+
+    .detail {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-between-groups);
+    }
+
+    .principles {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-between-blocks);
+    }
+
+    .principle {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-between-lines);
+    }
+
+    .principle-title {
+        font-weight: var(--font-weight-semi-bold);
+    }
+
+    .principle-description {
+        margin: 0;
+        color: var(--color-text-secondary);
+    }
+
+    .actions {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: var(--space-between-content);
+    }
+</style>

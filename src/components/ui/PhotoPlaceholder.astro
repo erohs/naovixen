@@ -1,0 +1,58 @@
+---
+/** Placeholder: stands in for a photo until there is one. */
+interface Props {
+    /** Read out in place of the photo. */
+    label: string;
+    shape?: "portrait" | "round";
+    class?: string;
+}
+
+const { label, shape = "portrait", class: className } = Astro.props;
+---
+
+<div role="img" aria-label={label} class:list={["placeholder", `placeholder--${shape}`, className]}>
+    {shape === "portrait" && (
+        <span class="label" aria-hidden="true">
+            Photo
+        </span>
+    )}
+</div>
+
+<style>
+    /* A frame striped in a faint tint of the line colour, so it follows the theme. */
+    .placeholder {
+        --stripe: color-mix(in oklch, var(--color-border) 12%, var(--color-background-surface));
+
+        display: grid;
+        place-items: center;
+        border: var(--border-width-standout) solid var(--color-border);
+        background: repeating-linear-gradient(
+            135deg,
+            var(--color-background-surface) 0 var(--space-between-text),
+            var(--stripe) var(--space-between-text) var(--space-between-content)
+        );
+    }
+
+    .placeholder--portrait {
+        aspect-ratio: 4 / 5;
+        border-radius: var(--radius-large-alternate);
+        rotate: 1.5deg;
+    }
+
+    .placeholder--round {
+        flex: none;
+        inline-size: calc(var(--space-between-regions) + var(--space-between-text));
+        block-size: calc(var(--space-between-regions) + var(--space-between-text));
+        border-radius: var(--radius-round);
+    }
+
+    .label {
+        padding: var(--space-padding-chip);
+        border: var(--border-width-default) solid var(--color-border);
+        border-radius: var(--radius-small);
+        background-color: var(--color-background-page);
+        font-family: var(--font-family-code);
+        font-size: var(--font-size-meta);
+        line-height: 1;
+    }
+</style>

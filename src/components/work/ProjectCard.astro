@@ -1,0 +1,100 @@
+---
+import { Image } from "astro:assets";
+import type { CollectionEntry } from "astro:content";
+import { projectPath } from "../../lib/paths";
+import Card from "../ui/Card.astro";
+import Icon from "../ui/Icon.astro";
+import Link from "../ui/Link.astro";
+import TagList from "../ui/TagList.astro";
+
+interface Props {
+    project: CollectionEntry<"work">;
+    headingLevel: 2 | 3;
+    /** The first card on a page loads its screenshot straight away. */
+    isPriority?: boolean;
+}
+
+const { project, headingLevel, isPriority = false } = Astro.props;
+const { title, summary, stack, screenshot } = project.data;
+const Heading = `h${headingLevel}` as const;
+---
+
+<Card class="project">
+    {screenshot && (
+        <Image
+            src={screenshot.src}
+            alt={screenshot.alt}
+            widths={[400, 800]}
+            sizes="(width < 47.5rem) 100vw, 33vw"
+            priority={isPriority}
+            class="screenshot"
+        />
+    )}
+    <div class="text">
+        <Heading class="heading">{title}</Heading>
+        <p class="summary">{summary}</p>
+    </div>
+    <TagList label="Tech stack" tags={stack.slice(0, 3)} />
+    <p class="footer">
+        <Link
+            href={projectPath(project.id)}
+            variant="standalone"
+            class="stretched"
+            aria-label={`View project: ${title}`}>
+            View project <Icon name="arrow-right" />
+        </Link>
+    </p>
+</Card>
+
+<style>
+    /*
+     * Tighter than a post card, so the screenshot sits close to the edge, and the text inside is
+     * inset again. The corners mirror the card's, so a row of mixed cards varies.
+     */
+    .project {
+        --inset: calc(var(--space-between-text) + var(--space-between-lines));
+        --card-gap: 0;
+        --card-padding: var(--inset) var(--inset) calc(var(--space-between-content) + var(--space-between-lines));
+        --card-radius: 14px 22px 12px 20px / 22px 12px 20px 14px;
+
+        & > :global(.tags) {
+            padding-block: calc(var(--space-between-content) + var(--space-between-lines))
+                calc(var(--space-between-blocks) + var(--space-between-lines));
+            padding-inline: var(--inset);
+        }
+    }
+
+    .screenshot {
+        inline-size: 100%;
+        block-size: auto;
+        aspect-ratio: 16 / 10;
+        object-fit: cover;
+        border: var(--border-width-default) solid var(--color-border);
+        border-radius: var(--radius-small);
+    }
+
+    .text {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-between-text);
+        padding-block-start: var(--space-between-blocks);
+        padding-inline: var(--inset);
+    }
+
+    .heading {
+        font-size: var(--font-size-h4);
+        line-height: var(--line-height-subheading);
+    }
+
+    .summary {
+        color: var(--color-text-secondary);
+    }
+
+    /* Pushed to the foot of the card, so a row of cards lines up whatever their summaries' length. */
+    .footer {
+        margin-block-start: auto;
+        margin-inline: var(--inset);
+        padding-block: calc(var(--space-between-content) + var(--space-between-lines)) var(--space-between-lines);
+        border-block-start: var(--border-width-default) dashed var(--color-border);
+    }
+</style>

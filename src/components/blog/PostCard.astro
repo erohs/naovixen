@@ -1,0 +1,49 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { postPath } from "../../lib/paths";
+import Card from "../ui/Card.astro";
+import Link from "../ui/Link.astro";
+import PostMeta from "./PostMeta.astro";
+
+interface Props {
+    post: CollectionEntry<"blog">;
+    headingLevel: 2 | 3;
+}
+
+const { post, headingLevel } = Astro.props;
+const Heading = `h${headingLevel}` as const;
+---
+
+<Card>
+    <Heading class="heading">
+        <Link href={postPath(post.id)} class="stretched">
+            {post.data.title}
+        </Link>
+    </Heading>
+    <p class="excerpt">{post.data.excerpt}</p>
+    <div class="details">
+        <PostMeta post={post} />
+    </div>
+</Card>
+
+<style>
+    .heading {
+        font-size: var(--font-size-h4);
+        line-height: var(--line-height-subheading);
+    }
+
+    .excerpt {
+        margin-block-end: var(--space-between-blocks);
+        color: var(--color-text-secondary);
+    }
+
+    /* Pushed to the foot of the card, so a row of cards lines up whatever their excerpts' length. */
+    .details {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-between-content);
+        margin-block-start: auto;
+        padding-block-start: calc(var(--space-between-content) + var(--space-between-lines));
+        border-block-start: var(--border-width-default) dashed var(--color-border);
+    }
+</style>

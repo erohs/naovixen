@@ -1,0 +1,27 @@
+---
+import type { HTMLAttributes } from "astro/types";
+import Icon from "./Icon.astro";
+import Link from "./Link.astro";
+
+/** An icon-only button shows its icon and reads out its label; any other shows what it holds. */
+type Props = HTMLAttributes<"a"> & {
+    href: string;
+    variant?: "primary" | "secondary";
+} & ({ icon: string; iconLabel: string } | { icon?: never; iconLabel?: never });
+
+const { variant = "secondary", iconLabel, icon, class: className, ...attributes } = Astro.props;
+---
+
+<Link
+    variant="plain"
+    class:list={["button", `button--${variant}`, iconLabel !== undefined && "button--round", className]}
+    {...attributes}>
+    {iconLabel === undefined ? (
+        <slot />
+    ) : (
+        <>
+            <Icon name={icon} />
+            <span class="visually-hidden">{iconLabel}</span>
+        </>
+    )}
+</Link>

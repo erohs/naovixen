@@ -1,0 +1,51 @@
+/* As many equal columns as fit, down to one on a narrow screen. A lone card keeps its column's width. */
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(20rem, 100%), 1fr));
+    gap: calc(var(--space-between-groups) + var(--space-between-text)) var(--space-between-groups);
+    padding-inline-start: 0;
+    list-style: none;
+}
+
+/* A page's title block after its breadcrumb, with its own space above and below. */
+.page-header {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-between-content);
+    margin-block: var(--space-below-heading) var(--space-padding-panel);
+}
+
+.page-intro {
+    max-inline-size: 48ch;
+    color: var(--color-text-secondary);
+}
+
+.lead {
+    font-size: var(--font-size-lead);
+}
+
+.title-size {
+    font-size: var(--font-size-title);
+}
+
+/* Dates, counts and other small facts beside the main text. */
+.meta {
+    color: var(--color-text-secondary);
+    font-family: var(--font-family-code);
+    font-size: var(--font-size-meta);
+}
+
+/* A short handwritten label in the accent colour, such as the title of a list. */
+.label-handwritten {
+    color: var(--color-text-accent);
+    font-family: var(--font-family-handwriting);
+    font-size: var(--font-size-h4);
+    font-weight: var(--font-weight-regular);
+}
+
+/* As many equal columns as fit, dropping to one on narrow screens, with room between. */
+.columns {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(18rem, 100%), 1fr));
+    gap: var(--space-between-regions) calc(2 * var(--space-between-groups));
+}

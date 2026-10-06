@@ -1,0 +1,65 @@
+---
+import PostCard from "../components/blog/PostCard.astro";
+import AboutSummary from "../components/home/AboutSummary.astro";
+import ContactBanner from "../components/home/ContactBanner.astro";
+import Experience from "../components/home/Experience.astro";
+import Hero from "../components/home/Hero.astro";
+import HomeSection from "../components/home/HomeSection.astro";
+import Skills from "../components/home/Skills.astro";
+import Testimonial from "../components/home/Testimonial.astro";
+import StructuredData from "../components/site/StructuredData.astro";
+import Icon from "../components/ui/Icon.astro";
+import Link from "../components/ui/Link.astro";
+import ProjectCard from "../components/work/ProjectCard.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { getProjects, getPublishedPosts } from "../lib/content";
+import { personData, websiteData } from "../lib/structured-data";
+
+const featuredProjects = (await getProjects()).filter((project) => project.data.featured);
+const latestPosts = (await getPublishedPosts()).slice(0, 3);
+---
+
+<BaseLayout
+    title="Naomi Shore — Software Engineer"
+    description="Naomi Shore is a software engineer with seven years of experience across React, TypeScript and C#/.NET, and a focus on accessibility."
+    isFullBleed>
+    <StructuredData slot="head" data={[personData(), websiteData()]} />
+    <Hero hasFeaturedProjects={featuredProjects.length > 0} />
+    {featuredProjects.length > 0 && (
+        <HomeSection
+            id="work"
+            heading="Featured projects"
+            intro="Recent work at PebblePad, from accessibility features to front-end architecture.">
+            <Link slot="action" href="/work/" variant="standalone">
+                All projects <Icon name="arrow-right" />
+            </Link>
+            <ul class="card-grid">
+                {featuredProjects.map((project) => (
+                    <li>
+                        <ProjectCard project={project} headingLevel={3} />
+                    </li>
+                ))}
+            </ul>
+        </HomeSection>
+    )}
+    <AboutSummary />
+    <Experience />
+    <Skills />
+    <Testimonial />
+    <HomeSection
+        id="blog"
+        heading="From the blog"
+        intro="Notes on accessibility, front-end craft and working well with AI.">
+        <Link slot="action" href="/blog/" variant="standalone">
+            All posts <Icon name="arrow-right" />
+        </Link>
+        <ul class="card-grid">
+            {latestPosts.map((post) => (
+                <li>
+                    <PostCard post={post} headingLevel={3} />
+                </li>
+            ))}
+        </ul>
+    </HomeSection>
+    <ContactBanner />
+</BaseLayout>

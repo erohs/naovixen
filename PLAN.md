@@ -1,301 +1,178 @@
-# naovixen — Implementation Plan
+# naovixen — Launch plan
 
-> **This file is temporary.** It is the working plan for turning the Claude Design prototype into a production codebase.
-> The implementing agent must **delete `PLAN.md` in the final phase**, after moving anything with lasting value (coding guidelines, architecture notes) into `CLAUDE.md` and `docs/`.
+> **This file is temporary.** It tracks the static Astro rebuild from branch `astro-rebuild`
+> to launch on `www.naovixen.com`. Tick each box in the commit that finishes it. In the last
+> phase, move anything of lasting value into `CLAUDE.md`, `.claude/rules/` or
+> `docs/decisions.md`, then delete this file.
 
 ---
 
 ## Where we are
 
-**Phases 0–6 are done**, and Phase 7 is built but not yet verified (2026-09-30): its check
-needs a read token, content in Sanity and, for "the live site", Phase 9's deployment.
-Progress and Naomi's Phase 7 decisions are in `notes/phase-7-status.md`. `pnpm typecheck`,
-`test`, `lint` and `build` all pass. Phase 5's pages carry placeholder copy (every file
-named `Placeholder*` in `apps/portfolio/src`) until Naomi answers the content gaps.
+**Phases 1–9 are done** (2026-10-06) on `astro-rebuild`. Every page, the content, search,
+the theme switch and the menu are built, and `pnpm check`, `lint`, `test`, `build` and
+`test:e2e` pass in all three engines with and without script. Locally, mobile Lighthouse
+scores 99–100.
 
-Still unanswered:
+Still to do: the verification that needs a person or a deployment (Phase 10), CI and
+deployment (Phase 11), launch content from Naomi (Phase 12), and the cut-over (Phase 13).
 
-- Open questions 4–5 — hosting (9), analytics (9). Phase 5 routes follow the prototype:
-  `/work`, `/work/$slug`, `/contact` and `/privacy` as well as the planned ones.
-- The 16 content gaps in `docs/content-inventory.md` (git-ignored). The ones that bite
-  first: which case studies exist, whether PebblePad work can be shown visually at all,
-  Naomi's GitHub and Bluesky handles, and whether `naovixen.dev` is real or placeholder.
+The TanStack Start, React and Sanity monorepo this replaces is at the `pre-astro` tag, and
+its plan is in that tag's `PLAN.md`. Its Sanity dataset is exported to `notes/sanity-export`.
 
 ---
 
-## 0. Rules for the implementing agent
+## Goal
 
-1. **Read the latest official docs before each phase.** Your training data is out of date for most of this stack. Before writing code for a tool, fetch its current docs (getting started, config reference, migration notes) and check the latest stable version on npm. Record the versions you pinned in `docs/decisions.md`.
-2. **Confirm before deviating.** If a decision in this plan turns out to be wrong or outdated (e.g. a tool is deprecated, an API changed), stop and ask Naomi rather than silently choosing an alternative.
-3. **Readability over cleverness.** Prefer explicit, verbose, well-named code. No clever one-liners, no magic abstractions. Future Naomi should understand any file in one read.
-4. **Work phase by phase.** Tick the checkboxes as you go. Each phase ends with its verification step passing before moving on.
-5. **Open questions (section 12) must be answered before the phase that depends on them.**
-6. **Trust the design's layout, not its code.** The Claude Design output may contain wonky CSS and messy implementation. Use it only for what it _looks like and how it behaves_: layout, spacing rhythm, hierarchy, colours, typography, interactions. Never copy its CSS, markup or JS. Rebuild everything clean and minimal from our tokens, layout primitives and conventions: the simplest CSS that reproduces the same visual result. If the prototype achieves something with hacks (magic numbers, absolute positioning, `!important`, fixed pixel heights, nested wrappers, non-semantic markup), find the clean equivalent. If a design detail can't be reproduced cleanly or accessibly, ask Naomi rather than copying the hack.
-7. **Content comes from Naomi's CV, or from Naomi.** Her CV is at `source-material/cv.pdf`. Use it as the single source for personal and factual content: bio, roles, employers, dates, skills, projects, education and links. **Never invent or embellish anything.** If a page needs information the CV doesn't contain (e.g. project write-ups, screenshots, an "about me" tone, social links), or the CV is ambiguous, ask Naomi. Placeholder copy from the design reference is not content. Don't publish private details from the CV (phone number, home address, personal email) unless Naomi explicitly says to.
-8. **Commit every stage.** The repo is initialised with `git init` as the very first step. Every phase ends with a commit once its verification passes, using Conventional Commits (e.g. `feat(theming): add design tokens and themes`). Smaller commits within a phase are welcome; never leave a phase's work uncommitted before starting the next. Each commit also ticks the completed checkboxes in `PLAN.md`, so the plan's history shows progress. Never commit anything in `source-material/`, secrets or `.env` files.
+One static Astro site, built the way Astro intends rather than ported from the monorepo:
 
----
-
-## 1. Decision summary
-
-| Area                     | Decision                                                                                         | Notes                                                                                                                                                                                                                                            |
-| ------------------------ | ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Language                 | TypeScript, `strict: true`                                                                       | Plus `noUncheckedIndexedAccess`, `exactOptionalPropertyTypes`                                                                                                                                                                                    |
-| UI library               | React (latest stable)                                                                            |                                                                                                                                                                                                                                                  |
-| App framework / router   | **TanStack Start** (TanStack Router)                                                             | Type-safe file-based routing, SSR, prerendering, server functions, Vite-based. At time of planning it was at v1 release-candidate stage; **verify current status**. Fallback if unsuitable: React Router (framework mode). Ask before switching. |
-| Monorepo                 | **pnpm workspaces + Turborepo**                                                                  | Internal packages, no publishing, no versioning                                                                                                                                                                                                  |
-| Package linking          | `"workspace:*"` + packages export TypeScript source directly                                     | "Internal / just-in-time packages": no build step, no version numbers, edits are live in every app                                                                                                                                               |
-| Styling                  | Global CSS, prefixed BEM (`.nv-block__element--modifier`), CSS custom properties, cascade layers | **No Tailwind, no CSS-in-JS, no CSS Modules**                                                                                                                                                                                                    |
-| Theming                  | CSS variables + `data-theme` on `<html>`, light / dark / system                                  | Cookie-backed so SSR renders the right theme with no flash                                                                                                                                                                                       |
-| Framework-agnostic logic | Pure TS packages: `utilities`, `seo`, `cms`, `theming`                                           | React only appears in thin adapters (hooks) and components                                                                                                                                                                                       |
-| Blog                     | Headless CMS (**Sanity** proposed), fetched at request time with CDN caching                     | Publish without redeploying; rich content mapped to own components                                                                                                                                                                               |
-| Hosting                  | **Cloudflare** (Workers), one project per app                                                    | Verify TanStack Start's current Cloudflare deployment guide. Alternatives: Netlify, Vercel                                                                                                                                                       |
-| Domains                  | `naovixen.com` → portfolio                                                                       | Future sites (e.g. a merch shop) are **not built now**; the architecture only has to make adding one easy                                                                                                                                        |
-| Tests                    | Vitest (unit), Testing Library (components), Playwright + axe (end-to-end + accessibility)       |                                                                                                                                                                                                                                                  |
-| Linting                  | ESLint (flat config, typescript-eslint, jsx-a11y), Stylelint (BEM pattern enforced), Prettier    |                                                                                                                                                                                                                                                  |
-| Design system            | `apps/design-system`, run locally, never deployed                                                |                                                                                                                                                                                                                                                  |
+- Animations behave exactly as the prototype's.
+- Every page works and keeps its layout with script off, and reads in order with styles off.
+- The same experience in current Chromium, Firefox and Safari.
+- Fast (mobile Lighthouse 100), strong SEO, WCAG 2.2 AA.
+- Easy to edit: content is MDX in the repo, copy sits in the template it appears in.
 
 ---
 
-## 2. Repository structure
+## How the rebuild plan changed
 
-The package list and what each holds is in `CLAUDE.md`, under Architecture. `apps/studio`
-(Sanity Studio) joins in Phase 7. Packages are internal: no build step, no versions, each
-exports its TypeScript source from `src/index.ts`. The allowed dependency directions are
-enforced in `eslint.config.js`.
+The rebuild was planned on 2026-10-04 with no client router, no theme switch and no search.
+Building it changed these, each recorded with its reason in `docs/decisions.md`:
 
----
+| Planned                                     | Built                                                                         |
+| ------------------------------------------- | ----------------------------------------------------------------------------- |
+| No script beyond one inline head script     | `<ClientRouter />` keeps the header across page changes; four bundled scripts |
+| Menu's close replayed on the next page load | The header is never swapped, so the menu closes with its own transitions      |
+| Theme follows the system only               | System by default, plus a switch that shows only with script                  |
+| No search; topic pages only                 | Search over `/blog/search.json`, with topic pages standing in without script  |
+| Experience and skills as YAML collections   | Typed lists in `src/data/`, which keep their order                            |
+| JetBrains Mono for code, dates and chips    | The system monospace font; the logo is SVG drawn from JetBrains Mono          |
+| A stylesheet per page                       | One stylesheet for every page                                                 |
+| `ArticleLayout`                             | `PageLayout`                                                                  |
 
-## 3–4. Coding guidelines and architecture
-
-Moved to `CLAUDE.md` and `.claude/rules/`, which are the source of truth.
-
----
-
-## 5. Styling system
-
-### 5.1 Tokens and stylesheets
-
-Built in Phase 2 in `packages/theming`. Token data lives in `src/tokens/*.tokens.ts`;
-`pnpm generate` writes `src/generated/tokens.css`, and lint fails if it is stale. The
-conventions are in `.claude/rules/styles.md`.
-
-Each React package's `src/index.css` imports its components' `styles/*.css` into
-`layer(components)`. Each app imports `@naovixen/theming/styles.css` first, then the other
-packages' stylesheets, then its own.
-
-### 5.3 Theming
-
-- `<html data-theme="light|dark">` holds the resolved theme; `data-theme-preference` holds the user's choice.
-- Preference stored in a cookie so the server renders the correct theme (no flash). A tiny inline script in `<head>` handles the `system` case before first paint.
-- Themes only redefine **semantic** colour tokens; components never branch on theme.
-- `ThemeToggle` component: accessible (announces current state), works without JavaScript falling back to system theme.
-
-### 5.4 Brand direction (from the design brief)
-
-Simple, accessible, professional, Scandinavian restraint with a playful hint of colour and interactivity; colour and sketchy/comic-book feel inspired by Jayrnski. Logo styled as code: `< naovixen />`.
-
-- Playful colours will often be used decoratively; **check every text/background pair meets WCAG 2.2 AA in both themes**. The pairs are listed in `ContrastRequirements.const.ts` and tested.
-- Sketchy/comic flourishes (hand-drawn borders, offset shadows, doodles) should be CSS/SVG decoration, `aria-hidden`, and toned down under `prefers-reduced-motion` and `forced-colors`.
+Dropped with the monorepo, from the old plan: Sanity and draft preview, the design-system
+app, Turborepo build filtering, `docs/adding-a-new-site.md`, i18next, and BEM prefixes.
 
 ---
 
-## 6. Blog
+## Phases
 
-### 6.1 Requirements
+### Phase 1 — Prepare
 
-- Add or edit posts **without redeploying**.
-- Render posts with Naomi's own components and styles, including custom embedded blocks (callouts, code blocks, image with caption, project embeds, etc.).
+- [x] Tag `main` as `pre-astro`.
+- [x] Export the Sanity dataset and check it against the seed fixture.
+- [x] Create branch `astro-rebuild`.
 
-### 6.2 Approach (proposed — confirm in open questions)
+### Phase 2 — Scaffold and tooling
 
-- **Sanity** as headless CMS; Studio lives in `apps/studio` and is deployed to Sanity's hosted studio URL. Verify current free-tier limits.
-- Content is **Portable Text** (structured JSON), rendered by `@naovixen/rich-content`, which maps every block and mark to our components. No raw HTML injection.
-- Schema enforces quality: required `alt` text on images, required excerpt/description (SEO), slug validation, published date, tags.
-- **Framework-agnostic boundary:**
-    - `cms`: the `IBlogPost` and `IBlogPostSummary` types, the `IBlogRepository` interface (`listPosts`, `getPostBySlug`, `listTags`), and `SanityBlogRepository implements IBlogRepository`, which maps CMS documents to those types. Swapping CMS later means writing one new adapter.
-- **Freshness without deploys:** blog routes are server-rendered; responses sent with `Cache-Control` using `s-maxage` + `stale-while-revalidate` so the CDN serves fast and picks up new posts within minutes. Optional: a Sanity webhook that purges the CDN cache for instant publishing.
-- Draft preview: preview route guarded by a secret token, using Sanity's draft perspective. Verify current Sanity preview/visual-editing docs.
-- RSS/Atom feed at `/blog/feed.xml`; blog posts included in the sitemap.
+- [x] Remove the monorepo; scaffold Astro 7 at the repo root.
+- [x] Strictest tsconfig, ESLint, Prettier, Stylelint, Vitest, Playwright, `.nvmrc`,
+      `wrangler.jsonc`.
 
----
+### Phase 3 — Foundations
 
-## 7. Design system
+- [x] Tokens, reset, base and shared styles; fonts through the Fonts API.
+- [x] `Head`, `BaseLayout`, the head script, theme, skip link, logo, footer.
 
-`apps/design-system`: a Vite app run locally with `pnpm --filter design-system dev`, never
-deployed, so nothing needs hiding. It renders the tokens (with every colour pair's contrast
-in both themes), every component and block with a few examples each, and a sample post
-body. One test runs axe over each page.
+### Phase 4 — Header and menu
 
----
+- [x] The `<dialog>` menu and its animations, copied 1:1 from the prototype.
+- [x] Client-side page changes that keep the header, so a menu link closes the menu in one slide.
+- [x] Reduced motion and forced colours.
 
-## 8. Performance, SEO and accessibility checklist
+### Phase 5 — UI components
 
-### Performance
+- [x] Link, LinkButton, LinkTile, Card, TagList, bubbles, PagerNav, Icon, BackToTop.
 
-- [ ] Static pages prerendered at build; blog server-rendered with CDN caching.
-- [ ] Route-level code splitting (TanStack Router default — verify).
-- [ ] Minimal client JS: interactive islands only where needed; no heavy dependencies without justification in `docs/decisions.md`.
-- [x] Fonts self-hosted, WOFF2, subset, `font-display: swap`, fallback metric overrides (`size-adjust`, `ascent-override`) to avoid layout shift.
-- [x] Preload the primary face: Fredoka, which sets the headings.
-- [ ] Images: responsive `srcset`/`sizes`, AVIF/WebP, explicit `width`/`height`, `loading="lazy"` below the fold, `fetchpriority="high"` on the LCP image. Sanity images via its image URL builder.
-- [ ] Budgets (enforced in CI via Lighthouse CI): LCP < 2.5 s, INP < 200 ms, CLS < 0.1, Lighthouse Performance ≥ 95 on mobile.
+### Phase 6 — Content
 
-### SEO
+- [x] Collection schemas; the six posts, three projects and the privacy notice as MDX.
+- [x] Experience and skills lists; the content blocks (Callout, Facts, CodeFigure).
 
-- [x] Per-route `title`, `description`, canonical URL, Open Graph and Twitter card tags via `buildHeadTags()` in `seo`.
-- [x] `<html lang="en-GB">`.
-- [x] JSON-LD: `Person` (details from the CV, only fields Naomi approved for publishing) + `WebSite` on the home page, `BlogPosting` on posts.
-- [x] `sitemap.xml` (static routes and posts) and `robots.txt`.
-- [x] RSS feed at `/blog/feed.xml`.
-- [x] Semantic heading structure, descriptive link text, clean slugs.
-- [ ] Open Graph images (static per page initially; generated per post as a later enhancement).
+### Phase 7 — Pages
 
-### Accessibility (target WCAG 2.2 AA)
+- [x] Home, about, contact, work and project, blog and post, privacy, 404.
 
-- [x] Semantic landmarks, one `<h1>` per page, logical heading order.
-- [x] Skip link, visible `:focus-visible` styles, focus moved and route change announced on navigation.
-- [ ] Minimum 24×24 px target sizes; full keyboard support; no keyboard traps.
-- [x] Colour contrast verified for all token pairs in both themes (a test in `theming`, shown in the design system).
-- [x] `prefers-reduced-motion` and `forced-colors` respected.
-- [x] `prefers-contrast: more` respected: secondary text and lines take the text colour, thin lines thicken.
-- [x] No information by colour alone; icons have accessible names or are `aria-hidden`.
-- [x] `eslint-plugin-jsx-a11y` in lint; axe on every design-system page.
-- [ ] axe in Playwright on every route (Phase 8).
+### Phase 8 — Topics and search
 
----
+- [x] Topic list and topic pages; blog search.
 
-## 9. Deployment
+### Phase 9 — SEO outputs
 
-- Each app is a **separate Cloudflare project** pointing at the same repo with its own root directory and build command (`pnpm turbo build --filter=portfolio`).
-- Build only when relevant: configure build watch paths (or `turbo-ignore`) so each app only rebuilds when its own folder or a `packages/*` it depends on changes. With one app today this mostly skips deploys for docs-only changes; it matters once a second site exists.
-- Preview deployments on every branch/PR.
-- Custom domain: `naovixen.com` (plus `www` redirect to the apex, or the reverse — pick one canonical host).
-- Environment variables (`SANITY_API_READ_TOKEN`, `PREVIEW_SESSION_SECRET`; see `apps/portfolio/.env.example`) documented in `.env.example` per app; secrets only in the hosting dashboard.
-- GitHub Actions CI on every PR: typecheck, lint (ESLint + Stylelint), unit tests, token-file freshness check, Playwright + axe, Lighthouse CI.
-- `docs/adding-a-new-site.md` explains how to spin up a new site in minutes (e.g. a future merch shop: new app folder, depend on the shared packages, set domain, create hosting project, deploy).
+- [x] Structured data (Person, WebSite, BlogPosting, BreadcrumbList), sitemap, feed, robots.
+- [x] `_headers` (CSP, HSTS, caching) and `_redirects`.
 
----
+### Phase 10 — Verify
 
-## 10. Phases
+- [x] End-to-end tests on every route in all three engines, with and without script and styles.
+- [ ] Mobile Lighthouse 100 on every page type, measured on the Phase 11 preview. Local
+      runs on 2026-10-06 (`wrangler dev`, gzip, Lighthouse 13.5) scored 100 in every category
+      on a post and a project; home and `/blog/` scored 99 for performance (LCP 1.8 s against
+      1.7 s) and 100 in the rest.
+- [ ] Animation parity: the prototype and the new site side by side in each browser — menu,
+      card hover, button press.
+- [ ] By hand: real Safari on macOS and iOS; VoiceOver and NVDA through the menu, search and
+      theme switch.
 
-### Phase 0 — Groundwork and confirmation
+### Phase 11 — CI and deployment
 
-- [x] `git init` (default branch `main`), then create `.gitignore` covering `node_modules/`, build output, `.env*` (except `.env.example`), `source-material/` and `docs/content-inventory.md`.
-- [x] First commit: `.gitignore` and `PLAN.md` only — `chore: initialise repository`.
-- [x] Ask Naomi whether to connect a remote now (e.g. a private GitHub repository). CI (Phase 8) and deployment (Phase 9) need one.
-- [x] Read current docs: pnpm workspaces, Turborepo, TanStack Start + Router, Vite, React, Sanity, Cloudflare deployment for TanStack Start, typescript-eslint, Stylelint, Vitest, Playwright. Record versions in `docs/decisions.md`.
-- [x] Ask Naomi to confirm/amend section 3.2 and answer section 12. **Section 3.2 is superseded by `CLAUDE.md` and `.claude/rules/`. Questions 1 and 2 answered. Questions 3–6 still open.**
-- [x] Ask Naomi to place the Claude Design export (and/or screenshots) in `design-reference/` and her CV at `source-material/cv.pdf`.
-- [x] Add `source-material/` to `.gitignore` before anything is committed.
-- [x] Read the CV and write `docs/content-inventory.md` (also git-ignored): which page will use which CV information, plus a list of **content gaps** — everything the pages need that the CV doesn't cover. Ask Naomi to fill the gaps and confirm which contact details may be published.
-- [x] Create `CLAUDE.md` containing: coding guidelines (section 3), architecture rules (section 4), the docs-first rule, and "readability over cleverness".
-- **Verify:** Naomi has approved the guidelines. **Commit:** `docs: add CLAUDE.md and coding guidelines`.
+GitHub Actions checks; Cloudflare Workers Builds deploys. Pushing is the whole release: no
+wrangler login and no API token.
 
-### Phase 1 — Monorepo scaffold
+- [ ] `.github/workflows/ci.yml` on every PR and push to `main`: `check`, `lint`, `test`;
+      `test:e2e` split into one job per engine, each with script on and off; and
+      `pnpm test:lighthouse` (Lighthouse 13, fetched when run: median of three mobile runs on
+      five pages, retrying a failed recording; performance at least 95, every other category
+      100). Every job has a time limit. First run: Lighthouse scored the home page 99, 100,
+      100, 100 before a failed recording, now retried. Tick once it is green on a PR.
+- [x] Push `astro-rebuild` and open a PR to `main`.
+- [ ] Connect Workers Builds in the Cloudflare dashboard (Naomi): Workers & Pages → Create
+      application → Import a repository → `erohs/naovixen`. The Worker's name must be
+      `naovixen`, matching `wrangler.jsonc`. Build command `pnpm build`; deploy command
+      `npx wrangler deploy`; production branch `main`; build variable `PNPM_VERSION` =
+      `12.8.1` (Cloudflare's default pnpm is older). Its first build, of `main`, fails
+      until the PR merges, as `main` still holds the monorepo; nothing is served from it.
+      Every other branch gets a preview link on its pull request.
+- [ ] On the PR's preview link, `curl -I` for
+      `x-robots-tag: noindex`, the headers, the 404 status and the `/about` → `/about/`
+      redirect.
+- [ ] Require the CI checks to pass before a PR merges to `main` (GitHub → Settings →
+      Branches), since Workers Builds deploys `main` whatever CI says.
 
-- [x] Root `package.json`, `pnpm-workspace.yaml`, `turbo.json`, `.nvmrc` (current Node LTS), `.editorconfig`, `.gitignore`.
-- [x] `@naovixen/typescript-config` (base, react-library, app) and `@naovixen/eslint-config`; Prettier; Stylelint with `selector-class-pattern` enforcing `^nv-[a-z0-9]+(-[a-z0-9]+)*(__[a-z0-9]+(-[a-z0-9]+)*)?(--[a-z0-9]+(-[a-z0-9]+)*)?$`.
-- [x] Empty `theming`, `components`, `formatting`, `design-system` packages exporting source.
-- [x] `@typescript-eslint/naming-convention` configured for section 3.1/3.2: camelCase functions, variables and parameters; PascalCase classes, interfaces, types and React components; UPPER_CASE allowed for module-level constants; leading underscore **required** on `private` methods and **forbidden** elsewhere. Non-exported module functions with an underscore are checked in review (the rule can't tell exported from non-exported cleanly — verify against current docs).
-- [x] Vitest ESLint plugin with `valid-title` (or equivalent — check current docs) enforcing section 3.5: outer `describe` starts with `Using `, inner `describe`s start with `given `, `and ` or `when `, and every `test` starts with `then it should `. Enable `consistent-test-it` (or equivalent) set to `test` so `it` is a lint error.
-- [x] Lint rules enforcing section 3.4: component (`*.tsx`) and service files may export only their one component/class (e.g. `no-restricted-syntax` on exported interfaces, types, enums and top-level `const`s outside the matching subfolders); files in `interfaces/`, `enums/`, `functions/` may export only one symbol. Document any rule that can't be automated in `CLAUDE.md`.
-- [x] `apps/portfolio` scaffolded with TanStack Start, importing one function from each package to prove linking and HMR work across packages.
-- **Verify:** `pnpm dev`, `pnpm build`, `pnpm lint`, `pnpm typecheck` all pass; editing a package updates the app live. **Commit** once this passes.
+### Phase 12 — Launch content
 
-### Phase 2 — Theming package
+None of these may ship. Each is marked "Placeholder" in the code.
 
-- [x] Derive palette, typography, spacing, radii, shadows and motion from how `design-reference/` **looks when rendered**, normalised into a small, consistent scale in `*.tokens.ts`. Don't lift raw values from its CSS: collapse near-duplicates (e.g. five slightly different greys or paddings become one token) and list any merges in `docs/decisions.md` for Naomi to check.
-- [x] Token generator script + generated `tokens.css`; light and dark semantic themes.
-- [x] Reset, base typography, focus styles, layout primitives, minimal utilities, cascade layers.
-- [x] Self-hosted fonts with fallback metrics.
-- **Verify:** generator is deterministic; contrast check for all semantic pairs passes AA. **Commit** once this passes.
+- [ ] The real contact email (now `hello@naovixen.dev`).
+- [ ] GitHub and Bluesky handles, or remove them. LinkedIn is the only confirmed profile.
+- [ ] The testimonial's quote, name and role, or remove the section.
+- [ ] The portrait photo, or remove its frames.
+- [ ] The privacy notice's email and hosting providers, and a line on the cookieless
+      analytics.
+- [ ] The CV PDF, if one is to be published (a redacted copy, without the phone number or
+      personal email). Until then every CV link stays hidden.
+- [ ] An Open Graph image, at least one for the whole site.
+- [ ] The remaining gaps in `docs/content-inventory.md`.
 
-### Phase 3 — Logic packages
+### Phase 13 — Cut over
 
-- [x] `models`: `Project`, `NavigationItem`, `SocialLink`, `SeoMetadata`, `BlogPost`, `BlogPostSummary`, plus `Image`, `Site` and `Person` for SEO. `Product` dropped until a shop exists.
-- [x] `cms`: the `BlogRepository` interface, which the Sanity adapter joins in Phase 7.
-- [x] `seo`: `buildHeadTags`, and JSON-LD builders for `Person`, `WebSite` and `BlogPosting`.
-- [x] `formatting`: date and reading-time formatting (en-GB).
-- [x] `ThemeController` in `theming`, with cookie storage and `matchMedia` source implementations. `ReducedMotionService` dropped: every animation is CSS, which honours `prefers-reduced-motion` itself.
-- [x] Unit tests for everything, written to `.claude/rules/testing.md`.
-- **Verify:** every exported function tested; no React or DOM imports outside `components` and `design-system`. **Commit** once this passes.
-
-### Phase 4 — React packages
-
-Reworked after review: the first cut was site widgets, not a component library.
-
-- [x] `components`: generic, HTML-level, intrinsic props passed through — Button, BusyButton, IconButton, ToggleButton, Link, LinkIcon, LinkButton, ExternalLink, Input, TextArea, Label, FormField, Heading, Text, Code, Image, Tag, Blockquote, Icon (one `*.icon.ts` source per icon), VisuallyHidden, SkipLink.
-- [x] `layout`: Container, Stack, Cluster, Grid.
-- [x] `blocks`: Card, Callout, CodeBlock, Figure, TagList, SpeechBubble, Breadcrumb, Pagination, Disclosure, NavigationList, LinkTile, SectionHeading, HandDrawnRule.
-- [x] `brand`: Logo, Wordmark, Heart, Paw (the fox mascot was later removed at Naomi's request).
-- [x] `site-shell`: ThemeProvider and `useTheme`, ThemeToggle, SiteHeader, SiteNavigation, MobileMenu, SiteFooter, BackToTop.
-- [x] `portable-text`: BlogContent.
-- [x] App compositions: ProjectCard and PostCard in `apps/portfolio`.
-- [x] Showcases for every component in `design-system`. Behaviour + axe tests on every component.
-- **Verify:** all tests pass; ESLint and Stylelint clean; no component imports a raw palette token; no component file exports anything but its component. **Commit** once this passes.
-
-### Phase 5 — Portfolio app
-
-- [x] Root route: `<html lang="en-GB">`, theme cookie handling, head/meta, global CSS, provider, skip link, route announcer.
-- [x] Routes per the Claude Design prototype's layout, rebuilt from scratch with semantic HTML and our components: `/`, `/about`, `/blog`, `/blog/$slug`, `/contact`, `/privacy`, custom 404. The work routes move to Phase 7 with the CMS.
-- [x] Copy the CV cannot supply uses the prototype's placeholder text for now, kept in one clearly named placeholder file per route so it is easy to find and replace. It never deploys (see Phase 9).
-- [x] SEO metadata + JSON-LD on every route; `sitemap.xml`, `robots.txt`.
-- **Verify:** pages match the prototype's layout visually on mobile and desktop (compare screenshots side by side), with no code carried over from it; Lighthouse ≥ 95 across all four categories locally. **Commit** once this passes.
-- **Result:** mobile Lighthouse 97–98 performance and 100 for accessibility, best practices and SEO on every page, measured behind compression (see `docs/decisions.md`); 87–92 performance without it.
-
-### Phase 6 — Design system page
-
-- [x] Build `apps/design-system` (section 7). Replaced the planned `/system` route and showcase package, at Naomi's request.
-- **Verify:** every token, component and block appears; axe passes on every page. **Commit** once this passes.
-
-### Phase 7 — Blog
-
-- [x] Sanity project + `apps/studio` schemas (post, project, tag, custom blocks) with validation. Author dropped at Naomi's request.
-- [x] Project repository in `cms`, `/work` and `/work/$slug` routes, and the home page's featured work.
-- [x] `SanityBlogRepository` in `cms`, mapping to its types, with tests against fixture data.
-- [x] Blog routes with caching headers, RSS, sitemap entries. Tag filtering and pagination dropped for now at Naomi's request.
-- [x] Draft preview route, from the Studio's Presentation tool. The webhook cache purge moves to Phase 9, which sets up the CDN.
-- **Verify:** publishing a post in Studio appears on the live site within the cache window with **no deployment**. **Commit** once this passes.
-
-### Phase 8 — Quality gates and CI
-
-- [ ] GitHub Actions: typecheck, lint, Stylelint, unit tests, token freshness, Playwright + axe on all routes, Lighthouse CI budgets.
-- **Verify:** CI green on a PR. **Commit** once this passes.
-
-### Phase 9 — Deployment
-
-- [ ] Every Phase 5 placeholder replaced with real copy from the CV or Naomi.
-- [ ] Cloudflare project for the portfolio; Sanity Studio deployed (`pnpm --filter studio deploy`, then record the printed `appId` in `sanity.cli.ts`); `naovixen.com` added to Sanity's CORS origins.
-- [ ] CDN bypasses its cache for requests with the `nv-preview` cookie; CSP `frame-ancestors` allows the hosted Studio; optional Sanity webhook purging changed pages.
-- [ ] Custom domains, HTTPS, security headers (CSP, `Referrer-Policy`, `Permissions-Policy`, HSTS).
-- [ ] Build filtering configured per app.
-- **Verify:** `naovixen.com` live over HTTPS with the canonical host redirect working. **Commit** once this passes.
-
-### Phase 10 — Documentation and cleanup
-
-- [ ] `docs/architecture.md`, `docs/decisions.md`, `docs/adding-a-new-site.md`, README with day-to-day commands ("how to add a component", "how to add a post", "how to add a page").
-- [ ] Delete `docs/content-inventory.md` once all gaps are filled (keep `source-material/` locally for future updates).
-- [ ] **Delete `PLAN.md`** and commit: `chore: remove implementation plan`.
+- [ ] Merge the `astro-rebuild` PR; Workers Builds deploys it.
+- [ ] Add `www.naovixen.com` as the Worker's custom domain, keeping `naovixen.com`
+      redirecting to it, as the domain does today.
+- [ ] Turn on Cloudflare Web Analytics, which sets no cookies. Check its current docs first:
+      if it needs a script beacon, ask before adding it, and allow it in the CSP in
+      `public/_headers`. Record the decision in `docs/decisions.md`.
+- [ ] Retire the Sanity Studio deployment and project (the export is kept).
+- [ ] Delete `docs/content-inventory.md` once every gap is filled.
+- [x] Update the memory notes that still describe the monorepo.
+- [ ] **Delete `PLAN.md`:** `chore: remove the launch plan`.
 
 ---
 
-## 11. Definition of done
+## Definition of done
 
-- Portfolio deployed to `naovixen.com` from a monorepo whose unversioned shared packages contain nothing portfolio-specific, so a new site can be added without touching them.
-- Blog posts publish without a deploy and render with naovixen components.
-- The design system app shows every token and component.
-- WCAG 2.2 AA, Lighthouse ≥ 95 in all categories on mobile, CI enforcing it.
-- Logic packages never import React; React packages take content as props.
-- `PLAN.md` removed; `CLAUDE.md` and `docs/` hold the lasting knowledge.
-
----
-
-## 12. Open questions (answer before the dependent phase)
-
-1. **Section 3.2 defaults** — keep or change? In particular **enums**: native TypeScript `enum`, or an `as const` object with a derived union type (erases to plain objects, works with TypeScript's `erasableSyntaxOnly` and Node's type stripping, which native enums don't)? (Phase 0)
-2. **Blog CMS** — Sanity (structured content, hosted editor, instant publishing) or an alternative? Git-based options (MDX in the repo) are simpler but need a rebuild to publish. (Phase 7)
-3. **Project/portfolio content** — typed data files in the repo, or managed in the CMS alongside the blog? (Phase 5) **Answered: Sanity, alongside the blog.**
-4. **Hosting** — happy with Cloudflare, or prefer Netlify/Vercel? (Phase 9)
-5. **Analytics** — none, or a privacy-friendly option that avoids a UK/EU cookie banner (e.g. Plausible, Cloudflare Web Analytics)? (Phase 9)
-6. **Contact** — contact form (needs a form/email service) or just links? (Phase 5) **Answered: links only.**
+- `www.naovixen.com` serves the Astro site over HTTPS, with `naovixen.com` redirecting to it.
+- No placeholder reaches the live site.
+- Publishing a post is a push to `main`.
+- WCAG 2.2 AA and mobile Lighthouse 100, checked automatically and by hand.
+- `PLAN.md` removed; `CLAUDE.md`, `.claude/rules/` and `docs/decisions.md` hold what lasts.

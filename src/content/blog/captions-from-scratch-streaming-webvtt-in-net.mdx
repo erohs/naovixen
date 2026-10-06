@@ -1,0 +1,38 @@
+---
+title: "Captions from scratch: streaming WebVTT in .NET"
+excerpt: "Parsing caption files without loading them into memory, and why I ended up being forgiving on input."
+published: "2026-08-07"
+topics: ["C#", ".NET", "Accessibility"]
+---
+
+Captions were one of the biggest accessibility gaps in our products: lots of user-uploaded video and no way to caption it. Fixing it started somewhere unglamorous, with reading WebVTT files.
+
+## Why streaming
+
+Caption files can be long, and they arrive alongside video uploads that are already heavy. Reading cues one at a time with IAsyncEnumerable keeps memory flat and lets the API start validating before it's read the whole file.
+
+```csharp title="WebVttReader.cs"
+public static async IAsyncEnumerable<Cue> ReadCuesAsync(
+    Stream stream, [EnumeratorCancellation] CancellationToken ct = default)
+{
+    using var reader = new StreamReader(stream);
+    var block = new List<string>();
+    while (await reader.ReadLineAsync(ct) is { } line)
+    {
+        if (line.Length > 0) { block.Add(line); continue; }
+        if (TryParseCue(block, out var cue)) yield return cue;
+        block.Clear();
+    }
+    if (TryParseCue(block, out var last)) yield return last;
+}
+```
+
+## Real files are messy
+
+Files exported from different tools had missing headers, comma-separated milliseconds and overlapping cues. Rejecting them all would have been technically correct and completely useless.
+
+<Callout label="lesson learnt" title="Forgiving on input, strict on output">
+    Recover from common mistakes and log them, but sanitise and validate everything before it reaches the player.
+</Callout>
+
+On the front end, reusable React components turn those cues into a caption track and a transcript that follows playback, where every cue is a button that seeks the video. The transcript ended up being the part people mentioned most.

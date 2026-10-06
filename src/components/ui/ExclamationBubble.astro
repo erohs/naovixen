@@ -1,0 +1,27 @@
+---
+import Icon from "./Icon.astro";
+import SpeechBubble from "./SpeechBubble.astro";
+---
+
+<div class="exclamation">
+    <SpeechBubble>
+        <slot />
+    </SpeechBubble>
+    <Icon name="motion-lines" class="lines" />
+</div>
+
+<style>
+    .exclamation {
+        display: flex;
+        align-items: end;
+        gap: 14px;
+    }
+
+    /* Level with the middle of the bubble rather than its tail. */
+    .lines {
+        inline-size: 24px;
+        block-size: 19.5px;
+        margin-block-end: 22px;
+        color: var(--color-border);
+    }
+</style>

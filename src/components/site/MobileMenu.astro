@@ -1,0 +1,240 @@
+---
+import { site } from "../../site";
+import ExclamationBubble from "../ui/ExclamationBubble.astro";
+import Link from "../ui/Link.astro";
+import ElsewhereList from "./ElsewhereList.astro";
+import HeaderBar from "./HeaderBar.astro";
+import MenuButton from "./MenuButton.astro";
+import NavList from "./NavList.astro";
+import ThemeToggle from "./ThemeToggle.astro";
+---
+
+<dialog id="menu" class="menu" aria-label="Menu">
+    <div class="row">
+        <HeaderBar>
+            <ThemeToggle />
+            <MenuButton command="close" label="Close menu" />
+        </HeaderBar>
+    </div>
+    <div class="sheet">
+        <div class="content">
+            <nav aria-label="Main">
+                <NavList items={site.navigation} layout="menu" />
+            </nav>
+            <div class="footer">
+                <ExclamationBubble>say hello!</ExclamationBubble>
+                {site.email !== undefined && (
+                    <Link href={`mailto:${site.email}`} variant="standalone" class="email">
+                        {site.email}
+                    </Link>
+                )}
+                <ElsewhereList />
+            </div>
+        </div>
+    </div>
+</dialog>
+
+<script>
+    import { connectMenu } from "../../scripts/menu";
+
+    connectMenu();
+</script>
+
+<style>
+    /*
+     * A modal dialog over the whole window, transparent itself: the sheet slides in from the side,
+     * and a copy of the header's row stands in for the real one, so the row stays put and usable.
+     *
+     * Firefox and Safari take a closed dialog off the screen at once, before any exit transition
+     * can run. So it stays rendered when closed, hidden only once the sheet has slid away, and a
+     * hidden dialog is out of the tab order and the accessibility tree. With page styles off, the
+     * browser's own stylesheet still hides it.
+     */
+    .menu {
+        position: fixed;
+        inset: 0;
+        display: block;
+        inline-size: auto;
+        block-size: auto;
+        max-inline-size: none;
+        max-block-size: none;
+        margin: 0;
+        padding: 0;
+        border: 0;
+        overflow: clip;
+        visibility: hidden;
+        background: transparent;
+        color: inherit;
+        transition: visibility 0s linear 0.5s;
+
+        &::backdrop {
+            background: transparent;
+        }
+    }
+
+    /*
+     * First in the markup, so focus meets the logo and close button before the links, as it did in
+     * the header. Shown only while open: the header's own row is hidden then, and shows again the
+     * moment the menu closes, so the two are never drawn over each other.
+     */
+    .row {
+        position: relative;
+        z-index: var(--z-index-raised);
+        visibility: hidden;
+    }
+
+    /*
+     * The page's colour with a wavy leading edge: the same wave drawn twice, in the line colour
+     * and, just inside it, in the page colour. Dots gather in the far corner.
+     */
+    .sheet {
+        --wave: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 400' preserveAspectRatio='none'%3E%3Cpath d='M12 0Q2 25 12 50T12 100T12 150T12 200T12 250T12 300T12 350T12 400H24V0Z'/%3E%3C/svg%3E");
+        --wave-overhang: 22px;
+        --off-screen: calc(100% + var(--space-between-groups)) 0;
+
+        position: absolute;
+        inset: 0;
+        translate: var(--off-screen);
+        will-change: translate;
+        background:
+            radial-gradient(ellipse 90% 60% at 100% 100%, transparent, var(--color-background-page)),
+            radial-gradient(
+                    circle,
+                    color-mix(in srgb, var(--color-decoration-dots) 60%, transparent) 15%,
+                    transparent 20%
+                )
+                0 0 / var(--space-between-content) var(--space-between-content),
+            var(--color-background-page);
+        transition: translate 0.5s cubic-bezier(0.7, 0, 0.25, 1);
+
+        &::before,
+        &::after {
+            content: "";
+            position: absolute;
+            inset-block: 0;
+            inline-size: calc(var(--wave-overhang) + 2px);
+            mask: var(--wave) center / 100% 100% no-repeat;
+        }
+
+        &::before {
+            inset-inline-start: calc(-1 * (var(--wave-overhang) + var(--border-width-highlight)));
+            background-color: var(--color-border);
+        }
+
+        &::after {
+            inset-inline-start: calc(-1 * var(--wave-overhang));
+            background-color: var(--color-background-page);
+        }
+    }
+
+    /* Clears the header's row at the top, and scrolls if a short screen cannot hold it all. */
+    .content {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-between-regions);
+        padding: calc(var(--size-action-minimum) + 2 * var(--space-between-groups)) var(--space-padding-page)
+            var(--space-between-regions);
+        overflow: hidden auto;
+        opacity: 0;
+        transition: opacity 0.2s ease;
+    }
+
+    /* The links slide in one after another, any beyond the fifth with the fifth, then the footer rises. */
+    .content :global(.item) {
+        opacity: 0;
+        translate: var(--space-between-regions) 0;
+        transition:
+            opacity 0.25s ease,
+            translate 0.45s cubic-bezier(0.3, 1.5, 0.5, 1);
+    }
+
+    .footer {
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+        gap: var(--space-between-content);
+        margin-block-start: auto;
+        opacity: 0;
+        translate: 0 var(--space-between-content);
+        transition:
+            opacity 0.3s ease,
+            translate 0.4s ease;
+    }
+
+    .footer .email {
+        margin-block-start: var(--space-between-text);
+        font-size: var(--font-size-lead);
+    }
+
+    .menu[open] {
+        visibility: visible;
+        transition-delay: 0s;
+
+        & .row {
+            visibility: visible;
+        }
+
+        & .sheet {
+            translate: none;
+        }
+
+        & .content {
+            opacity: 1;
+            transition: opacity 0.25s ease 0.2s;
+        }
+
+        & .content :global(.item),
+        & .footer {
+            opacity: 1;
+            translate: none;
+        }
+
+        & .content :global(.item) {
+            transition-delay: min(calc(0.16s + var(--i) * 0.05s), 0.36s);
+        }
+
+        & .footer {
+            transition-delay: 0.42s;
+        }
+    }
+
+    :global(:root:has(.menu[open])) {
+        overflow: hidden;
+    }
+
+    /* The sheet fades in and out where it would otherwise slide; the row above it never moves. */
+    @media (prefers-reduced-motion: reduce) {
+        .sheet,
+        .content :global(.item),
+        .footer {
+            translate: none;
+        }
+
+        .menu {
+            transition: visibility 0s linear var(--duration-medium);
+        }
+
+        .sheet {
+            opacity: 0;
+            transition: opacity var(--duration-medium) var(--easing-standard);
+        }
+
+        .menu[open] .sheet {
+            opacity: 1;
+        }
+    }
+
+    /* The wave is drawn with backgrounds, which forced colours drop, so a plain edge stands in. */
+    @media (forced-colors: active) {
+        .sheet {
+            border-inline-start: var(--border-width-highlight) solid CanvasText;
+
+            &::before,
+            &::after {
+                display: none;
+            }
+        }
+    }
+</style>

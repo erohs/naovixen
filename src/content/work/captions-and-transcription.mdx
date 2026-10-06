@@ -1,0 +1,48 @@
+---
+title: "Captions and transcription"
+summary: "Closed captions and transcripts for user-uploaded audio and video, across three products."
+order: 1
+featured: true
+stack: ["C#", ".NET", "React", "TypeScript", "WebVTT"]
+---
+
+<Facts
+    items={[
+        { label: "my role", value: "Lead engineer: design, back end and front end" },
+        { label: "timeline", value: "2025 – 2026" },
+    ]}
+/>
+
+Built at PebblePad, so there's no public demo or repo. I'm happy to walk through it in more detail in an interview.
+
+## The problem
+
+People upload a lot of audio and video into their portfolios, but none of it could carry captions or transcripts. That was a WCAG 2.2 conformance gap, and it came up again and again in customer accessibility audits and tender questionnaires.
+
+## My approach
+
+I built a streaming WebVTT parser in C#/.NET so large caption files never sit in memory, then a set of reusable React and TypeScript components: a caption track for the player, a transcript that follows playback, and an upload flow for caption files.
+
+```csharp title="CaptionService.cs"
+await foreach (var cue in WebVttReader.ReadCuesAsync(stream, ct))
+{
+    yield return cue with { Text = Sanitise(cue.Text) };
+}
+```
+
+## Challenges
+
+Caption files in the wild are messy: missing headers, overlapping cues and odd encodings. Being strict broke real files, but being loose let bad data through to the player.
+
+<Callout label="lesson learnt" title="Be forgiving on input, strict on output">
+    The parser recovers from common mistakes and logs them, but everything it hands to the UI is validated and
+    sanitised.
+</Callout>
+
+## Outcome
+
+Shipped across three products. Captions and transcripts closed a recurring audit finding and gave the sales team a clear answer in tenders.
+
+## What I'd do differently
+
+Run sessions with deaf and hard-of-hearing users before designing the transcript panel, rather than validating it afterwards.

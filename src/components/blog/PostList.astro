@@ -1,0 +1,27 @@
+---
+import type { CollectionEntry } from "astro:content";
+import PostCard from "./PostCard.astro";
+
+interface Props {
+    posts: CollectionEntry<"blog">[];
+}
+
+const { posts } = Astro.props;
+---
+
+{posts.length === 0 ? (
+    <p>There are no posts yet.</p>
+) : (
+    <>
+        <ul class="card-grid" data-post-list>
+            {posts.map((post) => (
+                <li data-post-id={post.id}>
+                    <PostCard post={post} headingLevel={2} />
+                </li>
+            ))}
+        </ul>
+        <p hidden data-no-matches>
+            No posts match that. Try a different word or topic.
+        </p>
+    </>
+)}

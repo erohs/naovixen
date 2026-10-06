@@ -1,0 +1,71 @@
+---
+import { site } from "../../site";
+import HeaderBar from "./HeaderBar.astro";
+import MenuButton from "./MenuButton.astro";
+import MobileMenu from "./MobileMenu.astro";
+import NavList from "./NavList.astro";
+import ThemeToggle from "./ThemeToggle.astro";
+---
+
+<header>
+    <HeaderBar>
+        <nav aria-label="Main" class="navigation">
+            <NavList items={site.navigation} layout="row" />
+        </nav>
+        <ThemeToggle />
+        <MenuButton command="show-modal" label="Menu" class="open" />
+    </HeaderBar>
+    <MobileMenu />
+</header>
+
+<script>
+    import { connectNavigation } from "../../scripts/navigation";
+
+    connectNavigation();
+</script>
+
+<style>
+    /*
+     * The header stacks above the page. A closed menu still sliding away stays inside it, beneath
+     * the row; an open one is in the top layer, above everything.
+     */
+    header {
+        position: relative;
+        z-index: var(--z-index-overlay);
+
+        & > :global(.bar) {
+            position: relative;
+            z-index: var(--z-index-raised);
+        }
+    }
+
+    /* A page change is instant: the menu's slide is the only motion it needs. */
+    :global(html[data-astro-transition]::view-transition-group(root)),
+    :global(html[data-astro-transition]::view-transition-old(root)),
+    :global(html[data-astro-transition]::view-transition-new(root)) {
+        animation: none;
+    }
+
+    /* The open menu shows its own copy of the row in its place. */
+    :global(:root:has(#menu[open])) header > :global(.bar) {
+        visibility: hidden;
+    }
+
+    /* Together with the row's gap, the switch sits as far from the last link as the links sit from each other. */
+    .navigation {
+        margin-inline-end: calc(var(--space-between-groups) - var(--space-between-content));
+    }
+
+    /* Media queries cannot read custom properties: 47.5rem is 760px at the default size. */
+    @media (width < 47.5rem) {
+        .navigation {
+            display: none;
+        }
+    }
+
+    @media (width >= 47.5rem) {
+        .open {
+            display: none;
+        }
+    }
+</style>

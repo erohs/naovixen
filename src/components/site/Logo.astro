@@ -1,0 +1,97 @@
+---
+/*
+ * The wordmark is JetBrains Mono, drawn from the font's outlines (SIL Open Font License 1.1) so
+ * no page downloads the font for one word: "<" and "/>" in semi-bold, the name in regular.
+ * Units are the font's, 1000 to the em, each box running from its ascent to its descent.
+ */
+const runs = [
+    {
+        isBracket: true,
+        width: 600,
+        path: "M521.6 -57.9 78.4 -269.8V-388.9L521.6 -601.2V-492.5L226.7 -354.2Q207.2 -345.2 188.3 -339Q169.4 -332.7 159.2 -330.7Q169.9 -328.7 189.1 -322.6Q208.4 -316.6 226.7 -307.6L521.6 -168.7Z",
+    },
+    {
+        isBracket: false,
+        width: 4800,
+        path: "M92 0V-550H182V-445H201L182 -424Q182 -489 221 -524.5Q260 -560 329 -560Q412 -560 461 -509Q510 -458 510 -370V0H420V-360Q420 -419 388.5 -450.5Q357 -482 303 -482Q247 -482 214.5 -448Q182 -414 182 -350V0ZM852 10Q765 10 715 -34.5Q665 -79 665 -155Q665 -232 715 -276Q765 -320 850 -320H1020V-375Q1020 -426 989.5 -453.5Q959 -481 903 -481Q854 -481 821 -460.5Q788 -440 783 -405H693Q702 -476 760 -518Q818 -560 905 -560Q1000 -560 1055 -511Q1110 -462 1110 -378V0H1022V-105H1007L1022 -120Q1022 -60 975.5 -25Q929 10 852 10ZM874 -61Q938 -61 979 -93Q1020 -125 1020 -175V-253H852Q807 -253 781 -228Q755 -203 755 -160Q755 -114 786.5 -87.5Q818 -61 874 -61ZM1500 8Q1434 8 1386 -17Q1338 -42 1311.5 -89.5Q1285 -137 1285 -202V-348Q1285 -414 1311.5 -461Q1338 -508 1386 -533Q1434 -558 1500 -558Q1566 -558 1614 -533Q1662 -508 1688.5 -461Q1715 -414 1715 -349V-202Q1715 -137 1688.5 -89.5Q1662 -42 1614 -17Q1566 8 1500 8ZM1500 -72Q1559 -72 1592 -105Q1625 -138 1625 -202V-348Q1625 -412 1592 -445Q1559 -478 1500 -478Q1442 -478 1408.5 -445Q1375 -412 1375 -348V-202Q1375 -138 1408.5 -105Q1442 -72 1500 -72ZM2039 0 1855 -550H1947L2069 -180Q2080 -147 2089 -116.5Q2098 -86 2102 -69Q2107 -86 2116 -116.5Q2125 -147 2135 -180L2254 -550H2345L2161 0ZM2485 0V-82H2680V-468H2510V-550H2770V-82H2955V0ZM2715 -649Q2682 -649 2663 -666Q2644 -683 2644 -712Q2644 -742 2663 -759.5Q2682 -777 2715 -777Q2748 -777 2767 -759.5Q2786 -742 2786 -712Q2786 -683 2767 -666Q2748 -649 2715 -649ZM3050 0 3245 -283 3062 -550H3168L3277 -380Q3284 -369 3290.5 -356Q3297 -343 3301 -335Q3304 -343 3310.5 -356Q3317 -369 3324 -380L3434 -550H3539L3356 -282L3550 0H3444L3326 -180Q3319 -191 3312.5 -205.5Q3306 -220 3301 -229Q3297 -220 3289.5 -205.5Q3282 -191 3274 -180L3155 0ZM3900 10Q3835 10 3786.5 -16Q3738 -42 3711.5 -89.5Q3685 -137 3685 -200V-350Q3685 -414 3711.5 -461Q3738 -508 3786.5 -534Q3835 -560 3900 -560Q3965 -560 4013.5 -534Q4062 -508 4088.5 -461Q4115 -414 4115 -350V-253H3773V-200Q3773 -135 3806 -100.5Q3839 -66 3900 -66Q3952 -66 3984 -84.5Q4016 -103 4023 -140H4113Q4104 -71 4045.5 -30.5Q3987 10 3900 10ZM4027 -313V-350Q4027 -415 3994.5 -450Q3962 -485 3900 -485Q3839 -485 3806 -450Q3773 -415 3773 -350V-321H4034ZM4292 0V-550H4382V-445H4401L4382 -424Q4382 -489 4421 -524.5Q4460 -560 4529 -560Q4612 -560 4661 -509Q4710 -458 4710 -370V0H4620V-360Q4620 -419 4588.5 -450.5Q4557 -482 4503 -482Q4447 -482 4414.5 -448Q4382 -414 4382 -350V0Z",
+    },
+    {
+        isBracket: true,
+        width: 1200,
+        path: "M101.1 110 451.7 -830H573.3L508.3 -655.7L1076.6 -389.3V-270.3L633.4 -57.9V-168.3L928.3 -306.4Q948.2 -315.4 969.1 -320.9Q990.1 -326.4 1001.6 -328Q989.5 -330 968.6 -335.5Q947.6 -341 928.3 -350L473.6 -563.1L222.7 110Z",
+    },
+];
+---
+
+<span class="logo">
+    <span class="wordmark">
+        {runs.map((run) => (
+            <svg
+                class:list={["glyphs", run.isBracket && "bracket"]}
+                viewBox={`0 -1020 ${run.width} 1320`}
+                width={Math.round(run.width * 0.022)}
+                height="29"
+                fill="currentcolor"
+                role={run.isBracket ? undefined : "img"}
+                aria-label={run.isBracket ? undefined : "naovixen"}
+                aria-hidden={run.isBracket ? "true" : undefined}>
+                <path d={run.path} />
+            </svg>
+        ))}
+    </span>
+    <span class="cursor" aria-hidden="true"></span>
+</span>
+
+<style>
+    .logo {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--border-width-standout);
+    }
+
+    /* Set in the line as the text was: lowered by the font's descent, so the baselines meet. */
+    .glyphs {
+        display: inline;
+        inline-size: auto;
+        block-size: 1.32em;
+        vertical-align: -0.3em;
+
+        & + & {
+            margin-inline-start: var(--space-between-text);
+        }
+    }
+
+    .bracket {
+        color: var(--color-text-accent);
+    }
+
+    .cursor {
+        inline-size: var(--border-width-standout);
+        block-size: 1em;
+        background-color: currentcolor;
+        opacity: 0;
+    }
+
+    :global(a:is(:hover, :focus-visible)) .cursor {
+        opacity: 1;
+        animation: blink calc(2 * var(--duration-slow)) steps(1) infinite;
+    }
+
+    @keyframes blink {
+        50% {
+            opacity: 0;
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        :global(a:is(:hover, :focus-visible)) .cursor {
+            animation: none;
+        }
+    }
+
+    @media (forced-colors: active) {
+        .cursor {
+            border-inline-start: var(--border-width-standout) solid;
+        }
+    }
+</style>

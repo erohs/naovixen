@@ -1,0 +1,45 @@
+---
+import { getEntry } from "astro:content";
+import Prose from "../components/content/Prose.astro";
+import PageLayout from "../layouts/PageLayout.astro";
+import { formatDate, isoDate } from "../lib/format-date";
+
+const notice = await getEntry("legal", "privacy");
+
+if (notice === undefined) {
+    throw new Error("The privacy notice is missing from src/content/legal.");
+}
+
+const { title, intro, updated } = notice.data;
+---
+
+<PageLayout title={title} description={intro} crumb="Privacy notice">
+    <article aria-labelledby="privacy-title" class="notice">
+        <header class="header">
+            <h1 id="privacy-title" class="title-size">
+                {title}
+            </h1>
+            <p class="meta">
+                Last updated <time datetime={isoDate(updated)}>{formatDate(updated)}</time>
+            </p>
+            <p class="lead">{intro}</p>
+        </header>
+        <Prose entry={notice} />
+    </article>
+</PageLayout>
+
+<style>
+    .notice {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-between-blocks);
+        max-inline-size: var(--layout-width-prose);
+        margin-block-start: var(--space-below-heading);
+    }
+
+    .header {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-between-content);
+    }
+</style>

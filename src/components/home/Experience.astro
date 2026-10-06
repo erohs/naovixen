@@ -1,0 +1,113 @@
+---
+import { experience } from "../../data/experience";
+import { site } from "../../site";
+import Icon from "../ui/Icon.astro";
+import Link from "../ui/Link.astro";
+import HomeSection from "./HomeSection.astro";
+---
+
+<HomeSection
+    id="experience"
+    heading="Experience"
+    intro="Seven years at PebblePad, a higher-education portfolio and assessment platform, with a first-class degree along the way.">
+    {site.cvPath !== undefined && (
+        <Link slot="action" href={site.cvPath} download variant="standalone" aria-label="Full CV (PDF)">
+            Full CV <Icon name="arrow-right" />
+        </Link>
+    )}
+    <ol class="timeline">
+        {experience.map((data) => (
+            <li class:list={["entry", data.icon === undefined && "entry--dot"]}>
+                {data.icon && <Icon name={data.icon} class="marker" />}
+                <p class="meta">{data.dates}</p>
+                <h3 class="title">{data.title}</h3>
+                <p class="organisation">{data.organisation}</p>
+                <p class="note">{data.note}</p>
+            </li>
+        ))}
+    </ol>
+</HomeSection>
+
+<style>
+    .timeline {
+        display: flex;
+        flex-direction: column;
+        max-inline-size: var(--layout-width-prose);
+        padding: 0;
+        list-style: none;
+    }
+
+    /*
+     * Every marker is centred on one vertical axis, level with the dates. A plain entry draws its
+     * dot on ::after; ::before is the faint line running down to the next entry's marker.
+     */
+    .entry {
+        --dot-size: calc(var(--space-between-content) + 2 * var(--border-width-standout));
+        --icon-size: var(--space-between-groups);
+        --axis: calc(var(--icon-size) / 2);
+        --marker-middle: calc(var(--space-between-lines) + var(--dot-size) / 2);
+
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-between-lines);
+        padding-block-end: var(--space-between-regions);
+        padding-inline-start: calc(var(--space-between-regions) + var(--space-between-lines));
+
+        &:not(:last-child)::before {
+            content: "";
+            position: absolute;
+            inset-block: var(--icon-size) var(--space-between-lines);
+            inset-inline-start: calc(var(--axis) - var(--border-width-standout) / 2);
+            inline-size: var(--border-width-standout);
+            background-color: var(--color-border);
+            opacity: 0.3;
+        }
+    }
+
+    .entry--dot::after {
+        content: "";
+        position: absolute;
+        inset-block-start: var(--space-between-lines);
+        inset-inline-start: calc(var(--axis) - var(--dot-size) / 2);
+        inline-size: var(--dot-size);
+        block-size: var(--dot-size);
+        border: var(--border-width-standout) solid var(--color-border);
+        border-radius: var(--radius-round);
+        background-color: var(--color-background-accent);
+    }
+
+    .marker {
+        position: absolute;
+        inset-block-start: calc(var(--marker-middle) - var(--icon-size) / 2);
+        inset-inline-start: 0;
+        inline-size: var(--icon-size);
+        block-size: var(--icon-size);
+        padding: calc(var(--space-between-text) - var(--border-width-standout));
+        border: var(--border-width-standout) solid var(--color-border);
+        border-radius: var(--radius-round);
+        background-color: var(--color-background-accent);
+        color: var(--color-text-on-accent);
+    }
+
+    .title {
+        font-size: var(--font-size-h4);
+    }
+
+    .organisation {
+        font-weight: var(--font-weight-semi-bold);
+    }
+
+    .note {
+        max-inline-size: 62ch;
+        margin-block-start: var(--space-between-lines);
+        color: var(--color-text-secondary);
+    }
+
+    @media (forced-colors: active) {
+        .entry::before,
+        .entry::after {
+            background-color: CanvasText;
+        }
+    }
+</style>
