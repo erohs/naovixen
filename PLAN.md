@@ -13,8 +13,7 @@
 every check: types, lint, unit tests, end-to-end in all three engines with and without
 script, and the Lighthouse budget.
 
-Still to do: the verification that needs a person or a deployment (Phase 10), connecting
-Cloudflare (Phase 11), launch content from Naomi (Phase 12), and the cut-over (Phase 13).
+Still to do: the verification that needs a person (Phase 10), launch content from Naomi (Phase 12), and the cut-over (Phase 13).
 `www.naovixen.com` is still served by Vercel.
 
 The TanStack Start, React and Sanity monorepo this replaces is at the `pre-astro` tag, and
@@ -121,16 +120,16 @@ wrangler login and no API token.
       100). Every job has a time limit. Each run's summary page shows the Lighthouse scores
       and the end-to-end results, with the merged Playwright report attached. Green on PR #1.
 - [x] Push `astro-rebuild` and open a PR to `main`.
-- [ ] Connect Workers Builds in the Cloudflare dashboard (Naomi): Workers & Pages → Create
-      application → Import a repository → `erohs/naovixen`. The Worker's name must be
-      `naovixen`, matching `wrangler.jsonc`. Build command `pnpm build`; deploy command
-      `npx wrangler deploy`; production branch `main`; build variable `PNPM_VERSION` =
-      `12.8.1` (Cloudflare's default pnpm is older). Its first build deploys `main` to the
-      Worker's `workers.dev` address only; the domain is untouched until Phase 13. Every
-      other branch gets a preview link on its pull request.
-- [ ] On a PR's preview link, `curl -I` for
-      `x-robots-tag: noindex`, the headers, the 404 status and the `/about` → `/about/`
-      redirect.
+- [x] Connect Workers Builds in the Cloudflare dashboard (Naomi, 2026-10-06): the Worker
+      `naovixen`, matching `wrangler.jsonc`; build command `pnpm run build`; deploy command
+      `npx wrangler deploy` on `main`; Cloudflare's default `npx wrangler preview` on every
+      other branch, which needs the `previews` block in `wrangler.jsonc`; build variable
+      `PNPM_VERSION` = `12.8.1` (Cloudflare's default pnpm is older). `main` deploys to
+      `naovixen.naomimshore.workers.dev`; the domain is untouched until Phase 13.
+- [x] On PR #2's preview link (`<branch>-naovixen.naomimshore.workers.dev`): `x-robots-tag:
+    noindex`, the headers, the redirects and the 404 status all as expected. Previews show
+      Cloudflare's plain "Not found" rather than `404.html`, which production serves; a gap in
+      the Previews beta, so check the 404 page on production rather than a preview.
 
 ### Phase 12 — Launch content
 
