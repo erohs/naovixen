@@ -18,7 +18,8 @@ script says so with `test.skip(!javaScriptEnabled, …)`. A test never races an 
 it down in the test instead.
 
 **Lighthouse** (`tests/lighthouse.ts`, `pnpm test:lighthouse`) holds every page type to its
-mobile budget in CI, against the site served by `wrangler dev`.
+mobile budget in CI, against the site served by `wrangler dev`. It needs Chrome; on a machine
+without it, set `CHROME_PATH` to Playwright's Chromium.
 
 Test behaviour, not implementation: query as a reader would, by role, accessible name or
 text. No markup snapshots.

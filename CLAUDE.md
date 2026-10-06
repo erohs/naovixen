@@ -2,7 +2,6 @@
 
 Naomi Shore's portfolio and blog: a static Astro site that builds to plain HTML, deployed to
 Cloudflare. TypeScript, pnpm. `docs/decisions.md` records the choices code cannot explain.
-`PLAN.md` tracks the work left before launch; tick its boxes as phases finish.
 
 ## Working rules
 
@@ -27,7 +26,8 @@ supplied, such as the testimonial or a portrait, is left undefined in `src/site.
 whatever shows it hides itself. Posts, case studies and copy are written with the `writer`
 agent.
 
-Never publish her phone number, home address or personal email unless she asks.
+Never publish her phone number, home address, town or personal email unless she asks. The
+public CV, `public/naomi-shore-cv.pdf`, carries her name alone, in its text and its metadata.
 
 ## Design reference
 

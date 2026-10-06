@@ -29,6 +29,20 @@ GitHub. Actions runs the checks and Lighthouse on every pull request and every p
 but it cannot stop a deploy. Small changes, such as docs, go straight to `main`; anything that
 changes how the site behaves goes through a pull request, so its checks pass before it deploys.
 
+## The Cloudflare dashboard holds what the repo cannot
+
+- **Workers Builds:** build command `pnpm run build`; `npx wrangler deploy` on `main` and
+  `npx wrangler preview` on other branches; build variable `PNPM_VERSION`, kept equal to
+  `packageManager` in `package.json`, as Cloudflare's default pnpm is older.
+- **Domains:** `naovixen.com` is the Worker's custom domain, production only, since previews on
+  it would need Cloudflare Access. `www` is a proxied `AAAA` to `100::`, sent on with a 301 by
+  the "Redirect from WWW to root" rule.
+- **DNS that must stay:** Email Routing's three `MX`, its SPF `TXT` and `cf2024-1._domainkey`;
+  `_atproto`, which verifies the Bluesky handle; `discord`; and `_dmarc` at `p=reject`, as
+  nothing sends from the domain.
+- **Previews** answer a missing page with Cloudflare's plain "Not found", not `404.html`, so
+  check the 404 page on production.
+
 ## Client-side page changes that keep the header
 
 Pages work fully without script. The narrow-screen menu is a modal `<dialog>` opened by an
