@@ -105,8 +105,10 @@ app, Turborepo build filtering, `docs/adding-a-new-site.md`, i18next, and BEM pr
 ### Phase 10 — Verify
 
 - [x] End-to-end tests on every route in all three engines, with and without script and styles.
-- [x] Mobile Lighthouse 100 on the home page.
-- [ ] Mobile Lighthouse on a post and `/blog/`.
+- [ ] Mobile Lighthouse 100 on every page type, measured on the preview deployment. Local
+      runs on 2026-10-06 (`wrangler dev`, gzip, Lighthouse 13.5) scored 100 in every category
+      on a post and a project; home and `/blog/` scored 99 for performance (LCP 1.8 s against
+      1.7 s) and 100 in the rest.
 - [ ] Animation parity: the prototype and the new site side by side in each browser — menu,
       card hover, button press.
 - [ ] By hand: real Safari on macOS and iOS; VoiceOver and NVDA through the menu, search and
