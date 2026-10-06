@@ -58,10 +58,19 @@ test("leads to the page chosen", async ({ page, javaScriptEnabled }) => {
 test("changes the address while it is still closing, after a link is followed", async ({ page, javaScriptEnabled }) => {
     test.skip(!javaScriptEnabled, "Without script the new page simply arrives with the menu closed.");
     await page.getByRole("button", { name: "Menu", exact: true }).click();
-    await page.getByRole("dialog").getByRole("link", { name: "Work" }).click();
+    const workLink = page.getByRole("dialog").getByRole("link", { name: "Work" });
+    await expect(workLink).toBeInViewport();
+    // A 3s close, so a slow runner cannot finish the 0.5s slide before the page changes. The
+    // style sits inside the menu, in the header, which the page change keeps.
+    await page
+        .locator("#menu")
+        .evaluate((menu) =>
+            menu.insertAdjacentHTML("afterbegin", "<style>#menu, #menu .sheet { transition-duration: 3s; }</style>"),
+        );
+    await workLink.click();
     await page.waitForURL(/\/work\/$/);
     await expect(page.locator("#menu .sheet")).toBeInViewport();
-    await expect(page.getByRole("dialog", { name: "Menu" })).toBeHidden();
+    await expect(page.getByRole("dialog", { name: "Menu" })).toBeHidden({ timeout: 10_000 });
 });
 
 test("shows the header's row once, never drawn twice, while it is open", async ({ page, javaScriptEnabled }) => {

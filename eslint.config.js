@@ -2,7 +2,17 @@ import astro from "eslint-plugin-astro";
 import tseslint from "typescript-eslint";
 
 export default [
-    { ignores: ["dist/", ".astro/", "notes/", "design-reference/", "source-material/", "playwright-report/"] },
+    {
+        ignores: [
+            "dist/",
+            ".astro/",
+            ".wrangler/",
+            "notes/",
+            "design-reference/",
+            "source-material/",
+            "playwright-report/",
+        ],
+    },
     ...tseslint.configs.strict,
     ...astro.configs.recommended,
     ...astro.configs["jsx-a11y-strict"],
