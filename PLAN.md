@@ -13,8 +13,8 @@
 every check: types, lint, unit tests, end-to-end in all three engines with and without
 script, and the Lighthouse budget.
 
-Phases 10–12 are done. Still to do in Phase 13: confirm the analytics beacon, the live
-Lighthouse run, and deleting this file.
+Phases 10–12 are done. Still to do in Phase 13: the live Lighthouse run, then deleting this
+file.
 `naovixen.com` serves the site from the Worker, and `www` redirects to it.
 
 The TanStack Start, React and Sanity monorepo this replaces is at the `pre-astro` tag, and
@@ -168,8 +168,8 @@ Settled with Naomi on 2026-10-06. Anything without a real value is left undefine
       `naovixen.com`; the SPF record stays because Email Routing needs it.
 - [x] Cloudflare Web Analytics with its injected beacon (Naomi, 2026-10-06): allowed in the
       CSP, recorded in `docs/decisions.md`, named in the privacy notice.
-    - [ ] Turned on for `naovixen.com` (Naomi, 2026-10-06), but the beacon is not in the live
-          pages yet. Check it appears and loads without a CSP error.
+    - [x] Turned on for `naovixen.com` (Naomi, 2026-10-06). Cloudflare injects the beacon only
+          into requests that look like a browser's, so check with a browser user agent.
 - [x] Retire the Sanity Studio deployment and project (Naomi, 2026-10-06; the export is kept).
 - [x] Delete `docs/content-inventory.md`: Phase 12 filled every gap.
 - [x] Update the memory notes that still describe the monorepo.
