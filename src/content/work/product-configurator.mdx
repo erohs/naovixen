@@ -1,6 +1,6 @@
 ---
 title: "A product configurator with a live 3D preview"
-summary: "A Next.js builder where people choose options, see them on a 3D model and watch the price as they go, with a basket that explains any price that changed since."
+summary: "A personal project I designed and built: a Next.js builder for choosing options, seeing them on a 3D model and watching the price as you go, with a basket that explains any price that changed since."
 order: 6
 featured: false
 stack: ["Next.js", "React", "TypeScript", "three.js", "next-intl", "RxJS", "CSS"]
@@ -8,12 +8,13 @@ stack: ["Next.js", "React", "TypeScript", "three.js", "next-intl", "RxJS", "CSS"
 
 <Facts
     items={[
-        { label: "my role", value: "Sole developer" },
+        { label: "my role", value: "Design and build" },
         { label: "context", value: "Personal project" },
+        { label: "timeline", value: "June 2026" },
     ]}
 />
 
-This is a builder for a made-to-order product. You pick from a set of options and colours, turn the result around on a 3D model, and add it to a basket with the price worked out as you go. The code is in a private repository, and this write-up sticks to how the front end works.
+I designed and built this in June 2026 as a personal project: a builder for a made-to-order product. You pick from a set of options and colours, turn the result around on a 3D model, and add it to a basket with the price worked out as you go. The code is in a private repository, and this write-up sticks to how the front end works.
 
 ## The problem
 
@@ -105,6 +106,8 @@ Accessibility got its own pass, and I switched ESLint to the full jsx-a11y recom
 - Every basket control names the item it acts on, by type and position in the list. Removing an item moves focus to its neighbour, or to the link to start building if the basket is now empty.
 - Status messages hide their visible text from assistive technology and put a copy into a hidden live region on the next frame. Live regions announce changes to content they already hold, so filling the region after it exists is what gets the message read out.
 - Input borders in both themes moved a step further from the background, for more contrast.
+
+I tested the builder across browsers.
 
 ## Challenges
 

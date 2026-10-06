@@ -166,3 +166,9 @@ at `#F3E2CC`. Brighter cream there glared, so do not merge them back.
 ## Reduced motion is CSS only
 
 Every animation is CSS, and each stylesheet answers `prefers-reduced-motion` itself.
+
+## Code blocks use GitHub's default themes
+
+Shiki draws code with `github-light-default` and `github-dark-default`. The older `github-light`
+colours parameters and properties `#E36209`, which is 3.5:1 on white and fails AA. Check any
+other theme's token colours against the code background before swapping it in.
