@@ -172,3 +172,11 @@ Every animation is CSS, and each stylesheet answers `prefers-reduced-motion` its
 Shiki draws code with `github-light-default` and `github-dark-default`. The older `github-light`
 colours parameters and properties `#E36209`, which is 3.5:1 on white and fails AA. Check any
 other theme's token colours against the code background before swapping it in.
+
+## Analytics come from Cloudflare's injected beacon
+
+Cloudflare Web Analytics sets no cookies, so the site needs no consent banner. Cloudflare adds
+its beacon to each page at the edge, so nothing in the repo loads it; the CSP allows
+`https://static.cloudflareinsights.com` by host, because the beacon's path carries a version,
+and `connect-src 'self'` covers its reports to `/cdn-cgi/rum`. A visitor without script is not
+counted. Injection needs proxied traffic and fails on `Cache-Control: no-transform`.

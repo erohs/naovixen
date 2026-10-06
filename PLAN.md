@@ -144,7 +144,7 @@ Settled with Naomi on 2026-10-06. Anything without a real value is left undefine
 - [x] No testimonial and no portrait for now. Both components stay, rendering nothing until
       there is a real one.
 - [x] The privacy notice names Cloudflare for hosting and email forwarding.
-    - [ ] Add a line on the cookieless analytics when Phase 13 turns them on.
+    - [x] Add a line on the cookieless analytics when Phase 13 turns them on.
 - [x] The CV at `/naomi-shore-cv.pdf`, redacted to the name alone: no town, phone, email or
       LinkedIn, in the text or the file's metadata. The town is off the about page too.
 - [x] One Open Graph image for the whole site, `public/og.png`, drawn from the home page's
@@ -176,9 +176,10 @@ Settled with Naomi on 2026-10-06. Anything without a real value is left undefine
     - [ ] Turnstile: delete the fursuit widget.
     - [ ] `_dmarc.naovixen.com`: once the contact email is settled, either keep it or, if
           nothing sends from `naovixen.com`, publish `v=spf1 -all` and `p=reject`.
-- [ ] Turn on Cloudflare Web Analytics, which sets no cookies. Check its current docs first:
-      if it needs a script beacon, ask before adding it, and allow it in the CSP in
-      `public/_headers`. Record the decision in `docs/decisions.md`.
+- [x] Cloudflare Web Analytics with its injected beacon (Naomi, 2026-10-06): allowed in the
+      CSP, recorded in `docs/decisions.md`, named in the privacy notice.
+    - [ ] Turn it on for `naovixen.com` once this deploys (Naomi), and check the beacon loads
+          without a CSP error.
 - [ ] Retire the Sanity Studio deployment and project (the export is kept).
 - [ ] Delete `docs/content-inventory.md` once every gap is filled.
 - [x] Update the memory notes that still describe the monorepo.
