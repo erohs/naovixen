@@ -14,11 +14,12 @@ is at the `pre-astro` tag.
 Blog search runs in the browser over `/blog/search.json`, with the old matching rules. Without
 script, the topic pages stand in for it.
 
-## The canonical host is `www.naovixen.com`
+## The canonical host is `naovixen.com`
 
-The domain already serves `www`, with the bare `naovixen.com` redirecting to it, so
-`site.origin` carries the `www` and every canonical URL, sitemap entry, feed link and piece
-of structured data follows it. Pointing them at the bare domain would make each one a redirect.
+The bare domain matches the email address and the Bluesky handle, and `www` 301s to it with
+Cloudflare's "Redirect from WWW to root" rule. `site.origin` carries the bare domain, so every
+canonical URL, sitemap entry, feed link and piece of structured data points at the address that
+serves the page rather than at a redirect.
 
 ## Cloudflare deploys; GitHub Actions only checks
 

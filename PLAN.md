@@ -1,7 +1,7 @@
 # naovixen — Launch plan
 
 > **This file is temporary.** It tracks the static Astro site, merged to `main` on
-> 2026-10-06, to launch on `www.naovixen.com`. Tick each box in the commit that finishes it. In the last
+> 2026-10-06, to launch on `naovixen.com`. Tick each box in the commit that finishes it. In the last
 > phase, move anything of lasting value into `CLAUDE.md`, `.claude/rules/` or
 > `docs/decisions.md`, then delete this file.
 
@@ -14,7 +14,7 @@ every check: types, lint, unit tests, end-to-end in all three engines with and w
 script, and the Lighthouse budget.
 
 Still to do: the verification that needs a person (Phase 10), launch content from Naomi (Phase 12), and the cut-over (Phase 13).
-`www.naovixen.com` is still served by Vercel.
+`naovixen.com` serves the site from the Worker, and `www` redirects to it.
 
 The TanStack Start, React and Sanity monorepo this replaces is at the `pre-astro` tag, and
 its plan is in that tag's `PLAN.md`. Its Sanity dataset is exported to `notes/sanity-export`.
@@ -156,13 +156,10 @@ Settled with Naomi on 2026-10-06. Anything without a real value is left undefine
 ### Phase 13 — Cut over
 
 - [x] Merge the `astro-rebuild` PR (#1, 2026-10-06).
-- [ ] Move `www.naovixen.com` from Vercel to the Worker. The DNS is already on Cloudflare,
-      but `www` and the bare domain point at Vercel, which serves the old fursuit app and
-      redirects the bare domain to `www`. Cloudflare refuses a custom domain while a CNAME
-      exists, so delete `www`'s Vercel CNAME and add `www.naovixen.com` as the Worker's
-      custom domain straight after (`www` is down in between). Replace the bare domain's
-      Vercel `A` records with a proxied `AAAA` `@` → `100::`, and add the "Redirect from root
-      to WWW" rule to `https://www.naovixen.com`, keeping the path, with a 301.
+- [x] Move the domain from Vercel to the Worker (Naomi, 2026-10-06). The bare domain is the
+      canonical host (`docs/decisions.md`): `naovixen.com` is the Worker's custom domain,
+      production only, and `www` is a proxied `AAAA` → `100::` that Cloudflare's "Redirect
+      from WWW to root" rule sends on with a 301, keeping the path and query.
 - [ ] Retire the fursuit app's services (its code is kept in `erohs/fursuit-builder`, and its
       databases hold no customers):
     - [x] `fursuit-builder`: disable its Deploy and Validate migrations workflows, and delete
@@ -182,7 +179,7 @@ Settled with Naomi on 2026-10-06. Anything without a real value is left undefine
 - [ ] Retire the Sanity Studio deployment and project (the export is kept).
 - [ ] Delete `docs/content-inventory.md` once every gap is filled.
 - [x] Update the memory notes that still describe the monorepo.
-- [ ] Mobile Lighthouse 100 on every page type, run against the live `www.naovixen.com`.
+- [ ] Mobile Lighthouse 100 on every page type, run against the live `naovixen.com`.
       CI's budget is 95 for performance on a local server; local runs on 2026-10-06 scored
       100 on a post and a project, and 99 for performance on home and `/blog/` (LCP 1.8 s
       against 1.7 s).
@@ -192,7 +189,7 @@ Settled with Naomi on 2026-10-06. Anything without a real value is left undefine
 
 ## Definition of done
 
-- `www.naovixen.com` serves the Astro site over HTTPS, with `naovixen.com` redirecting to it.
+- `naovixen.com` serves the Astro site over HTTPS, with `www.naovixen.com` redirecting to it.
 - No placeholder reaches the live site.
 - Publishing a post is a push to `main`.
 - WCAG 2.2 AA, checked automatically and with NVDA; mobile Lighthouse 100 on the live site.

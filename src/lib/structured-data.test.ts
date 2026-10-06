@@ -10,7 +10,7 @@ describe("Using blogPostingData, when given a post", () => {
             published: new Date("2026-10-04"),
             topics: ["CSS"],
         });
-        expect(data).toMatchObject({ url: "https://www.naovixen.com/blog/hello/", datePublished: "2026-10-04" });
+        expect(data).toMatchObject({ url: "https://naovixen.com/blog/hello/", datePublished: "2026-10-04" });
     });
 });
 
@@ -21,8 +21,8 @@ describe("Using breadcrumbData, when given steps", () => {
             { label: "Blog", href: "/blog/" },
         ]);
         expect(data["itemListElement"]).toEqual([
-            { "@type": "ListItem", position: 1, name: "Home", item: "https://www.naovixen.com/" },
-            { "@type": "ListItem", position: 2, name: "Blog", item: "https://www.naovixen.com/blog/" },
+            { "@type": "ListItem", position: 1, name: "Home", item: "https://naovixen.com/" },
+            { "@type": "ListItem", position: 2, name: "Blog", item: "https://naovixen.com/blog/" },
         ]);
     });
 });
