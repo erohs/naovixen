@@ -4,7 +4,7 @@ import { slugify } from "../../lib/slugify";
 import HomeSection from "./HomeSection.astro";
 ---
 
-<HomeSection id="skills" heading="Skills" intro="The tools and languages I use day to day.">
+<HomeSection id="skills" heading="Skills" intro="What I build with, from the interface down.">
     <div class="groups">
         {skillGroups.map((data) => (
             <section aria-labelledby={`skills-${slugify(data.label)}`} class="group">
@@ -27,8 +27,7 @@ import HomeSection from "./HomeSection.astro";
         ))}
     </div>
     <p class="also">
-        <strong>Also:</strong> system design, REST APIs, CQRS, event-driven architecture, NUnit, code review and
-        mentoring apprentices.
+        <strong>Also:</strong> system design, REST APIs, NUnit and code review.
     </p>
 </HomeSection>
 

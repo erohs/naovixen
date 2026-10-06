@@ -1,31 +1,70 @@
 ---
 title: "Bridging React into AngularJS, one feature at a time"
-excerpt: "Shipping modern components inside a legacy app, without a big-bang rewrite."
+excerpt: "Shipping new React components inside a legacy AngularJS app, without waiting for a big-bang rewrite."
 published: "2026-07-10"
 topics: ["React", "AngularJS", "Migration"]
 ---
 
-Big-bang rewrites rarely ship. When we built in-product messaging, the surrounding app was AngularJS, so we built the new feature in React and mounted it inside the old app.
+When we built in-product messaging, the app it had to live in was legacy AngularJS. Big-bang rewrites rarely ship, and the people waiting for the feature had no reason to wait for one, so we built it in React and mounted it inside the old app.
+
+Staff write and submit a message in an admin area on the back end, and it appears in front of users inside the product, as a global notification or a local one. Before, getting a message to users meant waiting for a release; now it takes minutes. I built the front end, where those notifications render in React inside the AngularJS app, and most of what made that work was a small bridge and a strict rule about HTML.
 
 ## A thin bridge
 
-A small directive mounts a React root, passes bindings through as props and unmounts cleanly when Angular destroys the scope. Each new feature gets a bridge, and the legacy code around it shrinks over time.
+The bridge is an AngularJS directive. It mounts a React root on its own element, passes the directive's bindings through as props, and unmounts the root when Angular destroys the scope.
 
-```typescript title="bridge.tsx"
-angular.module('app').directive('reactMessages', () => ({
-  scope: { threadId: '<' },
-  link(scope, el) {
-    const root = createRoot(el[0]);
-    const render = () => root.render(<Messages threadId={scope.threadId} />);
-    scope.$watch('threadId', render);
-    scope.$on('$destroy', () => root.unmount());
-  },
+```tsx title="bridge.tsx"
+angular.module("app").directive("reactNotification", () => ({
+    scope: { notificationId: "<" },
+    link(scope, el) {
+        const root = createRoot(el[0]);
+        const render = () => root.render(<Notification id={scope.notificationId} />);
+        scope.$watch("notificationId", render);
+        scope.$on("$destroy", () => root.unmount());
+    },
 }));
 ```
 
+An Angular template uses it like any other directive, so the page around it doesn't need to know React is involved:
+
+```html title="notification.html"
+<react-notification notification-id="vm.notificationId"></react-notification>
+```
+
+The sample uses today's `createRoot` API. Older versions of React do the same job with `ReactDOM.render` and `unmountComponentAtNode`, and the shape of the bridge doesn't change.
+
+Each line of the directive is doing a specific job:
+
+- `$watch` calls `render` once when it's registered, which gives the first paint, and again whenever the binding changes. React receives new props the way it expects and works out the DOM update itself, so Angular never touches anything inside the root.
+- The `$destroy` handler matters most. Angular removes the element when someone navigates away, but React doesn't know that. Without `unmount`, the component tree, its effects and any subscriptions it set up would stay in memory long after the user has moved on.
+- The bridge holds no logic of its own. State and behaviour live in the React components, which keeps them testable on their own terms and ready to move out of Angular entirely later.
+
+Since then, we've moved the main controls across the system the same way: date pickers, selects and buttons, the main page blocks, and the way profile images render. Each one that moves leaves less AngularJS behind.
+
 ## Sanitise at the boundary
 
-Messages contain rich text written by staff, which is a classic XSS risk. Everything is sanitised against a strict allow-list before it's rendered, and the allow-list lives in one place so it can't drift between the two frameworks.
+Notifications contain rich text that staff write in that admin area, which is a classic XSS risk: whatever HTML goes into a notification is rendered for every user who sees it. Everything is sanitised against a strict allow-list before it's rendered, and the allow-list lives in one place so it can't drift between the two frameworks.
+
+An allow-list fails safe. A tag nobody has thought about is stripped until someone decides it belongs, where a block-list would let it through until someone noticed. A minimal version of the idea, with an illustrative list:
+
+```tsx title="NotificationBody.tsx"
+import { sanitise } from "./sanitise";
+
+export const notificationAllowList = {
+    tags: ["p", "br", "strong", "em", "ul", "ol", "li", "a"],
+    attributes: { a: ["href"] },
+};
+
+export const NotificationBody = ({ html }: { html: string }) => (
+    <div dangerouslySetInnerHTML={{ __html: sanitise(html, notificationAllowList) }} />
+);
+```
+
+Keeping the raw HTML behind one component has a second benefit for the front end: `dangerouslySetInnerHTML` appears in exactly one place, so it's easy to find in review and hard to reach for casually anywhere else. The cost is that formatting outside the list is stripped, so the list has to cover the formatting staff actually need.
+
+## What the bridge costs
+
+Running two frameworks on one page isn't free. While the migration runs, both ship to the browser, and whoever maintains a bridged screen has to hold two mental models at once. A bridge kept this thin keeps the second cost small: on the Angular side there's one directive to understand, and everything else is ordinary React.
 
 <Callout label="lesson learnt" title="Migrate by feature, not by file">
     Each bridged component was a real feature people wanted, so the migration paid for itself as it went.

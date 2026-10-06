@@ -5,46 +5,67 @@ published: "2026-09-04"
 topics: ["Accessibility", "Forms", "GOV.UK"]
 ---
 
-Choosing "Other" and getting a text box underneath is one of the most common patterns on the web. It's also easy to get wrong, especially for screen reader and screen magnifier users, who may not notice that anything changed.
+Choosing "Other" and getting a text box underneath is one of the most common patterns on the web. It's also easy to get wrong for screen reader and screen magnifier users, who may not notice that anything changed. I came to it through existing content at work, where external accessibility audits had raised WCAG 2.2 issues for exactly that: someone's action revealed more content, and nothing let them know.
 
 ## What GOV.UK recommends
 
-The GOV.UK Design System supports conditionally revealing content for radios and checkboxes, and its guidance, shaped by research with real users, is refreshingly cautious. Keep it simple, and if the extra question is complicated, ask it on the next page instead.
+The GOV.UK Design System supports conditionally revealing content for radios and checkboxes. Its guidance comes from research with real users, and it's refreshingly cautious: keep it simple, and if the extra question is complicated, ask it on the next page instead.
 
 - Only reveal questions that relate directly to the option chosen.
 - Keep it to one simple question. Anything bigger belongs on its own page.
 - Don't nest a reveal inside another reveal.
 - Don't hide information people need before they can choose.
 
+I like that the advice starts with whether to use the pattern at all. Most of the trouble people have with revealed questions goes away if there's only ever one short one.
+
 ## Put the content where it's read next
 
-The most robust trick is DOM order. Place the revealed content straight after the radio that controls it, not at the end of the group. Then the next thing a screen reader reads, or a magnified view shows, is the new question.
+The simplest fix is DOM order. Place the revealed content straight after the radio that controls it, rather than after the whole group. Then the next thing a screen reader reads, or a magnified view shows, is the new question.
 
 ```html title="reveal.html"
 <div class="radio">
     <input type="radio" id="contact-other" name="contact" value="other" aria-controls="contact-other-reveal" />
     <label for="contact-other">Other</label>
 </div>
-<div class="reveal" id="contact-other-reveal" hidden>
+<div class="reveal" id="contact-other-reveal">
     <label for="contact-other-detail">How should we contact you?</label>
     <input type="text" id="contact-other-detail" name="contactOther" />
 </div>
 ```
 
+Someone using a magnifier is usually looking at a small part of the screen around the control they just used. If the new field appears at the bottom of the group, it can be completely out of their view. Next to the radio, it turns up exactly where they're already looking.
+
+This is most of the answer to what the audits raised. A radio has no state for "I revealed something": `aria-expanded` isn't allowed on it, and `aria-controls` only records which radio owns which reveal, with screen reader support that varies. So the page can't reliably tell people that new content appeared. What it can do is put that content in the very next place they'll read or look, so they meet it as they carry on through the form.
+
+GOV.UK's rule of one short question helps here too. A single field straight after the radio is easy to notice in reading order; a whole block of questions changes far more of the page than anyone has been told about.
+
+## Let script do the hiding
+
+Notice the reveal has no `hidden` attribute in the HTML. If the script never runs, every question stays visible and the form still works. The script hides the reveals it can manage when it loads, then keeps them in step with the checked radio.
+
 ```typescript title="reveal.ts"
-radios.forEach((radio) => {
-    radio.addEventListener("change", () => {
-        radios.forEach((r) => {
-            const id = r.getAttribute("aria-controls");
-            if (id) document.getElementById(id)!.hidden = !r.checked;
-        });
+const radios = document.querySelectorAll<HTMLInputElement>("input[type='radio'][aria-controls]");
+
+const syncReveals = (): void => {
+    radios.forEach((radio) => {
+        const reveal = document.getElementById(radio.getAttribute("aria-controls") ?? "");
+        if (reveal) reveal.hidden = !radio.checked;
     });
-});
+};
+
+radios.forEach((radio) => radio.addEventListener("change", syncReveals));
+syncReveals();
 ```
+
+Running `syncReveals` once on load also covers a radio that is already checked when the page loads, such as one the browser restored when someone came back, so their earlier answer and its question appear together.
+
+The `hidden` attribute removes the collapsed content for everyone, including screen readers, so nobody tabs into a field they can't see.
 
 <Callout label="watch out" title="Don't move focus">
     Jumping focus into the revealed field feels helpful, but it skips the remaining options. Leave focus on the radio
     and let people tab forward.
 </Callout>
 
-Use the hidden attribute so collapsed content is gone for everyone, and ignore values in hidden fields on submit, so nobody gets an error about a question they can't see.
+## Ignore what's hidden when the form is sent
+
+A hidden input still submits its value. If someone fills in the "Other" field, then changes their mind and picks another option, the form still sends what they typed. Ignore values from hidden fields on the server, so nobody gets an error about a question they can no longer see.

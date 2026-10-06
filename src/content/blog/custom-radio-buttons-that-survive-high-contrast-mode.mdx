@@ -5,11 +5,11 @@ published: "2026-09-18"
 topics: ["Accessibility", "CSS"]
 ---
 
-Most custom radio buttons hide the real input and draw a fake one with background colours. It looks great right up until someone turns on a Windows contrast theme. Forced colours mode replaces your colours with the user's palette, and the fake radio can disappear completely.
+Most custom radio buttons hide the real input and draw a fake one with background colours. It looks lovely until someone turns on a Windows contrast theme. Forced colours mode swaps your colours for the person's own palette, and the fake radio can disappear completely, taking the selected state with it. I built the version below at work, before we had a dedicated accessibility team.
 
 ## Keep the real input
 
-Don't hide the input and fake it with a span. Style the input itself with appearance: none. You keep native keyboard behaviour, arrow keys between options, form submission and the right role for assistive technology, all for free.
+Leave the input in place and style it directly with `appearance: none`. A hidden input plus a decorated `<span>` has to recreate everything the browser already does, and it rarely gets all of it. The native control keeps its behaviour for free: arrow keys move between options in a group, the value goes with the form, and assistive technology hears a radio button with its checked state.
 
 ```css title="radio.css"
 input[type="radio"] {
@@ -34,9 +34,11 @@ input[type="radio"]:checked::before {
 }
 ```
 
-The border uses currentColor, so it follows the text in every theme. The checked dot uses an inset box-shadow, which looks right everywhere except forced colours, where shadows are removed. That's the next fix.
+The border uses `currentColor`, so it follows the text colour in every theme, light, dark or anything else. The dot is a pseudo-element painted with an inset `box-shadow`, and it scales from nothing to full size when the input is checked. Sizing in `rem` means the control grows with the person's font size along with the label next to it.
 
-## Test in forced colours
+That box-shadow is the weak spot. It looks right everywhere except forced colours, where browsers remove box shadows altogether. The ring survives and the dot doesn't, so every option looks unchecked.
+
+## Fix the dot for forced colours
 
 ```css title="forced-colors.css"
 @media (forced-colors: active) {
@@ -51,11 +53,19 @@ The border uses currentColor, so it follows the text in every theme. The checked
 }
 ```
 
-CanvasText and Highlight are system colours, so the dot and focus ring pick up whatever palette the person has chosen. You can emulate forced colours in Chrome DevTools under Rendering, which is much faster than switching Windows themes every time.
+Inside the media query the dot gets a solid background instead. `forced-color-adjust: none` stops the browser overriding that background, and `CanvasText` is a system colour, so the dot still matches whatever palette the person has picked. `Highlight` does the same job for the focus ring, which makes the focused option stand out in the colour their theme already uses for focus and selection.
+
+It's worth being sparing with `forced-color-adjust: none`. It opts an element out of the person's choices, so I keep it to the one pseudo-element that needs it and only ever pair it with a system colour.
+
+## Testing it for real
+
+Chrome DevTools can emulate forced colours under Rendering, which is much faster than switching Windows themes every time you change a line. It's a good first check. I tested the finished radios in Windows high contrast mode, with NVDA, and with JAWS, which I ran over remote desktop from a laptop (not glamorous). For mobile, I used BrowserStack to try them with VoiceOver on iOS devices.
+
+Whatever you test with, check the unchecked, checked, focused and disabled states in both light and dark contrast themes. With this pattern, checked is the state to watch, because that's where the box-shadow was doing the work.
 
 <Callout label="tip!" title="Size the hit area, not just the dot">
     Wrap each radio and its label in one padded element so the whole row is clickable, and comfortably clears WCAG 2.2's
     24 by 24 pixel target size.
 </Callout>
 
-None of this is new. It's the native control, styled carefully, which is usually the most accessible thing you can ship.
+A `<label>` wrapping the input already makes its text clickable, so the padding on that wrapper is all the extra hit area needs.

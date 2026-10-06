@@ -5,41 +5,85 @@ published: "2026-08-21"
 topics: ["Accessibility", "Design tokens"]
 ---
 
-"High contrast" means at least three different things, and mixing them up is how themes end up fighting the people they're meant to help.
+"High contrast" means at least three different things, and mixing them up is how themes end up fighting the people they're meant to help. Before writing any CSS, it's worth being clear which of the three you're building for.
 
-- prefers-contrast: more. The person has asked their system for more contrast, but you still control the colours.
-- forced-colors: active. The system replaces your colours with its own palette, as with Windows contrast themes.
-- A site toggle. A theme you offer for people who can't, or don't want to, change system settings.
+- `forced-colors: active`. The system replaces your colours with its own palette, as with Windows contrast themes.
+- `prefers-contrast: more`. The person has asked their system for more contrast, but you still control the colours.
+- A site toggle. A theme you offer for people who can't, or don't want to, change their system settings.
 
-## Start with tokens
+The first asks you to step aside and keep the page meaningful in someone else's palette. The other two ask the same thing with different triggers: make your own palette stronger.
 
-If every colour is a token, a contrast theme is just another set of values. Bump muted text up to full ink, thicken borders, and drop decorative textures that add visual noise.
+At work, I built for the first. The product followed the system setting only, and my job was making sure it kept working when someone switched Windows to high contrast. The palette and toggle further down didn't ship there; they're how I'd extend it.
+
+## Follow the system's colours
+
+In forced colours mode, don't try to restore your brand palette. The person chose those colours for a reason, and fighting them usually leaves things less readable. Make sure meaning survives instead, and `currentColor` does a lot of that work.
+
+```css title="forced-colors.css"
+.icon {
+    fill: currentColor;
+}
+
+.button {
+    border: 2px solid transparent;
+}
+
+@media (forced-colors: active) {
+    :focus-visible {
+        outline: 3px solid Highlight;
+    }
+}
+```
+
+`currentColor` is whatever colour the text around it is. When forced colours swap the text for the person's own, icons and borders drawn with `currentColor` follow along with no extra rule. A fixed brand colour can end up clashing with their background, or disappearing into it.
+
+The transparent border costs nothing in the normal theme. Forced colours paint borders in a system colour, so the same border becomes the button's visible edge exactly when its background has been taken away. Focus rings use the `Highlight` system colour, so they match what the person's theme already uses for focus and selection. Keep `forced-color-adjust: none` for small details that would otherwise vanish.
+
+<Callout label="tip!" title="Masked icons disappear">
+    Icons drawn with CSS masks are painted with `background-color`, which forced colours overrides. Give them
+    `forced-color-adjust: none` and a `CanvasText` background so they stay visible.
+</Callout>
+
+Browser dev tools can emulate forced colours, which catches most of this early. I still tested in Windows high contrast mode before calling it done, because emulation only tells you what the browser thinks will happen.
+
+## Going further: a stronger palette of your own
+
+If you want to answer `prefers-contrast` too, or offer a toggle, tokens make it manageable. When every colour is a token, a contrast theme is another set of values: bump muted text up to full ink, thicken borders, and drop decorative textures that add visual noise.
 
 ```css title="tokens.css"
 :root {
     --ink: #1f1b22;
     --muted: #564e5a;
     --border-width: 2px;
+    --texture: url("/paper.svg");
 }
+
 @media (prefers-contrast: more) {
-    :root {
+    :root:not([data-contrast="standard"]) {
         --muted: var(--ink);
         --border-width: 3px;
+        --texture: none;
     }
 }
-[data-contrast="high"] {
+
+:root[data-contrast="high"] {
     --muted: var(--ink);
     --border-width: 3px;
+    --texture: none;
 }
 ```
 
-## Then get out of the way
+The `:not([data-contrast="standard"])` is there for the person whose system asks for more contrast but who has switched the site's theme off. Their choice on the page is the more specific one, so it wins.
 
-In forced colours mode, don't try to restore your brand palette. Make sure meaning survives instead: borders on anything that relied on a background, system colours for focus rings, and forced-color-adjust: none only for small details that would otherwise vanish.
+The values are written out twice, once for the media query and once for the toggle. I'd rather have that small duplication, sitting side by side where any drift is obvious, than a build step to share one block. Components never see any of this: they use `--muted` and `--border-width`, and the theme changes underneath them.
 
-<Callout label="tip!" title="Masked icons disappear">
-    Icons drawn with CSS masks are painted with background-color, which forced colours overrides. Give them
-    forced-color-adjust: none and a CanvasText background so they stay visible.
-</Callout>
+## If you add a toggle, remember the choice
 
-Finally, remember the person's choice. Save the toggle in localStorage, but let their system preference decide the first time they visit.
+Save the toggle in `localStorage`, but let the system preference decide the first time someone visits. With nothing saved, the page carries no `data-contrast` attribute and the media query does the work. Once they choose, a small script in the head restores that choice before the first paint, so the page never flashes the wrong theme.
+
+```js title="contrast.js"
+const saved = localStorage.getItem("contrast");
+if (saved) document.documentElement.dataset.contrast = saved;
+```
+
+The toggle itself suits a `<button>` with `aria-pressed`, writing `"high"` or `"standard"` when it's pressed. Writing `"standard"` rather than clearing the value is what lets someone opt out of the contrast theme even when their system asks for it.

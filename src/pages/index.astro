@@ -21,7 +21,7 @@ const latestPosts = (await getPublishedPosts()).slice(0, 3);
 
 <BaseLayout
     title="Naomi Shore — Software Engineer"
-    description="Naomi Shore is a software engineer with seven years of experience across React, TypeScript and C#/.NET, and a focus on accessibility."
+    description="Naomi Shore is a software engineer who builds accessible React and TypeScript interfaces, with seven years of experience across the full stack."
     isFullBleed>
     <StructuredData slot="head" data={[personData(), websiteData()]} />
     <Hero hasFeaturedProjects={featuredProjects.length > 0} />
@@ -29,7 +29,7 @@ const latestPosts = (await getPublishedPosts()).slice(0, 3);
         <HomeSection
             id="work"
             heading="Featured projects"
-            intro="Recent work at PebblePad, from accessibility features to front-end architecture.">
+            intro="Interfaces I've built and the principles behind them, from accessibility features to component architecture.">
             <Link slot="action" href="/work/" variant="standalone">
                 All projects <Icon name="arrow-right" />
             </Link>
@@ -49,7 +49,7 @@ const latestPosts = (await getPublishedPosts()).slice(0, 3);
     <HomeSection
         id="blog"
         heading="From the blog"
-        intro="Notes on accessibility, front-end craft and working well with AI.">
+        intro="Notes on accessible components, CSS, React and working well with AI.">
         <Link slot="action" href="/blog/" variant="standalone">
             All posts <Icon name="arrow-right" />
         </Link>

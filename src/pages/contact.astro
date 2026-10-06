@@ -8,14 +8,16 @@ import PageLayout from "../layouts/PageLayout.astro";
 import { site } from "../site";
 ---
 
-<PageLayout title="Contact" description="How to get in touch with Naomi Shore.">
+<PageLayout
+    title="Contact"
+    description="Get in touch with Naomi Shore by email, or find her on LinkedIn, GitHub and Bluesky.">
     <div class="contact">
         <GreetingHeading greeting="say hello!" isExclamation>
             Let's talk
         </GreetingHeading>
         <p class="body">
-            Whether it's a role, a project or a quick question, email is the fastest way to reach me. I usually reply
-            within two working days.
+            For a role, a project or a question about something I've written, email is the quickest way to reach me. I
+            usually reply within two working days.
         </p>
         {site.email !== undefined && (
             <>

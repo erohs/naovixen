@@ -1,15 +1,92 @@
 ---
-title: "Captions from scratch: streaming WebVTT in .NET"
-excerpt: "Parsing caption files without loading them into memory, and why I ended up being forgiving on input."
+title: "Captions from scratch: from WebVTT file to interactive transcript"
+excerpt: "Native captions and a readable transcript built from the WebVTT file people upload, and the forgiving .NET parser behind them."
 published: "2026-08-07"
-topics: ["C#", ".NET", "Accessibility"]
+topics: ["Accessibility", "React", ".NET", "C#"]
 ---
 
-Captions were one of the biggest accessibility gaps in our products: lots of user-uploaded video and no way to caption it. Fixing it started somewhere unglamorous, with reading WebVTT files.
+People were uploading plenty of audio and video to the products I work on, and there was no way to caption any of it. Meeting WCAG 2.2 was a product requirement, and captions were the gap that kept coming up in accessibility audits and tenders. I designed captions and transcription, starting with a prototype that our product manager and UX colleagues signed off, then built both ends: reusable React components for the people watching, and a WebVTT parser in .NET to feed them.
 
-## Why streaming
+## What viewers get
 
-Caption files can be long, and they arrive alongside video uploads that are already heavy. Reading cues one at a time with IAsyncEnumerable keeps memory flat and lets the API start validating before it's read the whole file.
+Whoever uploads a recording can add a WebVTT caption file alongside it. The player shows the captions using the native `<track>` element, and the same file becomes a transcript next to the player.
+
+```html title="player.html"
+<video controls src="lecture.mp4">
+    <track kind="captions" src="lecture.vtt" srclang="en" label="English" default />
+</video>
+```
+
+I chose `<track>` over drawing captions myself because the browser already does this well. People get the caption controls they know, and browsers can apply the caption styles someone has set in their system preferences. A custom overlay would have had to rebuild all of that.
+
+Captions help anyone who can't hear the audio, or who has the sound off on a train. For audio-only uploads, the transcript is the main way in. I think the transcript helps far more people than the ones it was built for, though. You can skim a recording before committing to an hour of it, or search the page for the two minutes you need.
+
+## A transcript you can read
+
+Here's a cut-down illustration of the transcript. Each cue is a list item with its start time, inside a region you can scroll with the keyboard.
+
+```tsx title="Transcript.tsx"
+export const Transcript = ({ cues }: { cues: Cue[] }) => (
+    <section className="transcript" tabIndex={0} aria-label="Transcript">
+        <ol>
+            {cues.map((cue, i) => (
+                <li key={i}>
+                    <time dateTime={`PT${cue.start}S`}>{formatTime(cue.start)}</time>
+                    <p>{cue.text}</p>
+                </li>
+            ))}
+        </ol>
+    </section>
+);
+```
+
+A scrolling box with nothing focusable inside can't be scrolled from the keyboard, so `tabIndex={0}` lets someone tab to it and use the arrow keys. The label tells a screen reader what they've landed on, and `<time>` gives each timestamp a machine-readable value.
+
+## Where it could go next
+
+Clicking a line to jump the video to that moment was planned and cut for time, and the transcript doesn't highlight the line being spoken. Neither has shipped, but each cue keeps its start and end times, so here's how both could be built on that data.
+
+Tracking the active line needs the video's current time. The `timeupdate` event fires a few times a second while it plays:
+
+```tsx title="useActiveCue.ts"
+export const useActiveCue = (video: HTMLVideoElement | null, cues: Cue[]): number => {
+    const [active, setActive] = useState(-1);
+
+    useEffect(() => {
+        if (!video) return;
+        const onTimeUpdate = () => {
+            const now = video.currentTime;
+            setActive(cues.findIndex((cue) => cue.start <= now && now < cue.end));
+        };
+        video.addEventListener("timeupdate", onTimeUpdate);
+        return () => video.removeEventListener("timeupdate", onTimeUpdate);
+    }, [video, cues]);
+
+    return active;
+};
+```
+
+The caption track has its own `cuechange` event, which fires exactly when a cue starts or ends. The catch is that it only fires while the track is showing or hidden, so if someone switches captions off in the player menu, the highlight would stop. `timeupdate` keeps working whatever they've chosen.
+
+Each line then gets a button that sets `video.currentTime`, and the active line gets `aria-current`:
+
+```tsx title="TranscriptLine.tsx"
+<li aria-current={i === active ? "true" : undefined}>
+    <button type="button" onClick={() => (video.currentTime = cue.start)}>
+        <span className="visually-hidden">Play from </span>
+        <time dateTime={`PT${cue.start}S`}>{formatTime(cue.start)}</time>
+    </button>
+    <p>{cue.text}</p>
+</li>
+```
+
+A real button gets keyboard support and a role without any extra work. The hidden text gives it a name that says what it does, where "1:23, button" would leave people guessing. The CSS can style `[aria-current]` directly, so the highlight and what a screen reader reports come from one attribute. Once every line has a button, the region has focusable content, and its own `tabIndex` could go.
+
+I'd leave out auto-scrolling to the active line, or at least let people turn it off. Someone reading ahead doesn't want the transcript dragged back to the speaker every few seconds.
+
+## Reading cues one at a time
+
+All of that depends on a clean list of cues. Caption files can be long, so the parser reads line by line and yields each cue as soon as it's complete, rather than loading the whole file first. `IAsyncEnumerable` keeps memory flat however long the file is.
 
 ```csharp title="WebVttReader.cs"
 public static async IAsyncEnumerable<Cue> ReadCuesAsync(
@@ -27,12 +104,14 @@ public static async IAsyncEnumerable<Cue> ReadCuesAsync(
 }
 ```
 
+WebVTT separates cues with blank lines, so the reader collects lines into a block and hands each finished block to `TryParseCue`. The last line catches a final cue when the file doesn't end with a blank line.
+
 ## Real files are messy
 
-Files exported from different tools had missing headers, comma-separated milliseconds and overlapping cues. Rejecting them all would have been technically correct and completely useless.
+Caption files come from all sorts of tools, and they turned up with missing headers, overlapping cues and odd encodings. Rejecting them all would have been technically correct and no help to anyone trying to caption a video. I wrote a test suite that feeds the parser bad data on purpose, so a later change can't quietly undo a recovery.
 
 <Callout label="lesson learnt" title="Forgiving on input, strict on output">
     Recover from common mistakes and log them, but sanitise and validate everything before it reaches the player.
 </Callout>
 
-On the front end, reusable React components turn those cues into a caption track and a transcript that follows playback, where every cue is a button that seeks the video. The transcript ended up being the part people mentioned most.
+Cue text can carry markup, so it's sanitised on the way in, and timings are checked too. By the time a cue reaches the React components, they can render it without second-guessing it. We tested with screen readers and voice control before release, and external accessibility audits follow.
