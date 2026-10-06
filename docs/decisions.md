@@ -24,8 +24,9 @@ of structured data follows it. Pointing them at the bare domain would make each 
 
 Cloudflare Workers Builds builds and deploys every push from the connected repository, with a
 preview link on each pull request, so deploying needs no wrangler login and no API token in
-GitHub. Actions runs the checks and Lighthouse. It cannot stop a deploy, so `main` only takes
-pull requests whose checks have passed.
+GitHub. Actions runs the checks and Lighthouse on every pull request and every push to `main`,
+but it cannot stop a deploy. Small changes, such as docs, go straight to `main`; anything that
+changes how the site behaves goes through a pull request, so its checks pass before it deploys.
 
 ## Client-side page changes that keep the header
 

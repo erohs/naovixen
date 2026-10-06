@@ -131,8 +131,6 @@ wrangler login and no API token.
 - [ ] On a PR's preview link, `curl -I` for
       `x-robots-tag: noindex`, the headers, the 404 status and the `/about` → `/about/`
       redirect.
-- [ ] Require the CI checks to pass before a PR merges to `main` (GitHub → Settings →
-      Branches), since Workers Builds deploys `main` whatever CI says.
 
 ### Phase 12 — Launch content
 
