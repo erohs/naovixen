@@ -126,10 +126,10 @@ wrangler login and no API token.
       other branch, which needs the `previews` block in `wrangler.jsonc`; build variable
       `PNPM_VERSION` = `12.8.1` (Cloudflare's default pnpm is older). `main` deploys to
       `naovixen.naomimshore.workers.dev`; the domain is untouched until Phase 13.
-- [x] On PR #2's preview link (`<branch>-naovixen.naomimshore.workers.dev`): `x-robots-tag:
-    noindex`, the headers, the redirects and the 404 status all as expected. Previews show
-      Cloudflare's plain "Not found" rather than `404.html`, which production serves; a gap in
-      the Previews beta, so check the 404 page on production rather than a preview.
+- [x] On PR #2's preview link (`<branch>-naovixen.naomimshore.workers.dev`):
+      `x-robots-tag: noindex`, the headers, the redirects and the 404 status all as expected.
+      Previews show Cloudflare's plain "Not found" rather than `404.html`, which production
+      serves; a gap in the Previews beta, so check the 404 page on production instead.
 
 ### Phase 12 — Launch content
 
@@ -158,7 +158,7 @@ None of these may ship. Each is marked "Placeholder" in the code.
       to WWW" rule to `https://www.naovixen.com`, keeping the path, with a 301.
 - [ ] Retire the fursuit app's services (its code is kept in `erohs/fursuit-builder`, and its
       databases hold no customers):
-    - [ ] `fursuit-builder`: disable its Deploy and Validate migrations workflows, and delete
+    - [x] `fursuit-builder`: disable its Deploy and Validate migrations workflows, and delete
           its four Actions secrets.
     - [ ] Vercel: remove the domains, delete the project, and uninstall its GitHub app if
           unused.
