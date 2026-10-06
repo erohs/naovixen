@@ -1,7 +1,7 @@
 # naovixen — Launch plan
 
-> **This file is temporary.** It tracks the static Astro rebuild from branch `astro-rebuild`
-> to launch on `www.naovixen.com`. Tick each box in the commit that finishes it. In the last
+> **This file is temporary.** It tracks the static Astro site, merged to `main` on
+> 2026-10-06, to launch on `www.naovixen.com`. Tick each box in the commit that finishes it. In the last
 > phase, move anything of lasting value into `CLAUDE.md`, `.claude/rules/` or
 > `docs/decisions.md`, then delete this file.
 
@@ -9,13 +9,13 @@
 
 ## Where we are
 
-**Phases 1–9 are done** (2026-10-06) on `astro-rebuild`. Every page, the content, search,
-the theme switch and the menu are built, and `pnpm check`, `lint`, `test`, `build` and
-`test:e2e` pass in all three engines with and without script. Locally, mobile Lighthouse
-scores 99–100.
+**Phases 1–9 are done, and the site is on `main`** (2026-10-06, PR #1), with CI green on
+every check: types, lint, unit tests, end-to-end in all three engines with and without
+script, and the Lighthouse budget.
 
-Still to do: the verification that needs a person or a deployment (Phase 10), CI and
-deployment (Phase 11), launch content from Naomi (Phase 12), and the cut-over (Phase 13).
+Still to do: the verification that needs a person or a deployment (Phase 10), connecting
+Cloudflare (Phase 11), launch content from Naomi (Phase 12), and the cut-over (Phase 13).
+`www.naovixen.com` is still served by Vercel.
 
 The TanStack Start, React and Sanity monorepo this replaces is at the `pre-astro` tag, and
 its plan is in that tag's `PLAN.md`. Its Sanity dataset is exported to `notes/sanity-export`.
@@ -119,21 +119,21 @@ app, Turborepo build filtering, `docs/adding-a-new-site.md`, i18next, and BEM pr
 GitHub Actions checks; Cloudflare Workers Builds deploys. Pushing is the whole release: no
 wrangler login and no API token.
 
-- [ ] `.github/workflows/ci.yml` on every PR and push to `main`: `check`, `lint`, `test`;
+- [x] `.github/workflows/ci.yml` on every PR and push to `main`: `check`, `lint`, `test`;
       `test:e2e` split into one job per engine, each with script on and off; and
       `pnpm test:lighthouse` (Lighthouse 13, fetched when run: median of three mobile runs on
       five pages, retrying a failed recording; performance at least 95, every other category
-      100). Every job has a time limit. First run: Lighthouse scored the home page 99, 100,
-      100, 100 before a failed recording, now retried. Tick once it is green on a PR.
+      100). Every job has a time limit. Each run's summary page shows the Lighthouse scores
+      and the end-to-end results, with the merged Playwright report attached. Green on PR #1.
 - [x] Push `astro-rebuild` and open a PR to `main`.
 - [ ] Connect Workers Builds in the Cloudflare dashboard (Naomi): Workers & Pages → Create
       application → Import a repository → `erohs/naovixen`. The Worker's name must be
       `naovixen`, matching `wrangler.jsonc`. Build command `pnpm build`; deploy command
       `npx wrangler deploy`; production branch `main`; build variable `PNPM_VERSION` =
-      `12.8.1` (Cloudflare's default pnpm is older). Its first build, of `main`, fails
-      until the PR merges, as `main` still holds the monorepo; nothing is served from it.
-      Every other branch gets a preview link on its pull request.
-- [ ] On the PR's preview link, `curl -I` for
+      `12.8.1` (Cloudflare's default pnpm is older). Its first build deploys `main` to the
+      Worker's `workers.dev` address only; the domain is untouched until Phase 13. Every
+      other branch gets a preview link on its pull request.
+- [ ] On a PR's preview link, `curl -I` for
       `x-robots-tag: noindex`, the headers, the 404 status and the `/about` → `/about/`
       redirect.
 - [ ] Require the CI checks to pass before a PR merges to `main` (GitHub → Settings →
@@ -156,9 +156,12 @@ None of these may ship. Each is marked "Placeholder" in the code.
 
 ### Phase 13 — Cut over
 
-- [ ] Merge the `astro-rebuild` PR; Workers Builds deploys it.
-- [ ] Add `www.naovixen.com` as the Worker's custom domain, keeping `naovixen.com`
-      redirecting to it, as the domain does today.
+- [x] Merge the `astro-rebuild` PR (#1, 2026-10-06).
+- [ ] Move `www.naovixen.com` from Vercel to the Worker. The DNS is already on Cloudflare,
+      but `www` and the bare domain point at Vercel, which also redirects the bare domain to
+      `www` today. Add `www.naovixen.com` as the Worker's custom domain, which replaces
+      Vercel's record; add a Cloudflare redirect rule sending `naovixen.com` to
+      `https://www.naovixen.com`, keeping the path; then remove the Vercel project.
 - [ ] Turn on Cloudflare Web Analytics, which sets no cookies. Check its current docs first:
       if it needs a script beacon, ask before adding it, and allow it in the CSP in
       `public/_headers`. Record the decision in `docs/decisions.md`.
