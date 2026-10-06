@@ -22,7 +22,7 @@ export const site = {
     givenName: "Naomi",
     familyName: "Shore",
     jobTitle: "Software Engineer",
-    origin: "https://www.naovixen.com",
+    origin: "https://naovixen.com",
     locale: "en-GB",
     /** Forwarded by Cloudflare Email Routing, so no personal address is published. */
     email: "hello@naovixen.com" as string | undefined,
