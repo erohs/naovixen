@@ -13,7 +13,8 @@
 every check: types, lint, unit tests, end-to-end in all three engines with and without
 script, and the Lighthouse budget.
 
-Still to do: the verification that needs a person (Phase 10), launch content from Naomi (Phase 12), and the cut-over (Phase 13).
+Phases 10–12 are done. Still to do in Phase 13: confirm the analytics beacon, the live
+Lighthouse run, and deleting this file.
 `naovixen.com` serves the site from the Worker, and `www` redirects to it.
 
 The TanStack Start, React and Sanity monorepo this replaces is at the `pre-astro` tag, and
@@ -105,7 +106,7 @@ app, Turborepo build filtering, `docs/adding-a-new-site.md`, i18next, and BEM pr
 
 - [x] End-to-end tests on every route in all three engines, with and without script and styles.
 - [x] Animation parity with the prototype: menu, card hover, button press (Naomi, 2026-10-06).
-- [ ] By hand: NVDA through the menu, search and theme switch. There is no way to check real
+- [x] By hand: NVDA through the menu, search and theme switch (Naomi, 2026-10-06). There is no way to check real
       Safari or VoiceOver, so WebKit in the end-to-end tests stands in for Safari.
 
 ### Phase 11 — CI and deployment
@@ -137,8 +138,8 @@ Settled with Naomi on 2026-10-06. Anything without a real value is left undefine
 `src/site.ts`, which hides whatever shows it.
 
 - [x] Contact email `hello@naovixen.com`, forwarded by Cloudflare Email Routing.
-    - [ ] Turn on Email Routing for `naovixen.com` and route `hello@` to Naomi's inbox
-          (Naomi). Send a test before launch.
+    - [x] Turn on Email Routing for `naovixen.com` and route `hello@` to Naomi's inbox
+          (Naomi, 2026-10-06). Its MX, SPF and `cf2024-1._domainkey` records must stay.
 - [x] GitHub `erohs` and Bluesky `@naovixen.com`. The Bluesky handle is verified by the
       `_atproto` TXT record, which must survive every DNS change.
 - [x] No testimonial and no portrait for now. Both components stay, rendering nothing until
@@ -160,25 +161,17 @@ Settled with Naomi on 2026-10-06. Anything without a real value is left undefine
       canonical host (`docs/decisions.md`): `naovixen.com` is the Worker's custom domain,
       production only, and `www` is a proxied `AAAA` → `100::` that Cloudflare's "Redirect
       from WWW to root" rule sends on with a 301, keeping the path and query.
-- [ ] Retire the fursuit app's services (its code is kept in `erohs/fursuit-builder`, and its
-      databases hold no customers):
-    - [x] `fursuit-builder`: disable its Deploy and Validate migrations workflows, and delete
-          its four Actions secrets.
-    - [ ] Vercel: remove the domains, delete the project, and uninstall its GitHub app if
-          unused.
-    - [ ] Supabase: delete the prod and dev projects.
-    - [ ] Resend: delete the API key and the `mail.naovixen.com` domain, then its DNS records
-          (`MX` and `TXT` on `send.mail`, `TXT` on `resend._domainkey.mail`), and revoke any
-          Cloudflare API token its one-click setup created.
-    - [ ] Turnstile: delete the fursuit widget.
-    - [ ] `_dmarc.naovixen.com`: once the contact email is settled, either keep it or, if
-          nothing sends from `naovixen.com`, publish `v=spf1 -all` and `p=reject`.
+- [x] Retire the fursuit app's services (Naomi, 2026-10-06; its code is kept in
+      `erohs/fursuit-builder`): its GitHub workflows and secrets, the Vercel project, domains
+      and GitHub app, both Supabase projects, Resend's key, both its domains and their DNS
+      records, and the Turnstile widget. `_dmarc` is `p=reject`, since nothing sends from
+      `naovixen.com`; the SPF record stays because Email Routing needs it.
 - [x] Cloudflare Web Analytics with its injected beacon (Naomi, 2026-10-06): allowed in the
       CSP, recorded in `docs/decisions.md`, named in the privacy notice.
-    - [ ] Turn it on for `naovixen.com` once this deploys (Naomi), and check the beacon loads
-          without a CSP error.
-- [ ] Retire the Sanity Studio deployment and project (the export is kept).
-- [ ] Delete `docs/content-inventory.md` once every gap is filled.
+    - [ ] Turned on for `naovixen.com` (Naomi, 2026-10-06), but the beacon is not in the live
+          pages yet. Check it appears and loads without a CSP error.
+- [x] Retire the Sanity Studio deployment and project (Naomi, 2026-10-06; the export is kept).
+- [x] Delete `docs/content-inventory.md`: Phase 12 filled every gap.
 - [x] Update the memory notes that still describe the monorepo.
 - [ ] Mobile Lighthouse 100 on every page type, run against the live `naovixen.com`.
       CI's budget is 95 for performance on a local server; local runs on 2026-10-06 scored
