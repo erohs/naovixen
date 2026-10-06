@@ -19,7 +19,7 @@ export const site = {
     givenName: "Naomi",
     familyName: "Shore",
     jobTitle: "Software Engineer",
-    origin: "https://naovixen.com",
+    origin: "https://www.naovixen.com",
     locale: "en-GB",
     /** Placeholder: not a confirmed address. */
     email: "hello@naovixen.dev" as string | undefined,
