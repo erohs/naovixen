@@ -14,6 +14,12 @@ is at the `pre-astro` tag.
 Blog search runs in the browser over `/blog/search.json`, with the old matching rules. Without
 script, the topic pages stand in for it.
 
+## The canonical host is `www.naovixen.com`
+
+The domain already serves `www`, with the bare `naovixen.com` redirecting to it, so
+`site.origin` carries the `www` and every canonical URL, sitemap entry, feed link and piece
+of structured data follows it. Pointing them at the bare domain would make each one a redirect.
+
 ## Client-side page changes that keep the header
 
 Pages work fully without script. The narrow-screen menu is a modal `<dialog>` opened by an

@@ -2,6 +2,7 @@
 
 Naomi Shore's portfolio and blog: a static Astro site that builds to plain HTML, deployed to
 Cloudflare. TypeScript, pnpm. `docs/decisions.md` records the choices code cannot explain.
+`PLAN.md` tracks the work left before launch; tick its boxes as phases finish.
 
 ## Working rules
 
@@ -22,8 +23,9 @@ Cloudflare. TypeScript, pnpm. `docs/decisions.md` records the choices code canno
 
 Anything factual about Naomi comes from `source-material/cv.pdf` (git-ignored) or from
 Naomi. Never invent a project, a handle, a testimonial or a bio. The prototype's placeholders
-(an email, two handles, a testimonial, photo frames) stay in place, each marked "Placeholder"
-in the code, until Naomi replaces them; none may reach launch. A fact with no placeholder,
+(an email, two handles, a testimonial, photo frames, the privacy notice's providers) stay in
+place, each marked "Placeholder" in the code, until Naomi replaces them; none may reach
+launch. A fact with no placeholder,
 such as the CV, is left out and whatever shows it hides itself.
 
 Never publish her phone number, home address or personal email unless she asks.
