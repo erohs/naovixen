@@ -10,10 +10,13 @@ export interface INavigationItem {
     href: string;
 }
 
-/**
- * Facts about Naomi shown across the site. LinkedIn is the only confirmed profile. Every value
- * marked "Placeholder" is the prototype's and must be replaced or removed before launch.
- */
+export interface ITestimonial {
+    quote: string;
+    name: string;
+    role: string;
+}
+
+/** Facts about Naomi shown across the site. Anything left undefined hides whatever shows it. */
 export const site = {
     name: "Naomi Shore",
     givenName: "Naomi",
@@ -21,10 +24,11 @@ export const site = {
     jobTitle: "Software Engineer",
     origin: "https://www.naovixen.com",
     locale: "en-GB",
-    /** Placeholder: not a confirmed address. */
-    email: "hello@naovixen.dev" as string | undefined,
-    /** No public CV exists yet, so every download link stays hidden until this is set. */
-    cvPath: undefined as string | undefined,
+    /** Forwarded by Cloudflare Email Routing, so no personal address is published. */
+    email: "hello@naovixen.com" as string | undefined,
+    /** A copy without contact details beyond the name. */
+    cvPath: "/naomi-shore-cv.pdf" as string | undefined,
+    testimonial: undefined as ITestimonial | undefined,
     profiles: [
         {
             label: "LinkedIn",
@@ -32,18 +36,16 @@ export const site = {
             url: "https://www.linkedin.com/in/naomi-shore",
             icon: "linkedin",
         },
-        /** Placeholder: the prototype's handle. */
         {
             label: "GitHub",
-            detail: "github.com/username",
-            url: "https://github.com/username",
+            detail: "github.com/erohs",
+            url: "https://github.com/erohs",
             icon: "github",
         },
-        /** Placeholder: the prototype's handle. */
         {
             label: "Bluesky",
-            detail: "@username.bsky.social",
-            url: "https://bsky.app/profile/username.bsky.social",
+            detail: "@naovixen.com",
+            url: "https://bsky.app/profile/naovixen.com",
             icon: "bluesky",
         },
     ] satisfies IProfile[] as IProfile[],

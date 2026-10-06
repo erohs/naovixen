@@ -1,31 +1,27 @@
 ---
-import PhotoPlaceholder from "../ui/PhotoPlaceholder.astro";
+import { site } from "../../site";
 
-/** Placeholder: the prototype's quote and attribution, to be replaced with a real testimonial. */
-const testimonial = {
-    quote: "Placeholder: Naomi is the engineer everyone wants on their team. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-    name: "Colleague Name",
-    role: "Engineering Manager, Company Name",
-};
+const { testimonial } = site;
 ---
 
-<section aria-labelledby="testimonial-title" class="testimonial">
-    <h2 id="testimonial-title" class="visually-hidden">
-        Testimonial
-    </h2>
-    <figure class="figure">
-        <blockquote class="quote">
-            <p>{testimonial.quote}</p>
-        </blockquote>
-        <figcaption class="attribution">
-            <PhotoPlaceholder label={`Photo placeholder: ${testimonial.name}`} shape="round" />
-            <span class="who">
-                <span class="name">{testimonial.name}</span>
-                <span class="role">{testimonial.role}</span>
-            </span>
-        </figcaption>
-    </figure>
-</section>
+{testimonial && (
+    <section aria-labelledby="testimonial-title" class="testimonial">
+        <h2 id="testimonial-title" class="visually-hidden">
+            Testimonial
+        </h2>
+        <figure class="figure">
+            <blockquote class="quote">
+                <p>{testimonial.quote}</p>
+            </blockquote>
+            <figcaption class="attribution">
+                <span class="who">
+                    <span class="name">{testimonial.name}</span>
+                    <span class="role">{testimonial.role}</span>
+                </span>
+            </figcaption>
+        </figure>
+    </section>
+)}
 
 <style>
     .testimonial {

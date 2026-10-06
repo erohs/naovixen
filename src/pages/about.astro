@@ -3,7 +3,6 @@ import Icon from "../components/ui/Icon.astro";
 import GreetingHeading from "../components/ui/GreetingHeading.astro";
 import InterestList from "../components/ui/InterestList.astro";
 import LinkButton from "../components/ui/LinkButton.astro";
-import PhotoPlaceholder from "../components/ui/PhotoPlaceholder.astro";
 import PageLayout from "../layouts/PageLayout.astro";
 import { site } from "../site";
 
@@ -35,8 +34,7 @@ const principles = [
             <div class="text">
                 <GreetingHeading greeting="the longer version!">About me</GreetingHeading>
                 <p class="lead">
-                    I'm Naomi, a software engineer from Telford with seven years at PebblePad and a real soft spot for
-                    accessibility.
+                    I'm Naomi, a software engineer with seven years at PebblePad and a real soft spot for accessibility.
                 </p>
                 <p>
                     I joined PebblePad as an apprentice in 2019 and earned a first-class BSc through a degree
@@ -54,7 +52,6 @@ const principles = [
                     it's helped make us one of the most productive teams in the company.
                 </p>
             </div>
-            <PhotoPlaceholder label="Photo placeholder: portrait of Naomi Shore" class="photo" />
         </div>
         <div class="columns">
             <section aria-labelledby="how-i-work-title" class="detail">
@@ -103,11 +100,6 @@ const principles = [
         flex-direction: column;
         gap: var(--space-between-blocks);
         max-inline-size: 62ch;
-    }
-
-    .photo {
-        justify-self: center;
-        inline-size: min(100%, calc(var(--layout-width-prose) / 2));
     }
 
     .detail {

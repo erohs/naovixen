@@ -133,18 +133,25 @@ wrangler login and no API token.
 
 ### Phase 12 — Launch content
 
-None of these may ship. Each is marked "Placeholder" in the code.
+Settled with Naomi on 2026-10-06. Anything without a real value is left undefined in
+`src/site.ts`, which hides whatever shows it.
 
-- [ ] The real contact email (now `hello@naovixen.dev`).
-- [ ] GitHub and Bluesky handles, or remove them. LinkedIn is the only confirmed profile.
-- [ ] The testimonial's quote, name and role, or remove the section.
-- [ ] The portrait photo, or remove its frames.
-- [ ] The privacy notice's email and hosting providers, and a line on the cookieless
-      analytics.
-- [ ] The CV PDF, if one is to be published (a redacted copy, without the phone number or
-      personal email). Until then every CV link stays hidden.
-- [ ] An Open Graph image, at least one for the whole site.
-- [ ] The remaining gaps in `docs/content-inventory.md`.
+- [x] Contact email `hello@naovixen.com`, forwarded by Cloudflare Email Routing.
+    - [ ] Turn on Email Routing for `naovixen.com` and route `hello@` to Naomi's inbox
+          (Naomi). Send a test before launch.
+- [x] GitHub `erohs` and Bluesky `@naovixen.com`. The Bluesky handle is verified by the
+      `_atproto` TXT record, which must survive every DNS change.
+- [x] No testimonial and no portrait for now. Both components stay, rendering nothing until
+      there is a real one.
+- [x] The privacy notice names Cloudflare for hosting and email forwarding.
+    - [ ] Add a line on the cookieless analytics when Phase 13 turns them on.
+- [x] The CV at `/naomi-shore-cv.pdf`, redacted to the name alone: no town, phone, email or
+      LinkedIn, in the text or the file's metadata. The town is off the about page too.
+- [x] One Open Graph image for the whole site, `public/og.png`, drawn from the home page's
+      hero.
+- [ ] Rewrite the copy, posts and case studies with a front-end focus, using the `writer`
+      agent (`.claude/agents/writer.md`) with the `humanizer` plugin, then fill the remaining
+      gaps in `docs/content-inventory.md`.
 
 ### Phase 13 — Cut over
 
