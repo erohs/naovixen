@@ -149,7 +149,7 @@ Settled with Naomi on 2026-10-06. Anything without a real value is left undefine
       LinkedIn, in the text or the file's metadata. The town is off the about page too.
 - [x] One Open Graph image for the whole site, `public/og.png`, drawn from the home page's
       hero.
-- [ ] Rewrite the copy, posts and case studies with a front-end focus, using the `writer`
+- [x] Rewrite the copy, posts and case studies with a front-end focus, using the `writer`
       agent (`.claude/agents/writer.md`) with the `humanizer` plugin, then fill the remaining
       gaps in `docs/content-inventory.md`.
 
