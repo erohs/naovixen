@@ -119,13 +119,13 @@ app, Turborepo build filtering, `docs/adding-a-new-site.md`, i18next, and BEM pr
 GitHub Actions checks; Cloudflare Workers Builds deploys. Pushing is the whole release: no
 wrangler login and no API token.
 
-- [ ] `.github/workflows/ci.yml` on every PR and push to `main`: `check`, `lint`, `test`,
-      `test:e2e` in all three engines, and `pnpm test:lighthouse` (Lighthouse 13: median of
-      three mobile runs on five pages; performance at least 95, every other category 100).
-      Every job has a time limit. Written but never run: Lighthouse CI hung on current Chrome,
-      and `wrangler dev` crashed on Windows, so the budget is first proven in CI. Tick once
-      it is green on a PR.
-- [ ] Push `astro-rebuild` and open a PR to `main`.
+- [ ] `.github/workflows/ci.yml` on every PR and push to `main`: `check`, `lint`, `test`;
+      `test:e2e` split into one job per engine, each with script on and off; and
+      `pnpm test:lighthouse` (Lighthouse 13, fetched when run: median of three mobile runs on
+      five pages, retrying a failed recording; performance at least 95, every other category
+      100). Every job has a time limit. First run: Lighthouse scored the home page 99, 100,
+      100, 100 before a failed recording, now retried. Tick once it is green on a PR.
+- [x] Push `astro-rebuild` and open a PR to `main`.
 - [ ] Connect Workers Builds in the Cloudflare dashboard (Naomi): Workers & Pages → Create
       application → Import a repository → `erohs/naovixen`. The Worker's name must be
       `naovixen`, matching `wrangler.jsonc`. Build command `pnpm build`; deploy command

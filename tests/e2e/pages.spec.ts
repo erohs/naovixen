@@ -33,8 +33,12 @@ const checkAccessibility = (route: string, colorScheme: "light" | "dark", hasScr
     });
 };
 
+/** The served HTML is the same in every engine, with or without script, so it is checked once. */
+const servedOnce = (): void => test.skip(test.info().project.name !== "chromium", "Checked once, in Chromium.");
+
 const checkBasics = (route: string): void => {
     test("is found, titled and canonical", async ({ page }) => {
+        servedOnce();
         const response = await page.goto(route);
         expect(response?.status()).toBe(200);
         await expect(page).toHaveTitle(/Naomi Shore/);
@@ -43,6 +47,7 @@ const checkBasics = (route: string): void => {
     });
 
     test("carries structured data that parses", async ({ page }) => {
+        servedOnce();
         await page.goto(route);
         const blocks = await page.locator('script[type="application/ld+json"]').allTextContents();
         expect(blocks.length).toBeGreaterThan(0);
@@ -63,6 +68,7 @@ for (const route of routes) {
 }
 
 test("an unknown address answers with the not-found page", async ({ page }) => {
+    servedOnce();
     const response = await page.goto("/no-such-page/");
     expect(response?.status()).toBe(404);
     await expect(page.locator("h1")).toHaveText("Page not found");

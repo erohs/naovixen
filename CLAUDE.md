@@ -54,6 +54,7 @@ src/
   styles/            tokens, reset, base, and the few styles several components share
   icons/             SVG icons, with their licences
 tests/e2e/           Playwright, every engine, with and without script
+tests/lighthouse.ts  the mobile Lighthouse budget, run in CI
 ```
 
 A component lives with the one area that uses it, and moves to `ui/` when a second needs it.
