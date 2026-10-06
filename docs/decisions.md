@@ -20,6 +20,13 @@ The domain already serves `www`, with the bare `naovixen.com` redirecting to it,
 `site.origin` carries the `www` and every canonical URL, sitemap entry, feed link and piece
 of structured data follows it. Pointing them at the bare domain would make each one a redirect.
 
+## Cloudflare deploys; GitHub Actions only checks
+
+Cloudflare Workers Builds builds and deploys every push from the connected repository, with a
+preview link on each pull request, so deploying needs no wrangler login and no API token in
+GitHub. Actions runs the checks and Lighthouse. It cannot stop a deploy, so `main` only takes
+pull requests whose checks have passed.
+
 ## Client-side page changes that keep the header
 
 Pages work fully without script. The narrow-screen menu is a modal `<dialog>` opened by an

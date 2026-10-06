@@ -11,11 +11,11 @@
 
 **Phases 1–9 are done** (2026-10-06) on `astro-rebuild`. Every page, the content, search,
 the theme switch and the menu are built, and `pnpm check`, `lint`, `test`, `build` and
-`test:e2e` pass in all three engines with and without script. The home page scores 100 on
-mobile Lighthouse.
+`test:e2e` pass in all three engines with and without script. Locally, mobile Lighthouse
+scores 99–100.
 
-Still to do: the verification that needs a person or a deployment (Phase 10), CI
-(Phase 11), launch content from Naomi (Phase 12), and the cut-over (Phase 13).
+Still to do: the verification that needs a person or a deployment (Phase 10), CI and
+deployment (Phase 11), launch content from Naomi (Phase 12), and the cut-over (Phase 13).
 
 The TanStack Start, React and Sanity monorepo this replaces is at the `pre-astro` tag, and
 its plan is in that tag's `PLAN.md`. Its Sanity dataset is exported to `notes/sanity-export`.
@@ -105,7 +105,7 @@ app, Turborepo build filtering, `docs/adding-a-new-site.md`, i18next, and BEM pr
 ### Phase 10 — Verify
 
 - [x] End-to-end tests on every route in all three engines, with and without script and styles.
-- [ ] Mobile Lighthouse 100 on every page type, measured on the preview deployment. Local
+- [ ] Mobile Lighthouse 100 on every page type, measured on the Phase 11 preview. Local
       runs on 2026-10-06 (`wrangler dev`, gzip, Lighthouse 13.5) scored 100 in every category
       on a post and a project; home and `/blog/` scored 99 for performance (LCP 1.8 s against
       1.7 s) and 100 in the rest.
@@ -113,16 +113,31 @@ app, Turborepo build filtering, `docs/adding-a-new-site.md`, i18next, and BEM pr
       card hover, button press.
 - [ ] By hand: real Safari on macOS and iOS; VoiceOver and NVDA through the menu, search and
       theme switch.
-- [ ] A preview deployment on Cloudflare. `curl -I` it for `x-robots-tag: noindex`, the
-      headers, the 404 status and the `/about` → `/about/` redirect.
 
-### Phase 11 — CI
+### Phase 11 — CI and deployment
 
-Carried over from the old plan's Phase 8.
+GitHub Actions checks; Cloudflare Workers Builds deploys. Pushing is the whole release: no
+wrangler login and no API token.
 
-- [ ] GitHub Actions on every PR: `check`, `lint`, `test`, `build`, `test:e2e`, and a
-      Lighthouse budget.
-- **Verify:** CI green on a PR.
+- [ ] `.github/workflows/ci.yml` on every PR and push to `main`: `check`, `lint`, `test`,
+      `test:e2e` in all three engines, and `pnpm test:lighthouse` (Lighthouse 13: median of
+      three mobile runs on five pages; performance at least 95, every other category 100).
+      Every job has a time limit. Written but never run: Lighthouse CI hung on current Chrome,
+      and `wrangler dev` crashed on Windows, so the budget is first proven in CI. Tick once
+      it is green on a PR.
+- [ ] Push `astro-rebuild` and open a PR to `main`.
+- [ ] Connect Workers Builds in the Cloudflare dashboard (Naomi): Workers & Pages → Create
+      application → Import a repository → `erohs/naovixen`. The Worker's name must be
+      `naovixen`, matching `wrangler.jsonc`. Build command `pnpm build`; deploy command
+      `npx wrangler deploy`; production branch `main`; build variable `PNPM_VERSION` =
+      `12.8.1` (Cloudflare's default pnpm is older). Its first build, of `main`, fails
+      until the PR merges, as `main` still holds the monorepo; nothing is served from it.
+      Every other branch gets a preview link on its pull request.
+- [ ] On the PR's preview link, `curl -I` for
+      `x-robots-tag: noindex`, the headers, the 404 status and the `/about` → `/about/`
+      redirect.
+- [ ] Require the CI checks to pass before a PR merges to `main` (GitHub → Settings →
+      Branches), since Workers Builds deploys `main` whatever CI says.
 
 ### Phase 12 — Launch content
 
@@ -141,9 +156,9 @@ None of these may ship. Each is marked "Placeholder" in the code.
 
 ### Phase 13 — Cut over
 
-- [ ] Merge `astro-rebuild` into `main` and push.
-- [ ] Serve the Worker on `www.naovixen.com`, keeping `naovixen.com` redirecting to it, as
-      the domain does today.
+- [ ] Merge the `astro-rebuild` PR; Workers Builds deploys it.
+- [ ] Add `www.naovixen.com` as the Worker's custom domain, keeping `naovixen.com`
+      redirecting to it, as the domain does today.
 - [ ] Turn on Cloudflare Web Analytics, which sets no cookies. Check its current docs first:
       if it needs a script beacon, ask before adding it, and allow it in the CSP in
       `public/_headers`. Record the decision in `docs/decisions.md`.

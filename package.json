@@ -14,7 +14,8 @@
         "lint": "eslint . && stylelint \"src/**/*.{css,astro}\" && prettier --check .",
         "format": "prettier --write .",
         "test": "vitest run",
-        "test:e2e": "playwright test"
+        "test:e2e": "playwright test",
+        "test:lighthouse": "node tests/lighthouse.ts"
     },
     "dependencies": {
         "@astrojs/mdx": "8.0.2",
@@ -30,6 +31,7 @@
         "eslint": "10.12.0",
         "eslint-plugin-astro": "3.2.1",
         "eslint-plugin-jsx-a11y-x": "0.2.0",
+        "lighthouse": "13.5.0",
         "postcss-html": "2.0.0",
         "prettier": "3.9.9",
         "prettier-plugin-astro": "1.1.0",
