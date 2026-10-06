@@ -16,9 +16,9 @@ export default defineConfig({
     testDir: "tests/e2e",
     fullyParallel: true,
     forbidOnly: Boolean(process.env["CI"]),
-    /* In CI, failures are also annotated on the pull request. */
-    reporter: process.env["CI"] ? [["github"], ["dot"]] : "list",
-    use: { baseURL: `http://localhost:${port}`, screenshot: "only-on-failure" },
+    /* In CI, failures are annotated on the pull request, and each engine's blob is merged into one report. */
+    reporter: process.env["CI"] ? [["github"], ["dot"], ["blob"]] : "list",
+    use: { baseURL: `http://localhost:${port}`, screenshot: "only-on-failure", trace: "retain-on-failure" },
     webServer: {
         command: `pnpm build && pnpm preview --port ${port}`,
         url: `http://localhost:${port}/`,

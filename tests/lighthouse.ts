@@ -1,4 +1,5 @@
 import { execSync } from "node:child_process";
+import { appendFileSync } from "node:fs";
 
 /**
  * Runs mobile Lighthouse three times on each page and fails if any category's median falls
@@ -52,16 +53,56 @@ const runLighthouse = (url: string, attemptsLeft = 3): Record<string, ICategory>
 const median = (values: number[]): number =>
     values.toSorted((first, second) => first - second)[Math.floor(values.length / 2)] ?? 0;
 
-const checkPage = (path: string): string[] => {
+interface IPageScores {
+    path: string;
+    scores: Record<string, number>;
+}
+
+const scorePage = (path: string): IPageScores => {
     const runs = Array.from({ length: runsPerPage }, () => runLighthouse(origin + path));
-    return Object.entries(minimumScores).flatMap(([category, minimum]) => {
-        const score = Math.round(median(runs.map((run) => run[category]?.score ?? 0)) * 100);
-        console.log(`${path} ${category} ${score}`);
-        return score < minimum * 100 ? [`${path}: ${category} ${score}, below ${minimum * 100}`] : [];
-    });
+    const scores = Object.fromEntries(
+        Object.keys(minimumScores).map((category) => [
+            category,
+            Math.round(median(runs.map((run) => run[category]?.score ?? 0)) * 100),
+        ]),
+    );
+    console.log(path, scores);
+    return { path, scores };
 };
 
-const failures = pages.flatMap(checkPage);
+const minimumOf = (category: string): number => (minimumScores[category] ?? 1) * 100;
+
+const scoreCell = (category: string, score: number): string => `${score < minimumOf(category) ? "❌" : "✅"} ${score}`;
+
+/** A table for the GitHub Actions run's summary page. */
+const summaryTable = (results: IPageScores[]): string => {
+    const categories = Object.keys(minimumScores);
+    const rows = results.map(
+        ({ path, scores }) =>
+            `| ${path} | ${categories.map((category) => scoreCell(category, scores[category] ?? 0)).join(" | ")} |`,
+    );
+    const budget = categories.map((category) => `${category} ${minimumOf(category)}`).join(", ");
+    return [
+        `## Lighthouse, mobile, median of ${runsPerPage} runs`,
+        "",
+        `Budget: ${budget}.`,
+        "",
+        `| Page | ${categories.join(" | ")} |`,
+        `| --- |${" ---: |".repeat(categories.length)}`,
+        ...rows,
+        "",
+    ].join("\n");
+};
+
+const results = pages.map(scorePage);
+const summaryPath = process.env["GITHUB_STEP_SUMMARY"];
+if (summaryPath) appendFileSync(summaryPath, summaryTable(results));
+
+const failures = results.flatMap(({ path, scores }) =>
+    Object.entries(scores)
+        .filter(([category, score]) => score < minimumOf(category))
+        .map(([category, score]) => `${path}: ${category} ${score}, below ${minimumOf(category)}`),
+);
 if (failures.length > 0) {
     console.error(failures.join("\n"));
     process.exitCode = 1;

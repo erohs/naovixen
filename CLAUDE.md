@@ -25,8 +25,8 @@ Anything factual about Naomi comes from `source-material/cv.pdf` (git-ignored) o
 Naomi. Never invent a project, a handle, a testimonial or a bio. The prototype's placeholders
 (an email, two handles, a testimonial, photo frames, the privacy notice's providers) stay in
 place, each marked "Placeholder" in the code, until Naomi replaces them; none may reach
-launch. A fact with no placeholder,
-such as the CV, is left out and whatever shows it hides itself.
+launch. A fact with no placeholder, such as the CV, is left out and whatever shows it hides
+itself.
 
 Never publish her phone number, home address or personal email unless she asks.
 
@@ -55,6 +55,7 @@ src/
   icons/             SVG icons, with their licences
 tests/e2e/           Playwright, every engine, with and without script
 tests/lighthouse.ts  the mobile Lighthouse budget, run in CI
+tests/e2e-summary.ts the end-to-end results table on a CI run's summary page
 ```
 
 A component lives with the one area that uses it, and moves to `ui/` when a second needs it.
