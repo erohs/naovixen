@@ -37,7 +37,7 @@ The month and year above the grid are formatted with `Intl.DateTimeFormat`, so t
 
 ### Keyboard and focus
 
-Inside the grid, the arrow keys move by a day or a week. Home and End jump to the first and last day of the week, which gets fiddly once the week can start on any day. Page Up and Page Down move to the same day in the previous or next month. They use the month helper described below, so Page Down from 31 March lands on 30 April instead of spilling into May. Space selects a date and keeps the calendar open, Enter selects and closes, and Escape closes without changing anything. Only the selected day is in the tab order (the roving tabindex pattern), so Tab moves between the grid and the buttons around it while the arrows move within it.
+Inside the grid, the arrow keys move by a day or a week. Home and End jump to the first and last day of the week, which gets fiddly once the week can start on any day. Page Up and Page Down move to the same day in the previous or next month, and with Shift held they move a year, as in the W3C pattern. They use the month helper described below, so Page Down from 31 March lands on 30 April instead of spilling into May. Space selects a date and keeps the calendar open, Enter selects and closes, and Escape closes without changing anything. Only the selected day is in the tab order (the roving tabindex pattern), so Tab moves between the grid and the buttons around it while the arrows move within it.
 
 ```tsx title="CalendarButton.tsx"
 <button tabIndex={isActive ? 0 : -1} onClick={onClick}>
