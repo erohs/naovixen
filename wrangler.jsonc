@@ -1,6 +1,10 @@
 {
     "name": "naovixen",
     "compatibility_date": "2026-10-04",
+    "workers_dev": true,
+    "preview_urls": true,
+    /* Branch builds run `wrangler preview`, which needs this block even when empty. */
+    "previews": {},
     "assets": {
         "directory": "./dist",
         "html_handling": "auto-trailing-slash",
