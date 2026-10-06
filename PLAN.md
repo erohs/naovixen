@@ -151,10 +151,25 @@ None of these may ship. Each is marked "Placeholder" in the code.
 
 - [x] Merge the `astro-rebuild` PR (#1, 2026-10-06).
 - [ ] Move `www.naovixen.com` from Vercel to the Worker. The DNS is already on Cloudflare,
-      but `www` and the bare domain point at Vercel, which also redirects the bare domain to
-      `www` today. Add `www.naovixen.com` as the Worker's custom domain, which replaces
-      Vercel's record; add a Cloudflare redirect rule sending `naovixen.com` to
-      `https://www.naovixen.com`, keeping the path; then remove the Vercel project.
+      but `www` and the bare domain point at Vercel, which serves the old fursuit app and
+      redirects the bare domain to `www`. Cloudflare refuses a custom domain while a CNAME
+      exists, so delete `www`'s Vercel CNAME and add `www.naovixen.com` as the Worker's
+      custom domain straight after (`www` is down in between). Replace the bare domain's
+      Vercel `A` records with a proxied `AAAA` `@` → `100::`, and add the "Redirect from root
+      to WWW" rule to `https://www.naovixen.com`, keeping the path, with a 301.
+- [ ] Retire the fursuit app's services (its code is kept in `erohs/fursuit-builder`, and its
+      databases hold no customers):
+    - [ ] `fursuit-builder`: disable its Deploy and Validate migrations workflows, and delete
+          its four Actions secrets.
+    - [ ] Vercel: remove the domains, delete the project, and uninstall its GitHub app if
+          unused.
+    - [ ] Supabase: delete the prod and dev projects.
+    - [ ] Resend: delete the API key and the `mail.naovixen.com` domain, then its DNS records
+          (`MX` and `TXT` on `send.mail`, `TXT` on `resend._domainkey.mail`), and revoke any
+          Cloudflare API token its one-click setup created.
+    - [ ] Turnstile: delete the fursuit widget.
+    - [ ] `_dmarc.naovixen.com`: once the contact email is settled, either keep it or, if
+          nothing sends from `naovixen.com`, publish `v=spf1 -all` and `p=reject`.
 - [ ] Turn on Cloudflare Web Analytics, which sets no cookies. Check its current docs first:
       if it needs a script beacon, ask before adding it, and allow it in the CSP in
       `public/_headers`. Record the decision in `docs/decisions.md`.
