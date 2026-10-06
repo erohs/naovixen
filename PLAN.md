@@ -13,8 +13,7 @@
 every check: types, lint, unit tests, end-to-end in all three engines with and without
 script, and the Lighthouse budget.
 
-Phases 10–12 are done. Still to do in Phase 13: the live Lighthouse run, then deleting this
-file.
+Every phase is done except deleting this file.
 `naovixen.com` serves the site from the Worker, and `www` redirects to it.
 
 The TanStack Start, React and Sanity monorepo this replaces is at the `pre-astro` tag, and
@@ -29,7 +28,7 @@ One static Astro site, built the way Astro intends rather than ported from the m
 - Animations behave exactly as the prototype's.
 - Every page works and keeps its layout with script off, and reads in order with styles off.
 - The same experience in current Chromium, Firefox and Safari.
-- Fast (mobile Lighthouse 100), strong SEO, WCAG 2.2 AA.
+- Fast (mobile Lighthouse 99 for performance, 100 elsewhere), strong SEO, WCAG 2.2 AA.
 - Easy to edit: content is MDX in the repo, copy sits in the template it appears in.
 
 ---
@@ -173,10 +172,9 @@ Settled with Naomi on 2026-10-06. Anything without a real value is left undefine
 - [x] Retire the Sanity Studio deployment and project (Naomi, 2026-10-06; the export is kept).
 - [x] Delete `docs/content-inventory.md`: Phase 12 filled every gap.
 - [x] Update the memory notes that still describe the monorepo.
-- [ ] Mobile Lighthouse 100 on every page type, run against the live `naovixen.com`.
-      CI's budget is 95 for performance on a local server; local runs on 2026-10-06 scored
-      100 on a post and a project, and 99 for performance on home and `/blog/` (LCP 1.8 s
-      against 1.7 s).
+- [x] Mobile Lighthouse on every page type against the live `naovixen.com` (2026-10-06):
+      performance 99, every other category 100. Naomi kept the fonts and the router over the
+      last point; the measurements are in `docs/decisions.md`.
 - [ ] **Delete `PLAN.md`:** `chore: remove the launch plan`.
 
 ---
@@ -186,5 +184,5 @@ Settled with Naomi on 2026-10-06. Anything without a real value is left undefine
 - `naovixen.com` serves the Astro site over HTTPS, with `www.naovixen.com` redirecting to it.
 - No placeholder reaches the live site.
 - Publishing a post is a push to `main`.
-- WCAG 2.2 AA, checked automatically and with NVDA; mobile Lighthouse 100 on the live site.
+- WCAG 2.2 AA, checked automatically and with NVDA; mobile Lighthouse 99 for performance and 100 elsewhere on the live site.
 - `PLAN.md` removed; `CLAUDE.md`, `.claude/rules/` and `docs/decisions.md` hold what lasts.

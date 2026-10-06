@@ -181,3 +181,13 @@ its beacon to each page at the edge, so nothing in the repo loads it; the CSP al
 `https://static.cloudflareinsights.com` by host, because the beacon's path carries a version,
 and `connect-src 'self'` covers its reports to `/cdn-cgi/rum`. A visitor without script is not
 counted. Injection needs proxied traffic and fails on `Cache-Control: no-transform`.
+
+## Mobile Lighthouse performance is 99, not 100
+
+Measured on the live site on 2026-10-06: 99 on every page type, every other category 100, LCP
+1.8–2.0 s against the 1.5 s that 100 needs. Lighthouse simulates slow 4G over every request
+that finished before the real first paint, and the real paint is so early (about 0.36 s) that
+all three fonts and every script count. Preview builds measured the causes: the fonts add about
+0.6 s to LCP and the scripts about 0.2 s to FCP, while preloading the handwriting font or
+inlining the stylesheet changed nothing. Only dropping the fonts or the router reached 100, and
+not reliably, so the design keeps both and the score stays at 99.
