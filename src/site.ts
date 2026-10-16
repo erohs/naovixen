@@ -42,12 +42,6 @@ export const site = {
             url: "https://github.com/erohs",
             icon: "github",
         },
-        {
-            label: "Bluesky",
-            detail: "@naovixen.com",
-            url: "https://bsky.app/profile/naovixen.com",
-            icon: "bluesky",
-        },
     ] satisfies IProfile[] as IProfile[],
     navigation: [
         { label: "Home", href: "/" },
