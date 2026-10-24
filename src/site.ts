@@ -38,8 +38,8 @@ export const site = {
         },
         {
             label: "GitHub",
-            detail: "github.com/erohs",
-            url: "https://github.com/erohs",
+            detail: "github.com/naovixen",
+            url: "https://github.com/naovixen",
             icon: "github",
         },
     ] satisfies IProfile[] as IProfile[],
