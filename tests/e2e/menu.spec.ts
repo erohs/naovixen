@@ -104,7 +104,7 @@ test("keeps the chosen theme and the blog search working after a link is followe
     await page.waitForURL(/\/blog\/$/);
     await expect(page.getByRole("dialog", { name: "Menu" })).toBeHidden();
     await page.getByLabel("Search posts").fill("radio");
-    await expect(page.locator("[data-summary]")).toHaveText("Showing 2 of 6 posts matching “radio”");
+    await expect(page.locator("[data-summary]")).toHaveText("Showing 2 of 10 posts matching “radio”");
     await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
 });
 

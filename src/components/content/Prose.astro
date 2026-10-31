@@ -4,6 +4,7 @@ import Link from "../ui/Link.astro";
 import Callout from "./Callout.astro";
 import CodeFigure from "./CodeFigure.astro";
 import Facts from "./Facts.astro";
+import Screenshot from "./Screenshot.astro";
 
 interface Props {
     entry: CollectionEntry<"blog" | "work" | "legal">;
@@ -16,7 +17,7 @@ const { Content } = await render(entry);
 ---
 
 <div class:list={["prose", isNumbered && "prose--numbered"]}>
-    <Content components={{ a: Link, pre: CodeFigure, Callout, Facts }} />
+    <Content components={{ a: Link, pre: CodeFigure, img: Screenshot, Callout, Facts }} />
 </div>
 
 <style>

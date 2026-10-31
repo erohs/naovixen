@@ -1,0 +1,81 @@
+---
+title: "Measure before you tune: driving a Cities: Skylines II city in BeamNG"
+excerpt: "A city that ran at 10 to 20 fps, the symptom that ruled out the obvious fix, and the measurements that freed 713 MiB of graphics memory without tearing a building apart."
+published: "2026-10-30"
+topics: ["Performance", "Process", "Python"]
+---
+
+My city ran at 10 to 20 frames a second as soon as I drove near it, and standing still it swung anywhere between 10 and 60. That second symptom turned out to be the useful one.
+
+The city comes from Cities: Skylines II. [Carto](https://github.com/taipei-native/Carto) is Taipei Native's open-source mod for exporting a city's map data, and that export still works unchanged in my fork. I added a ripper in C# that walks the loaded city inside the game and writes its meshes, materials, terrain and all 1.2 million objects into a documented bundle, audited until every layer traced back to something the game really draws. Then cs2beamng, a Python command line and desktop app, builds the bundle into a BeamNG.drive level. My fork is [on GitHub](https://github.com/naovixen/csii-world-bundle). I built my half with Claude Code as a pair, so "we" below is me and the agent.
+
+## Find the symptom that rules things out
+
+With the camera still, nothing about what's drawn changes between frames, so a frame rate that moves by 50 fps can't be geometry. Memory can change, though, and the level was using 6.8 GB of an 8 GB card with another 3.6 GB spilled into shared memory. It also got worse after I alt-tabbed, which fits: alt-tab makes the driver release its allocations, and a working set bigger than the card never gets them all back. An earlier sweep had hidden one part of the scene at a time (buildings, trees, roads, markings), and none of them moved the frame rate by more than one frame a second.
+
+I'd learnt to look before theorising earlier that same day. We'd spent two nights on water theories for some black squares around the docks before I looked properly and saw they were areas: a black reflective surface and the dock's grey concrete. I reverted every water fix.
+
+## Measure the thing the symptom points at
+
+BeamNG never streams meshes. Every shape a level places stays on the card all session, so the cost is what the level ships rather than what's on screen. `cs2beamng budget` reports that for a built level, and at heart it's a walk over the files:
+
+```python title="resident.py"
+from pathlib import Path
+
+KINDS = {".cdae": "meshes", ".dds": "textures", ".png": "textures"}
+
+def resident_mib(level: Path) -> dict[str, float]:
+    """What the engine keeps on the card: every mesh and texture the level ships."""
+    totals = {"meshes": 0, "textures": 0}
+    for file in level.rglob("*"):
+        if kind := KINDS.get(file.suffix):
+            totals[kind] += file.stat().st_size
+    return {kind: size / 2**20 for kind, size in totals.items()}
+```
+
+About four-fifths of the level's files were mesh, and textures are the only half BeamNG can stream, so the meshes were leaving the streamer no room.
+
+## Measure the curve, not two points
+
+The lever was to thin each shape's mesh, keeping a cut only where the surface measurably stays put. The first pass tried keeping 50% and 25% of the triangles, measured errors of up to a metre, and concluded there was no slack. I pushed back, because two aggressive points say nothing about the gentle end. The full curve said otherwise: on the shapes we tried, the first 10% of triangles came off at 0.000 m of measured movement, and on some the first 20% did too.
+
+The error isn't monotonic, either. One building moved 5.3 m at 60% and 0.44 m at 50%, so stopping at the first failure would miss good cuts. We try the deepest cut first and ship the first that passes:
+
+```python title="refine.py"
+import numpy as np
+
+def pick_reduction(mesh, ratios=(0.7, 0.8, 0.9), p95_cm=3.0, peak_cm=25.0):
+    """Try the deepest cut first; ship the first whose measured movement passes both bounds."""
+    for ratio in sorted(ratios):
+        candidate = decimate(mesh, ratio)
+        if candidate.triangle_count >= mesh.triangle_count:
+            continue  # the reducer stalled, so this isn't a reduction
+        moved_cm = surface_distances(candidate, mesh)
+        if np.percentile(moved_cm, 95) <= p95_cm and moved_cm.max() <= peak_cm:
+            return candidate
+    return mesh  # nothing passed: ship it whole
+```
+
+## Know what your bound can't see
+
+A 95th percentile says nothing about the worst twentieth of a surface. One tower passed with 2 cm of typical movement while a corner of it had travelled a full metre, hence the second bound, which caps the worst point at 25 cm.
+
+The bigger blind spot appeared when we raised the tolerance from 3 cm to 8 cm. The frame rate was lovely, and my screenshots showed what it cost: window openings torn open, curtain walls shredded into triangular tents, balconies collapsed into spikes. The thinning ran one material at a time, so a wall and its glass stopped sharing vertices and the seam between them opened while the vertices barely moved. No distance bound could catch that; I only saw it by looking. We went back to 3 cm with the worst-case cap on top, which gave up just 64 MiB against the build that broke.
+
+![A curved glass tower from the 8 cm build in BeamNG, close up: its grid of window frames is broken by pale triangles where the glass and the frames around it have pulled apart.](../../assets/blog/carto/torn-facade.jpg)
+
+Resident memory fell from 2,990 MiB to 2,277, a 24% cut, and the city ran at 40 to 60 fps, dipping to about 20 when panning into a dense area.
+
+## Put the measurement where people tune
+
+Diagonal facets remain on some buildings. Fixing them properly means changing how the thinning treats seams, not a tuning number, so I left them and gave people the control instead. "Thin and clean the meshes" and "How much to thin" sit in the World section beside the tree and prop sliders, and the slider is a distance in centimetres because distance is what gets measured. The two safety bounds stay under Advanced.
+
+![The cs2beamng settings panel with the High preset and the World section open: tick boxes for buildings, roads and road markings, sliders for trees and props, and, under "Thin and clean the meshes", a "How much to thin" slider set to 3 cm with the note "How far a thinned surface may move. Higher thins more and frees more memory."](../../assets/blog/carto/thin-slider.png)
+
+The rest of the app follows the same idea. It shows nine of its 79 settings, with the others behind _Show advanced_. Each control has one sentence of help, and the measured reason for its default sits behind "why" on the row. A cost meter stays on screen, predicting the video memory a level will need before you commit to a long build and saying how each figure was worked out; every build then prints the estimate beside the measurement. On one check it predicted 541.3 MiB of textures, and the build wrote 541.3 MiB.
+
+![The cost meter, headed "What this will cost" for an 8,018 MiB card. An amber bar reads 3,477 MiB of video memory against 3,473 MiB known to fit, with a line saying how each part was worked out and a note that it may run but nobody has measured it. Tiles below give the build time, 12m 24s, the size on disk, 3.58 GiB, and what the card holds.](../../assets/blog/carto/cost-meter.png)
+
+## Measure again after the fix
+
+With the memory pressure gone, BeamNG's overlay read 20.7 ms of CPU against 18.7 ms of GPU a frame, so draw calls are now the limit. The level ships 5,546 materials against vanilla BeamNG's 586, which also fits the dip in dense areas. More mesh thinning would buy less each time, and the next lever is combining materials.
