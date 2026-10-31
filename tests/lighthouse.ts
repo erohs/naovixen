@@ -13,7 +13,7 @@ const pages = [
     "/about/",
     "/blog/",
     "/blog/captions-from-scratch-streaming-webvtt-in-net/",
-    "/work/captions-and-transcription/",
+    "/work/react-date-picker/",
 ];
 
 const minimumScores: Record<string, number> = {

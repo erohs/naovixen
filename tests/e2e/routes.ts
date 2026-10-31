@@ -2,7 +2,7 @@
 export const routes = [
     "/",
     "/work/",
-    "/work/captions-and-transcription/",
+    "/work/react-date-picker/",
     "/about/",
     "/contact/",
     "/blog/",
