@@ -12,7 +12,7 @@ screenshot:
 <Facts
     items={[
         { label: "my role", value: "Sole developer, with Claude Code alongside" },
-        { label: "timeline", value: "Four days, October 2026" },
+        { label: "timeline", value: "2026" },
         { label: "status", value: "Live website, desktop app 0.8.0" },
     ]}
 />
@@ -127,7 +127,7 @@ The cost of size containment is that a control can't size itself from its conten
 
 A bug in the monitor level survived into firmware 1.0.5. The page encoded it as a single byte, so its slider reached only a fifth of the real volume and misread a level Console had set high. Every capture until then had moved that control only about 20% of the way, so its true maximum never appeared in the data, and it came to light only when a capture drove the knob to the top. The level is now a 16-bit value like the headphones'. Saved mixes don't carry output levels, so the fix couldn't make an old mix play louder.
 
-I also had to take a feature back out. Version 0.2.0 kept the website's mix in step with the desktop app's on the same computer. Both drive the same Volt, so taking the other's mix meant sending it again, and that could land after a newer change and briefly play an older, louder level. Version 0.2.1 dropped it. Instead, readings of the Volt that a page didn't ask for tell it another Volt Mixer is open, and the website pauses its mix and says so.
+I also had to take a feature back out. The website once kept its mix in step with the desktop app's on the same computer. Both drive the same Volt, so taking the other's mix meant sending it again, and that could land after a newer change and briefly play an older, louder level, so I removed it. Instead, readings of the Volt that a page didn't ask for tell it another Volt Mixer is open, and the website pauses its mix and says so.
 
 ## What it achieved
 
