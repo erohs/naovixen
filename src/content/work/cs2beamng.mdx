@@ -86,7 +86,7 @@ Tunnels gave the most visibly wrong results. Mouths jutted out of hillsides, cut
 
 The game never carves its heightmap. Every frame, it hides the ground inside an invisible volume swept along each tunnel mouth and sunken road. BeamNG's terrain can only punch out whole squares, so a per-pixel trick had to become real geometry.
 
-For a while I approximated it, and each fix closed one gap and opened another: curtains across tunnel bores, pale bands along every wall, 12 m spikes behind them. One rewrite made the next load worse, with walled-off tunnel mouths and moats beside sunken roads, and I reverted it. In the end I called a halt, because "this inventing and guessing has us going around in loops", and we replicated how the game does it.
+For a while I approximated it, and each fix closed one gap and opened another: curtains across tunnel bores, pale bands along every wall, 12 m spikes behind them. One rewrite made the next load worse, with walled-off tunnel mouths and moats beside sunken roads, and I reverted it. So I paused, looked more closely at how the game itself does it, and replicated that.
 
 ![A divided road in BeamNG.drive dropping into a tunnel mouth cut into a dry, grassy hill. Sharp grey triangles stick out of the dark retaining wall like teeth, and torn strips of terrain hang across the portal.](../../assets/work/cs2beamng/tunnel-teeth.jpg)
 
