@@ -1,0 +1,107 @@
+---
+title: "A fair waitlist for limited-stock drops"
+summary: "Evenqueue, my self-hosted waitlist for scarce restocks: buyers keep their place with a code instead of an account, and the order comes from public randomness. In development."
+order: 2
+featured: true
+stack: ["Astro", "TypeScript", "CSS", "Cloudflare Workers", "SQLite", "Playwright"]
+screenshot:
+    src: "../../assets/work/evenqueue-hero.png"
+    alt: "The top of the 'You're on the waitlist' page. It reads 'Your place is saved. These codes are the only link to it.', then a highlighted warning: 'Save these codes now. They are shown only once, and nobody can look them up for you later.' Below, a card headed Entry code shows a 26-character code in dash-separated groups of four, a line saying it checks your place, takes up an offer and lets you leave, and its QR code."
+---
+
+<Facts
+    items={[
+        { label: "my role", value: "Design and build, with Claude Code alongside" },
+        { label: "timeline", value: "2026" },
+        { label: "status", value: "In development, not yet released" },
+    ]}
+/>
+
+Evenqueue is a waitlist for small vendors who sell scarce restocks. Buyers join over a day or more instead of racing a "buy" button, the order is drawn from public randomness, and nobody is asked who they are. It's my own project, in development and not released yet; the source is public at [github.com/naovixen/evenqueue](https://github.com/naovixen/evenqueue).
+
+## The problem
+
+I started it when I realised that people running stock trackers were disadvantaging ordinary buyers of hot-drop and random-drop items. When a small shop restocks something scarce, the "buy" button rewards whoever is fastest, and a monitor watching the page is faster than anyone refreshing it by hand.
+
+The usual defences against bots are ID, phone or card checks, and they shut out the very buyers I wanted to help. So Evenqueue aims lower. It takes away the advantage speed gives bots and stock monitors, collects no personal data, and doesn't claim to stop a determined bot farm.
+
+It's for DIY and community vendors, each running their own copy on a free Cloudflare Workers account or their own Node server. So buyer pages had to work without JavaScript and meet WCAG 2.2 AA, entry could take no personal data, and a whole draw had to fit a free plan's limits.
+
+## My approach
+
+A vendor picks one of three rules for who is offered a unit first. The default is a random order where a buyer's priority rises each time they miss out, capped at two levels. In a simulation of repeated small restocks it gave the smallest worst-case shortfall to any group of buyers, including people whose internet access comes and goes. The windows are long for the same people: at least 24 hours to join and 12 to claim an offer.
+
+### A code instead of an account
+
+Joining is one button with nothing to fill in. The buyer gets a set of codes, and those codes are their whole relationship with the waitlist, so they had to be easy to keep.
+
+The entry code is 26 characters of Crockford base 32 in groups of four, and the field accepts any case, spaces, any dash, and O, I or L for 0 and 1. A seven-word phrase does everything the entry code does, for people who remember words more easily. Its list is adapted from the EFF's large wordlist, minus hyphenated words, which are easy to mistype, and gambling words, which would make a waitlist look like a game of chance. A view key only checks status, so a buyer can hand it to someone helping them, and a shorter recovery code is meant for paper.
+
+The codes page lists ways to keep them, none of which need script: print the page (the print styles leave a sheet of codes), write them down, scan a QR code from a small encoder of my own, or save the entry code in a password manager. For that last one, the page treats the code as a password and the waitlist's name as the username:
+
+```html title="codes-page.html"
+<form method="post" action="/status">
+    <input type="text" name="waitlist" value="Spring restock" autocomplete="username" hidden />
+    <input type="password" name="code" value="7K2M-…" autocomplete="current-password" hidden />
+    <button type="submit">Check my place now</button>
+</form>
+```
+
+Pressing "Check my place now" shows the buyer their place and gives the password manager a sign-in to offer to save. The status form's code field never blocks paste, as WCAG 2.2's accessible authentication criterion asks, turns off spellcheck, and hands back what was typed with any error, so nobody retypes 26 characters to fix one.
+
+![The 'You're on the waitlist' page. Under the line 'Your place is saved. These codes are the only link to it.' and a warning that the codes are shown only once, one card gives the entry code in dash-separated groups of four with its QR code and the note 'Checks your place, takes up an offer and lets you leave. Keep it private.' A second card gives a seven-word phrase, 'plywood shorthand elliptic unskilled saved darn gurgling', with the note 'Does everything the entry code does. Use whichever you find easier to keep.'](../../assets/work/evenqueue/codes-page.png)
+
+The codes are never stored, only lookups: a tagged SHA-256 of the entry code and view key, which have 128 random bits each, and an HMAC of the shorter recovery code and phrase under a key kept outside the database.
+
+### Forms that are safe to send twice
+
+Buyer pages run no script at all. They're sent with a Content Security Policy that has no script source, so anything that needed JavaScript would fail visibly instead of half-working. Every action is a plain form post, and plain forms get sent twice, by a double tap, a dropped connection or the back button. So the codes, and the place itself, are derived from the random nonce in the signed join form:
+
+```ts title="codes-from-nonce.ts"
+export const entryCodeFor = async (entryKey: CryptoKey, formNonce: Uint8Array): Promise<Uint8Array> => {
+    const message = new Uint8Array([...new TextEncoder().encode("entry-code\0"), ...formNonce]);
+    const signature = await crypto.subtle.sign("HMAC", entryKey, message);
+    return new Uint8Array(signature).slice(0, 16); // 128 bits
+};
+```
+
+The same form sent again shows the same codes and can never add a second place. The form also carries the bot checks: a signed token, a hidden field and a minimum time before sending. When one trips, the buyer is asked to confirm with a fresh form and is never turned away, because autofill, screen readers and fast hands trip them too. All a script loses is a second round trip.
+
+### Fixing the order in public
+
+Every place gets a fresh public id for each draw, so buyers can find themselves in the published order, and nobody can link one draw's list to the next. When joining closes, the instance commits to a Merkle root over the waitlist, with a digest of the settings buyers joined under, and names a round of drand's public randomness, by default six hours later. Meanwhile the root goes to three OpenTimestamps calendars as evidence the list was fixed before that randomness existed, and the round is used only once two relays agree on it. A public verifier, so anyone can check all of this, is still to come.
+
+Buyer pages never say "lottery", "draw" or "winner", and text a vendor writes for buyers is refused if it uses gambling words, even spelled with Cyrillic look-alikes.
+
+![The 'Your place' page for a waitlist called Spring yarn restock. Drops entered and Offers received both show 0. A line says joining closes on Tuesday 3 November 2026 at 23:25, in Europe/London time and in UTC, and that the order is then fixed in public and offers appear on this page. Below are a Leave the waitlist button and a Finish button, and a footer reads 'This waitlist never asks for your name, e-mail address, phone number or home address.'](../../assets/work/evenqueue/status-page.png)
+
+## Challenges
+
+The free Workers plan allows 10 ms of CPU and 50 database statements a request, and my first approach to proofs blew straight through it: rebuilding the Merkle tree for one buyer's proof took about 500 ms for 10,180 places. Now a timer builds each draw a slice a minute, storing the tree in chunks of 256 leaves, so each step fits in one request however large the waitlist. A proof is one read per tree level, about 0.05 ms for 50,000 places.
+
+Timings vary from machine to machine and statement counts don't, so the budget test counts statements and can fail the build:
+
+```ts title="budget.test.ts"
+test("one timer run stays under the free plan's statement limit", async () => {
+    const database = countingDatabase();
+    await runTimerOnce(database);
+    assert.ok(database.statementCount() < 40, `used ${database.statementCount()} of 50`);
+});
+```
+
+It caught four drops at once using 49 statements, so the timer now takes two steps a run instead of three. CPU time waits for a real deployment: Node spends about 15 ms on each chunk, so if Workers is close to that I'll halve them, which leaves the root and proofs unchanged.
+
+The back button was the other surprise. An audit of the buyer pages found that some engines resend a form from history without asking, so on a shared computer the next person could see the last buyer's codes, or bring back a place that had left. Now finishing, leaving, using a recovery form or pressing "I've saved my codes" marks the form spent, and a spent form shows no codes. Finishing also sends `Clear-Site-Data: "cache"`, every page is `no-store`, and codes travel only in form bodies, never in an address.
+
+## Where it stands
+
+The engine, buyer pages, vendor admin and both targets (Workers with D1, Node with SQLite) are built and tested. Vendors sign in with passkeys, or an authenticator app that works without JavaScript; a small passkey script on two admin pages is the only script any page loads.
+
+The CSS uses `light-dark()` colour tokens, so the theme follows the system, with rules for forced colours, more contrast, reduced motion and print. In Chromium, Firefox, WebKit and an emulated phone, every buyer page is tested with JavaScript off, scanned with axe against WCAG 2.2 AA in both themes and checked for reflow at 320 CSS pixels, and joining is tested by keyboard alone. An audit beyond axe covered 17 buyer and 31 admin page states, including zoom, text spacing and target sizes.
+
+Still to come: claiming an offer through a WooCommerce connector (until then every offer lapses), the public verifier, docs, a demo on workers.dev and release checks. NVDA and VoiceOver passes, and scanning a printed QR code with a real phone, are still to do. The first release will be labelled "beta, not independently audited".
+
+<Callout label="lesson learnt" title="Make actions safe to repeat">
+    Assume any request can arrive twice, late or from someone else, and design each action so repeating it does no harm.
+    It's far cheaper to build that in from the start than to retrofit it.
+</Callout>
