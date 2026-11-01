@@ -19,33 +19,76 @@ screenshot:
 
 insidetrack started as a fun side project with one question: could I beat the odds at the GTA Online casino fully AFK? Inside Track is the casino's horse-racing machine, and insidetrack is the Python bot I wrote to play it. It watches my PS5, streamed to my PC over chiaki-ng Remote Play, reads the six horses' odds, backs one, reads the winner, logs the race and goes round again.
 
-Automating the game breaks Rockstar's terms of service, and accounts get banned for it, so there are no setup steps here. The code is on [GitHub](https://github.com/naovixen/gtacasinotrackbot).
+Automating the game breaks Rockstar's terms of service, and accounts get banned for it, so I've left out how to run it. The code is on [GitHub](https://github.com/naovixen/gtacasinotrackbot).
 
 ## The problem
 
-The bot can't look inside the game, so every price, every menu screen, the end of the race and the winner have to come off pixels in a video window. A misread price backs the wrong horse, and a missed keypress leaves the menu somewhere the bot doesn't expect, with nobody watching.
+The bot can't look inside the game. Every price, menu and winner has to come off pixels in a video window, and every move goes back in as a keypress. A misread price backs the wrong horse, and a swallowed keypress leaves the menu somewhere unexpected, with nobody watching.
 
-Then there's the betting. I didn't invent a system: someone else had published one on Reddit, an order of preference among the prices, with his own 547-race log and per-track charts behind it. That's a lot of evidence to take on trust, and I wanted to see whether it held over races of my own.
+The betting system isn't mine. A Reddit author had published one, an order of preference among the prices, with 547 races he'd logged behind it, and I wanted to see whether it held up on races of my own.
 
 ## My approach
 
-The bot is a loop of small pieces: capture, image clean-up, text recognition, strategy, menu, log and console. Nothing builds its own collaborators, so a test can hand the board reader a fake screen and a scripted recogniser, much as you'd test a component with mocked data.
+I built it in six steps, in this order.
 
-### Reading the odds off a video stream
+### Setting up: a PS5 in a window
 
-Each price is read from a box, pixel coordinates inside the stream's window, measured once with a setup wizard. chiaki-ng hides the mouse pointer while it streams, so the wizard grabs a still and you click the corners on that.
+chiaki-ng streams the PS5 to a window on my PC, and that window is all the bot sees. It finds it by title and grabs pixels straight off the screen inside it, so the stream has to stay visible: anything dragged over it gets read instead.
 
-The trap is drawing the box around the text in front of you. `EVENS` is five characters and `2/1` is three, so a box drawn snugly round a `2/1` clips every `EVENS` from then on, and there may be no `EVENS` on the board while you measure. It's the rule for sizing a button for its longest translation: draw for the widest text the box will ever hold. Spare room is free, because the reader crops to the ink first. With every box shifted up to 14 pixels in any direction, it still reads all six lanes correctly.
+Talking back was harder. My first version drove a virtual DualShock 4, which Windows treats as a controller plugged into the whole machine. Steam picked it up and retyped the bot's presses into whatever window I had focused, so for a while the bot was more or less driving my PC.
 
-That crop fixed a real misread too. The recogniser scales its input to a fixed height, so odds filling a third of their box arrived as tiny glyphs and `13/1` came back as `19/1`. Scaling the cropped text instead made the size of the box stop mattering.
+The fix was to post key messages straight to chiaki-ng's window handle. They reach that one window and nothing else, and it doesn't need focus, so I could carry on using the PC: a Cross posted with PyCharm in the foreground still fired BET AGAIN. A small check sends Right, Right, Left, Left to each window chiaki-ng owns, to find the one the PS5 listens on.
 
-For speed, the bot stacks all six lanes onto one canvas, runs a single recognition pass and matches each result back to its lane by position: about 130 ms, against about 1,040 ms for a pass per lane. A board is trusted only when every lane reads confidently, and a lane that only just cleared the bar must read the same twice. Only a trusted board gets a bet; anything else backs out a screen and starts again.
+### Probing: showing it where to look
 
-### Knowing the race is over
+Everything the bot reads lives in a box, pixel coordinates inside the stream window. At first I measured them off a screenshot and typed them into the source by hand. The setup wizard I wrote next names a game screen, grabs a still and opens it in its own window, where you click each box's corners with a crosshair and magnifier. The still matters because chiaki-ng hides the mouse pointer while it streams.
 
-The race is the longest part of every cycle, so knowing when it ends is worth more than any other timing. My first version waited for the picture to stop moving, which sounds right and isn't. After the finish, the camera holds on the horses for between half a second and three seconds, and a held camera is as still as a finished screen. So the wait had to cover the worst case, every race.
+The trap is drawing the box around the text in front of you. `EVENS` is five characters and `2/1` is three, so a box drawn snugly round a `2/1` clips every `EVENS` from then on, and there may be no `EVENS` on the board while you measure. It's the rule for sizing a button for its longest translation: draw for the widest text the box will ever hold. The wizard asks outright whether `EVENS` would fit, and flags a box that's narrow for its height.
 
-Now the bot looks for the result screen itself. Its RESULTS title panel is the same every race, yellow letters on a near-black box, so it needs no text recognition, only two pixel counts:
+You draw lane 1 and one corner of lane 6, and the four between are spaced evenly, which divides any spacing error by five. At the end the wizard draws every box onto a screenshot in its own colour, as a probe command can any time later, so a box that has drifted or clips its text shows up at a glance.
+
+![The wizard's check image, cropped to the top of a result screen: the RESULTS title in yellow capitals on a near-black panel, and below it the winner's card, Sweet Releaf, with a thin yellow box labelled "win lane" drawn tight around the black 4 on the horse's green diamond badge.](../../assets/work/insidetrack/setup-check.jpg)
+
+### Reading the odds
+
+The bot reads text with easyocr. I started with its all-in-one read, which runs a text detector to find the words first, on boxes I'd already measured: about a second a board. Stacking all six lanes onto one canvas for a single recognition pass, and matching each result back to its lane by position, brought that to about 130 ms.
+
+Dropping the detector exposed a second job it had been doing all along: cropping to the text. The recogniser scales whatever it's given to a fixed height, so odds filling a third of their box arrived as tiny glyphs, and `13/1` came back as `19/1`. Read as whole boxes, a live board came out four lanes right of six. So the reader crops to the ink and scales the text itself:
+
+```python title="crop_to_ink.py"
+import cv2
+import numpy as np
+
+GLYPH_HEIGHT = 64
+
+
+def crop_to_ink(binary: np.ndarray) -> np.ndarray:
+    rows, cols = np.nonzero(binary < 128)
+    if rows.size == 0:
+        return binary
+    ink = binary[rows.min() : rows.max() + 1, cols.min() : cols.max() + 1]
+    scale = GLYPH_HEIGHT / ink.shape[0]
+    ink = cv2.resize(ink, (max(1, round(ink.shape[1] * scale)), GLYPH_HEIGHT))
+    return cv2.copyMakeBorder(ink, 8, 8, 8, 8, cv2.BORDER_CONSTANT, value=255)
+```
+
+Cropped, the same board read six of six, and still did with every box shifted up to 14 pixels in any direction. That's why spare room in a box costs nothing.
+
+What comes back has to match a strict pattern, after a few cautious repairs such as putting back the slash when `7/1` reads as `71`. A board is trusted only when all six lanes clear a confidence bar, and a lane that only just cleared it has to read the same twice.
+
+The winning lane's digit is dark on a bright badge inside a bigger dark card, so judging the ink's colour from average brightness failed on most screens. Reading it both ways round and keeping the surer answer took eleven real badges from two right to eleven. The payout is never read: it's the odds plus one, times the stake.
+
+### Optimising the inputs
+
+A bet is a short walk through the menu: open SINGLE EVENT, move to the lane, select the horse, cross to the bet panel, press Cross 27 times to take the stake from $100 to $10,000, then Place Bet.
+
+My first timings were three guessed profiles. A tune command that drives the real lane list showed that hold length didn't matter and a five-lane walk landed with a press every 120 ms. What went missing was the press that crossed into a new part of the menu while it was still animating. Slowing every press to protect three crossings was why the safest profile modelled at about 48 seconds a race, so now only the crossings wait longer.
+
+The presses that change the whole screen are confirmed: press, watch for the picture to change, press again if it didn't. The bot waits for the screen to settle first, because the result screen keeps moving as the chip count ticks up, and a swallowed Cross there used to pass for a landed one.
+
+The race is the longest part of every cycle, so knowing when it ends matters most. I started with a fixed 34-second wait, then waited for the picture to stop moving, which sounds right and isn't. After the finish, the camera holds on the horses for up to three seconds, and a held camera is as still as a finished screen, so every race paid for the longest hold.
+
+Now the bot looks for the result screen itself. Its RESULTS title panel is the same every race, yellow letters on a near-black box, so it needs only two pixel counts:
 
 ```python title="results_banner.py"
 import numpy as np
@@ -59,17 +102,61 @@ def looks_like_results(box: np.ndarray) -> bool:
     return near_black > 0.5 and 0.02 < yellow < 0.5
 ```
 
-That costs about a millisecond, so the bot can ask twenty times a second, and it wants two matching frames in a row so one odd frame mid-fade can't end the wait. In the log, the race time stops landing on the same value every race, and the median cycle drops from 40.6 to 38.6 seconds. If you've swapped a fixed sleep in an end-to-end test for waiting on the element you need, it's the same move.
+That costs about a millisecond, so the bot asks twenty times a second and wants two matching frames in a row. The median cycle dropped from 40.6 to 38.6 seconds. If you've swapped a fixed sleep in an end-to-end test for waiting on the element you need, it's the same move.
+
+## The maths behind the bet
+
+The betting rule belongs to the Reddit author. With two horses at `EVENS`, skip; otherwise back the first price on the board in the order `EVENS`, `2/1`, `4/1`, `3/1`, `5/1` at the maximum stake; if nothing is shorter than `6/1`, skip. A skip is still a $100 minimum bet. My part was checking it.
+
+### What a price promises
+
+A 10,000 bet on a `2/1` horse returns 30,000 if it wins (the stake plus twice the stake) and nothing if it loses, so it breaks even if it wins one race in three: the 33.3% the price implies.
+
+In his log, horses at `2/1` won 45.0% of the time. Picture a hundred 10,000 bets on `2/1`: 1,000,000 staked, about 45 winners at 30,000 each, 1,350,000 back. That's a return on investment (ROI) of +35%, or 3,500 a bet on average, which is the bet's expected value.
+
+`EVENS` pays double, so it needs 50%, and won 56.2%; `4/1` pays five times, needs 20% and won 30.3%. Across both logs every price from `EVENS` to `5/1` beat its break-even, and backing everything at `6/1` or longer lost 2.5%. That's where the rule draws its line.
+
+### Why EVENS comes first
+
+On those numbers `4/1` looks the better bet, so why back `EVENS` first? A price's average depends on the races it turns up in, and `4/1` looks good partly thanks to races with no favourite in them. The fair test compares two prices over the same races, and run that way every link in the order holds. On boards with exactly one `EVENS`, backing it was worth about 1,400 a race and the best alternative lost about the same.
+
+### How sure can 547 races make you?
+
+His rule returned +50.6% over his 547 races. To see how much of that could be luck, I used a bootstrap: draw 547 races at random from his 547, allowing repeats, score the rule, and repeat 5,000 times. The middle 95% of results ran from +36.5% to +65.5%.
+
+The bot started out on his per-track charts instead. They scored +57.4% on his races, but each cell rested on 7 to 40 appearances, and the best of six such cells is mostly the lucky one. Cross-validation tests for that: fit the charts on four fifths of the races, score them on the fifth they never saw, and rotate. On unseen races they fell to +38.2%, below the plain order's +50.6%, so the bot switched.
+
+It was tempting to tune the order on my own races too. Fitted to my first 656, the best order made 4,159 a race on mine and 3,034 on his, against 4,917 for his order: the charts' mistake again.
+
+### Variance and sample size
+
+A single race either pays two to six times the stake or loses it, so one tells you very little. Across both logs a race's profit typically swung 16,622 either way (its standard deviation) around an average of 4,287. Telling apart two orderings 500 a race apart would take about 4,250 races, roughly 48 hours of racing.
+
+Short samples mislead. After 67 appearances in my log, `EVENS` had won 49.3%, under break-even; over 481 in both logs it settled at 55.3%.
+
+### What my races showed
+
+My first 656 graded races returned +39.0%, below his +50.6% but inside the interval around it. Pooled with his, 1,203 races returned +44.3%, with a 95% interval of +34.8% to +54.2%. The edge survived a second log, and the published headline sat near the top of its range.
+
+## Challenges of running it AFK
+
+With nobody watching, the bot follows one rule: it only bets from a screen it has proved it's on, and anything unproven backs out one screen and starts the cycle again.
+
+A trusted board read is that proof. An untrusted read gets a second look, then the bot backs out and comes back in, and after four tries it skips the cycle without betting. If Place Bet or BET AGAIN never registers, it backs out too.
+
+Backing out used to fire three Circles as insurance, but the second left the machine and the third walked into the open world, where nothing can recover. Now it presses once and confirms it, since backing out too little fixes itself at the next board read.
+
+The window is checked every cycle and restored if minimised, and the race wait has a cap, so a missed result screen costs a warning and the bot carries on. A winner it can't read is logged blank and left out of every figure, because a missed read isn't a lost bet.
+
+ScrollLock pauses it from whatever window I'm in, and Ctrl-C stops it. Every race goes into a CSV with the whole board, the stake as read back off the screen, the winner and the timings, under its session's own ID.
 
 ### A console you can read at a glance
 
-Someone glancing at a bot that runs for hours wants to know two things: is it working, and is it winning? The first console printed four differently shaped lines per race, so you had to read them all. Now each race gets a row per question on one grid under a lane header.
+Glancing at a bot that runs for hours, you want to know two things: is it working, and is it winning? The first console printed four differently shaped lines per race. Now each race gets a row per question on one grid.
 
 ![The bot's console in colour, from a logged run: start-up settings, then three races on one grid under a header numbering lanes 1 to 6. In each race the bet row sits directly above the result row, so the lane and price backed line up with the lane and price that won. The first race lost 10,000 in red, the next two won 10,000 and 40,000 in green, and the session ends 2 of 3 won, up 40,000.](../../assets/work/insidetrack/console.png)
 
-Every value sits in one eight-column cell. A width per column left each row right on its own terms but the block ragged, so I used one width for the same reason a design system has one spacing scale. Each row has one bright value at most, the one you scan for. The bet row sits over the result row in the same cells, so you can see whether they match from the shape of the two lines.
-
-The colour helpers are named for meaning (`good`, `bad`, `warn`, `note`, `key`), like semantic colour tokens, and colour is never the only signal: `WON`, `LOST` and the sign on each profit still read with colour off. Colour does break padding, though. Python pads by characters, an ANSI escape is made of characters, and a green `WON` counts as twelve, so the grid measures visible width:
+A width per column left the block ragged, so every value sits in one eight-column cell, the way a design system keeps one spacing scale. The bet row sits over the result row, so whether they match shows in the shape of the two lines. Colours are named for meaning (`good`, `bad`, `warn`), like semantic tokens, and `WON`, `LOST` and each profit's sign still read without them. Colour does break padding, since a green `WON` counts as twelve characters, so the grid measures visible width:
 
 ```python title="grid.py"
 import re
@@ -83,21 +170,13 @@ def cell(text: str) -> str:
     return text + " " * max(0, CELL - visible)
 ```
 
-## Challenges
-
-Once I had a few hundred races of my own, it was tempting to tune the rule on them. I wrote a script that replays any strategy over the author's 547 races, and it made the case against. His preference order came out on top, at +50.6% ROI. His per-track charts looked better in-sample, at +57.4%, but fell to +38.2% under five-fold cross-validation: each cell rested on 7 to 40 appearances, so picking the best of six mostly picked the lucky one. An order fitted on my own 656 races then did worse on his races than his order did.
-
-My own log showed how far a short sample can mislead. Early on it had EVENS winning 49.3% of its first 67 appearances, under its 50% break-even; across 481 appearances in both logs it settled at 55.3%. Telling apart two orderings 500 a race apart would take about 4,250 races, roughly 48 hours of racing, so the bot keeps his order.
-
-The console's hourly figure never moved. It was throughput multiplied by the strategy's average return, so a session that was down still showed about +460,000 an hour. Now it's the session's own net over its running time, and it swings over the first few races just as the ROI does.
+The hourly figure used to be throughput times the rule's average return, so a losing session still showed about +460,000 an hour. Now it's the session's own net over its running time, paused time excluded.
 
 ## What it achieved
 
-The bot logged 860 races, 853 with a readable winner, at a median of about 40 seconds a race: roughly 90 an hour, a little short of the 103 in published claims.
+The bot logged 860 races over two days in September, 853 with a readable winner, at about 40 seconds a race, roughly 90 an hour. Across those 853 the rule returned +33.3%, about 3,210 a race and 2.74 million chips in all. It swings a long way: the last session of 60 races finished 70,100 down, and the worst hour-long stretch of 89 races lost 110,300 while the best won 579,861.
 
-Over my first 656 graded races the rule returned +39.0%, below the author's +50.6% but inside the 95% bootstrap interval round it, +36.5% to +65.5%. Pooling both logs, 1,203 races, gives +44.3%, and every price from EVENS to 5/1 still wins more often than its odds imply. Across all 853 of my races it's +33.3%, about 3,210 a race.
-
-It swings a long way. The 197 races logged after the figures in my strategy notes returned +14.6%, and the last session of 60 races finished 70,100 down. The worst hour-long stretch of 89 races lost 110,300, and the best won 579,861. So on my log the answer is yes: the favourites win more often than their prices say, fully AFK. The published headline sat near the top of its range, and an hour well below average is normal.
+So on my log the answer is yes. The favourites win more often than their prices say, and a bot can collect on that fully AFK, provided a bad hour doesn't rattle you.
 
 <Callout label="lesson learnt" title="Ask what a number is standing in for">
     Stillness stood in for "the race is over", an average stood in for how the session was going, and in-sample ROI

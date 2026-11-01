@@ -17,105 +17,137 @@ screenshot:
     ]}
 />
 
-Someone in the Cities: Skylines II community had already built Leonida, the setting of Grand Theft Auto VI, and I wanted a glimpse of it from behind the wheel in BeamNG.drive. That took two halves. The ripper, my fork of Taipei Native's open-source [Carto](https://github.com/taipei-native/Carto) mod, runs inside the game. cs2beamng, a desktop app and command line, builds what the ripper writes into a BeamNG level. Both are [on GitHub](https://github.com/naovixen/csii-world-bundle).
+Someone in the Cities: Skylines II community had already built Leonida, the setting of Grand Theft Auto VI, and I wanted a glimpse of it from behind the wheel in BeamNG.drive. That took two halves. The ripper, my fork of Taipei Native's open-source [Carto](https://github.com/taipei-native/Carto) mod, runs inside the game and writes out the whole city. cs2beamng, a desktop app and command line, builds what the ripper writes into a BeamNG level. Both are [on GitHub](https://github.com/naovixen/csii-world-bundle).
 
 ## The problem
 
-Carto exports what a map needs: building footprints, roads, zoning and a heightmap. Driving through a city needs every building, tree and fence with its real shape and textures, exactly where the game puts it: 1.2 million objects whose meshes exist only inside the running game. BeamNG keeps every mesh a level places on the graphics card all session, so the city had to fit on an 8 GB card. And with 79 settings, the app had to make the few that matter obvious and say what a build would cost before anyone waited for it.
+Cities: Skylines II holds 1.2 million placed objects whose meshes exist only inside the running game. It assembles roads from parts as it draws them, hides the ground at tunnel mouths with a rendering trick, and tints buildings by its own rules. BeamNG wants a level: a heightfield, static meshes, materials in its own format, and every mesh the level places held on the graphics card for the whole session.
 
-Ripped meshes and textures come from the player's own copy of the game, so the tool is for personal use and never publishes them.
+So the city had to look like the game, drive like a BeamNG level and fit on an 8 GB card. Ripped meshes and textures come from the player's own copy of the game, so the tool is for personal use and never publishes them.
+
+## Where it started
+
+The first attempt, CS2toBeamNG, was a one-evening trial: 17 commits on 3 August, built on what vanilla Carto already exports. It read the real Leonida export, a 14.3 km map with 8,897 building footprints and 7,480 roads, decoded the game's heightmap (528.20 m under a building that reported 528.19 m), and extruded each footprint into a grey box with a height guessed from its zone.
+
+By the end of the evening it was drivable, and it showed me what was missing. Footprints and centrelines are enough for a map, but to recognise Leonida from behind the wheel I needed real buildings with their textures, roads with kerbs, and tunnels where the trial had left gaps. That meant reading the game's own meshes, materials and positions from inside the game.
 
 ## My approach
 
-I split the project at a file format. The ripper writes a versioned "CS2 World Bundle", documented by a schema, fifteen JSON Schemas, a minimal example and a validator. A reader needs no copy of the game and none of the mod's code, much as a front end can be built against a well-documented API. Two readers sit beside the mod: cs2beamng, and a Blender importer I used to check each rip by eye.
+I split the project at a file format. The ripper writes a versioned "CS2 World Bundle", documented by a schema, fifteen JSON Schemas, a minimal example and a validator, so a reader needs no copy of the game and none of the mod's code. It's the same idea as building a front end against a well-documented API. Two readers sit beside the mod: cs2beamng, and a Blender importer I used to check each rip by eye before BeamNG ever saw it.
 
-### Ripping 1.2 million objects faithfully
-
-The biggest unknown was whether the game's meshes could be read from the CPU at all. The first day's answer was only half right: the geometry sat in CPU-side buffers, but only as a simplified copy kept for raycasting, and full detail had to come from the game's geometry assets.
-
-A week later, road pieces went missing from some rips and not others. The buffers I still read for those parts were a cache the renderer fills on demand, so a rip depended on what the camera had recently looked at. A public helper in the game could have filled the cache, but it writes into the game's state, and the mod only reads. Instead the ripper borrows each geometry asset, copies it and releases it. The next full rip lost no pieces.
-
-### Auditing the bundle against what the game draws
-
-"Faithful" needed a definition, so I audited the rip against the game's own code: 4,336 decompiled types, every way the game draws something, each checked against the bundle. All 22 of the bundle's layers traced to a named system in the game, and nothing that's always on screen was missing. The gaps it did find, such as dead trees rendering as healthy ones, were closed and checked against a new rip three days later.
-
-The Blender importer helped too: it once drew every tree as a bare trunk, because the reader kept the first of each tree's two meshes and dropped the leaves.
-
-### Fitting a city on an 8 GB card
-
-Near the city, the level ran at 10 to 20 frames a second, and with the camera still it swung between 10 and 60. Nothing drawn changes while the camera is still, which ruled out geometry and pointed at memory: the level used 6.8 GB of the card plus 3.6 GB of shared memory, and about four-fifths of what it kept on the card was mesh.
-
-So I thinned each mesh only where the surface measurably stays put. A first pass tested keeping 50% and 25% of the triangles, saw errors of up to a metre and found no slack. I pushed back, because two aggressive points say nothing about the gentle end, and the full curve showed the first 10% of triangles coming off with 0.000 m of movement on every shape tested. The error isn't monotonic, so the build tries the deepest cut first:
-
-```python title="refine.py"
-import numpy as np
-
-def pick_reduction(mesh, ratios=(0.7, 0.8, 0.9), p95_cm=3.0, peak_cm=25.0):
-    """Try the deepest cut first; ship the first whose measured movement passes both bounds."""
-    for ratio in sorted(ratios):
-        candidate = decimate(mesh, ratio)
-        if candidate.triangle_count >= mesh.triangle_count:
-            continue  # the reducer stalled, so this isn't a reduction
-        moved_cm = surface_distances(candidate, mesh)
-        if np.percentile(moved_cm, 95) <= p95_cm and moved_cm.max() <= peak_cm:
-            return candidate
-    return mesh  # nothing passed: ship it whole
-```
-
-Raising the tolerance from 3 cm to 8 cm made the frame rate lovely, and my screenshots showed windows torn open and curtain walls shredded into triangles. Thinning one material at a time had let a wall and its glass stop sharing vertices, so seams opened while every vertex barely moved, which no bound on distance can see. I went back to 3 cm with a 25 cm cap on the worst point, for just 64 MiB more than the build that broke.
-
-![A curved glass tower from the 8 cm build in BeamNG, close up: its grid of window frames is broken by pale triangles where the glass and the frames around it have pulled apart.](../../assets/work/cs2beamng/torn-facade.jpg)
-
-Memory on the card fell from 2,990 MiB to 2,277, a 24% cut, and the city ran at 40 to 60 fps, dipping to about 20 when panning into a dense area.
-
-### A settings screen that explains itself
-
-The first version of the app showed nine settings, hid the other 70 in accordions behind _Show advanced_, and kept the reasoning for each default behind a "why" on its row. The presets seemed to do nothing: each changed 12 to 20 settings, all of them hidden, so pressing one moved a highlight and nothing else.
-
-I rebuilt it the same day. Sections run down a sidebar rather than tabs, because more are planned and tabs run out of width, and search (`/` or Ctrl+F) reaches every setting. Each description is one sentence under 100 characters, and a test keeps code names and file formats out of every section but Advanced, which keeps its technical names because someone changing a level-of-detail budget needs to know that's what they're changing. A badge on each section counts the settings you've moved off the preset, and as soon as it was built it caught a bug: a fresh install showed one, because the shipped default and the High preset disagreed.
-
-![The cs2beamng settings panel with the High preset and the World section open: tick boxes for buildings, roads and road markings, sliders for trees and props, and, under "Thin and clean the meshes", a "How much to thin" slider set to 3 cm with the note "How far a thinned surface may move. Higher thins more and frees more memory."](../../assets/work/cs2beamng/thin-slider.png)
-
-Choosing part of the city used to mean typing three numbers. Now you place a square on a map, and the square and the fast-travel pins move with the arrow keys as well as the mouse.
-
-The cost meter borrows from the video memory bars in game graphics menus such as GTA V's. It predicts the video memory a level will need before a long build, and warns rather than blocks, because someone may be building for another machine. Textures are computed with the same arithmetic as the code that writes them, all 7,730 to the byte, and meshes are calibrated from real builds; each figure says which it is. On a level it had never been fitted to, it predicted 3,934 MiB against 3,942 measured.
-
-![The cost meter, headed "What this will cost" for an 8,018 MiB card. An amber bar reads 3,477 MiB of video memory against 3,473 MiB known to fit, with a line saying how each part was worked out and a note that it may run but nobody has measured it. Tiles below give the build time, 12m 24s, the size on disk, 3.58 GiB, and what the card holds.](../../assets/work/cs2beamng/cost-meter.png)
+Where the game's behaviour wasn't documented, I learnt to read it from the game's decompiled code and port the rule. Most of the challenges below began with a guess of my own that didn't hold.
 
 ## Challenges
 
-The fiddliest bugs were in the map. Dragging a pin did nothing, which looked like a CSS problem, but every redraw recreated the pins, so the first `pointermove` of a drag destroyed the element holding the pointer capture. The pins and their list rows are now created once and moved.
+### Getting the coordinates right
 
-The pin's tip also landed about 7 px west and 21 px south of its point. It carried both `rotate: -45deg` and a `transform` that translated it into place, and `rotate` applies on top of `transform`, so the offset was rotated too. Now an unrotated wrapper sits on the point and takes the drag and the focus, and the teardrop inside it is placed by margins, which apply before any transform. Three pins measured afterwards were within half a pixel:
+Nothing mapped 1:1 between the games. In early testing I spawned underneath the map, and the terrain threw artifacts up into the sky or out sideways. The trial even stood the city on its edge: the mesh files declared Y as up, BeamNG uses Z, so 14 km of city turned to vertical.
 
-```css title="map-pin.css"
-.pin {
-    --size: 1.5rem;
-    position: absolute;
-    inline-size: calc(var(--size) * 1.4142);
-    block-size: calc(var(--size) * 1.4142);
-    transform: translate(-50%, -100%); /* bottom centre on the point */
-}
+![An early trial build in BeamNG.drive: a red sports car hangs in total darkness with nothing around it and two puffs of smoke drifting above.](../../assets/work/cs2beamng/spawn-void.jpg)
 
-.pin-drop {
-    inline-size: var(--size);
-    block-size: var(--size);
-    margin: calc(var(--size) * 0.2071); /* centres it; the rotated tip meets the bottom edge */
-    border-radius: 50% 50% 50% 0;
-    rotate: -45deg;
-}
+The ripper brought subtler ones. The bundle keeps the game's frame, x east, y up and z north, which is left-handed. BeamNG uses x east, y north and z up, which is right-handed, so every position swaps two axes and every mesh is mirrored. BeamNG's clock counts from noon, too, so my first level loaded at 01:20 instead of 12:51, in the dark.
+
+Rotation was the bug I learnt most from. BeamNG reads an object's nine rotation values as its three axes in turn, and I'd written the matrix row by row, which is the inverse rotation. On a north-south street grid that's invisible, so whole districts looked right while the diagonal ones were scrambled. The street lights gave it away: a light has no mesh to hide the mistake, only a direction, and ours pointed the wrong way.
+
+```python title="frame.py"
+import numpy as np
+
+
+def to_beamng(point: np.ndarray) -> np.ndarray:
+    """The bundle is x east, y up, z north; BeamNG is x east, y north, z up."""
+    x, y, z = point
+    return np.array([x, z, y])
+
+
+def rotation_values(rotation: np.ndarray) -> list[float]:
+    """BeamNG reads nine values as the object's x, y and z axes: the matrix's columns."""
+    return rotation.T.flatten().tolist()  # flattening row by row writes the inverse
 ```
 
-My costliest mistake was a theory: two nights of water fixes for black squares around the docks, before I looked properly and saw a black reflective surface and the dock's grey concrete, both painted areas. I reverted every water fix.
+I settled it without BeamNG at all. The game builds a building facing its street, so a building and its nearest lane should line up: under the reading I'd shipped they were a median 14.24° apart, and under the correct one 0.01°. On the rebuilt level, 16,768 objects near a lane sit a median 0.10° off their street.
 
-<Callout label="lesson learnt" title="Look at the real thing before trusting a reading of it">
-    A cache read as if it were the asset, two nights of water theories, and a tolerance whose numbers passed while the
-    facades tore: each time, looking at the thing itself settled it faster than more measuring. I look first now, then
-    measure what I saw.
-</Callout>
+### Rebuilding roads from their parts
+
+Cities: Skylines II has no mesh for a stretch of road. Each road type names a cross-section of parts, such as carriageway, kerb and pavement, and the game bends every part along curves that trace the road's edges. A first spike did the same on the CPU for one road and its two junction flares: exactly 16.00 m wide, with 0.0000 m seams between the pieces.
+
+Junctions were the hard part. Across the city, 1,607 of 1,817 road junctions had every flare stopping more than a metre short of the middle, leaving a hole. The game fills it in a shader that decides which vertices follow which curve, and those shaders ship compiled inside the game's asset bundles, out of the decompiler's reach. So I worked backwards from the code around them: what the shader is fed, and what a finished junction looks like.
+
+That took three days. Five explanations reasoned from the code fell apart once I measured them, and a stand-in fill I'd built was deleted when I ported the game's own mesh generation instead. The breakthrough came from a screenshot of the game: by colour ratio, the inside of a junction matched the road surface (red to blue, 1.635) and not the dirt beneath it (about 1.87), so it had to be road geometry. A dump of the parts at eight such junctions turned up a part with zero width whose mesh has real width. My port had collapsed it into a line, and the fix was one line.
+
+BeamNG brought trouble of its own: in one load every big junction broke into shards, from road tiles with more than 65,535 vertices. Tiles now split at 60,000.
+
+![A multi-lane junction beside a roundabout in BeamNG.drive, its asphalt broken into dark grey shards and stray white slivers of road marking that cut across the lanes.](../../assets/work/cs2beamng/junction-shards.jpg)
+
+Across 5,872 junction strips, the bare edge left is at most 0.93 m, and under 0.36 m for 99% of them. That's good enough to drive.
+
+### Cutting tunnels into the terrain
+
+Tunnels gave the most visibly wrong results. Mouths jutted out of hillsides, cuts left teeth along the walls, and some left holes in the map with sky showing through.
+
+The game never carves its heightmap. Every frame, it hides the ground inside an invisible volume swept along each tunnel mouth and sunken road. BeamNG's terrain can only punch out whole squares, so a per-pixel trick had to become real geometry.
+
+For a while I approximated it, and each fix closed one gap and opened another: curtains across tunnel bores, pale bands along every wall, 12 m spikes behind them. One rewrite made the next load worse, with walled-off tunnel mouths and moats beside sunken roads, and I reverted it. After the seventeenth load I asked for a pause, because "this inventing and guessing has us going around in loops", and we replicated how the game does it.
+
+![A divided road in BeamNG.drive dropping into a tunnel mouth cut into a dry, grassy hill. Sharp grey triangles stick out of the dark retaining wall like teeth, and torn strips of terrain hang across the portal.](../../assets/work/cs2beamng/tunnel-teeth.jpg)
+
+The game's terrain code states the rule plainly: draw a terrain pixel unless it lies inside one of those volumes. That question has an exact answer on a triangle, so the cut now subtracts each volume from the terrain triangles it touches, with no sampling, snapping or lifting. Checked against the game's rule, it agrees on 99.983% of sample points at a trench and 100% at a tunnel mouth. Open-sky gaps at that mouth fell from 65 to 3, and the old method turned out to have punched 8,132 squares with nothing under them.
+
+One artefact remains: a flat grey band beside every cut. To trace it, we gave every terrain material a loud flat colour and reloaded, and the grey came back red, the colour of material zero. BeamNG stores a hole in the same byte as the ground's material, so a punched square forgets what it was and its neighbours blend in material zero. No fix I've found stays true to the game, so the band is documented and left alone.
+
+![The same kind of road cut seen from above with every surface recoloured for the test: the road in yellow, ground in blue and green, the cut meshes black, and a red band, material zero, hugging the black teeth along the cut.](../../assets/work/cs2beamng/tunnel-rim-test.jpg)
+
+### Recreating the world's colours
+
+Colour went wrong more often than anything else, and loudly: pure black, purple, green. Nearly every time, two programs disagreed about a convention.
+
+![BeamNG.drive terrain seen close up, dissolved into dense per-pixel noise of purple, magenta, green and cyan, with no trace of grass or soil.](../../assets/work/cs2beamng/terrain-noise.jpg)
+
+- The trial's first level was black, because a BeamNG level with no sun has no light.
+- Close up, the ground dissolved into purple and green noise. The textures were fine: BeamNG keeps one global, case-insensitive list of terrain materials, and an older test level's grass was shadowing the new one. Every material name now carries its level's name.
+- The ground then looked nearly black. The game's grass is very dark, about 0.06 in linear terms, where BeamNG expects nearer 0.2, so I calibrated a gain on grass.
+- In the Blender check, each road came out a different colour, and later every car park and path went black. The game packs normal maps into two channels, and read as ordinary colour they turn a surface away from the sun. The ripper rebuilds them now.
+- Some buildings rendered black. Both games tint a building through a mask, but BeamNG takes the amount of tint from the mask's alpha. I'd exported it fully opaque, so wherever the game meant "don't tint", BeamNG multiplied by zero: 61% of every tintable surface. Alpha now comes from the mask's own channels, which matches the game to within one 8-bit step.
+
+Two early "colour" bugs were in Blender, my checking tool: its default view transform turned the grass brown, and its alpha handling drew the ground at a tenth of its brightness.
+
+### Getting the frame rate playable
+
+Once the buildings and trees went in, the level ran at 2 frames a second. Making it playable took two weeks of measuring, and most causes weren't where they looked.
+
+The 2 fps was BeamNG building billboard stand-ins at runtime for every object shape in the level: 4,245 of 4,245, where its own West Coast USA map uses 82 of 2,608. Limiting them to 153 shapes, 3.6% of the total, ended the stall.
+
+Collision came next. The bundle filed every plant as a tree, so bushes and 314,222 patches of long grass were as solid as trunks. The game's own data says which plants are trees, and splitting on it took collision off exactly 376,187 plants. An airport's collision had collapsed into a box 1,344 m across, so driving onto it put the car inside a solid, invisible block. Anything past 20 m now keeps real collision.
+
+Memory was the next limit. At one point 5,071 MiB of files became 14.2 GB of video memory on an 8 GB card, and the level ran at a flat 8 fps wherever I pointed the camera. Hiding the forest didn't move it, so the limit was how much the level held in memory. Distant trees became flat billboards, taking the forest from 9.2 million triangles to 1.4 million at 8 km, and I trimmed textures, foliage and props.
+
+The last step thinned meshes where the surface measurably stays put. Raising the tolerance from 3 cm to 8 cm made the frame rate lovely, and my screenshots showed the facades torn open. Thinning one material at a time had let a wall and its glass stop sharing vertices, so seams opened while every vertex barely moved. I went back to 3 cm, with a 25 cm cap on the worst point.
+
+![A curved glass tower from the 8 cm build in BeamNG, close up: its grid of window frames is broken by pale triangles where the glass and the frames around it have pulled apart.](../../assets/work/cs2beamng/torn-facade.jpg)
+
+Memory on the card fell from 2,990 MiB to 2,277, and the city ran at 40 to 60 fps, dipping to about 20 when panning into a dense area.
+
+### Building a level from scratch, and explaining it
+
+cs2beamng builds a level from nothing but the bundle: terrain, water, sky, roads, buildings and materials, with the meshes precompiled by BeamNG's own tool and the result validated at the end. A full-city build fell from 100 minutes to 19. Every long step runs in a worker process, and the interface does none of the work itself: it shows progress, the time remaining and a Cancel button.
+
+The harder part was making all that clear to someone who'd never seen the repo. Installing it once meant cloning the repo and installing Python packages. Now it's a Windows app you unzip and run, and it can install the ripper mod into the game for you.
+
+The settings were where I learnt most. The first screen showed nine of 79 settings and hid the rest, and the presets seemed to do nothing: each changed 12 to 20 settings, all hidden, so pressing one moved a highlight and nothing else. I rebuilt it the same day around a sidebar and search, with one plain sentence under each control and a badge counting what you've moved off the preset. A preset now says what it gives you and which one fits your machine.
+
+![The cs2beamng settings panel with the High preset and the World section open. A line under the presets reads "Performance is the one that fits this machine." Below are tick boxes for buildings, roads and road markings, sliders for trees and props, and a "How much to thin" slider set to 3 cm with the note "How far a thinned surface may move. Higher thins more and frees more memory."](../../assets/work/cs2beamng/thin-slider.png)
+
+The cost meter predicts the video memory a level will need before a long build, warns rather than blocks, and says how each figure was worked out. On a level it had never been fitted to, it predicted 3,934 MiB against 3,942 measured.
+
+![The cost meter, headed "What this will cost" for an 8,018 MiB card. An amber bar reads 3,477 MiB of video memory against 3,473 MiB known to fit, with a line saying how each part was worked out and a note that it may run but nobody has measured it. Tiles below give the build time, 12m 24s, the size on disk, 3.58 GiB, and what the card holds.](../../assets/work/cs2beamng/cost-meter.png)
 
 ## What it achieved
 
-The ripper takes a whole city, 1.28 million objects in its latest rip, in about 28 minutes. cs2beamng ships as a Windows app you unzip and run, and it can install the ripper mod for you. Leonida runs at 40 to 60 frames a second on an 8 GB card.
+The ripper takes a whole city, 1.28 million objects in its latest rip, in about 28 minutes. cs2beamng ships as a Windows app, and Leonida runs at 40 to 60 frames a second on an 8 GB card, with its roads, tunnels and colours checked against the game's own rules.
 
 BeamNG's overlay now reads 20.7 ms of CPU against 18.7 ms of GPU a frame, so draw calls are the limit. The level ships 5,546 materials against vanilla BeamNG's 586, and combining them is the next lever.
+
+<Callout label="lesson learnt" title="Read how the original works before writing a workaround">
+    Junctions cost me five wrong explanations, and tunnels seven guesses, before I read how the game actually builds
+    them. Each guess fixed what I was looking at and broke something I wasn't. When one engine has to imitate another, I
+    now find the original's rule first, port it, and measure against it.
+</Callout>
