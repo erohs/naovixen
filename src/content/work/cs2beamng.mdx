@@ -146,8 +146,7 @@ The ripper takes a whole city, 1.28 million objects in its latest rip, in about 
 
 BeamNG's overlay now reads 20.7 ms of CPU against 18.7 ms of GPU a frame, so draw calls are the limit. The level ships 5,546 materials against vanilla BeamNG's 586, and combining them is the next lever.
 
-<Callout label="lesson learnt" title="Read how the original works before writing a workaround">
-    Junctions cost me five wrong explanations, and tunnels seven guesses, before I read how the game actually builds
-    them. Each guess fixed what I was looking at and broke something I wasn't. When one engine has to imitate another, I
-    now find the original's rule first, port it, and measure against it.
+<Callout label="lesson learnt" title="Verify before guessing">
+    Write clearer specs, and check how the existing code works before guessing. Reading the game's own logic first would
+    have saved most of my rework.
 </Callout>
