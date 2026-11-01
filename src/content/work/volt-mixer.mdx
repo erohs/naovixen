@@ -135,6 +135,7 @@ The website is live, and the desktop app is at 0.8.0 for Windows, macOS and Linu
 
 The pacing work halved the website's own work at idle, from 51 to 29 ms a second, and cut a drag from about 275 writes a second to 72. The desktop app gained more. With the engine in the main process, no page runs while the app sits in the tray: four processes instead of five, and 82 MB of private bytes instead of 245. Together with drawing in software, since a mixer page needs no GPU, that took a drag with the window open from 11% of the machine's CPU to about 4%.
 
-<Callout label="lesson learnt" title="Test the full range">
-    Test every control from its minimum to its maximum. Checks that only cover part of a range can still look complete.
+<Callout label="lesson learnt" title="Test the edges">
+    Test the boundaries as well as the typical values. Bugs hide at the limits everyday use never reaches, and partial
+    coverage can still look complete.
 </Callout>
